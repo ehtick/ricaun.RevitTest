@@ -8,7 +8,7 @@
 
 ## Installation
 
-* Download and install [ricaun.RevitTest.exe](../../releases/latest/download/ricaun.RevitTest.zip)
+* Download and install [ricaun.RevitTest.Console.exe](../../releases/latest/download/ricaun.RevitTest.Console.zip)
 
 ## License
 
