@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <Configurations>Debug; Release</Configurations>
+    <TargetFramework>net46</TargetFramework>
+  </PropertyGroup>
+
+  <!-- Release -->
+  <PropertyGroup Condition="!$(Configuration.Contains('Debug'))">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants></DefineConstants>
+    <NoWarn>MSB3052</NoWarn>
+    <DebugType>None</DebugType>
+  </PropertyGroup>
+
+  <!-- Debug -->
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>ricaun.RevitTest.Shared</PackageId>
+    <Version>1.0.0</Version>
+    <ProjectGuid>{184a0327-a663-44af-a9fc-b597039cf840}</ProjectGuid>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageAssemblyVersion></PackageAssemblyVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <IncludePackageReferencesDuringMarkupCompilation>false</IncludePackageReferencesDuringMarkupCompilation>
+    <Revision>$([MSBuild]::Divide($([System.DateTime]::Now.TimeOfDay.TotalSeconds), 4).ToString('F0'))</Revision>
+    <PackageAssemblyVersion>.Dev.$(Version).$(Revision)</PackageAssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Company>ricaun</Company>
+    <Authors>Luiz Henrique Cassettari</Authors>
+    <Description>RevitTest Framework Shared</Description>
+    <CopyrightYears>$([System.DateTime]::Now.ToString('yyyy'))</CopyrightYears>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>$(PackageId)$(PackageAssemblyVersion)</AssemblyName>
+    <Product>$(PackageId)</Product>
+    <Copyright>Copyright © $(Company) $(CopyrightYears)</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
+    <PackageReference Include="ricaun.NUnit" Version="*" />
+  </ItemGroup>
+
+</Project>
