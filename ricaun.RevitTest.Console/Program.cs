@@ -37,7 +37,7 @@ namespace ricaun.RevitTest.Console
     {
         static Program()
         {
-            CosturaUtility.Initialize();
+            //CosturaUtility.Initialize();
         }
         static void Main(string[] args)
         {
@@ -104,6 +104,26 @@ namespace ricaun.RevitTest.Console
             Log.WriteLine(output);
         }
         static void HandleParseError(IEnumerable<Error> errs)
+        {
+            foreach (var installedRevit in RevitInstallationUtils.InstalledRevit)
+            {
+                foreach (var process in installedRevit.GetProcesses())
+                {
+                    Log.WriteLine($"{installedRevit} {process.GetPipeName()} {process.PipeFileExists()}");
+                    if (process.PipeFileExists())
+                    {
+                        var client = new PipeTestClient(process);
+                        client.Request = new TestRequest();
+                        client.Initialize();
+                        Thread.Sleep(5000);
+                        client.Dispose();
+                        Thread.Sleep(1000);
+                    }
+                }
+            }
+        }
+
+        static void HandleParseErrorOld(IEnumerable<Error> errs)
         {
             var bundleUrl = Properties.Resources.ricaun_RevitTest_Application_bundle
                 .CopyToFile("ricaun.RevitTest.Application.bundle.zip");

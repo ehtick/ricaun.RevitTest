@@ -40,10 +40,14 @@ namespace ricaun.RevitTest.Application.Revit
                 application.ControlledApplication.GetApplication());
 
             PipeTestServer = new PipeTestServer();
+            PipeTestServer.SendResponse(response =>
+            {
+                response.IsBusy = RevitBusyControl.Control.IsRevitBusy;
+            });
             var initializeServer = PipeTestServer.Initialize();
 
             Log.WriteLine();
-            Log.WriteLine($"PipeTestServer: {initializeServer}");
+            Log.WriteLine($"PipeTestServer: {initializeServer} {PipeTestServer.PipeName}");
             Log.WriteLine();
 
             ribbonPanel = application.CreatePanel("");
@@ -54,25 +58,21 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
 #endif
 
-            var task = Task.Run(async () =>
-            {
-                await Task.Delay(5000);
-                var client = new PipeTestClient();
-                var initializeClient = client.Initialize();
-                Log.WriteLine();
-                Log.WriteLine($"PipeTestClient: {initializeClient}");
-                Log.WriteLine();
+            //var task = Task.Run(async () =>
+            //{
+            //    await Task.Delay(5000);
+            //    var client = new PipeTestClient();
 
-                client.NamedPipe.Connected += (connection) =>
-                {
-                    connection.PushMessage(new TestRequest() { MyProperty = 100 });
-                };
+            //    client.Request = new TestRequest();
 
-                await Task.Delay(1000);
-                client.NamedPipe.PushMessage(new TestRequest());
-                await Task.Delay(1000);
-                client.Dispose();
-            });
+            //    var initializeClient = client.Initialize();
+            //    Log.WriteLine();
+            //    Log.WriteLine($"PipeTestClient: {initializeClient}");
+            //    Log.WriteLine();
+
+            //    await Task.Delay(1000);
+            //    client.Dispose();
+            //});
 
             return Result.Succeeded;
         }
@@ -88,6 +88,17 @@ namespace ricaun.RevitTest.Application.Revit
         {
             var control = sender as RevitBusyService;
             UpdateLargeImageBusy(ribbonItem, control);
+            try
+            {
+                PipeTestServer.SendResponse(response =>
+                {
+                    response.IsBusy = control.IsRevitBusy;
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private static void UpdateLargeImageBusy(RibbonItem ribbonItem, RevitBusyService control)

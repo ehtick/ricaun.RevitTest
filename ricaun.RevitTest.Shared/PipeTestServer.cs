@@ -15,21 +15,47 @@ namespace ricaun.RevitTest.Shared
 
     public class PipeTestServer : IPipeTest
     {
+        public TestResponse Response { get; set; }
+        public TestRequest Request { get; private set; }
         public NamedPipeServer<TestRequest, TestResponse> NamedPipe { get; private set; }
+        public string PipeName { get; }
         public PipeTestServer()
         {
+            PipeName = ProcessPipeNameUtils.GetPipeName();
         }
 
         public bool Initialize()
         {
-            var pipeName = ProcessPipeNameUtils.GetPipeName();
-            if (NamedPipeUtils.PipeFileExists(pipeName) == false)
+            if (NamedPipeUtils.PipeFileExists(PipeName) == false)
             {
-                NamedPipe = new NamedPipeServer<TestRequest, TestResponse>(pipeName);
+                NamedPipe = new NamedPipeServer<TestRequest, TestResponse>(PipeName);
                 NamedPipe.Start();
+                NamedPipe.ClientConnected += NamedPipe_ClientConnected;
+                NamedPipe.ClientMessage += NamedPipe_ClientMessage;
                 NamedPipeDebug();
             }
             return NamedPipe != null;
+        }
+
+        public void SendResponse(Action<TestResponse> response)
+        {
+            if (Response is null) Response = new TestResponse();
+            response(Response);
+            NamedPipe?.PushMessage(Response);
+        }
+
+        private void NamedPipe_ClientMessage(NamedPipeConnection<TestRequest, TestResponse> connection, TestRequest message)
+        {
+            Request = message;
+        }
+
+        private void NamedPipe_ClientConnected(NamedPipeConnection<TestRequest, TestResponse> connection)
+        {
+            if (Response != null)
+            {
+                connection.PushMessage(Response);
+                Console.WriteLine($"[{connection.Id}] PushMessage: \t{Response}");
+            }
         }
 
         public void Dispose()
@@ -42,33 +68,55 @@ namespace ricaun.RevitTest.Shared
         {
             NamedPipe.ClientConnected += (connection) =>
             {
-                Debug.WriteLine($"[{connection.Id}] ClientConnected");
+                Console.WriteLine($"[{connection.Id}] ClientConnected");
             };
             NamedPipe.ClientDisconnected += (connection) =>
             {
-                Debug.WriteLine($"[{connection.Id}] ClientDisconnected");
+                Console.WriteLine($"[{connection.Id}] ClientDisconnected");
             };
             NamedPipe.ClientMessage += (connection, message) =>
             {
-                Debug.WriteLine($"[{connection.Id}] ClientMessage: \t{message}");
+                Console.WriteLine($"[{connection.Id}] ClientMessage: \t{message}");
             };
         }
     }
 
     public class PipeTestClient : IPipeTest
     {
+        public TestRequest Request { get; set; }
+        public TestResponse Response { get; private set; }
         public NamedPipeClient<TestResponse, TestRequest> NamedPipe { get; private set; }
+        public string PipeName { get; }
+
         public PipeTestClient()
         {
+            PipeName = ProcessPipeNameUtils.GetPipeName();
+        }
+
+        public PipeTestClient(Process process)
+        {
+            PipeName = process.GetPipeName();
         }
 
         public bool Initialize()
         {
-            var pipeName = ProcessPipeNameUtils.GetPipeName();
-            NamedPipe = new NamedPipeClient<TestResponse, TestRequest>(pipeName);
+            NamedPipe = new NamedPipeClient<TestResponse, TestRequest>(PipeName);
             NamedPipe.Start();
+            NamedPipe.Connected += NamedPipe_Connected;
+            NamedPipe.ServerMessage += NamedPipe_ServerMessage;
             NamedPipeDebug();
             return true;
+        }
+
+        private void NamedPipe_Connected(NamedPipeConnection<TestResponse, TestRequest> connection)
+        {
+            if (Request != null)
+                connection.PushMessage(Request);
+        }
+
+        private void NamedPipe_ServerMessage(NamedPipeConnection<TestResponse, TestRequest> connection, TestResponse message)
+        {
+            Response = message;
         }
 
         public void Dispose()
@@ -81,17 +129,17 @@ namespace ricaun.RevitTest.Shared
         {
             NamedPipe.Connected += (connection) =>
             {
-                Debug.WriteLine($"[{connection.Id}] Connected");
+                Console.WriteLine($"[{connection.Id}] Connected");
             };
 
             NamedPipe.Disconnected += (connection) =>
             {
-                Debug.WriteLine($"[{connection.Id}] Disconnected");
+                Console.WriteLine($"[{connection.Id}] Disconnected");
             };
 
             NamedPipe.ServerMessage += (connection, message) =>
             {
-                Debug.WriteLine($"[{connection.Id}] ServerMessage: \t{message}");
+                Console.WriteLine($"[{connection.Id}] ServerMessage: \t{message}");
             };
         }
     }

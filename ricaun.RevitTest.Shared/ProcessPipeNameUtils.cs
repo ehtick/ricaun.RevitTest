@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using NamedPipeWrapper;
+using System.Diagnostics;
 
 namespace ricaun.RevitTest.Shared
 {
@@ -13,6 +14,10 @@ namespace ricaun.RevitTest.Shared
         {
             var name = $"ricaun.{process.ProcessName}.{process.Id}";
             return name;
+        }
+        public static bool PipeFileExists(this Process process)
+        {
+            return NamedPipeUtils.PipeFileExists(process.GetPipeName());
         }
     }
 
