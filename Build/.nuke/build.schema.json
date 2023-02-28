@@ -91,9 +91,6 @@
         "ReleaseNameVersion": {
           "type": "boolean"
         },
-        "ReleasePackageBuilder": {
-          "type": "boolean"
-        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"

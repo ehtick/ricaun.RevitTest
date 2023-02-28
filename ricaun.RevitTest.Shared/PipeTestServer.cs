@@ -7,12 +7,12 @@ namespace ricaun.RevitTest.Shared
     public class PipeTestServer : PipeProcessServer<TestResponse, TestRequest>
     {
         public PipeTestServer() : base(ProcessPipeNameUtils.GetPipeName()) { }
-        public PipeTestServer(Process process) : base(process) { }
+        public PipeTestServer(Process process) : base(process.GetPipeName()) { }
     }
 
     public class PipeTestClient : PipeProcessClient<TestResponse, TestRequest>
     {
         public PipeTestClient() : base(ProcessPipeNameUtils.GetPipeName()) { }
-        public PipeTestClient(Process process) : base(process) { }
+        public PipeTestClient(Process process) : base(process.GetPipeName()) { }
     }
 }
