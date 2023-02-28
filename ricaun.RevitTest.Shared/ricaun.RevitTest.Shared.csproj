@@ -58,6 +58,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.*" IncludeAssets="build; compile" PrivateAssets="All" />
     <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
   </ItemGroup>

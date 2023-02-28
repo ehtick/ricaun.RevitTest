@@ -15,7 +15,7 @@ namespace ricaun.RevitTest.Shared
 
     public class PipeTestServer : IPipeTest
     {
-        public NamedPipeServer<Read, Write> NamedPipe { get; private set; }
+        public NamedPipeServer<TestRequest, TestResponse> NamedPipe { get; private set; }
         public PipeTestServer()
         {
         }
@@ -25,7 +25,7 @@ namespace ricaun.RevitTest.Shared
             var pipeName = ProcessPipeNameUtils.GetPipeName();
             if (NamedPipeUtils.PipeFileExists(pipeName) == false)
             {
-                NamedPipe = new NamedPipeServer<Read, Write>(pipeName);
+                NamedPipe = new NamedPipeServer<TestRequest, TestResponse>(pipeName);
                 NamedPipe.Start();
                 NamedPipeDebug();
             }
@@ -40,24 +40,24 @@ namespace ricaun.RevitTest.Shared
         [Conditional("DEBUG")]
         private void NamedPipeDebug()
         {
-            NamedPipe.ClientConnected += (client) =>
+            NamedPipe.ClientConnected += (connection) =>
             {
-                Debug.WriteLine($"ClientConnected: {client}");
+                Debug.WriteLine($"[{connection.Id}] ClientConnected");
             };
-            NamedPipe.ClientDisconnected += (client) =>
+            NamedPipe.ClientDisconnected += (connection) =>
             {
-                Debug.WriteLine($"ClientDisconnected: {client}");
+                Debug.WriteLine($"[{connection.Id}] ClientDisconnected");
             };
-            NamedPipe.ClientMessage += (client, message) =>
+            NamedPipe.ClientMessage += (connection, message) =>
             {
-                Debug.WriteLine($"ClientMessage: {client}: \t{message}");
+                Debug.WriteLine($"[{connection.Id}] ClientMessage: \t{message}");
             };
         }
     }
 
     public class PipeTestClient : IPipeTest
     {
-        public NamedPipeClient<Read, Write> NamedPipe { get; private set; }
+        public NamedPipeClient<TestResponse, TestRequest> NamedPipe { get; private set; }
         public PipeTestClient()
         {
         }
@@ -65,10 +65,10 @@ namespace ricaun.RevitTest.Shared
         public bool Initialize()
         {
             var pipeName = ProcessPipeNameUtils.GetPipeName();
-            NamedPipe = new NamedPipeClient<Read, Write>(pipeName);
+            NamedPipe = new NamedPipeClient<TestResponse, TestRequest>(pipeName);
             NamedPipe.Start();
             NamedPipeDebug();
-            return NamedPipeUtils.PipeFileExists(pipeName);
+            return true;
         }
 
         public void Dispose()
@@ -79,9 +79,19 @@ namespace ricaun.RevitTest.Shared
         [Conditional("DEBUG")]
         private void NamedPipeDebug()
         {
-            NamedPipe.ServerMessage += (server, message) =>
+            NamedPipe.Connected += (connection) =>
             {
-                Debug.WriteLine($"ServerMessage: {server}: \t{message}");
+                Debug.WriteLine($"[{connection.Id}] Connected");
+            };
+
+            NamedPipe.Disconnected += (connection) =>
+            {
+                Debug.WriteLine($"[{connection.Id}] Disconnected");
+            };
+
+            NamedPipe.ServerMessage += (connection, message) =>
+            {
+                Debug.WriteLine($"[{connection.Id}] ServerMessage: \t{message}");
             };
         }
     }

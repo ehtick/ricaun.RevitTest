@@ -56,13 +56,20 @@ namespace ricaun.RevitTest.Application.Revit
 
             var task = Task.Run(async () =>
             {
+                await Task.Delay(5000);
                 var client = new PipeTestClient();
                 var initializeClient = client.Initialize();
                 Log.WriteLine();
                 Log.WriteLine($"PipeTestClient: {initializeClient}");
                 Log.WriteLine();
+
+                client.NamedPipe.Connected += (connection) =>
+                {
+                    connection.PushMessage(new TestRequest() { MyProperty = 100 });
+                };
+
                 await Task.Delay(1000);
-                client.NamedPipe.PushMessage(new Write());
+                client.NamedPipe.PushMessage(new TestRequest());
                 await Task.Delay(1000);
                 client.Dispose();
             });
