@@ -40,7 +40,7 @@ namespace ricaun.RevitTest.Application.Revit
                 application.ControlledApplication.GetApplication());
 
             PipeTestServer = new PipeTestServer();
-            PipeTestServer.SendResponse(response =>
+            PipeTestServer.Update(response =>
             {
                 response.IsBusy = RevitBusyControl.Control.IsRevitBusy;
             });
@@ -90,7 +90,7 @@ namespace ricaun.RevitTest.Application.Revit
             UpdateLargeImageBusy(ribbonItem, control);
             try
             {
-                PipeTestServer.SendResponse(response =>
+                PipeTestServer.Update(response =>
                 {
                     response.IsBusy = control.IsRevitBusy;
                 });

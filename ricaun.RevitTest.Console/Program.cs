@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -105,19 +106,69 @@ namespace ricaun.RevitTest.Console
         }
         static void HandleParseError(IEnumerable<Error> errs)
         {
-            var clients = GetRevitPipeTestClient();
-            foreach (var client in clients)
+            //var task = Task.Run(async () =>
+            //{
+            //    var process = Process.GetProcesses()
+            //        .Where(e => e.ProcessName == "Revit")
+            //        .FirstOrDefault();
+            //    if (process is null) return;
+
+            //    var client = new NamedPipeClient<string>(process.GetPipeName());
+
+            //    client.Connected += (connection) =>
+            //    {
+            //        Log.WriteLine($"[{connection.Id}] Connected");
+            //    };
+
+            //    client.Disconnected += (connection) =>
+            //    {
+            //        Log.WriteLine($"[{connection.Id}] Disconnected");
+            //    };
+
+            //    client.ServerMessage += (connection, message) =>
+            //    {
+            //        Log.WriteLine($"[{connection.Id}] ServerMessage: \t{message}");
+            //    };
+
+
+            //    Log.WriteLine(process.GetPipeName());
+            //    client.Start();
+            //    client.WaitForConnection(1000);
+
+            //    await Task.Delay(10000);
+
+            //    client.Stop();
+            //    client.WaitForDisconnection(1000);
+            //    await Task.Delay(1000);
+
+
+            //});
+            //task.GetAwaiter().GetResult();
+
+
+            var t = Task.Run(async () =>
             {
-                client.Request = new TestRequest() { Id = 5 };
-                client.Initialize();
-            }
+                var clients = GetRevitPipeTestClient();
+                foreach (var client in clients)
+                {
+                    //client.Request = new TestRequest() { Id = 5 };
+                    client.Initialize();
+                }
 
-            for (int i = 0; i < 10; i++)
-                Thread.Sleep(1000);
+                for (int i = 0; i < 20; i++)
+                {
+                    await Task.Delay(1000);
+                    //Log.WriteLine(".");
+                }
 
-            foreach (var client in clients)
-                client.Dispose();
-            Thread.Sleep(1000);
+                foreach (var client in clients)
+                    client.Dispose();
+
+
+            });
+            t.GetAwaiter().GetResult();
+
+
         }
 
         private static IList<PipeTestClient> GetRevitPipeTestClient()

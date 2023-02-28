@@ -28,7 +28,8 @@ namespace ricaun.RevitTest.Application.Revit.Commands
                 Console.WriteLine(process.GetPipeName());
 
                 client = new PipeTestClient(process);
-                client.Request = new TestRequest() { Id = process.Id };
+                //client.Request = new TestRequest() { Id = process.Id };
+                client.Update(request => request.Id = process.Id);
                 var initializeClient = client.Initialize();
                 var task = Task.Run(async () =>
                 {
