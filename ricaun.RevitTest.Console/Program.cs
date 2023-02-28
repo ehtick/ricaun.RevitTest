@@ -37,7 +37,7 @@ namespace ricaun.RevitTest.Console
     {
         static Program()
         {
-            //CosturaUtility.Initialize();
+            CosturaUtility.Initialize();
         }
         static void Main(string[] args)
         {
@@ -105,6 +105,24 @@ namespace ricaun.RevitTest.Console
         }
         static void HandleParseError(IEnumerable<Error> errs)
         {
+            var clients = GetRevitPipeTestClient();
+            foreach (var client in clients)
+            {
+                client.Request = new TestRequest() { Id = 5 };
+                client.Initialize();
+            }
+
+            for (int i = 0; i < 10; i++)
+                Thread.Sleep(1000);
+
+            foreach (var client in clients)
+                client.Dispose();
+            Thread.Sleep(1000);
+        }
+
+        private static IList<PipeTestClient> GetRevitPipeTestClient()
+        {
+            var clients = new List<PipeTestClient>();
             foreach (var installedRevit in RevitInstallationUtils.InstalledRevit)
             {
                 foreach (var process in installedRevit.GetProcesses())
@@ -113,14 +131,11 @@ namespace ricaun.RevitTest.Console
                     if (process.PipeFileExists())
                     {
                         var client = new PipeTestClient(process);
-                        client.Request = new TestRequest();
-                        client.Initialize();
-                        Thread.Sleep(5000);
-                        client.Dispose();
-                        Thread.Sleep(1000);
+                        clients.Add(client);
                     }
                 }
             }
+            return clients;
         }
 
         static void HandleParseErrorOld(IEnumerable<Error> errs)

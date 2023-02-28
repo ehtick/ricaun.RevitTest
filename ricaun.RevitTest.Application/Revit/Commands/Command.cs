@@ -3,6 +3,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using ricaun.RevitTest.Shared;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit.Commands
@@ -17,8 +19,16 @@ namespace ricaun.RevitTest.Application.Revit.Commands
 
             if (client is null)
             {
-                var client = new PipeTestClient();
-                //client.Request = new TestRequest();
+                var process = Process.GetCurrentProcess();
+
+                process = Process.GetProcesses()
+                    .Where(e => e.ProcessName == process.ProcessName)
+                    .FirstOrDefault(e => e.Id != process.Id) ?? process;
+
+                Console.WriteLine(process.GetPipeName());
+
+                client = new PipeTestClient(process);
+                client.Request = new TestRequest() { Id = process.Id };
                 var initializeClient = client.Initialize();
                 var task = Task.Run(async () =>
                 {

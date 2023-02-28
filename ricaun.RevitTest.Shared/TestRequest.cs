@@ -5,7 +5,7 @@ namespace ricaun.RevitTest.Shared
 {
     public class TestRequest
     {
-        public int MyProperty { get; set; }
+        public int Id { get; set; }
         public override string ToString()
         {
             return this.JsonSerialize();
