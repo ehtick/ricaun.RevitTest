@@ -6,7 +6,9 @@ using Revit.Busy;
 using ricaun.NUnit;
 using ricaun.Revit.Async;
 using ricaun.Revit.UI;
+using ricaun.RevitTest.Shared;
 using System;
+using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
 {
@@ -20,9 +22,12 @@ namespace ricaun.RevitTest.Application.Revit
 
         private static RibbonPanel ribbonPanel;
         private static RibbonItem ribbonItem;
+        private static PipeTestServer PipeTestServer;
         public Result OnStartup(UIControlledApplication application)
         {
-            TestEngine.Initialize();
+            Log.WriteLine();
+            Log.WriteLine($"TestEngine: {TestEngine.Initialize(out string testInitialize)} {testInitialize}");
+            Log.WriteLine();
 
             RevitBusyControl.Initialize(application);
             RevitBusyControl.Control.PropertyChanged += RevitBusyControlPropertyChanged;
@@ -34,6 +39,13 @@ namespace ricaun.RevitTest.Application.Revit
                 application.GetUIApplication(),
                 application.ControlledApplication.GetApplication());
 
+            PipeTestServer = new PipeTestServer();
+            var initializeServer = PipeTestServer.Initialize();
+
+            Log.WriteLine();
+            Log.WriteLine($"PipeTestServer: {initializeServer}");
+            Log.WriteLine();
+
             ribbonPanel = application.CreatePanel("");
             ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
             UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
@@ -42,12 +54,26 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
 #endif
 
+            var task = Task.Run(async () =>
+            {
+                var client = new PipeTestClient();
+                var initializeClient = client.Initialize();
+                Log.WriteLine();
+                Log.WriteLine($"PipeTestClient: {initializeClient}");
+                Log.WriteLine();
+                await Task.Delay(1000);
+                client.NamedPipe.PushMessage(new Write());
+                await Task.Delay(1000);
+                client.Dispose();
+            });
+
             return Result.Succeeded;
         }
 
         public Result OnShutdown(UIControlledApplication application)
         {
             ribbonPanel?.Remove();
+            PipeTestServer?.Dispose();
             return Result.Succeeded;
         }
 

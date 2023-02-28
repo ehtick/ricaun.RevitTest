@@ -139,7 +139,13 @@
     <WeaverConfiguration>
       <Weavers>
         <PropertyChanged />
-        <Costura CreateTemporaryAssemblies="true" />
+        <Costura CreateTemporaryAssemblies="true" ExcludeAssemblies="nunit.framework"/>
+      </Weavers>
+    </WeaverConfiguration>
+    <WeaverConfiguration Condition="$(Configuration.Contains('DebugNo'))">
+      <Weavers>
+        <PropertyChanged />
+        <Costura IncludeAssemblies="" />
       </Weavers>
     </WeaverConfiguration>
   </PropertyGroup>
