@@ -209,65 +209,82 @@ namespace ricaun.RevitTest.Console
 
             var applicationPluginsFolder = RevitUtils.GetCurrentUserApplicationPluginsFolder();
             var bundleName = Path.GetFileNameWithoutExtension(bundleUrl);
-            //Console.WriteLine(applicationPluginsFolder);
             Log.WriteLine(bundleUrl);
             Log.WriteLine($"DownloadBundle: {bundleName}");
             ApplicationPluginsUtils.DownloadBundle(applicationPluginsFolder, bundleUrl);
 
-            //Thread.Sleep(5000);
-
-
-
-            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2020, out RevitInstallation revitInstallation))
+            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2021, out RevitInstallation revitInstallation))
             {
-                //using (new RevitAddinDisable(revitInstallation.InstallLocation))
+                if (revitInstallation.TryGetProcess(out Process process) == false)
                 {
-                    if (revitInstallation.TryGetProcess(out Process process) == false)
+                    Log.WriteLine($"{revitInstallation}: Start");
+                    process = revitInstallation.Start();
+
+                    var client = new PipeTestClient(process);
+                    client.Initialize();
+
+                    for (int i = 0; i < 2 * 60; i++)
                     {
-                        Log.WriteLine($"{revitInstallation}: Start");
-                        process = revitInstallation.Start();
-
-                        var client = new NamedPipeClient<MessageString>(process.GetPipeName());
-                        var clientConnected = false;
-                        var clientIsBusy = true;
-                        client.ServerMessage += (server, message) =>
-                        {
-                            Log.WriteLine($"> {message}");
-                            clientConnected = true;
-                            clientIsBusy = message.IsBusy;
-                        };
-                        client.Start();
-
-                        for (int i = 0; i < 60; i++)
-                        {
-
-                            if (clientConnected)
-                            {
-                                if (clientIsBusy == false)
-                                {
-                                    //Console.WriteLine("Send: Source");
-                                    client.PushMessage(new MessageString() { Source = "" });
-                                }
-                                Log.WriteLine($"{revitInstallation}: Wait {i}");
-                                //client.PushMessage(new MessageString());
-                            }
-                            else
-                            {
-                                Log.WriteLine($"{revitInstallation}: Wait {i}");
-                            }
-                            Thread.Sleep(1000);
-                        }
-
-                        client.Stop();
-                        if (!process.HasExited)
-                            process.Kill();
+                        Log.WriteLine($"{revitInstallation}: Wait {i}");
+                        Thread.Sleep(1000);
                     }
+
+                    client.Dispose();
+                    if (!process.HasExited)
+                        process.Kill();
                 }
             }
 
             ApplicationPluginsUtils.DeleteBundle(applicationPluginsFolder, bundleName);
 
             Thread.Sleep(3000);
+
+            /*
+            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2020, out RevitInstallation revitInstallation))
+            {
+                if (revitInstallation.TryGetProcess(out Process process) == false)
+                {
+                    Log.WriteLine($"{revitInstallation}: Start");
+                    process = revitInstallation.Start();
+
+
+                    var client = new NamedPipeClient<MessageString>(process.GetPipeName());
+                    var clientConnected = false;
+                    var clientIsBusy = true;
+                    client.ServerMessage += (server, message) =>
+                    {
+                        Log.WriteLine($"> {message}");
+                        clientConnected = true;
+                        clientIsBusy = message.IsBusy;
+                    };
+                    client.Start();
+
+                    for (int i = 0; i < 60; i++)
+                    {
+
+                        if (clientConnected)
+                        {
+                            if (clientIsBusy == false)
+                            {
+                                //Console.WriteLine("Send: Source");
+                                client.PushMessage(new MessageString() { Source = "" });
+                            }
+                            Log.WriteLine($"{revitInstallation}: Wait {i}");
+                            //client.PushMessage(new MessageString());
+                        }
+                        else
+                        {
+                            Log.WriteLine($"{revitInstallation}: Wait {i}");
+                        }
+                        Thread.Sleep(1000);
+                    }
+
+                    client.Stop();
+                    if (!process.HasExited)
+                        process.Kill();
+                }
+            }
+            */
             //ShowTestNamesAssembly(GetFile("SampleTest.Tests/SampleTest.Tests.dll"));
             //ShowTestNamesAssembly(GetFile("RevitAddin.UnitTest/RevitAddin.UnitTest.dll"), @"C:\Program Files\Autodesk\Revit 2018");
         }

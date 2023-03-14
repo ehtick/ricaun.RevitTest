@@ -11,5 +11,11 @@ namespace ricaun.RevitTest.Application.Revit
             Log.WriteLine();
             return testInitialize;
         }
+
+        public static string GetInitialize()
+        {
+            ricaun.NUnit.TestEngine.Initialize(out string testInitialize);
+            return testInitialize;
+        }
     }
 }

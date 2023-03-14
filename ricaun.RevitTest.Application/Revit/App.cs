@@ -21,11 +21,6 @@ namespace ricaun.RevitTest.Application.Revit
         private static PipeTestServer PipeTestServer;
         public Result OnStartup(UIControlledApplication application)
         {
-            //NUnitUtils.Initialize();
-            Log.WriteLine();
-            Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
-            Log.WriteLine();
-
             RevitBusyControl.Initialize(application);
             RevitBusyControl.Control.PropertyChanged += RevitBusyControlPropertyChanged;
             RevitTask.Initialize(application);
@@ -91,7 +86,7 @@ namespace ricaun.RevitTest.Application.Revit
                 PipeTestServer.Update(response =>
                 {
                     response.IsBusy = control.IsRevitBusy;
-                    response.Text = string.Join(" ", NUnitUtils.GetAssemblies().Select(e => e.ToString())) + " " + TestUtils.Initialize();
+                    response.Text = TestUtils.GetInitialize() + " " + this.GetType().Assembly;
                 });
             }
             catch (Exception ex)
