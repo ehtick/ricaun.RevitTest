@@ -83,8 +83,11 @@ namespace ricaun.RevitTest.Shared
             namedPipe.ServerMessage += NamedPipe_ServerMessage;
             namedPipe.NamedPipeDebug();
 
+            namedPipe.AutoReconnect = false;
+
             namedPipe.Start();
             namedPipe.WaitForConnection(1000);
+
             return true;
         }
 

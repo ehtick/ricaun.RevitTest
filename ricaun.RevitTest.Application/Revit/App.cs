@@ -1,5 +1,6 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Macros;
 using Autodesk.Revit.UI;
 using NamedPipeWrapper;
 using Revit.Busy;
@@ -71,6 +72,11 @@ namespace ricaun.RevitTest.Application.Revit
 
         public Result OnShutdown(UIControlledApplication application)
         {
+            PipeTestServer.Update(response =>
+            {
+                response.Text = "OnShutdown";
+            });
+
             ribbonPanel?.Remove();
             PipeTestServer?.Dispose();
             RevitBusyControl.Control.PropertyChanged -= RevitBusyControlPropertyChanged;

@@ -191,6 +191,51 @@ namespace ricaun.RevitTest.Console
 
         static void HandleParseError(IEnumerable<Error> errs)
         {
+            Task.Run(ErrorTest).GetAwaiter().GetResult();
+        }
+
+        static async Task ErrorTest()
+        {
+            var applicationPluginsDisposable = new ApplicationPluginsDisposable(
+                Properties.Resources.ricaun_RevitTest_Application_bundle,
+                "ricaun.RevitTest.Application.bundle.zip");
+
+            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2021, out RevitInstallation revitInstallation))
+            {
+                Log.WriteLine(revitInstallation);
+                if (revitInstallation.TryGetProcess(out Process process) == false)
+                {
+                    Log.WriteLine($"{revitInstallation}: Start");
+                    process = revitInstallation.Start();
+
+                    var client = new PipeTestClient(process);
+                    client.Initialize();
+
+                    for (int i = 0; i < 2 * 60; i++)
+                    {
+                        Log.WriteLine($"{revitInstallation}: Wait {i}");
+                        Thread.Sleep(1000);
+                        if (process.HasExited) break;
+                    }
+
+                    client.Dispose();
+                    if (!process.HasExited)
+                        process.Kill();
+
+                    Log.WriteLine($"{revitInstallation}: Exited");
+                }
+            }
+
+            applicationPluginsDisposable.Dispose();
+
+            Thread.Sleep(3000);
+        }
+
+
+        static void HandleParseError3(IEnumerable<Error> errs)
+        {
+
+
             var bundleUrl = Properties.Resources.ricaun_RevitTest_Application_bundle
                 .CopyToFile("ricaun.RevitTest.Application.bundle.zip");
 
