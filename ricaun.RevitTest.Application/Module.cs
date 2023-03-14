@@ -10,7 +10,7 @@ namespace ricaun.RevitTest.Application
         [ModuleInitializer]
         internal static void Initialize()
         {
-            using (AppDomain.CurrentDomain.GetAssemblyResolveDisposable().AddDelegatesAfterDispose())
+            using (AppDomainUtils.AssemblyResolveDisposable())
             {
                 CosturaUtility.Initialize();
                 TestUtils.Initialize();

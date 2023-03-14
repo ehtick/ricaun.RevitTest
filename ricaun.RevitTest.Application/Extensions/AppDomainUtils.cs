@@ -1,12 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Extensions
 {
+    internal static class AppDomainUtils
+    {
+        /// <summary>
+        /// AssemblyResolveDisposable
+        /// Remove all the AssemblyResolve until Dispose.
+        /// </summary>
+        /// <returns></returns>
+        public static AppDomainExtension.DelegatesDisposable AssemblyResolveDisposable()
+        {
+            return AppDomain.CurrentDomain.GetAssemblyResolveDisposable().AddDelegatesAfterDispose();
+        }
+    }
+
     internal static class AppDomainExtension
     {
         /// <summary>
@@ -61,6 +70,10 @@ namespace ricaun.RevitTest.Application.Extensions
 
             private bool _AddCurrentDelegates = false;
 
+            /// <summary>
+            /// AddDelegatesAfterDispose 
+            /// </summary>
+            /// <returns></returns>
             public DelegatesDisposable AddDelegatesAfterDispose()
             {
                 _AddCurrentDelegates = true;
