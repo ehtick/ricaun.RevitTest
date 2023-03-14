@@ -16,11 +16,6 @@ namespace ricaun.RevitTest.Application.Revit
     [AppLoader]
     public class App : IExternalApplication
     {
-        public App()
-        {
-            CosturaUtility.Initialize();
-        }
-
         private static RibbonPanel ribbonPanel;
         private static RibbonItem ribbonItem;
         private static PipeTestServer PipeTestServer;
@@ -83,6 +78,7 @@ namespace ricaun.RevitTest.Application.Revit
         {
             ribbonPanel?.Remove();
             PipeTestServer?.Dispose();
+            RevitBusyControl.Control.PropertyChanged -= RevitBusyControlPropertyChanged;
             return Result.Succeeded;
         }
 

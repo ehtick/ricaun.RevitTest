@@ -36,10 +36,10 @@ namespace ricaun.RevitTest.Console
 
     internal class Program
     {
-        static Program()
-        {
-            CosturaUtility.Initialize();
-        }
+        //static Program()
+        //{
+        //    CosturaUtility.Initialize();
+        //}
         static void Main(string[] args)
         {
             CommandLine.Parser.Default.ParseArguments<Options>(args)
@@ -218,7 +218,7 @@ namespace ricaun.RevitTest.Console
 
 
 
-            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2021, out RevitInstallation revitInstallation))
+            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2020, out RevitInstallation revitInstallation))
             {
                 //using (new RevitAddinDisable(revitInstallation.InstallLocation))
                 {
