@@ -3,11 +3,12 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using NamedPipeWrapper;
 using Revit.Busy;
-using ricaun.NUnit;
 using ricaun.Revit.Async;
 using ricaun.Revit.UI;
 using ricaun.RevitTest.Shared;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
@@ -25,8 +26,9 @@ namespace ricaun.RevitTest.Application.Revit
         private static PipeTestServer PipeTestServer;
         public Result OnStartup(UIControlledApplication application)
         {
+            //NUnitUtils.Initialize();
             Log.WriteLine();
-            Log.WriteLine($"TestEngine: {TestEngine.Initialize(out string testInitialize)} {testInitialize}");
+            Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
             Log.WriteLine();
 
             RevitBusyControl.Initialize(application);
@@ -93,6 +95,7 @@ namespace ricaun.RevitTest.Application.Revit
                 PipeTestServer.Update(response =>
                 {
                     response.IsBusy = control.IsRevitBusy;
+                    response.Text = string.Join(" ", NUnitUtils.GetAssemblies().Select(e => e.ToString())) + " " + TestUtils.Initialize();
                 });
             }
             catch (Exception ex)

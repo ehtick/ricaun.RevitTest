@@ -1,6 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Reflection;
 
-namespace ricaun.RevitTest.Console
+namespace ricaun.RevitTest.Console.Extensions
 {
     public static class ResourcesExtension
     {

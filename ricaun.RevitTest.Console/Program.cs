@@ -1,12 +1,12 @@
 ﻿using CommandLine;
 using NamedPipeWrapper;
 using ricaun.Revit.Installation;
+using ricaun.RevitTest.Console.Extensions;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -104,7 +104,7 @@ namespace ricaun.RevitTest.Console
 
             Log.WriteLine(output);
         }
-        static void HandleParseError(IEnumerable<Error> errs)
+        static void HandleParseError2(IEnumerable<Error> errs)
         {
             //var task = Task.Run(async () =>
             //{
@@ -189,23 +189,23 @@ namespace ricaun.RevitTest.Console
             return clients;
         }
 
-        static void HandleParseErrorOld(IEnumerable<Error> errs)
+        static void HandleParseError(IEnumerable<Error> errs)
         {
             var bundleUrl = Properties.Resources.ricaun_RevitTest_Application_bundle
                 .CopyToFile("ricaun.RevitTest.Application.bundle.zip");
 
-            var bundleLocal = @"D:\Users\ricau\source\repos\ricaun.RevitTest\ricaun.RevitTest.Application\bin\ReleaseFiles\ricaun.RevitTest.Application.bundle.zip";
-            var bundleResource = @"D:\Users\ricau\source\repos\ricaun.RevitTest\ricaun.RevitTest.Console\Resources\ricaun.RevitTest.Application.bundle.zip";
-            if (File.Exists(bundleLocal) == true)
-            {
-                try
-                {
-                    File.Copy(bundleLocal, bundleResource, true);
-                }
-                catch { }
-                bundleUrl = bundleLocal;
+            //var bundleLocal = @"D:\Users\ricau\source\repos\ricaun.RevitTest\ricaun.RevitTest.Application\bin\ReleaseFiles\ricaun.RevitTest.Application.bundle.zip";
+            //var bundleResource = @"D:\Users\ricau\source\repos\ricaun.RevitTest\ricaun.RevitTest.Console\Resources\ricaun.RevitTest.Application.bundle.zip";
+            //if (File.Exists(bundleLocal) == true)
+            //{
+            //    try
+            //    {
+            //        File.Copy(bundleLocal, bundleResource, true);
+            //    }
+            //    catch { }
+            //    bundleUrl = bundleLocal;
 
-            }
+            //}
 
             var applicationPluginsFolder = RevitUtils.GetCurrentUserApplicationPluginsFolder();
             var bundleName = Path.GetFileNameWithoutExtension(bundleUrl);
@@ -216,51 +216,58 @@ namespace ricaun.RevitTest.Console
 
             //Thread.Sleep(5000);
 
-            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2023, out RevitInstallation revitInstallation))
+
+
+            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2021, out RevitInstallation revitInstallation))
             {
-                if (revitInstallation.TryGetProcess(out Process process) == false)
+                //using (new RevitAddinDisable(revitInstallation.InstallLocation))
                 {
-                    Log.WriteLine($"{revitInstallation}: Start");
-                    process = revitInstallation.Start();
-
-                    var client = new NamedPipeClient<MessageString>(process.GetPipeName());
-                    var clientConnected = false;
-                    var clientIsBusy = true;
-                    client.ServerMessage += (server, message) =>
+                    if (revitInstallation.TryGetProcess(out Process process) == false)
                     {
-                        Log.WriteLine($"> {message}");
-                        clientConnected = true;
-                        clientIsBusy = message.IsBusy;
-                    };
-                    client.Start();
+                        Log.WriteLine($"{revitInstallation}: Start");
+                        process = revitInstallation.Start();
 
-                    for (int i = 0; i < 60; i++)
-                    {
-
-                        if (clientConnected)
+                        var client = new NamedPipeClient<MessageString>(process.GetPipeName());
+                        var clientConnected = false;
+                        var clientIsBusy = true;
+                        client.ServerMessage += (server, message) =>
                         {
-                            if (clientIsBusy == false)
+                            Log.WriteLine($"> {message}");
+                            clientConnected = true;
+                            clientIsBusy = message.IsBusy;
+                        };
+                        client.Start();
+
+                        for (int i = 0; i < 60; i++)
+                        {
+
+                            if (clientConnected)
                             {
-                                //Console.WriteLine("Send: Source");
-                                client.PushMessage(new MessageString() { Source = "" });
+                                if (clientIsBusy == false)
+                                {
+                                    //Console.WriteLine("Send: Source");
+                                    client.PushMessage(new MessageString() { Source = "" });
+                                }
+                                Log.WriteLine($"{revitInstallation}: Wait {i}");
+                                //client.PushMessage(new MessageString());
                             }
-                            //client.PushMessage(new MessageString());
+                            else
+                            {
+                                Log.WriteLine($"{revitInstallation}: Wait {i}");
+                            }
+                            Thread.Sleep(1000);
                         }
-                        else
-                        {
-                            Log.WriteLine($"{revitInstallation}: Wait {i}");
-                        }
-                        Thread.Sleep(1000);
-                    }
 
-                    client.Stop();
-                    if (!process.HasExited)
-                        process.Kill();
+                        client.Stop();
+                        if (!process.HasExited)
+                            process.Kill();
+                    }
                 }
             }
 
             ApplicationPluginsUtils.DeleteBundle(applicationPluginsFolder, bundleName);
 
+            Thread.Sleep(3000);
             //ShowTestNamesAssembly(GetFile("SampleTest.Tests/SampleTest.Tests.dll"));
             //ShowTestNamesAssembly(GetFile("RevitAddin.UnitTest/RevitAddin.UnitTest.dll"), @"C:\Program Files\Autodesk\Revit 2018");
         }

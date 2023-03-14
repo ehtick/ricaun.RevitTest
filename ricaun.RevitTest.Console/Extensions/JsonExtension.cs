@@ -1,4 +1,4 @@
-﻿namespace ricaun.RevitTest.Console
+﻿namespace ricaun.RevitTest.Console.Extensions
 {
     using System.Web.Script.Serialization;
     /// <summary>
