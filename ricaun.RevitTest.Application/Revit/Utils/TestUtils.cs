@@ -12,5 +12,4 @@ namespace ricaun.RevitTest.Application.Revit
             return testInitialize;
         }
     }
-
 }
