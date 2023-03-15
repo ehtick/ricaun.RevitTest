@@ -1,6 +1,7 @@
 ﻿using ricaun.RevitTest.Application.Extensions;
 using ricaun.RevitTest.Application.Revit;
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace ricaun.RevitTest.Application
@@ -10,6 +11,7 @@ namespace ricaun.RevitTest.Application
         [ModuleInitializer]
         internal static void Initialize()
         {
+            //Debug.WriteLine($"Module: {typeof(Module).Assembly}");
             using (AppDomainUtils.AssemblyResolveDisposable())
             {
                 CosturaUtility.Initialize();

@@ -196,38 +196,77 @@ namespace ricaun.RevitTest.Console
 
         static async Task ErrorTest()
         {
-            var applicationPluginsDisposable = new ApplicationPluginsDisposable(
+            using (new ApplicationPluginsDisposable(
                 Properties.Resources.ricaun_RevitTest_Application_bundle,
-                "ricaun.RevitTest.Application.bundle.zip");
-
-            if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallation(2021, out RevitInstallation revitInstallation))
+                "ricaun.RevitTest.Application.bundle.zip"))
             {
-                Log.WriteLine(revitInstallation);
-                if (revitInstallation.TryGetProcess(out Process process) == false)
+
+                if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(2023, out RevitInstallation revitInstallation))
                 {
-                    Log.WriteLine($"{revitInstallation}: Start");
-                    process = revitInstallation.Start();
+                    Log.WriteLine(revitInstallation);
+                    var processStarted = false;
+                    if (revitInstallation.TryGetProcess(out Process process) == false)
+                    {
+                        Log.WriteLine($"{revitInstallation}: Start");
+                        process = revitInstallation.Start();
+                        processStarted = true;
+                    }
 
                     var client = new PipeTestClient(process);
                     client.Initialize();
-
-                    for (int i = 0; i < 2 * 60; i++)
+                    var sendTestPath = @"C:\Users\ricau\source\repos\TestProject.Tests\TestProject.Tests\bin\Debug\TestProject.Tests.dll";
+                    for (int i = 0; i < 5 * 60; i++)
                     {
-                        Log.WriteLine($"{revitInstallation}: Wait {i}");
+                        //Log.WriteLine($"{revitInstallation}: Wait {i}");
                         Thread.Sleep(1000);
                         if (process.HasExited) break;
+
+                        if (client.ServerMessage is null)
+                            continue;
+
+                        if (client.ServerMessage.IsBusy)
+                            continue;
+
+                        if (System.Console.KeyAvailable)
+                        {
+                            var cki = System.Console.ReadKey(true);
+                            if (cki.Key == ConsoleKey.Escape) break;
+                            if (cki.Key == ConsoleKey.Spacebar)
+                            {
+                                Log.WriteLine($"{revitInstallation}: Send {sendTestPath}");
+                                client.Update((request) =>
+                                {
+                                    request.TestPathFile = sendTestPath;
+                                });
+                            }
+                        }
+
+
+                        //if (string.IsNullOrEmpty(sendTestPath) == false)
+                        //{
+                        //    Log.WriteLine($"{revitInstallation}: Send {sendTestPath}");
+                        //    client.Update((request) =>
+                        //    {
+                        //        request.TestPathFile = sendTestPath;
+                        //    });
+                        //    sendTestPath = null;
+                        //}
+
                     }
 
                     client.Dispose();
-                    if (!process.HasExited)
-                        process.Kill();
 
-                    Log.WriteLine($"{revitInstallation}: Exited");
+                    if (processStarted)
+                    {
+                        if (!process.HasExited)
+                            process.Kill();
+
+                        Log.WriteLine($"{revitInstallation}: Exited");
+                    }
+
                 }
+
             }
-
-            applicationPluginsDisposable.Dispose();
-
             Thread.Sleep(3000);
         }
 

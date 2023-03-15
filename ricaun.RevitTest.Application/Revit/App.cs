@@ -36,8 +36,48 @@ namespace ricaun.RevitTest.Application.Revit
             PipeTestServer.Update(response =>
             {
                 response.IsBusy = RevitBusyControl.Control.IsRevitBusy;
+                response.Text = TestUtils.GetInitialize() + " " + this.GetType().Assembly.GetName().Name;
             });
             var initializeServer = PipeTestServer.Initialize();
+
+            if (initializeServer)
+            {
+                PipeTestServer.NamedPipe.ClientMessage += async (connection, message) =>
+                {
+                    Log.WriteLine($"Execute: {message.TestPathFile}");
+                    PipeTestServer.Update((response) =>
+                    {
+                        response.IsBusy = true;
+                        response.Text = null;
+                    });
+                    var tests = await RevitTask.Run((uiapp) =>
+                    {
+                        var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
+                        return tests;
+                    });
+                    PipeTestServer.Update((response) =>
+                    {
+                        response.IsBusy = false;
+                        response.Text = tests.ToString();
+                    });
+                    await Task.Delay(10);
+
+                    if (tests is ricaun.NUnit.Models.TestAssemblyModel modelTest)
+                    {
+                        var modelTests = modelTest.Tests.SelectMany(e => e.Tests);
+                        foreach (var test in modelTests)
+                        {
+                            PipeTestServer.Update((response) =>
+                            {
+                                response.IsBusy = false;
+                                response.Text = test.ToString();
+                            });
+                            await Task.Delay(10);
+                        }
+                    }
+
+                };
+            }
 
             Log.WriteLine();
             Log.WriteLine($"PipeTestServer: {initializeServer} {PipeTestServer.PipeName}");
@@ -50,22 +90,6 @@ namespace ricaun.RevitTest.Application.Revit
 #if DEBUG
             ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
 #endif
-
-            //var task = Task.Run(async () =>
-            //{
-            //    await Task.Delay(5000);
-            //    var client = new PipeTestClient();
-
-            //    client.Request = new TestRequest();
-
-            //    var initializeClient = client.Initialize();
-            //    Log.WriteLine();
-            //    Log.WriteLine($"PipeTestClient: {initializeClient}");
-            //    Log.WriteLine();
-
-            //    await Task.Delay(1000);
-            //    client.Dispose();
-            //});
 
             return Result.Succeeded;
         }
@@ -92,7 +116,7 @@ namespace ricaun.RevitTest.Application.Revit
                 PipeTestServer.Update(response =>
                 {
                     response.IsBusy = control.IsRevitBusy;
-                    response.Text = TestUtils.GetInitialize() + " " + this.GetType().Assembly;
+                    response.Text = null;
                 });
             }
             catch (Exception ex)

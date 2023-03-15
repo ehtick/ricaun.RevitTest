@@ -139,14 +139,17 @@
     <WeaverConfiguration>
       <Weavers>
         <PropertyChanged />
-        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false"/>
+        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" />
       </Weavers>
     </WeaverConfiguration>
     <WeaverConfiguration Condition="$(Configuration.Contains('Debug'))">
       <Weavers>
         <PropertyChanged />
+        <!--
+        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" ExcludeAssemblies="nunit.framework" />
+        -->
         <Costura IncludeAssemblies="" />
-        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false"/>
+        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" />
       </Weavers>
     </WeaverConfiguration>
   </PropertyGroup>

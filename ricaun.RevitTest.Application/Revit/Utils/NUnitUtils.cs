@@ -19,13 +19,13 @@ namespace ricaun.RevitTest.Application.Revit
                 Console.WriteLine($"AppDomain: {assembly}");
             }
 
-            var hasversion = assemblies.Any(e => e.GetName().Version.ToString(3) == NUNIT_VERSION);
-            if (!hasversion)
-            {
-                Console.WriteLine($"LoadFile: {LoadFile()}");
-            }
+            //var hasversion = assemblies.Any(e => e.GetName().Version.ToString(3) == NUNIT_VERSION);
+            //if (!hasversion)
+            //{
+            //    Console.WriteLine($"LoadFile: {LoadFile()}");
+            //}
 
-            TestUtils.Initialize();
+            //TestUtils.Initialize();
         }
 
         /// <summary>
