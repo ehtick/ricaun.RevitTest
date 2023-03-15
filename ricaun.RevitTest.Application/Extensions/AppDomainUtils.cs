@@ -7,12 +7,12 @@ namespace ricaun.RevitTest.Application.Extensions
     {
         /// <summary>
         /// AssemblyResolveDisposable
-        /// Remove all the AssemblyResolve until Dispose.
+        /// Remove all the AssemblyResolve until Dispose, the current AssemblyResolve is not Removed and stays with the priority.
         /// </summary>
         /// <returns></returns>
         public static AppDomainExtension.DelegatesDisposable AssemblyResolveDisposable()
         {
-            return AppDomain.CurrentDomain.GetAssemblyResolveDisposable().AddDelegatesAfterDispose();
+            return AppDomain.CurrentDomain.GetAssemblyResolveDisposable().NotRemoveDelegatesAfterDispose();
         }
     }
 
@@ -69,6 +69,7 @@ namespace ricaun.RevitTest.Application.Extensions
             private readonly Func<Delegate[]> get;
 
             private bool _AddCurrentDelegates = false;
+            private bool _RemoveCurrentDelegates = true;
 
             /// <summary>
             /// AddDelegatesAfterDispose 
@@ -77,6 +78,16 @@ namespace ricaun.RevitTest.Application.Extensions
             public DelegatesDisposable AddDelegatesAfterDispose()
             {
                 _AddCurrentDelegates = true;
+                return this;
+            }
+
+            /// <summary>
+            /// NotRemoveDelegatesAfterDispose 
+            /// </summary>
+            /// <returns></returns>
+            public DelegatesDisposable NotRemoveDelegatesAfterDispose()
+            {
+                _RemoveCurrentDelegates = false;
                 return this;
             }
 
@@ -119,7 +130,10 @@ namespace ricaun.RevitTest.Application.Extensions
             /// </summary>
             public void Dispose()
             {
-                var delegates = RemoveCurrentDelegates();
+                var delegates = new Delegate[] { };
+
+                if (_RemoveCurrentDelegates)
+                    delegates = RemoveCurrentDelegates();
 
                 foreach (var d in Delegates)
                 {

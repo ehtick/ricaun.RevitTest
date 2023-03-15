@@ -26,6 +26,8 @@ namespace ricaun.RevitTest.Application.Revit
             RevitBusyControl.Control.PropertyChanged += RevitBusyControlPropertyChanged;
             RevitTask.Initialize(application);
 
+            NUnitUtils.Initialize();
+
             RevitParameters.AddParameter(
                 application,
                 application.ControlledApplication,

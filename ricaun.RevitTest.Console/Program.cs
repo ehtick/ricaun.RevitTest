@@ -196,12 +196,40 @@ namespace ricaun.RevitTest.Console
 
         static async Task ErrorTest()
         {
-            using (new ApplicationPluginsDisposable(
-                Properties.Resources.ricaun_RevitTest_Application_bundle,
-                "ricaun.RevitTest.Application.bundle.zip"))
+            var installedRevits = RevitInstallationUtils.InstalledRevit;
+            ConsoleKeyInfo keyLoop;
+            do
             {
+                Log.WriteLine();
+                for (int i = 0; i < installedRevits.Length; i++)
+                {
+                    Log.WriteLine($"[NumPad{i + 1}] {installedRevits[i]}");
+                }
+                Log.WriteLine();
+                keyLoop = System.Console.ReadKey(true);
+                var number = keyLoop.Key - ConsoleKey.NumPad1;
 
-                if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(2023, out RevitInstallation revitInstallation))
+                if (number < 0) break;
+                if (number >= installedRevits.Length) break;
+
+                var revitVersionNumber = installedRevits[number].Version;
+
+                CreateRevitServer(revitVersionNumber);
+
+            } while (keyLoop.Key != ConsoleKey.Escape);
+
+            Log.WriteLine("...");
+
+            Thread.Sleep(1000);
+        }
+
+        private static void CreateRevitServer(int revitVersionNumber)
+        {
+            using (new ApplicationPluginsDisposable(
+                                Properties.Resources.ricaun_RevitTest_Application_bundle,
+                                "ricaun.RevitTest.Application.bundle.zip"))
+            {
+                if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallation))
                 {
                     Log.WriteLine(revitInstallation);
                     var processStarted = false;
@@ -267,9 +295,7 @@ namespace ricaun.RevitTest.Console
                 }
 
             }
-            Thread.Sleep(3000);
         }
-
 
         static void HandleParseError3(IEnumerable<Error> errs)
         {
