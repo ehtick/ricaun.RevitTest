@@ -50,11 +50,21 @@ namespace ricaun.RevitTest.Application.Revit
                         response.IsBusy = true;
                         response.Text = null;
                     });
+                    ricaun.NUnit.TestEngine.Result = new TestModelResultAction((test) =>
+                    {
+                        PipeTestServer.Update((response) =>
+                        {
+                            response.IsBusy = true;
+                            response.Text = test.ToString();
+                        });
+                        System.Threading.Thread.Sleep(10);
+                    });
                     var tests = await RevitTask.Run((uiapp) =>
                     {
                         var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
                         return tests;
                     });
+                    ricaun.NUnit.TestEngine.Result = null;
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = false;
@@ -62,19 +72,19 @@ namespace ricaun.RevitTest.Application.Revit
                     });
                     await Task.Delay(10);
 
-                    if (tests is ricaun.NUnit.Models.TestAssemblyModel modelTest)
-                    {
-                        var modelTests = modelTest.Tests.SelectMany(e => e.Tests);
-                        foreach (var test in modelTests)
-                        {
-                            PipeTestServer.Update((response) =>
-                            {
-                                response.IsBusy = false;
-                                response.Text = test.ToString();
-                            });
-                            await Task.Delay(10);
-                        }
-                    }
+                    //if (tests is ricaun.NUnit.Models.TestAssemblyModel modelTest)
+                    //{
+                    //    var modelTests = modelTest.Tests.SelectMany(e => e.Tests);
+                    //    foreach (var test in modelTests)
+                    //    {
+                    //        PipeTestServer.Update((response) =>
+                    //        {
+                    //            response.IsBusy = false;
+                    //            response.Text = test.ToString();
+                    //        });
+                    //        await Task.Delay(10);
+                    //    }
+                    //}
 
                 };
             }
@@ -93,6 +103,8 @@ namespace ricaun.RevitTest.Application.Revit
 
             return Result.Succeeded;
         }
+
+
 
         public Result OnShutdown(UIControlledApplication application)
         {
