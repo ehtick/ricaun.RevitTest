@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,6 +43,10 @@ namespace ricaun.RevitTest.Console
         //}
         static void Main(string[] args)
         {
+
+            Task.Run(RevitProcessServerSelectAsync).GetAwaiter().GetResult();
+            return;
+
             CommandLine.Parser.Default.ParseArguments<Options>(args)
               .WithParsed(RunOptions)
               .WithNotParsed(HandleParseError);
@@ -191,11 +196,15 @@ namespace ricaun.RevitTest.Console
 
         static void HandleParseError(IEnumerable<Error> errs)
         {
-            Task.Run(ErrorTest).GetAwaiter().GetResult();
+            Task.Run(RevitProcessServerSelectAsync).GetAwaiter().GetResult();
         }
 
-        static async Task ErrorTest()
+        static async Task RevitProcessServerSelectAsync()
         {
+            var assemblyName = typeof(Program).Assembly.GetName();
+            Log.WriteLine();
+            Log.WriteLine($"{assemblyName.Name} {assemblyName.Version.ToString(3)}");
+
             var installedRevits = RevitInstallationUtils.InstalledRevit;
             ConsoleKeyInfo keyLoop;
             do
