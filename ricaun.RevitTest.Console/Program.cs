@@ -37,14 +37,12 @@ namespace ricaun.RevitTest.Console
 
     internal class Program
     {
-        //static Program()
-        //{
-        //    CosturaUtility.Initialize();
-        //}
+        static string sendTestPath = @"C:\Users\ricau\source\repos\TestProject.Tests\TestProject.Tests\bin\Debug\TestProject.Tests.dll";
         static void Main(string[] args)
         {
 
             Task.Run(RevitProcessServerSelectAsync).GetAwaiter().GetResult();
+
             return;
 
             CommandLine.Parser.Default.ParseArguments<Options>(args)
@@ -216,14 +214,38 @@ namespace ricaun.RevitTest.Console
                 }
                 Log.WriteLine();
                 keyLoop = System.Console.ReadKey(true);
+
+                var revitVersionNumber = 0;
+
                 var number = keyLoop.Key - ConsoleKey.NumPad1;
+                if (keyLoop.Key == ConsoleKey.Spacebar)
+                {
+                    if (!RevitUtils2.TryGetRevitVersion(sendTestPath, out revitVersionNumber))
+                    {
+                        break;
+                    }
+                    if (!RevitUtils2.TryGetRevitVersion(sendTestPath, out revitVersionNumber))
+                    {
+                        break;
+                    }
+                    Log.WriteLine($"TestFile {Path.GetFileName(sendTestPath)} | Revit {revitVersionNumber}");
 
-                if (number < 0) break;
-                if (number >= installedRevits.Length) break;
+                    foreach (var item in AppDomain.CurrentDomain.ReflectionOnlyGetAssemblies())
+                    {
+                        System.Console.WriteLine(item);
+                    }
 
-                var revitVersionNumber = installedRevits[number].Version;
+                    break;
+                }
+                else
+                {
+                    if (number < 0) break;
+                    if (number >= installedRevits.Length) break;
 
-                CreateRevitServer(revitVersionNumber);
+                    revitVersionNumber = installedRevits[number].Version;
+                }
+
+                CreateRevitServer(revitVersionNumber, sendTestPath);
 
             } while (keyLoop.Key != ConsoleKey.Escape);
 
@@ -232,8 +254,12 @@ namespace ricaun.RevitTest.Console
             Thread.Sleep(1000);
         }
 
-        private static void CreateRevitServer(int revitVersionNumber)
+
+        private static void CreateRevitServer(int revitVersionNumber, string fileToTest)
         {
+            if (revitVersionNumber == 0)
+                return;
+
             using (new ApplicationPluginsDisposable(
                                 Properties.Resources.ricaun_RevitTest_Application_bundle,
                                 "ricaun.RevitTest.Application.bundle.zip"))
@@ -251,7 +277,9 @@ namespace ricaun.RevitTest.Console
 
                     var client = new PipeTestClient(process);
                     client.Initialize();
-                    var sendTestPath = @"C:\Users\ricau\source\repos\TestProject.Tests\TestProject.Tests\bin\Debug\TestProject.Tests.dll";
+
+                    var sendFileWhenStart = true;
+
                     for (int i = 0; i < 5 * 60; i++)
                     {
                         //Log.WriteLine($"{revitInstallation}: Wait {i}");
@@ -270,24 +298,23 @@ namespace ricaun.RevitTest.Console
                             if (cki.Key == ConsoleKey.Escape) break;
                             if (cki.Key == ConsoleKey.Spacebar)
                             {
-                                Log.WriteLine($"{revitInstallation}: Send {sendTestPath}");
+                                Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
                                 client.Update((request) =>
                                 {
-                                    request.TestPathFile = sendTestPath;
+                                    request.TestPathFile = fileToTest;
                                 });
                             }
                         }
 
-
-                        //if (string.IsNullOrEmpty(sendTestPath) == false)
-                        //{
-                        //    Log.WriteLine($"{revitInstallation}: Send {sendTestPath}");
-                        //    client.Update((request) =>
-                        //    {
-                        //        request.TestPathFile = sendTestPath;
-                        //    });
-                        //    sendTestPath = null;
-                        //}
+                        if (sendFileWhenStart)
+                        {
+                            Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
+                            client.Update((request) =>
+                            {
+                                request.TestPathFile = fileToTest;
+                            });
+                            sendFileWhenStart = false;
+                        }
 
                     }
 
@@ -447,20 +474,5 @@ namespace ricaun.RevitTest.Console
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             return Path.Combine(directory, file);
         }
-
-        class MessageString
-        {
-            public string Source { get; set; }
-            public string Text { get; set; }
-            public DateTime Date { get; set; }
-            public int Id { get; set; }
-            public string Revit { get; set; }
-            public bool IsBusy { get; set; }
-            public override string ToString()
-            {
-                return $"{Text} {IsBusy}";
-            }
-        }
     }
-
 }
