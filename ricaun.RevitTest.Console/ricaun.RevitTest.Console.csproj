@@ -28,6 +28,11 @@
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="*" />
     <PackageReference Include="ricaun.Revit.Installation" Version="*" />
+    <!--
+    <Reference Include="ricaun.Revit.Installation.1.0.3">
+      <HintPath>..\..\ricaun.Revit.Installation\ricaun.Revit.Installation\bin\Release\net45\ricaun.Revit.Installation.1.0.3.dll</HintPath>
+    </Reference>
+    -->
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +65,7 @@
   <PropertyGroup>
     <WeaverConfiguration>
       <Weavers>
+        <Costura IncludeAssemblies="" />
         <Costura CreateTemporaryAssemblies="true" />
       </Weavers>
     </WeaverConfiguration>

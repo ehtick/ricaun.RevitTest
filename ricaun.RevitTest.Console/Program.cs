@@ -41,6 +41,7 @@ namespace ricaun.RevitTest.Console
         static void Main(string[] args)
         {
 
+
             Task.Run(RevitProcessServerSelectAsync).GetAwaiter().GetResult();
 
             return;
@@ -220,22 +221,13 @@ namespace ricaun.RevitTest.Console
                 var number = keyLoop.Key - ConsoleKey.NumPad1;
                 if (keyLoop.Key == ConsoleKey.Spacebar)
                 {
-                    if (!RevitUtils2.TryGetRevitVersion(sendTestPath, out revitVersionNumber))
+
+                    if (!RevitUtils.TryGetRevitVersion(sendTestPath, out revitVersionNumber))
                     {
                         break;
                     }
-                    if (!RevitUtils2.TryGetRevitVersion(sendTestPath, out revitVersionNumber))
-                    {
-                        break;
-                    }
+
                     Log.WriteLine($"TestFile {Path.GetFileName(sendTestPath)} | Revit {revitVersionNumber}");
-
-                    foreach (var item in AppDomain.CurrentDomain.ReflectionOnlyGetAssemblies())
-                    {
-                        System.Console.WriteLine(item);
-                    }
-
-                    break;
                 }
                 else
                 {
