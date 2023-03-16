@@ -4,6 +4,7 @@ using Autodesk.Revit.DB.Macros;
 using Autodesk.Revit.UI;
 using NamedPipeWrapper;
 using Revit.Busy;
+using ricaun.NUnit;
 using ricaun.Revit.Async;
 using ricaun.Revit.UI;
 using ricaun.RevitTest.Shared;
@@ -52,7 +53,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.IsBusy = true;
                         response.Text = null;
                     });
-                    ricaun.NUnit.TestEngine.Result = new TestModelResultAction((test) =>
+                    ricaun.NUnit.TestEngine.Result = new TestModelResult((test) =>
                     {
                         PipeTestServer.Update((response) =>
                         {
