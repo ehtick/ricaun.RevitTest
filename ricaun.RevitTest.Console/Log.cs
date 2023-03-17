@@ -10,6 +10,19 @@ namespace ricaun.RevitTest.Console
         public static bool Enabled { get; set; } = true;
 
         /// <summary>
+        /// Write
+        /// </summary>
+        /// <param name="value"></param>
+        public static void Write(string value)
+        {
+            if (Enabled)
+            {
+                value = " " + value;
+                System.Console.Write(value);
+            }
+        }
+
+        /// <summary>
         /// WriteLine
         /// </summary>
         /// <param name="value"></param>

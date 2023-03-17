@@ -3,7 +3,7 @@ using ricaun.RevitTest.Console.Extensions;
 using System;
 using System.IO;
 
-namespace ricaun.RevitTest.Console
+namespace ricaun.RevitTest.Console.Utils
 {
     public class ApplicationPluginsDisposable : IDisposable
     {
@@ -16,7 +16,7 @@ namespace ricaun.RevitTest.Console
         }
         public ApplicationPluginsDisposable(byte[] data, string fileName)
         {
-            this.applicationPluginsPath = data.CopyToFile(fileName);
+            applicationPluginsPath = data.CopyToFile(fileName);
             Initialize();
         }
         private void Initialize()
