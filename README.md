@@ -12,6 +12,18 @@ ricaun.RevitTest is a Framework to execute NUnit tests using Visual Studio.
 
 * Download and install [ricaun.RevitTest.Console.exe](../../releases/latest/download/ricaun.RevitTest.Console.zip)
 
+## CommandLine
+
+```bash
+.\ricaun.RevitTest.Console.exe --help
+.\ricaun.RevitTest.Console.exe --version
+```
+
+```bash
+.\ricaun.RevitTest.Console.exe --file "C:\Users\ricau\source\repos\TestProject.Tests\TestProject.Tests\bin\Debug\TestProject.Tests.dll" --read
+.\ricaun.RevitTest.Console.exe --file "C:\Users\ricau\source\repos\TestProject.Tests\TestProject.Tests\bin\Debug\TestProject.Tests.dll" --read --output "output.json"
+```
+
 ## License
 
 This project is [licensed](LICENSE) under the [MIT Licence](https://en.wikipedia.org/wiki/MIT_License).

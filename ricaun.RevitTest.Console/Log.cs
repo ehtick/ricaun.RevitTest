@@ -46,7 +46,7 @@ namespace ricaun.RevitTest.Console
         /// WriteLine
         /// </summary>
         /// <param name="value"></param>
-        public static void WriteLine(object value) => WriteLine(value.ToString());
+        public static void WriteLine(object value) => WriteLine(value?.ToString());
 
         /// <summary>
         /// WriteLine

@@ -1,5 +1,4 @@
 ﻿using CommandLine;
-using NamedPipeWrapper;
 using ricaun.Revit.Installation;
 using ricaun.RevitTest.Console.Extensions;
 using ricaun.RevitTest.Console.Utils;
@@ -9,47 +8,39 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Console
 {
-    class Options
-    {
-        [Option('f', "file",
-            Required = true,
-            HelpText = "Input file to be processed.")]
-        public string File { get; set; }
-
-        [Option('o', "output",
-            HelpText = "Output file processed.")]
-        public string Output { get; set; }
-
-        [Option('v', "version",
-          HelpText = "Force to run with Revit version.")]
-        public int Version { get; set; }
-
-        [Option('l', "log",
-          Default = false,
-          HelpText = "Prints all messages to log in standard output.")]
-        public bool Log { get; set; }
-    }
 
     internal class Program
     {
         static void Main(string[] args)
         {
-            RevitProcessServerSelect();
 
-            return;
+            // RevitProcessServerSelect(); return;
 
-            CommandLine.Parser.Default.ParseArguments<Options>(args)
-              .WithParsed(RunOptions)
-              .WithNotParsed(HandleParseError);
+            CommandLine.Parser.Default
+                .ParseArguments<Options>(args)
+                .WithParsed(RunOptions)
+                .WithNotParsed(HandleParseError);
+
         }
         static void RunOptions(Options options)
         {
+            var runCommand = new RunCommand(options);
+            runCommand.Run();
+
+            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                Log.WriteLine($"{a} {a.Location}");
+            }
+
+            Thread.Sleep(1000);
+
+            return;
+
             Log.Enabled = options.Log;
 
             Log.WriteLine();
@@ -191,8 +182,16 @@ namespace ricaun.RevitTest.Console
             return clients;
         }
 
-        static void HandleParseError(IEnumerable<Error> errs)
+        static void HandleParseError(IEnumerable<Error> errors)
         {
+            if (errors.IsHelp()) return;
+            if (errors.IsVersion()) return;
+
+            foreach (var error in errors)
+            {
+                Log.WriteLine($"Error: {error}");
+            }
+
             RevitProcessServerSelect();
         }
 
@@ -230,6 +229,26 @@ namespace ricaun.RevitTest.Console
                 {
                     return;
                 }
+            }
+
+            //AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
+            //AppDomain.CurrentDomain.FirstChanceException += (s, e) =>
+            //{
+            //    Log.WriteLine($"FirstChanceException {s}");
+            //    Log.WriteLine(e.Exception);
+            //};
+
+            //AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            //{
+            //    Log.WriteLine($"UnhandledException {s}");
+            //    Log.WriteLine(e);
+            //};
+
+
+            foreach (var test in RevitTestUtils.GetTestFullNames(fileToTest))
+            {
+                Log.WriteLine(test);
             }
 
             var installedRevits = RevitInstallationUtils.InstalledRevit;
@@ -274,6 +293,11 @@ namespace ricaun.RevitTest.Console
             Thread.Sleep(1000);
         }
 
+        //private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        //{
+        //    Log.WriteLine($"{args.Name} {args.RequestingAssembly}");
+        //    return null;
+        //}
 
         private static void CreateRevitServer(int revitVersionNumber, string fileToTest)
         {
