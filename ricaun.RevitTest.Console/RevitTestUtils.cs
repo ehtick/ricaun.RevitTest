@@ -49,7 +49,7 @@ namespace ricaun.RevitTest.Console
         public static void CreateRevitServer(
             string fileToTest,
             int revitVersionNumber,
-            Action<string> actionOutput,
+            Action<string> actionOutput = null,
             bool forceToOpenNewRevit = false,
             bool forceToWaitRevit = false,
             bool forceToCloseRevit = false)
@@ -92,7 +92,7 @@ namespace ricaun.RevitTest.Console
                         {
                             if (m.Test is not null)
                             {
-                                Log.WriteLine($"{revitInstallation}: {m.Test}");
+                                Log.WriteLine($"{revitInstallation}: {m.Test.Time} \t {m.Test}");
                                 actionOutput?.Invoke(m.Test.ToJson());
                             }
                         };

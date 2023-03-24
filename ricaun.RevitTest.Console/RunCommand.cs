@@ -27,6 +27,9 @@ namespace ricaun.RevitTest.Console
 
         private void Initialize()
         {
+            var assemblyName = typeof(RunCommand).Assembly.GetName();
+            Log.WriteLine();
+            Log.WriteLine($"{assemblyName.Name} {assemblyName.Version.ToString(3)}");
             Log.WriteLine();
             ricaun.NUnit.TestEngine.Initialize(out string init);
             Log.WriteLine(init);
