@@ -42,9 +42,10 @@ namespace ricaun.RevitTest.Console
             int revitVersionNumber,
             Action<string> actionOutput,
             bool forceToOpenNewRevit = false,
+            bool forceToWaitRevit = false,
             bool forceToCloseRevit = false)
         {
-            int timeoutCountMax = 1;
+            int timeoutCountMax = forceToWaitRevit ? 0 : 1;
 
             if (revitVersionNumber == 0)
                 return;
@@ -129,10 +130,10 @@ namespace ricaun.RevitTest.Console
 
                         client.Dispose();
 
-                        if (forceToCloseRevit)
-                            processStarted = true;
+                        //if (forceToCloseRevit)
+                        //    processStarted = true;
 
-                        if (processStarted)
+                        if (forceToCloseRevit)
                         {
                             if (!process.HasExited)
                                 process.Kill();
@@ -140,6 +141,7 @@ namespace ricaun.RevitTest.Console
                             Log.WriteLine($"{revitInstallation}: Exited");
                         }
 
+                        Log.WriteLine($"{revitInstallation}: Finish");
                     }
 
                 }

@@ -54,7 +54,15 @@ namespace ricaun.RevitTest.Console
                 return true;
             }
 
-            RevitTestUtils.CreateRevitServer(options.File, options.RevitVersion, (e) => { WriteOutput(e); });
+            Action<string> outputAction = (e) => { WriteOutput(e); };
+
+            RevitTestUtils.CreateRevitServer(
+                options.File,
+                options.RevitVersion,
+                outputAction,
+                options.ForceToOpen,
+                options.ForceToWait,
+                options.ForceToClose);
 
             return false;
         }
