@@ -15,7 +15,7 @@ namespace ricaun.RevitTest.Console
 
         [Option('v', "version",
           HelpText = "Force to run with Revit version.")]
-        public int Version { get; set; }
+        public int RevitVersion { get; set; }
 
         [Option('l', "log",
           Default = false,

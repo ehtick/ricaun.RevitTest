@@ -1,7 +1,12 @@
 ﻿using ricaun.NUnit;
 using ricaun.Revit.Installation;
+using ricaun.RevitTest.Console.Extensions;
+using ricaun.RevitTest.Console.Utils;
+using ricaun.RevitTest.Shared;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace ricaun.RevitTest.Console
 {
@@ -31,5 +36,115 @@ namespace ricaun.RevitTest.Console
             }
             return tests;
         }
+
+        public static void CreateRevitServer(
+            string fileToTest,
+            int revitVersionNumber,
+            Action<string> actionOutput,
+            bool forceToOpenNewRevit = false,
+            bool forceToCloseRevit = false)
+        {
+            int timeoutCountMax = 1;
+
+            if (revitVersionNumber == 0)
+                return;
+
+            int timeoutCount = 0;
+            bool sendFileWhenCreatedOrUpdated = true;
+
+            Action<string, bool> resetSendFile = (file, exists) =>
+            {
+                sendFileWhenCreatedOrUpdated = exists;
+            };
+
+            using (new FileWatcher().Initialize(fileToTest, resetSendFile))
+            {
+                using (new ApplicationPluginsDisposable(
+                                    Properties.Resources.ricaun_RevitTest_Application_bundle,
+                                    "ricaun.RevitTest.Application.bundle.zip"))
+                {
+                    if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallation))
+                    {
+                        Log.WriteLine(revitInstallation);
+                        var processStarted = false;
+                        if (revitInstallation.TryGetProcess(out Process process) == false || forceToOpenNewRevit)
+                        {
+                            Log.WriteLine($"{revitInstallation}: Start");
+                            process = revitInstallation.Start();
+                            processStarted = true;
+                        }
+
+                        var client = new PipeTestClient(process);
+                        client.Initialize();
+                        client.NamedPipe.ServerMessage += (c, m) =>
+                        {
+                            if (m.Test is not null)
+                                actionOutput?.Invoke(m.Test.ToJson());
+                        };
+
+                        for (int i = 0; i < 10 * 60; i++)
+                        {
+                            Thread.Sleep(1000);
+                            if (process.HasExited) break;
+
+                            if (client.ServerMessage is null)
+                                continue;
+
+                            if (client.ServerMessage.IsBusy)
+                                timeoutCount = 0;
+                            else
+                                timeoutCount++;
+
+                            if (timeoutCountMax > 0 && timeoutCount > timeoutCountMax)
+                                break;
+
+                            if (client.ServerMessage.IsBusy)
+                                continue;
+
+                            if (System.Console.KeyAvailable)
+                            {
+                                var cki = System.Console.ReadKey(true);
+                                if (cki.Key == ConsoleKey.Escape) break;
+                                if (cki.Key == ConsoleKey.Spacebar)
+                                {
+                                    Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
+                                    client.Update((request) =>
+                                    {
+                                        request.TestPathFile = fileToTest;
+                                    });
+                                }
+                            }
+
+                            if (sendFileWhenCreatedOrUpdated)
+                            {
+                                Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
+                                Thread.Sleep(100);
+                                client.Update((request) =>
+                                {
+                                    request.TestPathFile = fileToTest;
+                                });
+                                sendFileWhenCreatedOrUpdated = false;
+                            }
+                        }
+
+                        client.Dispose();
+
+                        if (forceToCloseRevit)
+                            processStarted = true;
+
+                        if (processStarted)
+                        {
+                            if (!process.HasExited)
+                                process.Kill();
+
+                            Log.WriteLine($"{revitInstallation}: Exited");
+                        }
+
+                    }
+
+                }
+            }
+        }
+
     }
 }

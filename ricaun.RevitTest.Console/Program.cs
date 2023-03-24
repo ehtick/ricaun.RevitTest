@@ -13,12 +13,10 @@ using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Console
 {
-
     internal class Program
     {
         static void Main(string[] args)
         {
-
             // RevitProcessServerSelect(); return;
 
             CommandLine.Parser.Default
@@ -31,14 +29,6 @@ namespace ricaun.RevitTest.Console
         {
             var runCommand = new RunCommand(options);
             runCommand.Run();
-
-            foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                Log.WriteLine($"{a} {a.Location}");
-            }
-
-            Thread.Sleep(1000);
-
             return;
 
             Log.Enabled = options.Log;
@@ -59,9 +49,9 @@ namespace ricaun.RevitTest.Console
                 if (RevitUtils.TryGetRevitVersion(file, out int revitVersion))
                 {
                     Log.WriteLine($"File with Revit Version: {revitVersion}");
-                    if (options.Version != 0)
+                    if (options.RevitVersion != 0)
                     {
-                        revitVersion = options.Version;
+                        revitVersion = options.RevitVersion;
                         Log.WriteLine($"Force to use Revit Version: {revitVersion}");
                     }
                     if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersion, out RevitInstallation revitInstallation))
@@ -313,7 +303,6 @@ namespace ricaun.RevitTest.Console
 
             using (new FileWatcher().Initialize(fileToTest, resetSendFile))
             {
-
                 using (new ApplicationPluginsDisposable(
                                     Properties.Resources.ricaun_RevitTest_Application_bundle,
                                     "ricaun.RevitTest.Application.bundle.zip"))

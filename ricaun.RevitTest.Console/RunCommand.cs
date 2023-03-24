@@ -41,9 +41,10 @@ namespace ricaun.RevitTest.Console
 
         private bool ReadTests()
         {
+            WriteOutput();
+
             if (options.Read)
             {
-                WriteOutput();
                 var tests = RevitTestUtils.GetTestFullNames(options.File);
                 foreach (var test in tests)
                 {
@@ -52,6 +53,9 @@ namespace ricaun.RevitTest.Console
                 WriteOutput(tests.ToJson());
                 return true;
             }
+
+            RevitTestUtils.CreateRevitServer(options.File, options.RevitVersion, (e) => { WriteOutput(e); });
+
             return false;
         }
 
