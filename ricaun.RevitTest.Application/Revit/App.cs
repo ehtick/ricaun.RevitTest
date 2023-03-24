@@ -51,6 +51,7 @@ namespace ricaun.RevitTest.Application.Revit
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = true;
+                        response.Test = null;
                         response.Text = null;
                     });
                     ricaun.NUnit.TestEngine.Result = new TestModelResult((test) =>
@@ -58,7 +59,8 @@ namespace ricaun.RevitTest.Application.Revit
                         PipeTestServer.Update((response) =>
                         {
                             response.IsBusy = true;
-                            response.Text = test.ToString();
+                            response.Test = test;
+                            response.Text = null;
                         });
                         System.Threading.Thread.Sleep(10);
                     });
@@ -71,6 +73,7 @@ namespace ricaun.RevitTest.Application.Revit
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = false;
+                        response.Test = null;
                         response.Text = tests.ToString();
                     });
                     await Task.Delay(10);
@@ -131,6 +134,7 @@ namespace ricaun.RevitTest.Application.Revit
                 PipeTestServer.Update(response =>
                 {
                     response.IsBusy = control.IsRevitBusy;
+                    response.Test = null;
                     response.Text = null;
                 });
             }

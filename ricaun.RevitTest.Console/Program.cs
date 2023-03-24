@@ -309,7 +309,7 @@ namespace ricaun.RevitTest.Console
                         client.Initialize();
 
 
-                        for (int i = 0; i < 5 * 60; i++)
+                        for (int i = 0; i < 10 * 60; i++)
                         {
                             //Log.WriteLine($"{revitInstallation}: Wait {i}");
                             Thread.Sleep(1000);
