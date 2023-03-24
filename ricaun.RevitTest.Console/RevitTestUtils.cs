@@ -37,6 +37,15 @@ namespace ricaun.RevitTest.Console
             return tests;
         }
 
+        /// <summary>
+        /// Create Revit Server
+        /// </summary>
+        /// <param name="fileToTest"></param>
+        /// <param name="revitVersionNumber"></param>
+        /// <param name="actionOutput"></param>
+        /// <param name="forceToOpenNewRevit"></param>
+        /// <param name="forceToWaitRevit"></param>
+        /// <param name="forceToCloseRevit"></param>
         public static void CreateRevitServer(
             string fileToTest,
             int revitVersionNumber,
@@ -48,7 +57,9 @@ namespace ricaun.RevitTest.Console
             int timeoutCountMax = forceToWaitRevit ? 0 : 1;
 
             if (revitVersionNumber == 0)
-                return;
+            {
+                RevitUtils.TryGetRevitVersion(fileToTest, out revitVersionNumber);
+            }
 
             int timeoutCount = 0;
             bool sendFileWhenCreatedOrUpdated = true;
@@ -80,7 +91,10 @@ namespace ricaun.RevitTest.Console
                         client.NamedPipe.ServerMessage += (c, m) =>
                         {
                             if (m.Test is not null)
+                            {
+                                Log.WriteLine($"{revitInstallation}: {m.Test}");
                                 actionOutput?.Invoke(m.Test.ToJson());
+                            }
                         };
 
                         for (int i = 0; i < 10 * 60; i++)

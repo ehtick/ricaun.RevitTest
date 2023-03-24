@@ -107,7 +107,7 @@
   <PropertyGroup>
     <Company>ricaun</Company>
     <Authors>Luiz Henrique Cassettari</Authors>
-    <Description>Revit Plugin Description for $(PackageId).</Description>
+    <Description>ricaun.RevitTest.Application</Description>
     <CopyrightYears>$([System.DateTime]::Now.ToString('yyyy'))</CopyrightYears>
   </PropertyGroup>
 

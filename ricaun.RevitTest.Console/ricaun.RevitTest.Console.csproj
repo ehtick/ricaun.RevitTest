@@ -25,6 +25,17 @@
     <DebugType>Full</DebugType>
   </PropertyGroup>
 
+   <PropertyGroup>
+    <Company>ricaun</Company>
+    <Authors>Luiz Henrique Cassettari</Authors>
+    <Description>ricaun.RevitTest.Console</Description>
+    <CopyrightYears>$([System.DateTime]::Now.ToString('yyyy'))</CopyrightYears>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Copyright>Copyright (C) $(CopyrightYears) $(Company)</Copyright>
+  </PropertyGroup>
+    
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="*" />
     <PackageReference Include="ricaun.Revit.Installation" Version="*" />
