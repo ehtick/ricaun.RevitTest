@@ -16,8 +16,9 @@ namespace ricaun.RevitTest.Console.Utils
         }
         public ApplicationPluginsDisposable(byte[] data, string fileName)
         {
-            applicationPluginsPath = data.CopyToFile(fileName);
+            this.applicationPluginsPath = data.CopyToFile(fileName);
             Initialize();
+            File.Delete(this.applicationPluginsPath);
         }
         private void Initialize()
         {
