@@ -94,6 +94,10 @@ namespace ricaun.RevitTest.Console
                                 actionOutput?.Invoke(m.Test.ToJson());
                             }
                         };
+                        client.ServerMessage.PropertyChanged += (s, e) =>
+                        {
+                            Log.WriteLine($"{revitInstallation}: PropertyChanged[ {e.PropertyName} ]");
+                        };
 
                         for (int i = 0; i < 10 * 60; i++)
                         {

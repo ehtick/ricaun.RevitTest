@@ -108,7 +108,7 @@ namespace ricaun.RevitTest.Application.Revit
 
                         foreach (var test in tests)
                         {
-                            Console.WriteLine($"\t {test}");
+                            Console.WriteLine($"\t {test.Time}\t {test}");
                         }
                     }
 

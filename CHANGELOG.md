@@ -23,8 +23,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] CommandLine - Force Open/Close/Wait
 [] CommandLine - Run Tests with Filter
 ### Shared
-[x] PipeServer/Client
-[] Fody.PropertyChanged
+[x] PipeServer/Client - Json
+[x] PipeServer/Client - Default is new()
+[x] PipeServer/Client - Mapper.Map
+[x] TestRequests - PropertyChanged
+[x] TestResponse - PropertyChanged
+[x] Fody.PropertyChanged
 
 [vNext]: ../../compare/1.0.0...HEAD
 [1.0.0]: ../../compare/1.0.0

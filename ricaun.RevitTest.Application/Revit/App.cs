@@ -1,8 +1,6 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Macros;
 using Autodesk.Revit.UI;
-using NamedPipeWrapper;
 using Revit.Busy;
 using ricaun.NUnit;
 using ricaun.Revit.Async;
@@ -47,7 +45,13 @@ namespace ricaun.RevitTest.Application.Revit
             {
                 PipeTestServer.NamedPipe.ClientMessage += async (connection, message) =>
                 {
+                    if (string.IsNullOrEmpty(message.TestPathFile))
+                    {
+                        return;
+                    }
+
                     Log.WriteLine($"Execute: {message.TestPathFile}");
+
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = true;

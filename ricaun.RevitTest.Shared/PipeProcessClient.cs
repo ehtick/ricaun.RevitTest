@@ -7,8 +7,8 @@ namespace ricaun.RevitTest.Shared
         where TServer : class, new()
         where TClient : class, new()
     {
-        public TServer ServerMessage { get; internal set; }
-        public TClient ClientMessage { get; set; }
+        public TServer ServerMessage { get; internal set; } = new TServer();
+        public TClient ClientMessage { get; internal set; } = new TClient();
         public string PipeName => pipeName;
         public NamedPipeClient<TServer, TClient> NamedPipe => namedPipe;
 
@@ -50,7 +50,7 @@ namespace ricaun.RevitTest.Shared
 
         private void NamedPipe_ServerMessage(NamedPipeConnection<TServer, TClient> connection, TServer message)
         {
-            ServerMessage = message;
+            Mappers.Mapper.Map(message, ServerMessage);
         }
 
         public void Dispose()
