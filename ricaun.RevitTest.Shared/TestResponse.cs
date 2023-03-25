@@ -17,8 +17,9 @@ namespace ricaun.RevitTest.Shared
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         #endregion
         public bool IsBusy { get; set; } = true;
-        public string Text { get; set; }
         public TestModel Test { get; set; }
+        public TestAssemblyModel Tests { get; set; }
+        public string Info { get; set; }
         public override string ToString()
         {
             return this.JsonSerialize();

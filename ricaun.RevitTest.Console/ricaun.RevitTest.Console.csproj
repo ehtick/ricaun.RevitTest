@@ -80,6 +80,11 @@
         <Costura CreateTemporaryAssemblies="true" />
       </Weavers>
     </WeaverConfiguration>
+    <WeaverConfiguration Condition="$(Configuration.Contains('Debug'))">
+      <Weavers>
+        <Costura IncludeAssemblies="" />
+      </Weavers>
+    </WeaverConfiguration>
   </PropertyGroup>
 
 </Project>

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 ### Application
 [x] PipeServer - Shared
+[] PipeClient - PropertyChanged
 [x] Run Tests - ricaun.NUnit
 [x] Run Tests - Filter Tests
 [x] Zip - Copy Zip Folder
@@ -16,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [] Log - Enable/View
 ### Console
 [x] PipeClient - Shared
+[x] PipeClient - PropertyChanged
 [x] RevitInstallation - Get Revit Installed
 [x] CommandLine - Run File Tests
 [x] CommandLine - Get File Tests FullName
@@ -30,6 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] PipeServer/Client - Mapper.Map
 [x] TestRequests - PropertyChanged
 [x] TestResponse - PropertyChanged
+[x] TestResponse - Test/Tests/Info
 [x] Fody.PropertyChanged
 
 [vNext]: ../../compare/1.0.0...HEAD

@@ -147,8 +147,8 @@
         <PropertyChanged />
         <!--
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" ExcludeAssemblies="nunit.framework" />
-        -->
         <Costura IncludeAssemblies="" />
+        -->
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" />
       </Weavers>
     </WeaverConfiguration>

@@ -3,8 +3,10 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Revit.Busy;
 using ricaun.NUnit;
+using ricaun.NUnit.Models;
 using ricaun.Revit.Async;
 using ricaun.Revit.UI;
+using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
@@ -13,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
 {
+
     [AppLoader]
     public class App : IExternalApplication
     {
@@ -40,7 +43,9 @@ namespace ricaun.RevitTest.Application.Revit
             PipeTestServer.Update(response =>
             {
                 response.IsBusy = RevitBusyControl.Control.IsRevitBusy;
-                response.Text = TestUtils.GetInitialize() + " " + this.GetType().Assembly.GetName().Name;
+                response.Info = AppUtils.GetInfo() + $" [{TestUtils.GetInitialize()}]";
+                response.Test = null;
+                response.Tests = null;
             });
 
             var initializeServer = PipeTestServer.Initialize();
@@ -53,7 +58,6 @@ namespace ricaun.RevitTest.Application.Revit
             {
                 PipeTestServer.NamedPipe.ClientMessage += async (connection, message) =>
                 {
-
                     if (string.IsNullOrEmpty(message.TestPathFile))
                     {
                         return;
@@ -72,7 +76,8 @@ namespace ricaun.RevitTest.Application.Revit
                     {
                         response.IsBusy = true;
                         response.Test = null;
-                        response.Text = null;
+                        response.Info = null;
+                        response.Tests = null;
                     });
                     ricaun.NUnit.TestEngine.Result = new TestModelResult((test) =>
                     {
@@ -80,7 +85,8 @@ namespace ricaun.RevitTest.Application.Revit
                         {
                             response.IsBusy = true;
                             response.Test = test;
-                            response.Text = null;
+                            response.Info = null;
+                            response.Tests = null;
                         });
                         if (test.Time < TestThreadSleepMin) System.Threading.Thread.Sleep(TestThreadSleepMin);
                     });
@@ -97,11 +103,19 @@ namespace ricaun.RevitTest.Application.Revit
                     ricaun.NUnit.TestEngineFilter.Reset();
                     PipeTestServer.Update((response) =>
                     {
+                        response.IsBusy = true;
+                        response.Test = null;
+                        response.Info = null;
+                        response.Tests = tests as TestAssemblyModel;
+                    });
+                    await Task.Delay(50);
+                    PipeTestServer.Update((response) =>
+                    {
                         response.IsBusy = false;
                         response.Test = null;
-                        response.Text = tests.ToString();
+                        response.Info = null;
+                        response.Tests = null;
                     });
-                    await Task.Delay(10);
                 };
             }
 
@@ -126,7 +140,9 @@ namespace ricaun.RevitTest.Application.Revit
         {
             PipeTestServer.Update(response =>
             {
-                response.Text = "OnShutdown";
+                response.Info = "OnShutdown";
+                response.Test = null;
+                response.Tests = null;
             });
 
             ribbonPanel?.Remove();
@@ -145,7 +161,8 @@ namespace ricaun.RevitTest.Application.Revit
                 {
                     response.IsBusy = control.IsRevitBusy;
                     response.Test = null;
-                    response.Text = null;
+                    response.Tests = null;
+                    response.Info = null;
                 });
             }
             catch (Exception ex)

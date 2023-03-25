@@ -86,22 +86,45 @@ namespace ricaun.RevitTest.Console.Utils
 
                         var client = new PipeTestClient(process);
                         client.Initialize();
-                        client.NamedPipe.ServerMessage += (c, m) =>
-                        {
-                            if (m.Test is not null)
-                            {
-                                Log.WriteLine($"{revitInstallation}: {m.Test.Time} \t {m.Test}");
-                                actionOutput?.Invoke(m.Test.ToJson());
-                            }
-                        };
+
                         client.ServerMessage.PropertyChanged += (s, e) =>
                         {
-                            Log.WriteLine($"{revitInstallation}: PropertyChanged[ {e.PropertyName} ]");
+                            var message = s as TestResponse;
+                            Debug.WriteLine($"{revitInstallation}: PropertyChanged[ {e.PropertyName} ]");
+                            Debug.WriteLine($"{revitInstallation}: {message}");
+                            switch (e.PropertyName)
+                            {
+                                case nameof(TestResponse.Test):
+                                    var test = message.Test;
+                                    if (test is not null)
+                                    {
+                                        Log.WriteLine($"{revitInstallation}: {test.Time} \t {test}");
+                                        actionOutput?.Invoke(test.ToJson());
+                                    }
+                                    break;
+                                case nameof(TestResponse.Tests):
+                                    var tests = message.Tests;
+                                    if (tests is not null)
+                                    {
+                                        Log.WriteLine($"{revitInstallation}: {tests.Time} \t {tests}");
+                                        actionOutput?.Invoke(null); // Force to clear file
+                                        actionOutput?.Invoke(tests.ToJson());
+                                    }
+                                    break;
+                                case nameof(TestResponse.Info):
+                                    var text = message.Info;
+                                    if (text is not null)
+                                    {
+                                        Log.WriteLine($"{revitInstallation}: {text}");
+                                    }
+                                    break;
+                            }
                         };
 
                         for (int i = 0; i < 10 * 60; i++)
                         {
                             Thread.Sleep(1000);
+
                             if (process.HasExited) break;
 
                             if (client.ServerMessage is null)
@@ -135,7 +158,6 @@ namespace ricaun.RevitTest.Console.Utils
                             if (sendFileWhenCreatedOrUpdated)
                             {
                                 Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
-                                Thread.Sleep(100);
                                 client.Update((request) =>
                                 {
                                     request.TestPathFile = fileToTest;
