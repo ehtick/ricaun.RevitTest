@@ -15,8 +15,8 @@ namespace ricaun.RevitTest.Shared
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "") =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         #endregion
-        public int Id { get; set; }
         public string TestPathFile { get; set; }
+        public string TestFilter { get; set; }
         public override string ToString()
         {
             return this.JsonSerialize();

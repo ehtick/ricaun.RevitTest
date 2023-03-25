@@ -1,9 +1,10 @@
 ﻿using ricaun.RevitTest.Console.Extensions;
+using ricaun.RevitTest.Console.Utils;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace ricaun.RevitTest.Console
+namespace ricaun.RevitTest.Console.Command
 {
     public class RunCommand
     {
@@ -31,7 +32,7 @@ namespace ricaun.RevitTest.Console
             Log.WriteLine();
             Log.WriteLine($"{assemblyName.Name} {assemblyName.Version.ToString(3)}");
             Log.WriteLine();
-            ricaun.NUnit.TestEngine.Initialize(out string init);
+            NUnit.TestEngine.Initialize(out string init);
             Log.WriteLine(init);
             Log.WriteLine();
         }
@@ -65,7 +66,8 @@ namespace ricaun.RevitTest.Console
                 outputAction,
                 options.ForceToOpen,
                 options.ForceToWait,
-                options.ForceToClose);
+                options.ForceToClose,
+                options.Test);
 
             return false;
         }

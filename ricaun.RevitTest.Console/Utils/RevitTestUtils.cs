@@ -1,14 +1,13 @@
 ﻿using ricaun.NUnit;
 using ricaun.Revit.Installation;
 using ricaun.RevitTest.Console.Extensions;
-using ricaun.RevitTest.Console.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
-namespace ricaun.RevitTest.Console
+namespace ricaun.RevitTest.Console.Utils
 {
     public static class RevitTestUtils
     {
@@ -52,7 +51,8 @@ namespace ricaun.RevitTest.Console
             Action<string> actionOutput = null,
             bool forceToOpenNewRevit = false,
             bool forceToWaitRevit = false,
-            bool forceToCloseRevit = false)
+            bool forceToCloseRevit = false,
+            string testFilter = null)
         {
             int timeoutCountMax = forceToWaitRevit ? 0 : 1;
 
@@ -139,6 +139,7 @@ namespace ricaun.RevitTest.Console
                                 client.Update((request) =>
                                 {
                                     request.TestPathFile = fileToTest;
+                                    request.TestFilter = testFilter;
                                 });
                                 sendFileWhenCreatedOrUpdated = false;
                             }

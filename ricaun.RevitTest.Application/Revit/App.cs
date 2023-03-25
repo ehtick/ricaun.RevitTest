@@ -19,6 +19,9 @@ namespace ricaun.RevitTest.Application.Revit
         private static RibbonPanel ribbonPanel;
         private static RibbonItem ribbonItem;
         private static PipeTestServer PipeTestServer;
+
+        private const int TestThreadSleepMin = 50;
+
         public Result OnStartup(UIControlledApplication application)
         {
             RevitBusyControl.Initialize(application);
@@ -50,12 +53,20 @@ namespace ricaun.RevitTest.Application.Revit
             {
                 PipeTestServer.NamedPipe.ClientMessage += async (connection, message) =>
                 {
+
                     if (string.IsNullOrEmpty(message.TestPathFile))
                     {
                         return;
                     }
 
                     Log.WriteLine($"Execute: {message.TestPathFile}");
+
+                    string[] testFilterNames = new string[] { };
+                    if (string.IsNullOrEmpty(message.TestFilter) == false)
+                    {
+                        testFilterNames = message.TestFilter.Split(',');
+                        Log.WriteLine($"ExecuteFilter: {message.TestFilter}");
+                    }
 
                     PipeTestServer.Update((response) =>
                     {
@@ -71,14 +82,19 @@ namespace ricaun.RevitTest.Application.Revit
                             response.Test = test;
                             response.Text = null;
                         });
-                        System.Threading.Thread.Sleep(10);
+                        if (test.Time < TestThreadSleepMin) System.Threading.Thread.Sleep(TestThreadSleepMin);
                     });
+                    foreach (var testFilterName in testFilterNames)
+                    {
+                        ricaun.NUnit.TestEngineFilter.Add(testFilterName);
+                    }
                     var tests = await RevitTask.Run((uiapp) =>
                     {
                         var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
                         return tests;
                     });
                     ricaun.NUnit.TestEngine.Result = null;
+                    ricaun.NUnit.TestEngineFilter.Reset();
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = false;
@@ -86,21 +102,6 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Text = tests.ToString();
                     });
                     await Task.Delay(10);
-
-                    //if (tests is ricaun.NUnit.Models.TestAssemblyModel modelTest)
-                    //{
-                    //    var modelTests = modelTest.Tests.SelectMany(e => e.Tests);
-                    //    foreach (var test in modelTests)
-                    //    {
-                    //        PipeTestServer.Update((response) =>
-                    //        {
-                    //            response.IsBusy = false;
-                    //            response.Text = test.ToString();
-                    //        });
-                    //        await Task.Delay(10);
-                    //    }
-                    //}
-
                 };
             }
 

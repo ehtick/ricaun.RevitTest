@@ -4,14 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] / 2023-02-27 - 2023-03-24
+## [1.0.0] / 2023-02-27 - 2023-03-25
 ### Features
 ### Application
 [x] PipeServer - Shared
 [x] Run Tests - ricaun.NUnit
-[] Filter Tests
-[x] Copy Zip Folder
-[] Copy back Zip Folder
+[x] Run Tests - Filter Tests
+[x] Zip - Copy Zip Folder
+[] Zip - Copy back Zip Folder
+[] Zip - Zip max size file
+[] Log - Enable/View
 ### Console
 [x] PipeClient - Shared
 [x] RevitInstallation - Get Revit Installed
@@ -21,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] CommandLine - Logger enable/disable
 [x] CommandLine - Select RevitVersion
 [x] CommandLine - Force Open/Close/Wait
-[] CommandLine - Run Tests with Filter
+[x] CommandLine - Run Tests with Filter
 ### Shared
 [x] PipeServer/Client - Json
 [x] PipeServer/Client - Default is new()

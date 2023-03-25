@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace ricaun.RevitTest.Console
+namespace ricaun.RevitTest.Console.Command
 {
     public class Options
     {
@@ -26,6 +26,10 @@ namespace ricaun.RevitTest.Console
           Default = false,
           HelpText = "Only read the tests name.")]
         public bool Read { get; set; }
+
+        [Option('t', "test",
+          HelpText = "Test Name filter.")]
+        public string Test { get; set; }
 
         [Option("open",
           Default = false,

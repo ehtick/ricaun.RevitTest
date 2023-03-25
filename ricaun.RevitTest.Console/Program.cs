@@ -1,5 +1,7 @@
 ﻿using CommandLine;
 using ricaun.Revit.Installation;
+using ricaun.RevitTest.Console.Command;
+using ricaun.RevitTest.Console.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -25,7 +25,7 @@ namespace ricaun.RevitTest.Shared
             namedPipe = new NamedPipeClient<TServer, TClient>(pipeName);
             namedPipe.Connected += NamedPipe_Connected;
             namedPipe.ServerMessage += NamedPipe_ServerMessage;
-            namedPipe.NamedPipeDebug();
+            //namedPipe.NamedPipeDebug();
 
             namedPipe.AutoReconnect = false;
 
