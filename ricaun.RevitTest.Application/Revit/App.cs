@@ -39,7 +39,12 @@ namespace ricaun.RevitTest.Application.Revit
                 response.IsBusy = RevitBusyControl.Control.IsRevitBusy;
                 response.Text = TestUtils.GetInitialize() + " " + this.GetType().Assembly.GetName().Name;
             });
+
             var initializeServer = PipeTestServer.Initialize();
+            PipeTestServer.ClientMessage.PropertyChanged += (s, e) =>
+            {
+                Debug.WriteLine($"PropertyChanged[ {e.PropertyName} ]\t {s.GetType().Name}");
+            };
 
             if (initializeServer)
             {
