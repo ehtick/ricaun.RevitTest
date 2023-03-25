@@ -71,19 +71,17 @@ namespace ricaun.RevitTest.Console
 
             using (new FileWatcher().Initialize(fileToTest, resetSendFile))
             {
-                using (new ApplicationPluginsDisposable(
-                                    Properties.Resources.ricaun_RevitTest_Application_bundle,
-                                    "ricaun.RevitTest.Application.bundle.zip"))
+                using (CreateAppPlugin())
                 {
                     if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallation))
                     {
                         Log.WriteLine(revitInstallation);
-                        var processStarted = false;
+                        //var processStarted = false;
                         if (revitInstallation.TryGetProcess(out Process process) == false || forceToOpenNewRevit)
                         {
                             Log.WriteLine($"{revitInstallation}: Start");
                             process = revitInstallation.Start();
-                            processStarted = true;
+                            //processStarted = true;
                         }
 
                         var client = new PipeTestClient(process);
@@ -162,5 +160,13 @@ namespace ricaun.RevitTest.Console
             }
         }
 
+        #region private
+        private static ApplicationPluginsDisposable CreateAppPlugin()
+        {
+            return new ApplicationPluginsDisposable(
+                        Properties.Resources.ricaun_RevitTest_Application_bundle,
+                        "ricaun.RevitTest.Application.bundle.zip");
+        }
+        #endregion
     }
 }
