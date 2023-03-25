@@ -10,7 +10,7 @@ namespace ricaun.RevitTest.Console.Command
         public string File { get; set; }
 
         [Option('o', "output",
-            HelpText = "Output file processed. (Use 'console' to output in 'System.Console').")]
+            HelpText = "Output file processed. (Use 'console' to output in standard output).")]
         public string Output { get; set; }
 
         [Option('v', "version",
@@ -28,7 +28,7 @@ namespace ricaun.RevitTest.Console.Command
         public bool Read { get; set; }
 
         [Option('t', "test",
-          HelpText = "Test Name filter.")]
+          HelpText = "Filter tests using wildcard pattern separated by comma. (Example: '*.Test1,*.Test2')")]
         public string Test { get; set; }
 
         [Option("open",
