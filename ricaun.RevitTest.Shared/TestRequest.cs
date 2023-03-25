@@ -22,13 +22,4 @@ namespace ricaun.RevitTest.Shared
             return this.JsonSerialize();
         }
     }
-    //public class TestRequest
-    //{
-    //    public int Id { get; set; }
-    //    public string TestPathFile { get; set; }
-    //    public override string ToString()
-    //    {
-    //        return this.JsonSerialize();
-    //    }
-    //}
 }
