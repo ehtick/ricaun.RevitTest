@@ -11,6 +11,8 @@ namespace ricaun.RevitTest.Console
 {
     internal class Program
     {
+        private const string DefaultTestFile = @"D:\Users\ricau\source\repos\RevitTest0\RevitTest0\bin\Debug\RevitTest0.dll";
+
         static void Main(string[] args)
         {
             CommandLine.Parser.Default
@@ -24,7 +26,6 @@ namespace ricaun.RevitTest.Console
             var runCommand = new RunCommand(options);
             runCommand.Run();
         }
-
         static void HandleParseError(IEnumerable<Error> errors)
         {
             if (errors.IsHelp()) return;
@@ -37,12 +38,10 @@ namespace ricaun.RevitTest.Console
 
             RevitProcessServerSelect();
         }
-
         static void RevitProcessServerSelect()
         {
             Task.Run(RevitProcessServerSelectAsync).GetAwaiter().GetResult();
         }
-
         static async Task RevitProcessServerSelectAsync()
         {
             await Task.Delay(0);
@@ -60,7 +59,7 @@ namespace ricaun.RevitTest.Console
                 var line = System.Console.ReadLine();
                 if (string.IsNullOrEmpty(line))
                 {
-                    fileToTest = @"C:\Users\ricau\source\repos\TestProject.Tests\TestProject.Tests\bin\Debug\TestProject.Tests.dll";
+                    fileToTest = DefaultTestFile;
                     Log.WriteLine(Path.GetFileName(fileToTest));
                 }
                 else
@@ -74,10 +73,10 @@ namespace ricaun.RevitTest.Console
                 }
             }
 
-            foreach (var test in RevitTestUtils.GetTestFullNames(fileToTest))
-            {
-                Log.WriteLine(test);
-            }
+            //foreach (var test in RevitTestUtils.GetTestFullNames(fileToTest))
+            //{
+            //    Log.WriteLine(test);
+            //}
 
             var installedRevits = RevitInstallationUtils.InstalledRevit;
             ConsoleKeyInfo keyLoop;
