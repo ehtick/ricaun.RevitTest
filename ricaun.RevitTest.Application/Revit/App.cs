@@ -108,6 +108,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Info = null;
                         response.Tests = tests as TestAssemblyModel;
                     });
+                    // Todo: Send back the zip files
                     await Task.Delay(50);
                     PipeTestServer.Update((response) =>
                     {
