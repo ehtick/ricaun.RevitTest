@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
 {
-
     [AppLoader]
     public class App : IExternalApplication
     {
@@ -39,6 +38,21 @@ namespace ricaun.RevitTest.Application.Revit
                 application.GetUIApplication(),
                 application.ControlledApplication.GetApplication());
 
+            PipeTestServer_Initialize();
+
+            ribbonPanel = application.CreatePanel("");
+            ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
+            UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
+
+#if DEBUG
+            ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
+#endif
+
+            return Result.Succeeded;
+        }
+
+        private static void PipeTestServer_Initialize()
+        {
             PipeTestServer = new PipeTestServer();
             PipeTestServer.Update(response =>
             {
@@ -79,6 +93,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Info = null;
                         response.Tests = null;
                     });
+
                     ricaun.NUnit.TestEngine.Result = new TestModelResult((test) =>
                     {
                         PipeTestServer.Update((response) =>
@@ -123,19 +138,7 @@ namespace ricaun.RevitTest.Application.Revit
             Log.WriteLine();
             Log.WriteLine($"PipeTestServer: {initializeServer} {PipeTestServer.PipeName}");
             Log.WriteLine();
-
-            ribbonPanel = application.CreatePanel("");
-            ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
-            UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
-
-#if DEBUG
-            ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
-#endif
-
-            return Result.Succeeded;
         }
-
-
 
         public Result OnShutdown(UIControlledApplication application)
         {

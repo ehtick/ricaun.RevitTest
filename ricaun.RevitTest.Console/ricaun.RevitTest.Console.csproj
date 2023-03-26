@@ -35,6 +35,10 @@
   <PropertyGroup>
     <Copyright>Copyright (C) $(CopyrightYears) $(Company)</Copyright>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\icon.ico" />
+  </ItemGroup>
     
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="*" />
@@ -85,6 +89,10 @@
         <Costura IncludeAssemblies="" />
       </Weavers>
     </WeaverConfiguration>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
 
 </Project>

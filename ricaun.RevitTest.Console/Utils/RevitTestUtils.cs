@@ -157,6 +157,7 @@ namespace ricaun.RevitTest.Console.Utils
 
                             if (sendFileWhenCreatedOrUpdated)
                             {
+                                i = 0;
                                 Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
                                 client.Update((request) =>
                                 {

@@ -1,4 +1,5 @@
-﻿using ricaun.RevitTest.Console.Extensions;
+﻿using NUnit.Framework.Internal;
+using ricaun.RevitTest.Console.Extensions;
 using ricaun.RevitTest.Console.Utils;
 using System;
 using System.IO;
@@ -49,10 +50,12 @@ namespace ricaun.RevitTest.Console.Command
             if (options.Read)
             {
                 var tests = RevitTestUtils.GetTestFullNames(options.File);
+                Log.WriteLine();
                 foreach (var test in tests)
                 {
                     Log.WriteLine(test);
                 }
+                Log.WriteLine();
                 WriteOutput(tests.ToJson());
                 return true;
             }

@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [] Zip - Zip max size file
 [] Log - Enable/View
 ### Console
+[x] Info - icon.ico
 [x] PipeClient - Shared
 [x] PipeClient - PropertyChanged
 [x] RevitInstallation - Get Revit Installed

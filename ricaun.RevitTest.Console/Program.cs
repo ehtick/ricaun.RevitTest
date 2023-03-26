@@ -13,15 +13,12 @@ namespace ricaun.RevitTest.Console
 {
     internal class Program
     {
-        private const string DefaultTestFile = @"D:\Users\ricau\source\repos\RevitTest0\RevitTest0\bin\Debug\RevitTest0.dll";
-
         static void Main(string[] args)
         {
             CommandLine.Parser.Default
                 .ParseArguments<Options>(args)
                 .WithParsed(RunOptions)
                 .WithNotParsed(HandleParseError);
-
         }
         static void RunOptions(Options options)
         {
@@ -33,13 +30,14 @@ namespace ricaun.RevitTest.Console
             if (errors.IsHelp()) return;
             if (errors.IsVersion()) return;
 
-            foreach (var error in errors)
-            {
-                Log.WriteLine($"Error: {error}");
-            }
+            //foreach (var error in errors)
+            //{
+            //    Log.WriteLine($"Error: {error}");
+            //}
 
             RevitProcessServerSelect();
         }
+        [Conditional("DEBUG")]
         static void RevitProcessServerSelect()
         {
             Task.Run(RevitProcessServerSelectAsync).GetAwaiter().GetResult();
@@ -61,7 +59,7 @@ namespace ricaun.RevitTest.Console
                 var line = System.Console.ReadLine();
                 if (string.IsNullOrEmpty(line))
                 {
-                    fileToTest = DefaultTestFile;
+                    fileToTest = App.DefaultFilePath;
                     Log.WriteLine(Path.GetFileName(fileToTest));
                 }
                 else
