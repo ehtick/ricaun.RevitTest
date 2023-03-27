@@ -35,6 +35,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestResponse - PropertyChanged
 [x] TestResponse - Test/Tests/Info
 [x] Fody.PropertyChanged
+### TestAdapter
+[x] Base Code
+[] Todo
 
 [vNext]: ../../compare/1.0.0...HEAD
 [1.0.0]: ../../compare/1.0.0
