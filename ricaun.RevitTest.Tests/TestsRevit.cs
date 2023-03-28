@@ -7,7 +7,7 @@ namespace ricaun.RevitTest.Tests
     /// <summary>
     /// dotnet test .\ricaun.RevitTest.Tests\bin\Debug\ricaun.RevitTest.Tests.dll -v:detailed
     /// </summary>
-    public class Tests
+    public class TestsRevit
     {
         [Test]
         public void TestRevit1(UIApplication uiapp)

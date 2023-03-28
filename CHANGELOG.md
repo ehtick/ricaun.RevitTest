@@ -45,7 +45,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] Services - ProcessStart
 [x] Test Models
 ### Tests
-[x] TestRevits
+[x] TestsRevit
+[x] TestsPass
+[x] TestsIgnore
+[x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
 [1.0.0]: ../../compare/1.0.0
