@@ -36,8 +36,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestResponse - Test/Tests/Info
 [x] Fody.PropertyChanged
 ### TestAdapter
-[x] Base Code
-[] Todo
+[x] TestAdapter - Discoverer
+[x] TestAdapter - Executor
+[x] TestAdapter - Logger
+[x] TestAdapter - TestCaseUtils
+[] TestAdapter - RunSettings
+[x] Services - RevitTestConsole
+[x] Services - ProcessStart
+[x] Test Models
+### Tests
+[x] TestRevits
 
 [vNext]: ../../compare/1.0.0...HEAD
 [1.0.0]: ../../compare/1.0.0

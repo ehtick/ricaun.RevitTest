@@ -58,6 +58,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Mappers\MapperPropertyChangedTests.cs" />
+    <Compile Remove="Mappers\MapperTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!--
     <PackageReference Include="Newtonsoft.Json" Version="9.*" IncludeAssets="build; compile" PrivateAssets="All" />
     -->
@@ -67,7 +72,7 @@
 
   <!-- Fody -->
   <ItemGroup>
-    <PackageReference Include = "PropertyChanged.Fody" Version="3.*" IncludeAssets="build; compile" PrivateAssets="all" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.*" IncludeAssets="build; compile" PrivateAssets="all" />
   </ItemGroup>
   <PropertyGroup>
     <WeaverConfiguration>

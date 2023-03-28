@@ -35,6 +35,13 @@ ricaun.RevitTest is a Framework to execute NUnit tests using Visual Studio.
 .\ricaun.RevitTest.Console\bin\Debug\ricaun.RevitTest.Console.exe --file "D:\Users\ricau\source\repos\RevitTest0\RevitTest0\bin\Debug\RevitTest0.dll" -v 2021 -o "console"
 ```
 
+## Tests
+### PackageReference 
+
+* `ricaun.RevitTest.TestAdapter`
+* `NUnit` need to be 3.13.3
+* `Microsoft.NET.Test.Sdk` works with 17.3.0
+
 ## License
 
 This project is [licensed](LICENSE) under the [MIT Licence](https://en.wikipedia.org/wiki/MIT_License).

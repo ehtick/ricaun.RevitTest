@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using ricaun.RevitTest.TestAdapter.Extensions;
+using ricaun.RevitTest.TestAdapter.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -25,12 +26,7 @@ namespace ricaun.RevitTest.TestAdapter
             GetTests(this, sources, discoverySink);
         }
 
-        private static System.Guid GetGuid(string name)
-        {
-            return new System.Guid(name.GetHashCode(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        }
-
-        public static List<TestCase> GetTests(TestAdapter TestAdapter, IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink = null)
+        public static List<TestCase> GetTests(TestAdapter TestAdapter, IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
         {
             List<TestCase> tests = new List<TestCase>();
             var task = Task.Run(async () =>
@@ -44,17 +40,11 @@ namespace ricaun.RevitTest.TestAdapter
 
                         foreach (var testName in testNames)
                         {
-                            var fullyQualifiedName = testName.Substring(0, testName.LastIndexOf('.'));
-                            var displayName = testName.Substring(testName.LastIndexOf('.') + 1);
-                            var testcase = new TestCase(fullyQualifiedName, ExecutorUri, source)
-                            {
-                                DisplayName = displayName,
-                                Id = GetGuid($"{testName}"),
-                            };
-                            TestAdapter.TestLog.Info($"Test: {testName} - {testName}");
+                            TestAdapter.TestLog.Info($"Test: {testName}");
+                            var testCase = TestCaseUtils.Create(source, testName);
 
-                            discoverySink?.SendTestCase(testcase);
-                            tests.Add(testcase);
+                            discoverySink?.SendTestCase(testCase);
+                            tests.Add(testCase);
                         }
                     }
                 }
