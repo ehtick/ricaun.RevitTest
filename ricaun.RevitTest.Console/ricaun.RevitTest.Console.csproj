@@ -48,6 +48,7 @@
       <HintPath>..\..\ricaun.Revit.Installation\ricaun.Revit.Installation\bin\Release\net45\ricaun.Revit.Installation.1.0.3.dll</HintPath>
     </Reference>
     -->
+    <PackageReference Include="ricaun.NUnit" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
