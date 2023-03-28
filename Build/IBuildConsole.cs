@@ -31,5 +31,28 @@ public interface IBuildConsole : IHazExample, IRevitPackageBuilder
                 var releaseFileName = CreateReleaseFromDirectory(exampleDirectory, fileName, version);
                 Serilog.Log.Information($"Release: {releaseFileName}");
             });
+
+            var projectTestAdapter = Solution.GetOtherProject("ricaun.RevitTest.TestAdapter");
+
+            var releaseDirectoryConsole = GetExampleDirectory(Solution.GetOtherProject("ricaun.RevitTest.Console"));
+            PathConstruction.GlobFiles(releaseDirectoryConsole, "**/*.exe")
+                .ForEach(file =>
+                {
+                    var resourcesDirectory = projectTestAdapter.Directory / "Resources";
+                    Serilog.Log.Information($"Copy Exe: {file} to {resourcesDirectory}");
+                    FileSystemTasks.CopyFileToDirectory(file, resourcesDirectory, FileExistsPolicy.OverwriteIfNewer);
+                });
+
+            Solution.BuildProject(projectTestAdapter, (project) =>
+            {
+                SignProject(project);
+                var fileName = project.Name;
+                var version = project.GetInformationalVersion();
+                var exampleDirectory = GetExampleDirectory(project);
+
+                var releaseFileName = CreateReleaseFromDirectory(exampleDirectory, fileName, version);
+                Serilog.Log.Information($"Release: {releaseFileName}");
+            });
+
         });
 }

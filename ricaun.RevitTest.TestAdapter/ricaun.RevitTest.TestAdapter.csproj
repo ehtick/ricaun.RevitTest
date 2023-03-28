@@ -21,6 +21,26 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
 
+  <!-- Fody -->
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="5.*" IncludeAssets="build; compile" PrivateAssets="all" />
+  </ItemGroup>
+  <PropertyGroup>
+    <WeaverConfiguration>
+      <Weavers>
+        <Costura CreateTemporaryAssemblies="true" />
+      </Weavers>
+    </WeaverConfiguration>
+    <!--
+    <WeaverConfiguration Condition="$(Configuration.Contains('Debug'))">
+      <Weavers>
+        <Costura IncludeAssemblies="" />
+      </Weavers>
+    </WeaverConfiguration>
+    -->
+  </PropertyGroup>
+
+
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>

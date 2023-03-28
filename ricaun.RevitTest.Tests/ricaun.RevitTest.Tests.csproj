@@ -36,6 +36,13 @@
       <Private></Private>
       <PrivateAssets>true</PrivateAssets>
     </ProjectReference>
+    <!--
+    <Reference Include="ricaun.RevitTest.TestAdapter">
+      <HintPath>..\ricaun.RevitTest.TestAdapter\bin\Debug\ricaun.RevitTest.TestAdapter.dll</HintPath>
+      <Private></Private>
+      <PrivateAssets>true</PrivateAssets>
+    </Reference>
+    -->
   </ItemGroup>
 
   <ItemGroup>
