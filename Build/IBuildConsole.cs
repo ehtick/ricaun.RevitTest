@@ -52,6 +52,14 @@ public interface IBuildConsole : IHazExample, IRevitPackageBuilder
 
                 var releaseFileName = CreateReleaseFromDirectory(exampleDirectory, fileName, version);
                 Serilog.Log.Information($"Release: {releaseFileName}");
+
+                PathConstruction.GlobFiles(exampleDirectory, "**/*.nupkg")
+                    .ForEach(file =>
+                    {
+                        Serilog.Log.Information($"Copy nupkg: {file} to {releaseDirectory}");
+                        FileSystemTasks.CopyFileToDirectory(file, releaseDirectory, FileExistsPolicy.OverwriteIfNewer);
+                    });
+
             });
 
         });
