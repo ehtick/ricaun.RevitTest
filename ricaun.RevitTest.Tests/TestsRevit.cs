@@ -6,6 +6,7 @@ namespace ricaun.RevitTest.Tests
 {
     /// <summary>
     /// dotnet test .\ricaun.RevitTest.Tests\bin\Debug\ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.RevitVersion=2021
+    /// -- NUnit.RevitVersion=2021 NUnit.RevitOpen=true NUnit.RevitClose=true
     /// </summary>
     public class TestsRevit
     {

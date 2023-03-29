@@ -17,6 +17,8 @@ namespace ricaun.RevitTest.TestAdapter
         public void RunTests(IEnumerable<TestCase> testCases, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
             Initialize(frameworkHandle);
+            AdapterSettings.Create(runContext);
+            TestLog.Info($"AdapterSettings: {AdapterSettings.Settings.ToJson()}");
 
             var testCasesBySources = testCases
                 .GroupBy(e => e.Source)
@@ -45,17 +47,8 @@ namespace ricaun.RevitTest.TestAdapter
         public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
             Initialize(frameworkHandle);
-
-            //Microsoft.VisualStudio.TestPlatform.Common.RunSettings
-
-            if (runContext.RunSettings is IRunSettings runSettings)
-            {
-
-                TestLog.Info($"RunSettings: {runSettings.GetType()}");
-                TestLog.Info($"RunSettings: {runSettings.SettingsXml}");
-                TestLog.Info($"RunSettings: {runSettings.GetSettings("NUnit.RevitVersion")}");
-
-            }
+            AdapterSettings.Create(runContext);
+            TestLog.Info($"AdapterSettings: {AdapterSettings.Settings.ToJson()}");
 
             var task = Task.Run(async () =>
             {
@@ -131,7 +124,11 @@ namespace ricaun.RevitTest.TestAdapter
                     }
                 };
 
-                await revit.RunTestAction(source, 0, outputConsole, filters);
+                await revit.RunTestAction(source,
+                    AdapterSettings.Settings.NUnit.RevitVersion,
+                    AdapterSettings.Settings.NUnit.RevitOpen,
+                    AdapterSettings.Settings.NUnit.RevitClose,
+                    outputConsole, filters);
             }
         }
     }

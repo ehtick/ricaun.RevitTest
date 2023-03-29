@@ -42,6 +42,28 @@ namespace ricaun.RevitTest.TestAdapter.Services
             await new ProcessStart(path).Run(arguments, consoleAction);
         }
 
+        public async Task RunTestAction(
+            string file,
+            int version = 0,
+            bool revitOpen = false,
+            bool revitClose = false,
+            Action<string> consoleAction = null,
+            params string[] filter)
+        {
+            var arguments = $"-f \"{file}\" -v {version} -o console";
+
+            if (revitOpen)
+                arguments += $" --open";
+
+            if (revitClose)
+                arguments += $" --close";
+
+            if (filter.Length > 0)
+                arguments += $" -t \"{string.Join(",", filter)}\"";
+
+            await new ProcessStart(path).Run(arguments, consoleAction);
+        }
+
         public async Task<string[]> RunTestRead(string file)
         {
             var read = await Run($"-f \"{file}\" -r -o console");

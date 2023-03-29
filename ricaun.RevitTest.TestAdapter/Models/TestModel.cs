@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Models
 {
-
     public class TestAssemblyModel
     {
         public string FileName { get; set; }
