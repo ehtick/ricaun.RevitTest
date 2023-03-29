@@ -10,9 +10,25 @@ namespace ricaun.RevitTest.TestAdapter.Services
     {
         private readonly string path;
 
+        /// <summary>
+        /// Create Temporary Directory
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private string CreateTemporaryDirectory(string file)
+        {
+            string fileName = Path.GetFileNameWithoutExtension(file);
+            string folderName = Assembly.GetExecutingAssembly().GetName().Name;
+            string tempFolderName = fileName;
+            string tempDirectory = Path.Combine(Path.GetTempPath(), folderName, tempFolderName);
+            Directory.CreateDirectory(tempDirectory);
+            return tempDirectory;
+        }
+
         public RevitTestConsole()
         {
-            var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var directory = CreateTemporaryDirectory(Properties.Resources.ricaun_RevitTest_Console_Name);
             var file = Path.Combine(directory, Properties.Resources.ricaun_RevitTest_Console_Name);
             path = Properties.Resources.ricaun_RevitTest_Console.CopyToFile(file);
         }
