@@ -26,7 +26,17 @@ namespace ricaun.RevitTest.TestAdapter
             GetTests(this, sources, discoverySink);
         }
 
-        public static List<TestCase> GetTests(TestAdapter TestAdapter, IEnumerable<string> sources, ITestCaseDiscoverySink discoverySink)
+        /// <summary>
+        /// Get All Tests using RevitTest.Console -r
+        /// </summary>
+        /// <param name="TestAdapter"></param>
+        /// <param name="sources"></param>
+        /// <param name="discoverySink"></param>
+        /// <returns></returns>
+        internal static List<TestCase> GetTests(
+            TestAdapter TestAdapter,
+            IEnumerable<string> sources,
+            ITestCaseDiscoverySink discoverySink = null)
         {
             List<TestCase> tests = new List<TestCase>();
             var task = Task.Run(async () =>

@@ -47,13 +47,6 @@
         <Costura CreateTemporaryAssemblies="true" />
       </Weavers>
     </WeaverConfiguration>
-    <!--
-    <WeaverConfiguration Condition="$(Configuration.Contains('Debug'))">
-      <Weavers>
-        <Costura IncludeAssemblies="" />
-      </Weavers>
-    </WeaverConfiguration>
-    -->
   </PropertyGroup>
 
 
@@ -91,10 +84,19 @@
     <PackageProjectUrl>https://github.com/$(GitHubRepositoryOwner)/$(GitHubRepository)</PackageProjectUrl>
     <RepositoryUrl>https://github.com/$(GitHubRepositoryOwner)/$(GitHubRepository)</RepositoryUrl>
     <RepositoryType>github</RepositoryType>
-    <!--
     <PackageIcon>icon.png</PackageIcon>
-    -->
     <PackageIconUrl />
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Resources\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="Resources\icon.png" />
+  </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace ricaun.RevitTest.Tests
 {
     /// <summary>
-    /// dotnet test .\ricaun.RevitTest.Tests\bin\Debug\ricaun.RevitTest.Tests.dll -v:detailed
+    /// dotnet test .\ricaun.RevitTest.Tests\bin\Debug\ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.RevitVersion=2021
     /// </summary>
     public class TestsRevit
     {

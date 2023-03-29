@@ -44,6 +44,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] Services - RevitTestConsole
 [x] Services - ProcessStart
 [x] Test Models
+[x] Package - Icon
 ### Tests
 [x] TestsRevit
 [x] TestsPass

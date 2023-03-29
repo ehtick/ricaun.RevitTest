@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
+using NUnit.Engine.Internal;
 using ricaun.RevitTest.TestAdapter.Extensions;
 using ricaun.RevitTest.TestAdapter.Models;
 using ricaun.RevitTest.TestAdapter.Services;
@@ -45,6 +46,17 @@ namespace ricaun.RevitTest.TestAdapter
         {
             Initialize(frameworkHandle);
 
+            //Microsoft.VisualStudio.TestPlatform.Common.RunSettings
+
+            if (runContext.RunSettings is IRunSettings runSettings)
+            {
+
+                TestLog.Info($"RunSettings: {runSettings.GetType()}");
+                TestLog.Info($"RunSettings: {runSettings.SettingsXml}");
+                TestLog.Info($"RunSettings: {runSettings.GetSettings("NUnit.RevitVersion")}");
+
+            }
+
             var task = Task.Run(async () =>
             {
                 foreach (var source in sources)
@@ -55,7 +67,17 @@ namespace ricaun.RevitTest.TestAdapter
             task.GetAwaiter().GetResult();
         }
 
+        public void Cancel()
+        {
+        }
 
+        /// <summary>
+        /// Run Tests using RevitTest.Console -t
+        /// </summary>
+        /// <param name="frameworkHandle"></param>
+        /// <param name="source"></param>
+        /// <param name="tests"></param>
+        /// <returns></returns>
         private async Task RunTests(IFrameworkHandle frameworkHandle, string source, List<TestCase> tests = null)
         {
             tests = tests ?? new List<TestCase>();
@@ -111,11 +133,6 @@ namespace ricaun.RevitTest.TestAdapter
 
                 await revit.RunTestAction(source, 0, outputConsole, filters);
             }
-        }
-
-
-        public void Cancel()
-        {
         }
     }
 }

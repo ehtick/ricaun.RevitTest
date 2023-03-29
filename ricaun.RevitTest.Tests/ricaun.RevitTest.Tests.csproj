@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <RevitVersion>2017</RevitVersion>
+    
     <TargetFramework>net48</TargetFramework>
     <RevitVersion>2021</RevitVersion>
     
-    <TargetFramework>net46</TargetFramework>
-    <RevitVersion>2017</RevitVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
