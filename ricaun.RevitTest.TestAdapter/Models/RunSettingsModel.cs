@@ -18,6 +18,9 @@
 
             [XmlElement("RevitClose")]
             public XmlBool RevitClose { get; set; }
+
+            [XmlElement("Verbosity")]
+            public int Verbosity { get; set; }
         }
     }
 }

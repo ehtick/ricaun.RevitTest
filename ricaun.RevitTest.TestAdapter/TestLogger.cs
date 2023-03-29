@@ -78,7 +78,8 @@ namespace ricaun.RevitTest.TestAdapter
         public void Info(string message)
         {
             //if (adapterSettings?.Verbosity >= 0)
-            SendMessage(TestMessageLevel.Informational, message);
+            if (AdapterSettings.Settings.NUnit.Verbosity >= 1)
+                SendMessage(TestMessageLevel.Informational, message);
         }
 
         #endregion
@@ -87,8 +88,8 @@ namespace ricaun.RevitTest.TestAdapter
 
         public void Debug(string message)
         {
-            //if (adapterSettings?.Verbosity >= 5)
-            SendMessage(TestMessageLevel.Informational, message);
+            if (AdapterSettings.Settings.NUnit.Verbosity >= 5)
+                SendMessage(TestMessageLevel.Informational, message);
         }
 
         #endregion

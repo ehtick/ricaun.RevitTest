@@ -47,6 +47,9 @@ ricaun.RevitTest is a Framework to execute NUnit tests using Visual Studio.
 dotnet test ricaun.RevitTest.Tests.dll -- NUnit.RevitVersion=2021 NUnit.RevitOpen=true NUnit.RevitClose=true
 ```
 ```bash
+dotnet test ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.RevitVersion=2021 NUnit.RevitOpen=True NUnit.RevitClose=True NUnit.Verbosity=1
+```
+```bash
 dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings
 ```
 ```bash
@@ -74,6 +77,7 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.RevitVer
 		<RevitVersion>2021</RevitVersion>
 		<RevitOpen>true</RevitOpen>
 		<RevitClose>true</RevitClose>
+		<Verbosity>1</Verbosity>
 	</NUnit>
 </RunSettings>
 ```

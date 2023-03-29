@@ -26,12 +26,14 @@ public interface IBuildLocalTests : IBuildConsole
             {
                 return setting
                     //.SetRunSetting("NUnit.RevitVersion", 2021)
+                    //.SetVerbosity(DotNetVerbosity.Normal)
+                    //.SetRunSetting("NUnit.Verbosity", 1)
                     .SetRunSetting("NUnit.RevitOpen", true)
                     .SetRunSetting("NUnit.RevitClose", true);
             });
         });
 
-    // <summary>
+    /// <summary>
     /// TestProjects
     /// </summary>
     /// <param name="testProjectName"></param>
