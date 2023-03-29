@@ -15,9 +15,11 @@
         {
             try
             {
-                StringReader xmlStream = new StringReader(value);
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
-                return (T)serializer.Deserialize(xmlStream);
+                using (StringReader xmlStream = new StringReader(value))
+                {
+                    return (T)serializer.Deserialize(xmlStream);
+                }
             }
             catch { }
             return default(T);

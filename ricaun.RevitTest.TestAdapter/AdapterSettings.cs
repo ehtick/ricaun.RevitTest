@@ -14,7 +14,8 @@ namespace ricaun.RevitTest.TestAdapter
             {
                 if (Instance == null)
                     return new RunSettingsModel();
-                return Instance.RunSettings;
+
+                return Instance.RunSettings ?? new RunSettingsModel();
             }
         }
 

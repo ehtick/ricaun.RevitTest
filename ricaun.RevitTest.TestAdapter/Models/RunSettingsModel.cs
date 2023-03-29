@@ -14,10 +14,10 @@
             public int RevitVersion { get; set; }
 
             [XmlElement("RevitOpen")]
-            public bool RevitOpen { get; set; }
+            public XmlBool RevitOpen { get; set; }
 
             [XmlElement("RevitClose")]
-            public bool RevitClose { get; set; }
+            public XmlBool RevitClose { get; set; }
         }
     }
 }

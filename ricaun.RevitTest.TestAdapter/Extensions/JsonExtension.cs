@@ -7,7 +7,14 @@
     /// </summary>
     public static class JsonExtension
     {
-        private static JavaScriptSerializer JavaScriptSerializer { get; set; } = new JavaScriptSerializer();
+        private static JavaScriptSerializer JavaScriptSerializer { get; set; } = Create();
+
+        private static JavaScriptSerializer Create()
+        {
+            var javaScriptSerializer = new JavaScriptSerializer();
+            javaScriptSerializer.RegisterConverters(new[] { new Converters.XmlBoolConverter() });
+            return javaScriptSerializer;
+        }
 
         /// <summary>
         /// Deserialize

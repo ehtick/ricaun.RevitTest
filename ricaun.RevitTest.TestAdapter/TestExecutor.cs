@@ -48,7 +48,9 @@ namespace ricaun.RevitTest.TestAdapter
         {
             Initialize(frameworkHandle);
             AdapterSettings.Create(runContext);
+
             TestLog.Info($"AdapterSettings: {AdapterSettings.Settings.ToJson()}");
+            //TestLog.Info($"AdapterSettings: {runContext.RunSettings.SettingsXml}");
 
             var task = Task.Run(async () =>
             {
