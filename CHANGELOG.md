@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] Package - Icon
 ### Tests
 [x] TestsRevit
+[x] TestsRevitDocument
 [x] TestsPass
 [x] TestsIgnore
 [x] TestsFail
