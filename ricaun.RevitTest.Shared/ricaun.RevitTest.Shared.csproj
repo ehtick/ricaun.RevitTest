@@ -31,7 +31,7 @@
 
   <PropertyGroup>
     <PackageId>ricaun.RevitTest.Shared</PackageId>
-    <Version>1.0.0</Version>
+    <Version Condition="'$(Version)' == ''">1.0.0</Version>
     <ProjectGuid>{184a0327-a663-44af-a9fc-b597039cf840}</ProjectGuid>
   </PropertyGroup>
 

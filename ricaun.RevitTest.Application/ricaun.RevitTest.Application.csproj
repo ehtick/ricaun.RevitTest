@@ -91,7 +91,7 @@
 
   <PropertyGroup>
     <PackageId>ricaun.RevitTest.Application</PackageId>
-    <Version>1.0.0</Version>
+    <Version Condition="'$(Version)' == ''">1.0.0</Version>
     <ProjectGuid>{65F304B3-8EFB-464D-B08A-12CFD61A1986}</ProjectGuid>
   </PropertyGroup>
 

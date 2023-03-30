@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{485BDE38-840E-4A7B-8382-43ADF381EEBA}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md
+		Directory.Build.props = Directory.Build.props
 		LICENSE = LICENSE
 		README.md = README.md
 	EndProjectSection
@@ -20,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ricaun.RevitTest.Console", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ricaun.RevitTest.TestAdapter", "ricaun.RevitTest.TestAdapter\ricaun.RevitTest.TestAdapter.csproj", "{0C6CA174-8D4F-43AF-8FA4-01CC62034EA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ricaun.RevitTest.Tests", "ricaun.RevitTest.Tests\ricaun.RevitTest.Tests.csproj", "{8EB7DB2E-64A7-4239-9885-E66ACFC634E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ricaun.RevitTest.Tests", "ricaun.RevitTest.Tests\ricaun.RevitTest.Tests.csproj", "{8EB7DB2E-64A7-4239-9885-E66ACFC634E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
