@@ -19,7 +19,7 @@ flowchart LR
     TestAdapter[TestAdapter]
     Console[Console]
     Application[Application]
-    dll--dotnet-->TestAdapter
+    dll--dotnet test-->TestAdapter
     TestAdapter--Start-->Console
     Console--Run Tests-->Application
     Console-.Open/Close.-Revit
