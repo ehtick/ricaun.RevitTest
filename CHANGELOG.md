@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] / 2023-02-27 - 2023-03-25
+## [1.0.0] / 2023-02-27 - 2023-03-29
 ### Features
 ### Application
 [x] PipeServer - Shared
@@ -35,6 +35,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestResponse - PropertyChanged
 [x] TestResponse - Test/Tests/Info
 [x] Fody.PropertyChanged
+### TestAdapter
+[x] TestAdapter - Discoverer
+[x] TestAdapter - Executor
+[x] TestAdapter - Logger
+[x] TestAdapter - TestCaseUtils
+[x] TestAdapter - RunSettings (AdapterSettings, XmlExtension, RunSettingModel, XmlBool)
+[x] TestAdapter - RunSettingsModel (RevitVersion, RevitOpen, RevitClose, Verbosity)
+[x] Services - RevitTestConsole
+[x] Services - ProcessStart
+[x] Test Models
+[x] Package - Icon
+### Tests
+[x] TestsRevit
+[x] TestsPass
+[x] TestsIgnore
+[x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
 [1.0.0]: ../../compare/1.0.0

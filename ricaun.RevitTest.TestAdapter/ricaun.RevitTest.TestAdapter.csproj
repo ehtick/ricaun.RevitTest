@@ -1,0 +1,102 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <LangVersion>Latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <!-- Release -->
+  <PropertyGroup Condition="!$(Configuration.Contains('Debug'))">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants></DefineConstants>
+    <NoWarn>MSB3052</NoWarn>
+    <DebugType>None</DebugType>
+  </PropertyGroup>
+
+  <!-- Debug -->
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DebugType>Full</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+    <PackageReference Include="nunit.engine" Version="3.15.2" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.2" IncludeAssets="build; compile" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.3" IncludeAssets="compile; build" PrivateAssets="all" />
+    -->
+    <PackageReference Include="nunit.engine" Version="3.15.2" />
+    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.2" IncludeAssets="compile; build" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web.Extensions" />
+  </ItemGroup>
+
+  <!-- Fody -->
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="5.*" IncludeAssets="build; compile" PrivateAssets="all" />
+  </ItemGroup>
+  <PropertyGroup>
+    <WeaverConfiguration>
+      <Weavers>
+        <Costura CreateTemporaryAssemblies="true" />
+      </Weavers>
+    </WeaverConfiguration>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <Company>ricaun</Company>
+    <Authors>Luiz Henrique Cassettari</Authors>
+    <Description>Package $(PackageId)</Description>
+    <CopyrightYears>$([System.DateTime]::Now.ToString('yyyy'))</CopyrightYears>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Product>$(PackageId)</Product>
+    <Copyright>Copyright (C) $(Company) $(CopyrightYears)</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GitHubRepository>$(PackageId)</GitHubRepository>
+    <GitHubRepositoryOwner>ricaun-io</GitHubRepositoryOwner>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/$(GitHubRepositoryOwner)/$(GitHubRepository)</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/$(GitHubRepositoryOwner)/$(GitHubRepository)</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Resources\icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="Resources\icon.png" />
+  </ItemGroup>
+
+</Project>

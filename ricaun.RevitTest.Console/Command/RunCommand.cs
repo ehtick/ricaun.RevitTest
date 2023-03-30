@@ -1,5 +1,4 @@
-﻿using NUnit.Framework.Internal;
-using ricaun.RevitTest.Console.Extensions;
+﻿using ricaun.RevitTest.Console.Extensions;
 using ricaun.RevitTest.Console.Utils;
 using System;
 using System.IO;

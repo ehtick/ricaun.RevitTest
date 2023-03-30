@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<NUnit>
+    <RevitVersion>2019</RevitVersion>
+    <RevitOpen>false</RevitOpen>
+    <RevitClose>false</RevitClose>
+	</NUnit>
+</RunSettings>
