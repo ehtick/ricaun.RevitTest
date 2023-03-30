@@ -1,6 +1,6 @@
 # ricaun.RevitTest
 
-ricaun.RevitTest is a Framework to execute NUnit tests using Visual Studio.
+ricaun.RevitTest is a Framework to execute NUnit tests using Visual Studio and Revit.
 
 [![Revit 2017](https://img.shields.io/badge/Revit-2017+-blue.svg)](https://github.com/ricaun-io/ricaun.RevitTest)
 [![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio-2022-blue)](https://github.com/ricaun-io/ricaun.RevitTest)
