@@ -28,7 +28,11 @@ namespace ricaun.RevitTest.TestAdapter.Extensions
         public static string CopyToFile(this byte[] data, string path)
         {
             FileInfo fi = new FileInfo(path);
-            File.WriteAllBytes(path, data);
+            try
+            {
+                File.WriteAllBytes(path, data);
+            }
+            catch { }
             return fi.FullName;
         }
     }

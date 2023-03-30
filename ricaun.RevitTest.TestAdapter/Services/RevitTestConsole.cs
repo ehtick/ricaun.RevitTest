@@ -75,8 +75,12 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
         public void Dispose()
         {
-            if (File.Exists(applicationPath))
-                File.Delete(applicationPath);
+            try
+            {
+                if (File.Exists(applicationPath))
+                    File.Delete(applicationPath);
+            }
+            catch { }
         }
     }
 }
