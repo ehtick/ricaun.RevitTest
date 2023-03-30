@@ -2,15 +2,35 @@
 
 ricaun.RevitTest is a Framework to execute NUnit tests using Visual Studio.
 
-[![Revit 2017](https://img.shields.io/badge/Revit-2017+-blue.svg)](../..)
-[![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio-2022-blue)](../..)
+[![Revit 2017](https://img.shields.io/badge/Revit-2017+-blue.svg)](https://github.com/ricaun-io/ricaun.RevitTest)
+[![Visual Studio 2022](https://img.shields.io/badge/Visual%20Studio-2022-blue)](https://github.com/ricaun-io/ricaun.RevitTest)
 [![Nuke](https://img.shields.io/badge/Nuke-Build-blue)](https://nuke.build/)
 [![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Build](../../actions/workflows/Build.yml/badge.svg)](../../actions)
+[![Build](https://github.com/ricaun-io/ricaun.RevitTest/actions/workflows/Build.yml/badge.svg)](https://github.com/ricaun-io/ricaun.RevitTest/actions)
+
+## WorkFlow
+
+```mermaid
+---
+title: ricaun.RevitTest
+---
+flowchart LR
+    dll(dll)
+    TestAdapter[TestAdapter]
+    Console[Console]
+    Application[Application]
+    dll--dotnet-->TestAdapter
+    TestAdapter--Start-->Console
+    Console--Run Tests-->Application
+    Console-.Open/Close.-Revit
+    subgraph Revit [Revit]
+        Application
+    end
+```
 
 ## Installation
 
-* Download and install [ricaun.RevitTest.Console.exe](../../releases/latest/download/ricaun.RevitTest.Console.zip)
+* Download and install [ricaun.RevitTest.Console.exe](https://github.com/ricaun-io/ricaun.RevitTest/releases/latest/download/ricaun.RevitTest.Console.zip)
 
 ## CommandLine
 
@@ -88,4 +108,4 @@ This project is [licensed](LICENSE) under the [MIT Licence](https://en.wikipedia
 
 ---
 
-Do you like this project? Please [star this project on GitHub](../../stargazers)!
+Do you like this project? Please [star this project on GitHub](https://github.com/ricaun-io/ricaun.RevitTest/stargazers)!
