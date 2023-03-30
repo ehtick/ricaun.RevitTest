@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using ricaun.RevitTest.TestAdapter.Extensions;
 using ricaun.RevitTest.TestAdapter.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter
@@ -17,13 +18,20 @@ namespace ricaun.RevitTest.TestAdapter
             IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
         {
             Initialize(logger);
+            AdapterSettings.Create(discoveryContext);
+
+            TestLog.Info($"AdapterSettings: {AdapterSettings.Settings.ToJson()}");
 
             foreach (var source in sources)
             {
                 TestLog.Info($"DiscoverTests: {source}");
             }
 
-            GetTests(this, sources, discoverySink);
+            var tests = GetTests(this, sources, discoverySink);
+
+            if (tests.Any() == false)
+                TestLog.Warning($"DiscoverTests: Tests not found [{string.Join(" ", sources)}]");
+
         }
 
         /// <summary>
@@ -43,7 +51,7 @@ namespace ricaun.RevitTest.TestAdapter
             {
                 foreach (var source in sources)
                 {
-                    using (var revit = new RevitTestConsole())
+                    using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
                     {
                         var testNames = await revit.RunTestRead(source);
                         TestAdapter.TestLog.Info($"DiscoverTests: {testNames.ToJson()}");

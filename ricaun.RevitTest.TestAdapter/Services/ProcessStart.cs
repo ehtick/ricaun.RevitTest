@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -6,11 +7,45 @@ namespace ricaun.RevitTest.TestAdapter.Services
 {
     public class ProcessStart
     {
-        private string fileName;
-
-        public ProcessStart(string fileName)
+        private string processPath;
+        private Dictionary<string, object> argumentsPair = new Dictionary<string, object>();
+        private string CreateArguments()
         {
-            this.fileName = fileName;
+            string ConvertKey(string key)
+            {
+                if (key.StartsWith("-"))
+                    return key;
+                return $"--{key}";
+            }
+            string ConvertValue(object value)
+            {
+                if (value is string)
+                    return $"\"{value}\"";
+                return $"{value}";
+            }
+            var arguments = "";
+            foreach (var item in argumentsPair)
+            {
+                if (item.Value is null)
+                {
+                    arguments += $"{ConvertKey(item.Key)} ";
+                    continue;
+                }
+                arguments += $"{ConvertKey(item.Key)} ";
+                arguments += $"{ConvertValue(item.Value)} ";
+            }
+            return arguments;
+        }
+
+        public ProcessStart SetArgument(string name, object value = null)
+        {
+            argumentsPair[name] = value;
+            return this;
+        }
+
+        public ProcessStart(string processPath)
+        {
+            this.processPath = processPath;
         }
 
         private ProcessStartInfo NewProcessStartInfo(string arguments)
@@ -20,7 +55,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             return new ProcessStartInfo
             {
                 Verb = "runas",
-                FileName = fileName,
+                FileName = processPath,
                 Arguments = arguments,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = false,
@@ -32,8 +67,22 @@ namespace ricaun.RevitTest.TestAdapter.Services
             };
         }
 
-        public async Task<string> Run(string arguments = null)
+
+        public async Task<string> Run()
         {
+            var arguments = CreateArguments();
+            return await Run(arguments);
+        }
+
+        public async Task Run(Action<string> consoleAction, Action<string> errorAction = null)
+        {
+            var arguments = CreateArguments();
+            await Run(arguments, consoleAction, errorAction);
+        }
+
+        private async Task<string> Run(string arguments)
+        {
+            if (string.IsNullOrEmpty(processPath)) return string.Empty;
             var psi = NewProcessStartInfo(arguments);
             var process = Process.Start(psi);
             var output = await process.StandardOutput.ReadToEndAsync();
@@ -42,10 +91,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
             return output;
         }
 
-        public async Task Run(string arguments = null,
+        private async Task Run(string arguments,
             Action<string> consoleAction = null,
             Action<string> errorAction = null)
         {
+            if (string.IsNullOrEmpty(processPath)) return;
             var psi = NewProcessStartInfo(arguments);
             var process = Process.Start(psi);
             process.OutputDataReceived += (sender, e) =>

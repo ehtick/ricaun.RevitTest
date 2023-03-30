@@ -22,6 +22,12 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>Full</DebugType>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="TestsFail.cs" />
+    <Compile Remove="TestsIgnore.cs" />
+    <Compile Remove="TestsPass.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.13.3" />

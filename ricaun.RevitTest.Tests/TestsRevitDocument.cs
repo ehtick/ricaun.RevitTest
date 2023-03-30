@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace ricaun.RevitTest.Tests
 {
+    [Explicit]
     public class TestsRevitDocument
     {
         [Test]

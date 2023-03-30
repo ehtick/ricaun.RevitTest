@@ -28,9 +28,30 @@ flowchart LR
     end
 ```
 
+## Tests
+### PackageReference 
+```xml
+<PackageReference Include="NUnit" Version="3.13.3" />
+<PackageReference Include="ricaun.RevitTest.TestAdapter" Version="*" />
+```
+
 ## Installation
 
 * Download and install [ricaun.RevitTest.Console.exe](https://github.com/ricaun-io/ricaun.RevitTest/releases/latest/download/ricaun.RevitTest.Console.zip)
+
+### RevitTest
+
+#### Application
+* [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
+* [ricaun.Revit.UI](https://github.com/ricaun-io/ricaun.Revit.UI)
+* [ricaun.Revit.Async](https://github.com/ricaun-io/ricaun.Revit.Async)
+* [Revit.Busy](https://github.com/ricaun-io/Revit.Busy)
+#### Console
+* [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
+* [ricaun.Revit.Installation](https://github.com/ricaun-io/ricaun.Revit.Installation)
+#### Shared
+* [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
+* [NamedPipeWrapper.Json](https://github.com/ricaun-io/named-pipe-wrapper-json)
 
 ## CommandLine
 

@@ -48,9 +48,10 @@ namespace ricaun.RevitTest.TestAdapter
         {
             Initialize(frameworkHandle);
             AdapterSettings.Create(runContext);
-
+            AdapterLogger.Create(frameworkHandle);
+            AdapterLogger.Logger.Warning("Logger");
             TestLog.Info($"AdapterSettings: {AdapterSettings.Settings.ToJson()}");
-            //TestLog.Info($"AdapterSettings: {runContext.RunSettings.SettingsXml}");
+            //TestLog.Debug($"AdapterSettings: {runContext.RunSettings.SettingsXml}");
 
             var task = Task.Run(async () =>
             {
@@ -79,7 +80,7 @@ namespace ricaun.RevitTest.TestAdapter
 
             TestLog.Info($"RunTest: {source} {tests.Count}");
 
-            using (var revit = new RevitTestConsole())
+            using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
             {
                 var filters = tests.Select(e => $"{e.FullyQualifiedName}.{e.DisplayName}").ToArray();
 

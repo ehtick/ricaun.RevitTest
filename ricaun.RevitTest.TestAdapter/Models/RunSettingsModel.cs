@@ -21,6 +21,9 @@
 
             [XmlElement("Verbosity")]
             public int Verbosity { get; set; }
+
+            [XmlElement("Application")]
+            public string Application { get; set; }
         }
     }
 }

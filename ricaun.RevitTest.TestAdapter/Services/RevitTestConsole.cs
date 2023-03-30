@@ -8,54 +8,39 @@ namespace ricaun.RevitTest.TestAdapter.Services
 {
     public class RevitTestConsole : IDisposable
     {
-        private readonly string path;
+        private readonly string applicationPath;
 
-        /// <summary>
-        /// Create Temporary Directory
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
-        private string CreateTemporaryDirectory(string file)
+        private string ValidadeApplication(string applicationPath)
         {
-            string fileName = Path.GetFileNameWithoutExtension(file);
-            string folderName = Assembly.GetExecutingAssembly().GetName().Name;
-            string tempFolderName = fileName;
-            string tempDirectory = Path.Combine(Path.GetTempPath(), folderName, tempFolderName);
-            Directory.CreateDirectory(tempDirectory);
-            return tempDirectory;
+            if (string.IsNullOrWhiteSpace(applicationPath))
+                return null;
+
+            if (ApplicationUtils.Download(applicationPath, out string directory))
+            {
+                var applicationName = Path.ChangeExtension(Path.GetFileName(applicationPath), "exe");
+                var applicationNewPath = Path.Combine(directory, applicationName);
+
+                AdapterLogger.Logger.Info($"Application Download: {applicationPath}");
+
+                if (File.Exists(applicationNewPath))
+                {
+                    AdapterLogger.Logger.Warning($"Application Process: {Path.GetFileName(applicationNewPath)}");
+                    return applicationNewPath;
+                }
+            }
+
+            return null;
         }
 
-        public RevitTestConsole()
+        public RevitTestConsole(string application = null)
         {
-            //var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var directory = CreateTemporaryDirectory(Properties.Resources.ricaun_RevitTest_Console_Name);
-            var file = Path.Combine(directory, Properties.Resources.ricaun_RevitTest_Console_Name);
-            path = Properties.Resources.ricaun_RevitTest_Console.CopyToFile(file);
-        }
-
-        public async Task<string> Run(params string[] arguments)
-        {
-            return await new ProcessStart(path).Run(string.Join(" ", arguments));
-        }
-
-        public async Task<string> RunTest(string file, int version = 0, params string[] filter)
-        {
-            var read = await Run($"-f \"{file}\" -v {version} -o console -t \"{string.Join(",", filter)}\"");
-            return read;
-        }
-
-        public async Task RunTestAction(
-            string file,
-            int version = 0,
-            Action<string> consoleAction = null,
-            params string[] filter)
-        {
-            var arguments = $"-f \"{file}\" -v {version} -o console";
-
-            if (filter.Length > 0)
-                arguments += $" -t \"{string.Join(",", filter)}\"";
-
-            await new ProcessStart(path).Run(arguments, consoleAction);
+            applicationPath = ValidadeApplication(application);
+            if (applicationPath is null)
+            {
+                var directory = ApplicationUtils.CreateTemporaryDirectory(Properties.Resources.ricaun_RevitTest_Console_Name);
+                var file = Path.Combine(directory, Properties.Resources.ricaun_RevitTest_Console_Name);
+                applicationPath = Properties.Resources.ricaun_RevitTest_Console.CopyToFile(file);
+            }
         }
 
         public async Task RunTestAction(
@@ -66,31 +51,32 @@ namespace ricaun.RevitTest.TestAdapter.Services
             Action<string> consoleAction = null,
             params string[] filter)
         {
-            var arguments = $"-f \"{file}\" -v {version} -o console";
-
-            if (revitOpen)
-                arguments += $" --open";
-
-            if (revitClose)
-                arguments += $" --close";
-
-            if (filter.Length > 0)
-                arguments += $" -t \"{string.Join(",", filter)}\"";
-
-            await new ProcessStart(path).Run(arguments, consoleAction);
+            await new RevitTestProcessStart(applicationPath)
+                .SetFile(file)
+                .SetRevitVersion(version)
+                .SetOutputConsole()
+                .SetOpen(revitOpen)
+                .SetClose(revitClose)
+                .SetTestFilter(filter)
+                .Run(consoleAction);
         }
 
         public async Task<string[]> RunTestRead(string file)
         {
-            var read = await Run($"-f \"{file}\" -r -o console");
+            var read = await new RevitTestProcessStart(applicationPath)
+                .SetFile(file)
+                .SetOutputConsole()
+                .SetRead()
+                .Run();
+
             var testNames = read.Deserialize<string[]>();
             return testNames;
         }
 
         public void Dispose()
         {
-            if (File.Exists(path))
-                File.Delete(path);
+            if (File.Exists(applicationPath))
+                File.Delete(applicationPath);
         }
     }
 }

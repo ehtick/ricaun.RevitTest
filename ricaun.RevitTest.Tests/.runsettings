@@ -4,5 +4,7 @@
     <RevitVersion>2019</RevitVersion>
     <RevitOpen>false</RevitOpen>
     <RevitClose>false</RevitClose>
+    <Verbosity>1</Verbosity>
+    <Application>file</Application>
 	</NUnit>
 </RunSettings>
