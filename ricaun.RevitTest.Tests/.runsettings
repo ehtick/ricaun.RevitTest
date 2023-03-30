@@ -5,6 +5,6 @@
     <RevitOpen>false</RevitOpen>
     <RevitClose>false</RevitClose>
     <Verbosity>1</Verbosity>
-    <Application>file</Application>
+    <Application></Application>
 	</NUnit>
 </RunSettings>

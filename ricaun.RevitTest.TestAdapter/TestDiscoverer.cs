@@ -15,22 +15,19 @@ namespace ricaun.RevitTest.TestAdapter
     {
         public void DiscoverTests(
             IEnumerable<string> sources, IDiscoveryContext discoveryContext,
-            IMessageLogger logger, ITestCaseDiscoverySink discoverySink)
+            IMessageLogger messageLogger, ITestCaseDiscoverySink discoverySink)
         {
-            Initialize(logger);
-            AdapterSettings.Create(discoveryContext);
-
-            TestLog.Info($"AdapterSettings: {AdapterSettings.Settings.ToJson()}");
+            Initialize(discoveryContext, messageLogger);
 
             foreach (var source in sources)
             {
-                TestLog.Info($"DiscoverTests: {source}");
+                AdapterLogger.Logger.Info($"DiscoverTests: {source}");
             }
 
-            var tests = GetTests(this, sources, discoverySink);
+            var tests = GetTests(sources, discoverySink);
 
             if (tests.Any() == false)
-                TestLog.Warning($"DiscoverTests: Tests not found [{string.Join(" ", sources)}]");
+                AdapterLogger.Logger.Warning($"DiscoverTests: Tests not found [{string.Join(" ", sources)}]");
 
         }
 
@@ -42,7 +39,6 @@ namespace ricaun.RevitTest.TestAdapter
         /// <param name="discoverySink"></param>
         /// <returns></returns>
         internal static List<TestCase> GetTests(
-            TestAdapter TestAdapter,
             IEnumerable<string> sources,
             ITestCaseDiscoverySink discoverySink = null)
         {
@@ -54,11 +50,11 @@ namespace ricaun.RevitTest.TestAdapter
                     using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
                     {
                         var testNames = await revit.RunTestRead(source);
-                        TestAdapter.TestLog.Info($"DiscoverTests: {testNames.ToJson()}");
+                        AdapterLogger.Logger.Info($"DiscoverTests: {testNames.ToJson()}");
 
                         foreach (var testName in testNames)
                         {
-                            TestAdapter.TestLog.Info($"Test: {testName}");
+                            AdapterLogger.Logger.Info($"Test: {testName}");
                             var testCase = TestCaseUtils.Create(source, testName);
 
                             discoverySink?.SendTestCase(testCase);

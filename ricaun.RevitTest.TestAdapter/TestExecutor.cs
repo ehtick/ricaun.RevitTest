@@ -16,9 +16,7 @@ namespace ricaun.RevitTest.TestAdapter
     {
         public void RunTests(IEnumerable<TestCase> testCases, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
-            Initialize(frameworkHandle);
-            AdapterSettings.Create(runContext);
-            TestLog.Info($"AdapterSettings: {AdapterSettings.Settings.ToJson()}");
+            Initialize(runContext, frameworkHandle);
 
             var testCasesBySources = testCases
                 .GroupBy(e => e.Source)
@@ -46,12 +44,7 @@ namespace ricaun.RevitTest.TestAdapter
         /// <param name="frameworkHandle"></param>
         public void RunTests(IEnumerable<string> sources, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
-            Initialize(frameworkHandle);
-            AdapterSettings.Create(runContext);
-            AdapterLogger.Create(frameworkHandle);
-            AdapterLogger.Logger.Warning("Logger");
-            TestLog.Info($"AdapterSettings: {AdapterSettings.Settings.ToJson()}");
-            //TestLog.Debug($"AdapterSettings: {runContext.RunSettings.SettingsXml}");
+            Initialize(runContext, frameworkHandle);
 
             var task = Task.Run(async () =>
             {
@@ -78,7 +71,7 @@ namespace ricaun.RevitTest.TestAdapter
         {
             tests = tests ?? new List<TestCase>();
 
-            TestLog.Info($"RunTest: {source} {tests.Count}");
+            AdapterLogger.Logger.Info($"RunTest: {source} [TestCase: {tests.Count}]");
 
             using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
             {
@@ -87,7 +80,9 @@ namespace ricaun.RevitTest.TestAdapter
                 Action<string> outputConsole = (item) =>
                 {
                     if (string.IsNullOrEmpty(item)) return;
-                    TestLog.Info($"RunTest: {item.Trim()}");
+
+                    AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
+
                     if (item.StartsWith("{\"FileName"))
                     {
                         var testAssembly = item.Deserialize<TestAssemblyModel>();
@@ -103,7 +98,8 @@ namespace ricaun.RevitTest.TestAdapter
                                 testCase = TestCaseUtils.Create(source, testModel.FullName);
                             }
 
-                            TestLog.Info($"TestModel: {testModel} {testCase}");
+                            AdapterLogger.Logger.Info($"TestCase: {testCase}");
+
                             var testResult = new TestResult(testCase);
 
                             testResult.Outcome = TestOutcome.Failed;

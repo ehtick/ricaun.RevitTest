@@ -1,5 +1,6 @@
 ﻿namespace ricaun.RevitTest.TestAdapter.Models
 {
+    using ricaun.RevitTest.TestAdapter.Extensions;
     using System.Xml.Serialization;
 
     [XmlRoot("RunSettings")]
@@ -24,6 +25,11 @@
 
             [XmlElement("Application")]
             public string Application { get; set; }
+        }
+
+        public override string ToString()
+        {
+            return this.ToJson();
         }
     }
 }

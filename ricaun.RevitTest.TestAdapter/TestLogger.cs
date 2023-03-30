@@ -78,7 +78,7 @@ namespace ricaun.RevitTest.TestAdapter
         public void Info(string message)
         {
             //if (adapterSettings?.Verbosity >= 0)
-            if (AdapterSettings.Settings.NUnit.Verbosity >= 1)
+            if (Verbosity >= 1)
                 SendMessage(TestMessageLevel.Informational, message);
         }
 
@@ -88,7 +88,7 @@ namespace ricaun.RevitTest.TestAdapter
 
         public void Debug(string message)
         {
-            if (AdapterSettings.Settings.NUnit.Verbosity >= 5)
+            if (Verbosity >= 2)
                 SendMessage(TestMessageLevel.Informational, message);
         }
 

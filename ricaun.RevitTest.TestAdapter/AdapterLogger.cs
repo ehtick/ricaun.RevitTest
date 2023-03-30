@@ -10,13 +10,11 @@ namespace ricaun.RevitTest.TestAdapter
         {
             get
             {
-                if (Instance == null)
-                    return new NoneTestLogger();
-
+                if (Instance == null) return new NoneTestLogger();
                 return Instance.TestLogger;
             }
         }
-        public static void Create(IMessageLogger messageLogger, int verbosity = 10)
+        public static void Create(IMessageLogger messageLogger, int verbosity = 0)
         {
             if (Instance == null)
             {

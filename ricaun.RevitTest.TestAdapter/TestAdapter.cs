@@ -18,32 +18,20 @@ namespace ricaun.RevitTest.TestAdapter
         // The adapter version
         protected string AdapterVersion { get; set; }
         // Our logger used to display messages
-        public TestLogger TestLog { get; private set; }
         protected TestAdapter()
         {
-            AdapterVersion = typeof(TestAdapter).GetTypeInfo().Assembly.GetName().Version.ToString();
+            var assemblyName = typeof(TestAdapter).GetTypeInfo().Assembly.GetName();
+            AdapterVersion = $"{assemblyName.Name} {assemblyName.Version.ToString(3)}";
         }
 
-        // The Adapter is constructed using the default constructor.
-        // We don't have any info to initialize it until one of the
-        // ITestDiscovery or ITestExecutor methods is called. Each
-        // Discover or Execute method must call this method.
-        protected void Initialize(IMessageLogger messageLogger)
+        protected void Initialize(IDiscoveryContext discoveryContext, IMessageLogger messageLogger)
         {
-            TestLog = new TestLogger(messageLogger);
-            try
-            {
+            AdapterSettings.Create(discoveryContext);
+            AdapterLogger.Create(messageLogger, AdapterSettings.Settings.NUnit.Verbosity);
 
-            }
-            catch (Exception e)
-            {
-                TestLog.Warning("Error initializing RunSettings. Default settings will be used");
-                TestLog.Warning(e.ToString());
-            }
-            finally
-            {
-                TestLog.DebugRunfrom();
-            }
+            AdapterLogger.Logger.Info($"TestAdapter: {this.AdapterVersion}");
+            AdapterLogger.Logger.Info($"AdapterSettings: {AdapterSettings.Settings}");
+            //AdapterLogger.Logger.Debug($"SettingsXml: {discoveryContext.RunSettings.SettingsXml}");
         }
     }
 }
