@@ -147,11 +147,7 @@ namespace ricaun.RevitTest.Console.Utils
                                 if (cki.Key == ConsoleKey.Escape) break;
                                 if (cki.Key == ConsoleKey.Spacebar)
                                 {
-                                    Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
-                                    client.Update((request) =>
-                                    {
-                                        request.TestPathFile = fileToTest;
-                                    });
+                                    sendFileWhenCreatedOrUpdated = true;
                                 }
                             }
 
@@ -159,6 +155,7 @@ namespace ricaun.RevitTest.Console.Utils
                             {
                                 i = 0;
                                 Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
+                                process.AttachDTE();
                                 client.Update((request) =>
                                 {
                                     request.TestPathFile = fileToTest;
@@ -172,6 +169,8 @@ namespace ricaun.RevitTest.Console.Utils
 
                         //if (forceToCloseRevit)
                         //    processStarted = true;
+
+                        process.DetachDTE();
 
                         if (forceToCloseRevit)
                         {

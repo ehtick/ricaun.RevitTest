@@ -49,6 +49,7 @@
     </Reference>
     -->
     <PackageReference Include="ricaun.NUnit" Version="*" />
+    <PackageReference Include="Microsoft.VisualStudio.Interop" Version="*" />
   </ItemGroup>
 
   <ItemGroup>

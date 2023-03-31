@@ -32,6 +32,8 @@ namespace ricaun.RevitTest.Application.Revit
 
             NUnitUtils.Initialize();
 
+            Debug.WriteLine($"Debugger: {Debugger.IsAttached}");
+
             RevitParameters.AddParameter(
                 application,
                 application.ControlledApplication,

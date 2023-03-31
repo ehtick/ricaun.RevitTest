@@ -50,6 +50,14 @@ namespace ricaun.RevitTest.Console
             Log.WriteLine();
             Log.WriteLine($"{assemblyName.Name} {assemblyName.Version.ToString(3)}");
 
+            Log.WriteLine();
+            Log.WriteLine($"DebuggerUtils: {DebuggerUtils.IsDebuggerAttached}");
+            if (DebuggerUtils.IsDebuggerAttached)
+            {
+                var dte = DebuggerUtils.GetDTE();
+                Log.WriteLine($"DebuggerUtils: {dte.GetName()}");
+            }
+
             var fileToTest = App.FilePath;
 
             if (string.IsNullOrEmpty(fileToTest))
