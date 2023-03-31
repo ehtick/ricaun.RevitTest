@@ -1,18 +1,38 @@
 ﻿using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using NUnit.Framework;
+using System;
 
 namespace ricaun.RevitTest.Tests
 {
-    [Explicit]
     public class TestsRevitDocument
     {
+        private readonly Application application;
+
+        public TestsRevitDocument(Application application)
+        {
+            this.application = application;
+        }
+
+        [TestCase(UnitSystem.Metric, ExpectedResult = DisplayUnit.METRIC)]
+        [TestCase(UnitSystem.Imperial, ExpectedResult = DisplayUnit.IMPERIAL)]
+        public DisplayUnit NewProjectDocument(UnitSystem unitSystem)
+        {
+            using (var document = application.NewProjectDocument(unitSystem))
+            {
+                Console.WriteLine($"{document.Title} {document.DisplayUnitSystem}");
+                var displayUnit = document.DisplayUnitSystem;
+                document.Close(false);
+                return displayUnit;
+            }
+        }
+
         [Test]
-        public void NewProjectDocument(Application application)
+        public void NewProjectDocument_Metric(Application application)
         {
             using (var document = application.NewProjectDocument(UnitSystem.Metric))
             {
-                System.Console.WriteLine(document.Title);
+                Console.WriteLine($"{document.Title} {document.DisplayUnitSystem}");
                 Assert.IsTrue(document.IsValidObject);
                 document.Close(false);
             }
@@ -23,7 +43,7 @@ namespace ricaun.RevitTest.Tests
         {
             using (var document = application.NewProjectDocument(UnitSystem.Imperial))
             {
-                System.Console.WriteLine(document.Title);
+                Console.WriteLine($"{document.Title} {document.DisplayUnitSystem}");
                 Assert.IsTrue(document.IsValidObject);
                 document.Close(false);
             }
