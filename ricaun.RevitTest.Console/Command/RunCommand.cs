@@ -61,6 +61,8 @@ namespace ricaun.RevitTest.Console.Command
 
             Action<string> outputAction = (e) => { WriteOutput(e); };
 
+            DebuggerUtils.AttachedDebugger(options.DebuggerAttach);
+
             RevitTestUtils.CreateRevitServer(
                 options.File,
                 options.RevitVersion,

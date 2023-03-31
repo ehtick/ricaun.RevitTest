@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] CommandLine - Select RevitVersion
 [x] CommandLine - Force Open/Close/Wait
 [x] CommandLine - Run Tests with Filter
+[x] CommandLine - DebuggerAttach hidden options (DebuggerUtils with EnvDTE)
 ### Shared
 [x] PipeServer/Client - Json
 [x] PipeServer/Client - Default is new()
@@ -43,6 +44,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestAdapter - RunSettings (AdapterSettings, XmlExtension, RunSettingModel, XmlBool)
 [x] TestAdapter - RunSettingsModel (RevitVersion, RevitOpen, RevitClose, Verbosity, Application)
 [x] TestAdapter - Custom Application Process (Download Zip)
+[x] TestAdapter - Add Debugger in executor if needed
 [x] Services - RevitTestConsole
 [x] Services - ProcessStart
 [x] Services - RevitTestProcessStart
@@ -52,6 +54,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Tests
 [x] TestsRevit
 [x] TestsRevitDocument
+[x] TestsDebugger
 [x] TestsPass
 [x] TestsIgnore
 [x] TestsFail

@@ -1,43 +1,10 @@
-﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
-using NUnit.Engine.Internal.Backports;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Services
 {
-    public class ProcessDebug
-    {
-        public static IFrameworkHandle FrameworkHandle;
-        public static void Initialize(IFrameworkHandle frameworkHandle)
-        {
-            FrameworkHandle = frameworkHandle;
-            AdapterLogger.Logger.Warning("FrameworkHandle");
-        }
-        public static Process LaunchProcessWithDebuggerAttached(ProcessStartInfo info)
-        {
-            if (FrameworkHandle is null || Debugger.IsAttached == false)
-            {
-                return Process.Start(info);
-            }
-
-            AdapterLogger.Logger.Warning($"LaunchProcessWithDebuggerAttached {Debugger.IsAttached}");
-
-            Dictionary<string, string> environment =
-                info.EnvironmentVariables.Cast<DictionaryEntry>().ToDictionary(
-                    item => item.Key.ToString(),
-                    item => item.Value.ToString()
-                );
-
-            int pid = FrameworkHandle.LaunchProcessWithDebuggerAttached(info.FileName, info.WorkingDirectory, info.Arguments, environment);
-            System.Diagnostics.Process process = System.Diagnostics.Process.GetProcessById(pid);
-            return process;
-        }
-    }
-
     public class ProcessStart
     {
         private string processPath;
@@ -105,12 +72,14 @@ namespace ricaun.RevitTest.TestAdapter.Services
         public async Task<string> Run()
         {
             var arguments = CreateArguments();
+            Debug.WriteLine($"Run: {arguments}");
             return await Run(arguments);
         }
 
         public async Task Run(Action<string> consoleAction, Action<string> errorAction = null)
         {
             var arguments = CreateArguments();
+            Debug.WriteLine($"Run: {arguments}");
             await Run(arguments, consoleAction, errorAction);
         }
 
@@ -131,8 +100,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
         {
             if (string.IsNullOrEmpty(processPath)) return;
             var psi = NewProcessStartInfo(arguments);
-            var process = ProcessDebug.LaunchProcessWithDebuggerAttached(psi);
-            process.EnableRaisingEvents = true;
+            var process = Process.Start(psi);
             process.OutputDataReceived += (sender, e) =>
             {
                 consoleAction?.Invoke(e.Data);

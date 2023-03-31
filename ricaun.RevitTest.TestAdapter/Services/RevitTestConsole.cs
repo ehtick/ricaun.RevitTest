@@ -58,6 +58,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 .SetOpen(revitOpen)
                 .SetClose(revitClose)
                 .SetTestFilter(filter)
+                .SetDebugger(System.Diagnostics.Debugger.IsAttached)
                 .Run(consoleAction);
         }
 

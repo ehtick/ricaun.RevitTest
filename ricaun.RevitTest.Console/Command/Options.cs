@@ -45,5 +45,11 @@ namespace ricaun.RevitTest.Console.Command
           Default = false,
           HelpText = "Force to close the Revit process.")]
         public bool ForceToClose { get; set; }
+
+        [Option("debugger",
+            Default = false,
+            Hidden = true,
+            HelpText = "Force to attach debbuger in the Revit process.")]
+        public bool DebuggerAttach { get; set; }
     }
 }

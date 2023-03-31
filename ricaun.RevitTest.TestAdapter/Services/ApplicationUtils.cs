@@ -12,6 +12,8 @@ namespace ricaun.RevitTest.TestAdapter.Services
     /// </summary>
     public static class ApplicationUtils
     {
+        private const string ZIP_FILE_EXTENSION = ".zip";
+
         /// <summary>
         /// Create Temporary Directory
         /// </summary>
@@ -82,7 +84,8 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 {
                     downloadFileException?.Invoke(ex);
                 }
-                if (File.Exists(zipPath)) File.Delete(zipPath);
+                if (Path.GetExtension(zipPath) == ZIP_FILE_EXTENSION)
+                    if (File.Exists(zipPath)) File.Delete(zipPath);
             }
 
             return result;
@@ -95,7 +98,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
         /// <param name="destinationDirectoryName"></param>
         private static void ExtractBundleZipToDirectory(string archiveFileName, string destinationDirectoryName)
         {
-            if (Path.GetExtension(archiveFileName) != ".zip") return;
+            if (Path.GetExtension(archiveFileName) != ZIP_FILE_EXTENSION) return;
 
             using (var archive = ZipFile.OpenRead(archiveFileName))
             {

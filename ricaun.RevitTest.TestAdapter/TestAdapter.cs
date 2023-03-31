@@ -5,7 +5,6 @@
 
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Reflection;
 
@@ -33,9 +32,6 @@ namespace ricaun.RevitTest.TestAdapter
             AdapterLogger.Logger.Info($"TestAdapter: {this.AdapterVersion}");
             AdapterLogger.Logger.Info($"AdapterSettings: {AdapterSettings.Settings}");
             //AdapterLogger.Logger.Debug($"SettingsXml: {discoveryContext.RunSettings.SettingsXml}");
-
-            if (messageLogger is IFrameworkHandle frameworkHandle)
-                ProcessDebug.Initialize(frameworkHandle);
         }
     }
 }

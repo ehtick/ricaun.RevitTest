@@ -7,7 +7,12 @@ namespace ricaun.RevitTest.Console.Utils
 {
     public static class DebuggerUtils
     {
-        public static bool IsDebuggerAttached { get { return System.Diagnostics.Debugger.IsAttached; } }
+        private static bool DebuggerAttached { get; set; }
+        public static void AttachedDebugger(bool debugger)
+        {
+            DebuggerAttached = debugger;
+        }
+        public static bool IsDebuggerAttached { get { return System.Diagnostics.Debugger.IsAttached | DebuggerAttached; } }
         public static DTE DTE { get; set; } = GetDTE();
 
         public static System.Diagnostics.Process AttachDTE(this System.Diagnostics.Process process, DTE dte = null)

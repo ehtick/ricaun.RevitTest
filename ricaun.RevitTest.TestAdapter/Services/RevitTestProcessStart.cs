@@ -40,6 +40,11 @@
                 return this;
             return SetRevitArgument("test", testFilter);
         }
+        public RevitTestProcessStart SetDebugger(bool debugger = true)
+        {
+            if (!debugger) return this;
+            return SetRevitArgument("debugger");
+        }
     }
 
 }
