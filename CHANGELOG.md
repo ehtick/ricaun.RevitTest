@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] CommandLine - Force Open/Close/Wait
 [x] CommandLine - Run Tests with Filter
 [x] CommandLine - DebuggerAttach hidden options (DebuggerUtils with EnvDTE)
+[x] CommandLine - Update Parser (Ignore Unknown Arguments)
 ### Shared
 [x] PipeServer/Client - Json
 [x] PipeServer/Client - Default is new()

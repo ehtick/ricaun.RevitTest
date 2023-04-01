@@ -15,8 +15,7 @@ namespace ricaun.RevitTest.Console
     {
         static void Main(string[] args)
         {
-            CommandLine.Parser.Default
-                .ParseArguments<Options>(args)
+            Options.Parser.ParseArguments<Options>(args)
                 .WithParsed(RunOptions)
                 .WithNotParsed(HandleParseError);
         }

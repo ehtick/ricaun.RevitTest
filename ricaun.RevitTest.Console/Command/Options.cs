@@ -4,6 +4,19 @@ namespace ricaun.RevitTest.Console.Command
 {
     public class Options
     {
+        #region Parser
+        public static Parser Parser { get; } = CreateParser();
+        private static Parser CreateParser()
+        {
+            var parser = new Parser(with =>
+            {
+                with.HelpWriter = System.Console.Error;
+                with.IgnoreUnknownArguments = true;
+            });
+            return parser;
+        }
+        #endregion
+
         [Option('f', "file",
         Required = true,
         HelpText = "Input file to be processed.")]

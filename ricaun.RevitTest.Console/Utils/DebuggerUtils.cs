@@ -19,9 +19,9 @@ namespace ricaun.RevitTest.Console.Utils
         {
             if (IsDebuggerAttached == false) return process;
             dte = dte ?? DTE;
-            var processDTE = process.GetProcessDTE(dte);
             try
             {
+                var processDTE = process.GetProcessDTE(dte);
                 processDTE?.Attach();
                 Debug.WriteLine($"DTE.Debugger.Attach[{process.Id}]: {dte?.Name} {dte?.Version}");
             }
@@ -33,9 +33,9 @@ namespace ricaun.RevitTest.Console.Utils
         {
             if (IsDebuggerAttached == false) return process;
             dte = dte ?? DTE;
-            var processDTE = process.GetProcessDTE(dte);
             try
             {
+                var processDTE = process.GetProcessDTE(dte);
                 processDTE?.Detach(false);
                 Debug.WriteLine($"DTE.Debugger.Detach[{process.Id}]: {dte?.Name} {dte?.Version}");
             }
