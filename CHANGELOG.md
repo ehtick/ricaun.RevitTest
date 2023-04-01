@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] Run Tests - ricaun.NUnit
 [x] Run Tests - Filter Tests
 [x] Zip - Copy Zip Folder
-[] Zip - Copy back Zip Folder
+[x] Zip - Copy back Zip Folder
 [] Zip - Zip max size file
 [] Log - Enable/View
 ### Console
