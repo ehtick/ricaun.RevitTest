@@ -12,7 +12,7 @@ namespace ricaun.RevitTest.Application.Revit
         /// <param name="zipFile"></param>
         /// <param name="zipDestination"></param>
         /// <returns></returns>
-        public static bool ExtractToFolder(string zipFile, out string zipDestination)
+        public static bool ExtractToTempFolder(string zipFile, out string zipDestination)
         {
             var zipName = Path.GetFileNameWithoutExtension(zipFile);
             var zipDirectory = Path.GetDirectoryName(zipFile);
@@ -42,6 +42,35 @@ namespace ricaun.RevitTest.Application.Revit
             catch { }
 
             return false;
+        }
+
+        public static void ExtractToDirectoryIfNewer(string zipFile, string zipDestination)
+        {
+            using (ZipArchive archive = ZipFile.OpenRead(zipFile))
+            {
+                foreach (ZipArchiveEntry entry in archive.Entries)
+                {
+                    string filePath = Path.Combine(zipDestination, entry.FullName);
+
+                    if (File.Exists(filePath) == false | entry.LastWriteTime > File.GetLastWriteTime(filePath))
+                    {
+                        var directory = Path.GetDirectoryName(filePath);
+
+                        try
+                        {
+                            if (string.IsNullOrEmpty(entry.Name)) continue;
+
+                            if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
+                                Directory.CreateDirectory(directory);
+
+                            // Console.WriteLine($"ExtractToFile: {entry.Name}");
+
+                            entry.ExtractToFile(filePath, true);
+                        }
+                        catch { }
+                    }
+                }
+            }
         }
 
         /// <summary>

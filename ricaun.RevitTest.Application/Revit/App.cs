@@ -113,8 +113,13 @@ namespace ricaun.RevitTest.Application.Revit
                     }
                     var tests = await RevitTask.Run((uiapp) =>
                     {
-                        var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
-                        return tests;
+                        try
+                        {
+                            var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
+                            return tests;
+                        }
+                        catch { Log.WriteLine("TestExecuteUtils: Fail"); }
+                        return null;
                     });
                     ricaun.NUnit.TestEngine.Result = null;
                     ricaun.NUnit.TestEngineFilter.Reset();

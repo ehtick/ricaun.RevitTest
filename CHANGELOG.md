@@ -56,6 +56,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestsRevit
 [x] TestsRevitDocument
 [x] TestsDebugger
+[x] TestsFile
+[x] TestsFolder
 [x] TestsPass
 [x] TestsIgnore
 [x] TestsFail

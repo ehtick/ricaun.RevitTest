@@ -19,6 +19,7 @@ namespace ricaun.RevitTest.Application.Revit
             var location = Assembly.GetExecutingAssembly().Location;
             var directory = Path.GetDirectoryName(location);
 
+            var copyPathBack = false;
             string copyPath = null;
             if (Path.GetExtension(filePath).EndsWith("zip"))
             {
@@ -26,6 +27,7 @@ namespace ricaun.RevitTest.Application.Revit
             }
             else if (Path.GetExtension(filePath).EndsWith("dll"))
             {
+                copyPathBack = true;
                 copyPath = ZipExtension.CreateFromDirectory(
                     Path.GetDirectoryName(filePath),
                     Path.Combine(directory, Path.GetFileName(filePath))
@@ -33,10 +35,40 @@ namespace ricaun.RevitTest.Application.Revit
             }
             else return null;
 
-            var tests = UnZipAndTestFiles(directory, versionNumber, parameters);
+            //var tests = UnZipAndTestFiles(directory, versionNumber, parameters);
+
+            object tests = null;
+
+            if (ZipExtension.ExtractToTempFolder(copyPath, out string zipDestination))
+            {
+                tests = TestDirectory(zipDestination, parameters);
+            }
 
             if (copyPath is not null)
                 File.Delete(copyPath);
+
+            if (copyPathBack)
+            {
+                try
+                {
+                    var zipCopyBack = zipDestination + ".zip";
+
+                    if (File.Exists(zipCopyBack))
+                        File.Delete(zipCopyBack);
+
+                    var zipCopyPathBack = ZipExtension.CreateFromDirectory(zipDestination, zipCopyBack);
+
+                    ZipExtension.ExtractToDirectoryIfNewer(zipCopyPathBack, Path.GetDirectoryName(filePath));
+
+                    if (File.Exists(zipCopyPathBack))
+                        File.Delete(zipCopyPathBack);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+
+            }
 
             return tests;
         }
@@ -52,7 +84,7 @@ namespace ricaun.RevitTest.Application.Revit
         {
             if (Directory.GetFiles(directory, "*.zip").FirstOrDefault() is string zipFile)
             {
-                if (ZipExtension.ExtractToFolder(zipFile, out string zipDestination))
+                if (ZipExtension.ExtractToTempFolder(zipFile, out string zipDestination))
                 {
                     if (string.IsNullOrEmpty(versionNumber) == false)
                     {
@@ -100,8 +132,8 @@ namespace ricaun.RevitTest.Application.Revit
                         //System.Windows.Clipboard.SetText(Newtonsoft.Json.JsonConvert.SerializeObject(modelTest));
                         //System.Windows.Clipboard.SetText(modelTest.AsString());
 
-                        var passed = modelTest.Success ? "PASSED" : "FAILED";
-                        if (modelTest.TestCount == 0) { passed = "NO TESTS"; }
+                        var passed = modelTest.Success ? "Passed" : "Failed";
+                        if (modelTest.TestCount == 0) { passed = "No Tests"; }
                         Console.WriteLine($"{modelTest}\t {passed}");
 
                         var tests = modelTest.Tests.SelectMany(e => e.Tests);
