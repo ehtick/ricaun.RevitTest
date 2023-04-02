@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] Zip - Copy back Zip Folder
 [] Zip - Zip max size file
 [x] Log - Debug/Jornal
-[] Log - Enable/View
+[x] Log - FileOpen/JornalOpen
 ### Console
 [x] Info - icon.ico
 [x] PipeClient - Shared

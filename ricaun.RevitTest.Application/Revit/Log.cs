@@ -2,15 +2,18 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace ricaun.RevitTest.Application.Revit
 {
     public static class Log
     {
+        private static string LogName = "ricaun.RevitTest";
+
         static ControlledApplication ControlledApplication;
         public static void Initilize(UIControlledApplication application)
         {
-            ControlledApplication = application.ControlledApplication;
+            Initilize(application.ControlledApplication);
         }
         public static void Initilize(ControlledApplication application)
         {
@@ -23,15 +26,36 @@ namespace ricaun.RevitTest.Application.Revit
             ControlledApplication?.WriteJournalComment(value, false);
         }
 
+        public static void OpenJornal()
+        {
+            if (ControlledApplication is null) return;
+            Process.Start(ControlledApplication.RecordingJournalFilename);
+        }
+
+        private static string FileName = "RevitTest.log";
+        private static string FilePath = Path.Combine(Path.GetDirectoryName(typeof(Log).Assembly.Location), FileName);
+        private static void WriteFile(string value)
+        {
+            value = $"{DateTime.Now}: {value}{Environment.NewLine}";
+            File.AppendAllText(FilePath, value);
+        }
+
+        public static void OpenFile()
+        {
+            if (File.Exists(FilePath))
+                Process.Start(FilePath);
+        }
+
         /// <summary>
         /// WriteLine
         /// </summary>
         /// <param name="value"></param>
         public static void WriteLine(string value)
         {
-            value = $"RevitTest: {value}";
+            value = $"{LogName}: {value}";
             Debug.WriteLine(value);
             WriteJornal(value);
+            WriteFile(value);
         }
 
         /// <summary>
