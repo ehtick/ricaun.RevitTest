@@ -26,13 +26,15 @@ namespace ricaun.RevitTest.Application.Revit
 
         public Result OnStartup(UIControlledApplication application)
         {
+            Log.Initilize(application);
+
             RevitBusyControl.Initialize(application);
             RevitBusyControl.Control.PropertyChanged += RevitBusyControlPropertyChanged;
             RevitTask.Initialize(application);
 
             NUnitUtils.Initialize();
 
-            Debug.WriteLine($"Debugger: {Debugger.IsAttached}");
+            if (Debugger.IsAttached) Log.WriteLine($"Debugger: {Debugger.IsAttached}");
 
             RevitParameters.AddParameter(
                 application,
@@ -178,7 +180,7 @@ namespace ricaun.RevitTest.Application.Revit
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Log.WriteLine(ex);
             }
         }
 

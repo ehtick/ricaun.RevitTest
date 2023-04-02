@@ -16,13 +16,13 @@ namespace ricaun.RevitTest.Application.Revit
 
             foreach (var assembly in assemblies)
             {
-                Console.WriteLine($"AppDomain: {assembly}");
+                Log.WriteLine($"AppDomain: {assembly}");
             }
 
             //var hasversion = assemblies.Any(e => e.GetName().Version.ToString(3) == NUNIT_VERSION);
             //if (!hasversion)
             //{
-            //    Console.WriteLine($"LoadFile: {LoadFile()}");
+            //    Log.WriteLine($"LoadFile: {LoadFile()}");
             //}
 
             //TestUtils.Initialize();

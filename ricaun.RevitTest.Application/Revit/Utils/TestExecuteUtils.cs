@@ -1,8 +1,5 @@
-﻿using Autodesk.Revit.DB;
-using ricaun.NUnit;
-using ricaun.NUnit.Models;
+﻿using ricaun.NUnit;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -65,7 +62,7 @@ namespace ricaun.RevitTest.Application.Revit
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Log.WriteLine(ex);
                 }
 
             }
@@ -92,7 +89,7 @@ namespace ricaun.RevitTest.Application.Revit
                         {
                             if (Path.GetFileName(versionDirectory).Equals(versionNumber))
                             {
-                                Console.WriteLine($"Test VersionNumber: {versionNumber}");
+                                Log.WriteLine($"Test VersionNumber: {versionNumber}");
                                 return TestDirectory(versionDirectory, parameters);
                             }
                         }
@@ -109,9 +106,9 @@ namespace ricaun.RevitTest.Application.Revit
         {
             NUnit.Models.TestAssemblyModel modelTest = null;
 
-            Console.WriteLine("----------------------------------");
-            Console.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
-            Console.WriteLine("----------------------------------");
+            Log.WriteLine("----------------------------------");
+            Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
+            Log.WriteLine("----------------------------------");
 
             foreach (var filePath in Directory.GetFiles(directory, "*.dll"))
             {
@@ -120,10 +117,10 @@ namespace ricaun.RevitTest.Application.Revit
                 {
                     if (TestEngine.ContainNUnit(filePath))
                     {
-                        //Console.WriteLine($"Test File: {fileName}");
+                        //Log.WriteLine($"Test File: {fileName}");
                         //foreach (var testName in TestEngine.GetTestFullNames(filePath))
                         //{
-                        //    Console.WriteLine($"\t{testName}");
+                        //    Log.WriteLine($"\t{testName}");
                         //}
 
                         modelTest = TestEngine.TestAssembly(
@@ -134,24 +131,25 @@ namespace ricaun.RevitTest.Application.Revit
 
                         var passed = modelTest.Success ? "Passed" : "Failed";
                         if (modelTest.TestCount == 0) { passed = "No Tests"; }
-                        Console.WriteLine($"{modelTest}\t {passed}");
+
+                        Log.WriteLine($"{modelTest}\t {passed}");
 
                         var tests = modelTest.Tests.SelectMany(e => e.Tests);
 
                         foreach (var test in tests)
                         {
-                            Console.WriteLine($"\t {test.Time}\t {test}");
+                            Log.WriteLine($"\t {test.Time}\t {test}");
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error: {fileName} {ex}");
+                    Log.WriteLine($"Error: {fileName} {ex}");
                 }
             }
 
-            Console.WriteLine("----------------------------------");
+            Log.WriteLine("----------------------------------");
 
             return modelTest;
         }

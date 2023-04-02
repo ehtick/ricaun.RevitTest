@@ -63,7 +63,7 @@ namespace ricaun.RevitTest.Application.Revit
                             if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
                                 Directory.CreateDirectory(directory);
 
-                            // Console.WriteLine($"ExtractToFile: {entry.Name}");
+                            // Log.WriteLine($"ExtractToFile: {entry.Name}");
 
                             entry.ExtractToFile(filePath, true);
                         }

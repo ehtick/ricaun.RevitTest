@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] / 2023-02-27 - 2023-03-30
+## [1.0.0] / 2023-02-27 - 2023-04-02
 ### Features
 ### Application
 [x] PipeServer - Shared
@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] Zip - Copy Zip Folder
 [x] Zip - Copy back Zip Folder
 [] Zip - Zip max size file
+[x] Log - Debug/Jornal
 [] Log - Enable/View
 ### Console
 [x] Info - icon.ico
