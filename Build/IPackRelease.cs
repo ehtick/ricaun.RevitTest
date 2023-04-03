@@ -7,14 +7,14 @@ using ricaun.Nuke.Components;
 using ricaun.Nuke.Extensions;
 
 /// <summary>
-/// IPackContent
+/// IPackRelease
 /// </summary>
-public interface IPackContent : IHazPack, IHazContent, ISign, IHazGitRepository, INukeBuild, IBuildConsole, IGitRelease
+public interface IPackRelease : IHazPack, IHazContent, ISign, IHazGitRepository, INukeBuild, IBuildConsole, IGitRelease
 {
     /// <summary>
     /// Target Pack
     /// </summary>
-    Target Pack => _ => _
+    Target PackRelease => _ => _
         .TriggeredBy(BuildConsole)
         .After(GitRelease)
         .OnlyWhenStatic(() => NugetApiUrl.SkipEmpty())
@@ -23,9 +23,11 @@ public interface IPackContent : IHazPack, IHazContent, ISign, IHazGitRepository,
         .OnlyWhenDynamic(() => GitRepository.IsOnMainOrMasterBranch())
         .Executes(() =>
         {
-            PathConstruction.GlobFiles(ContentDirectory, "**/*.nupkg")
+            var releaseDirectory = GetReleaseDirectory(MainProject);
+            PathConstruction.GlobFiles(releaseDirectory, "**/*.nupkg")
                .ForEach(x =>
                {
+                   Serilog.Log.Information($"DotNetNuGetPush: {x}");
                    DotNetTasks.DotNetNuGetPush(s => s
                         .SetTargetPath(x)
                         .SetSource(NugetApiUrl)
