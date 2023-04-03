@@ -12,20 +12,16 @@ namespace ricaun.RevitTest.Application.Revit
 
         public static void Initialize()
         {
+            Log.WriteLine();
+            Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
+            Log.WriteLine();
+
             Assembly[] assemblies = GetAssemblies();
 
             foreach (var assembly in assemblies)
             {
                 Log.WriteLine($"AppDomain: {assembly}");
             }
-
-            //var hasversion = assemblies.Any(e => e.GetName().Version.ToString(3) == NUNIT_VERSION);
-            //if (!hasversion)
-            //{
-            //    Log.WriteLine($"LoadFile: {LoadFile()}");
-            //}
-
-            //TestUtils.Initialize();
         }
 
         /// <summary>

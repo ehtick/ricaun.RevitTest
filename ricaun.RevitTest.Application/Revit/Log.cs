@@ -46,14 +46,14 @@ namespace ricaun.RevitTest.Application.Revit
         #endregion
 
         #region File
-        private static string FileName = "RevitTest.log";
+        private static string FileName = "RevitTest_{0}.log";
         private static string FilePath = null;
 
         private static void CreateFile()
         {
             if (FilePath is null)
             {
-                FilePath = Path.Combine(Path.GetTempPath(), FileName);
+                FilePath = Path.Combine(Path.GetTempPath(), string.Format(FileName, DateTime.Now.Ticks));
             }
         }
 
@@ -65,9 +65,13 @@ namespace ricaun.RevitTest.Application.Revit
         }
         private static void WriteFile(string value)
         {
-            if (FilePath is null) return;
-            value = $"{DateTime.Now}: {value}{Environment.NewLine}";
-            File.AppendAllText(FilePath, value);
+            try
+            {
+                if (FilePath is null) return;
+                value = $"{DateTime.Now}: {value}{Environment.NewLine}";
+                File.AppendAllText(FilePath, value);
+            }
+            catch { }
         }
 
         public static void OpenFile()
