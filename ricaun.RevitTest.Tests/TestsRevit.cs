@@ -6,9 +6,9 @@ namespace ricaun.RevitTest.Tests
 {
     /// <summary>
     /// dotnet test .\ricaun.RevitTest.Tests\bin\Debug\ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.Verbosity=1
-    /// dotnet test .\ricaun.RevitTest.Tests\bin\Debug\ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.RevitVersion=2021
+    /// dotnet test .\ricaun.RevitTest.Tests\bin\Debug\ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.Version=2021
     /// dotnet test .\ricaun.RevitTest.Tests\bin\Debug\ricaun.RevitTest.Tests.dll --settings:.\ricaun.RevitTest.Tests\bin\Debug\.runsettings -v:detailed
-    /// -- NUnit.RevitVersion=2021 NUnit.RevitOpen=true NUnit.RevitClose=true
+    /// -- NUnit.Version=2021 NUnit.Open=true NUnit.Close=true
     /// </summary>
     public class TestsRevit
     {
