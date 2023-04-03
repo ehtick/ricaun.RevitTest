@@ -11,6 +11,7 @@ public interface IBuildLocalTests : IBuildConsole, IHazTest
 
     Target BuildTests => _ => _
         .TriggeredBy(BuildConsole)
+        .Before(Release)
         .OnlyWhenStatic(() => IsLocalBuild)
         .Executes(() =>
         {
