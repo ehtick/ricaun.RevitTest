@@ -158,8 +158,8 @@ namespace ricaun.RevitTest.Console.Utils
                                 process.AttachDTE();
                                 client.Update((request) =>
                                 {
-                                    request.TestPathFile = fileToTest;
                                     request.TestFilter = testFilter;
+                                    request.TestPathFile = fileToTest;
                                 });
                                 sendFileWhenCreatedOrUpdated = false;
                             }

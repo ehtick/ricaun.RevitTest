@@ -5,6 +5,8 @@
     <RevitOpen>false</RevitOpen>
     <RevitClose>false</RevitClose>
     <Verbosity>1</Verbosity>
+    <!--
     <Application></Application>
+    -->
 	</NUnit>
 </RunSettings>

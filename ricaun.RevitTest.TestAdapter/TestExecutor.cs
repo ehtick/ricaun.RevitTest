@@ -14,6 +14,12 @@ namespace ricaun.RevitTest.TestAdapter
     [ExtensionUri(ExecutorUriString)]
     public class TestExecutor : TestAdapter, ITestExecutor
     {
+        /// <summary>
+        /// RunTests
+        /// </summary>
+        /// <param name="testCases"></param>
+        /// <param name="runContext"></param>
+        /// <param name="frameworkHandle"></param>
         public void RunTests(IEnumerable<TestCase> testCases, IRunContext runContext, IFrameworkHandle frameworkHandle)
         {
             Initialize(runContext, frameworkHandle);
@@ -72,6 +78,8 @@ namespace ricaun.RevitTest.TestAdapter
             tests = tests ?? new List<TestCase>();
 
             AdapterLogger.Logger.Info($"RunTest: {source} [TestCase: {tests.Count}]");
+
+            Metadatas.MetadataSettings.Create(source);
 
             using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
             {

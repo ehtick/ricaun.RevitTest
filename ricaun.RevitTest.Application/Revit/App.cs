@@ -81,6 +81,8 @@ namespace ricaun.RevitTest.Application.Revit
                     var message = s as TestRequest;
                     if (message is null) return;
 
+                    if (e.PropertyName != nameof(TestRequest.TestPathFile)) return;
+
                     if (string.IsNullOrEmpty(message.TestPathFile))
                     {
                         return;

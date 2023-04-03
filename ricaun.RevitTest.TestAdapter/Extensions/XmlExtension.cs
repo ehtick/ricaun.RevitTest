@@ -24,5 +24,20 @@
             catch { }
             return default(T);
         }
+
+        public static string SerializeXml<T>(this T value)
+        {
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                using (StringWriter xmlStream = new StringWriter())
+                {
+                    serializer.Serialize(xmlStream, value);
+                    return xmlStream.ToString();
+                }
+            }
+            catch { }
+            return null;
+        }
     }
 }

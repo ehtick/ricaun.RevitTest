@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] / 2023-02-27 - 2023-04-02
+## [1.0.0] / 2023-02-27 - 2023-04-03
 ### Features
 ### Application
 [x] App - RibbonPanel/RibbonItem
@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Shared
 [x] PipeServer/Client - Json
 [x] PipeServer/Client - Default is new()
-[x] PipeServer/Client - Mapper.Map
+[x] PipeServer/Client - Mapper.Map (Update Map static)
 [x] TestRequests - PropertyChanged
 [x] TestResponse - PropertyChanged
 [x] TestResponse - Test/Tests/Info

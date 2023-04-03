@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace ricaun.RevitTest.Shared.Mappers
+namespace ricaun.RevitTest.TestAdapter.Metadatas
 {
     /// <summary>
     /// Mapper

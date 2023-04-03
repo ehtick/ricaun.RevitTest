@@ -57,10 +57,22 @@
     <Copyright>Copyright © $(Company) $(CopyrightYears)</Copyright>
   </PropertyGroup>
 
+  <!--Tests-->
   <ItemGroup>
     <Compile Remove="Mappers\MapperPropertyChangedTests.cs" />
     <Compile Remove="Mappers\MapperTests.cs" />
   </ItemGroup>
+  <!--
+  <ItemGroup Condition="!$(Configuration.Contains('Debug'))">
+    <Compile Remove="Mappers\MapperPropertyChangedTests.cs" />
+    <Compile Remove="Mappers\MapperTests.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('Debug'))">
+    <PackageReference Include="NUnit" Version="*" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0"/>
+  </ItemGroup>
+  -->
 
   <ItemGroup>
     <!--
