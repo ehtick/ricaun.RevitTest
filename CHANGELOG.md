@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.0] / 2023-02-27 - 2023-04-02
 ### Features
 ### Application
+[x] App - RibbonPanel/RibbonItem
 [x] PipeServer - Shared
-[] PipeClient - PropertyChanged
+[x] PipeClient - PropertyChanged
 [x] Run Tests - ricaun.NUnit
 [x] Run Tests - Filter Tests
 [x] Zip - Copy Zip Folder

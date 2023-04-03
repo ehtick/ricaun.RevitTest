@@ -44,8 +44,12 @@ namespace ricaun.RevitTest.Application.Revit
 
             PipeTestServer_Initialize();
 
-            ribbonPanel = application.CreatePanel("");
+            ribbonPanel = application.CreatePanel(this.GetType().Name);
+            ribbonPanel.Title = "ricaun";
             ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
+            ribbonItem.SetContextualHelp("https://ricaun.com")
+                .SetToolTip("Open RevitTest.log File");
+
             UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
 
 #if DEBUG
@@ -67,15 +71,16 @@ namespace ricaun.RevitTest.Application.Revit
             });
 
             var initializeServer = PipeTestServer.Initialize();
-            PipeTestServer.ClientMessage.PropertyChanged += (s, e) =>
-            {
-                Debug.WriteLine($"PropertyChanged[ {e.PropertyName} ]\t {s.GetType().Name}");
-            };
 
             if (initializeServer)
             {
-                PipeTestServer.NamedPipe.ClientMessage += async (connection, message) =>
+                PipeTestServer.ClientMessage.PropertyChanged += async (s, e) =>
                 {
+                    Debug.WriteLine($"PropertyChanged[ {e.PropertyName} ]\t {s.GetType().Name}");
+
+                    var message = s as TestRequest;
+                    if (message is null) return;
+
                     if (string.IsNullOrEmpty(message.TestPathFile))
                     {
                         return;
