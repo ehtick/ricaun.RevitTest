@@ -5,9 +5,9 @@ using System.Reflection;
 
 #if DEBUG
 [assembly: AssemblyMetadata("NUnit.Version", "2021")]
-[assembly: AssemblyMetadata("NUnit.Open", "true")]
-[assembly: AssemblyMetadata("NUnit.Close", "true")]
-[assembly: AssemblyMetadata("NUnit.Verbosity", "1")]
+//[assembly: AssemblyMetadata("NUnit.Open", "true")]
+//[assembly: AssemblyMetadata("NUnit.Close", "true")]
+//[assembly: AssemblyMetadata("NUnit.Verbosity", "1")]
 #endif
 
 namespace ricaun.RevitTest.Tests

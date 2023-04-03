@@ -85,16 +85,16 @@ flowchart LR
 
 ### `dotnet test`
 ```bash
-dotnet test ricaun.RevitTest.Tests.dll -- NUnit.RevitVersion=2021 NUnit.RevitOpen=true NUnit.RevitClose=true
+dotnet test ricaun.RevitTest.Tests.dll -- NUnit.Version=2021 NUnit.Open=true NUnit.Close=true
 ```
 ```bash
-dotnet test ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.RevitVersion=2021 NUnit.RevitOpen=True NUnit.RevitClose=True NUnit.Verbosity=1
+dotnet test ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.Version=2021 NUnit.Open=True NUnit.Close=True NUnit.Verbosity=1
 ```
 ```bash
 dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings
 ```
 ```bash
-dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.RevitVersion=2023
+dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=2023
 ```
 
 ### `.runsettings`
@@ -115,13 +115,23 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.RevitVer
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<NUnit>
-		<RevitVersion>2021</RevitVersion>
-		<RevitOpen>true</RevitOpen>
-		<RevitClose>true</RevitClose>
+		<Version>2021</Version>
+		<Open>true</Open>
+		<Close>true</Close>
 		<Verbosity>1</Verbosity>
 	</NUnit>
 </RunSettings>
 ```
+
+AssemblyMetadata
+```c#
+[assembly: AssemblyMetadata("NUnit.Version", "2021")]
+[assembly: AssemblyMetadata("NUnit.Open", "true")]
+[assembly: AssemblyMetadata("NUnit.Close", "true")]
+[assembly: AssemblyMetadata("NUnit.Verbosity", "1")]
+```
+
+
 
 ## License
 
