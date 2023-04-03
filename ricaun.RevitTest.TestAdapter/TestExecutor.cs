@@ -132,9 +132,9 @@ namespace ricaun.RevitTest.TestAdapter
                 };
 
                 await revit.RunTestAction(source,
-                    AdapterSettings.Settings.NUnit.RevitVersion,
-                    AdapterSettings.Settings.NUnit.RevitOpen,
-                    AdapterSettings.Settings.NUnit.RevitClose,
+                    AdapterSettings.Settings.NUnit.Version,
+                    AdapterSettings.Settings.NUnit.Open,
+                    AdapterSettings.Settings.NUnit.Close,
                     outputConsole, filters);
             }
         }

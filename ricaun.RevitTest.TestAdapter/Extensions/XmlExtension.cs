@@ -25,6 +25,12 @@
             return default(T);
         }
 
+        /// <summary>
+        /// SerializeXml
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string SerializeXml<T>(this T value)
         {
             try

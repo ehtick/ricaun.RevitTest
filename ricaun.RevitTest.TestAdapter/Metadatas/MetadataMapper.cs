@@ -26,6 +26,7 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         }
         private static object GetValue(AssemblyMetadataAttribute attribute, PropertyInfo propertyInfo)
         {
+            Debug.WriteLine(propertyInfo.PropertyType);
             var type = propertyInfo.PropertyType;
             if (type == typeof(int))
             {
@@ -40,10 +41,15 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
                 }
                 catch { }
             }
-            else if (type == typeof(bool) || type == typeof(XmlBool))
+            else if (type == typeof(bool))
             {
                 var value = attribute.Value.ToLower();
                 return value.Equals("true");
+            }
+            else if (type == typeof(XmlBool))
+            {
+                var value = attribute.Value.ToLower();
+                return (XmlBool)value.Equals("true");
             }
             return attribute.Value;
         }

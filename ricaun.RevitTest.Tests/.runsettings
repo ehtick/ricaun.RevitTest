@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<NUnit>
-    <RevitVersion>2021</RevitVersion>
-    <RevitOpen>false</RevitOpen>
-    <RevitClose>false</RevitClose>
+    <Version>2021</Version>
+    <Open>false</Open>
+    <Close>false</Close>
     <Verbosity>1</Verbosity>
     <!--
     <Application></Application>

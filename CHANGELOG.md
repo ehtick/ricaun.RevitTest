@@ -45,9 +45,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestAdapter - Logger (AdapterLogger)
 [x] TestAdapter - TestCaseUtils
 [x] TestAdapter - RunSettings (AdapterSettings, XmlExtension, RunSettingModel, XmlBool)
-[x] TestAdapter - RunSettingsModel (RevitVersion, RevitOpen, RevitClose, Verbosity, Application)
+[x] TestAdapter - RunSettingsModel (Version, Open, Close, Verbosity, Application)
 [x] TestAdapter - Custom Application Process (Download Zip)
 [x] TestAdapter - Add Debugger in executor if needed
+[X] TestAdapter - MetadataMapper (AssemblyMetadataAttribute)
 [x] Services - RevitTestConsole
 [x] Services - ProcessStart
 [x] Services - RevitTestProcessStart

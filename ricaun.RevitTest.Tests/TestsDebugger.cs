@@ -3,10 +3,12 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 
-//[assembly: AssemblyMetadata("NUnit.RevitVersion", "2022")]
-[assembly: AssemblyMetadata("NUnit.RevitOpen", "false")]
-[assembly: AssemblyMetadata("NUnit.RevitClose", "false")]
-[assembly: AssemblyMetadata("NUnit.Verbosity", "5")]
+#if DEBUG
+[assembly: AssemblyMetadata("NUnit.Version", "2021")]
+[assembly: AssemblyMetadata("NUnit.Open", "true")]
+[assembly: AssemblyMetadata("NUnit.Close", "true")]
+[assembly: AssemblyMetadata("NUnit.Verbosity", "1")]
+#endif
 
 namespace ricaun.RevitTest.Tests
 {
