@@ -6,6 +6,7 @@ namespace ricaun.RevitTest.Application.Revit
     {
         public static string Initialize()
         {
+            Log.Initilize();
             Log.WriteLine();
             Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
             Log.WriteLine();

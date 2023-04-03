@@ -18,8 +18,20 @@ namespace ricaun.RevitTest.Application.Revit
         public static void Initilize(ControlledApplication application)
         {
             ControlledApplication = application;
+            Initilize();
         }
 
+        public static void Initilize()
+        {
+            CreateFile();
+        }
+
+        public static void Finish()
+        {
+            RemoveFile();
+        }
+
+        #region Jornal
         private static void WriteJornal(string value)
         {
             if (ControlledApplication is null) return;
@@ -31,11 +43,29 @@ namespace ricaun.RevitTest.Application.Revit
             if (ControlledApplication is null) return;
             Process.Start(ControlledApplication.RecordingJournalFilename);
         }
+        #endregion
 
+        #region File
         private static string FileName = "RevitTest.log";
-        private static string FilePath = Path.Combine(Path.GetDirectoryName(typeof(Log).Assembly.Location), FileName);
+        private static string FilePath = null;
+
+        private static void CreateFile()
+        {
+            if (FilePath is null)
+            {
+                FilePath = Path.Combine(Path.GetTempPath(), FileName);
+            }
+        }
+
+        private static void RemoveFile()
+        {
+            if (FilePath is null) return;
+            if (File.Exists(FilePath))
+                File.Delete(FilePath);
+        }
         private static void WriteFile(string value)
         {
+            if (FilePath is null) return;
             value = $"{DateTime.Now}: {value}{Environment.NewLine}";
             File.AppendAllText(FilePath, value);
         }
@@ -43,9 +73,13 @@ namespace ricaun.RevitTest.Application.Revit
         public static void OpenFile()
         {
             if (File.Exists(FilePath))
+            {
                 Process.Start(FilePath);
+            }
         }
+        #endregion
 
+        #region WriteLine
         /// <summary>
         /// WriteLine
         /// </summary>
@@ -81,6 +115,7 @@ namespace ricaun.RevitTest.Application.Revit
         /// WriteLine
         /// </summary>
         public static void WriteLine() => WriteLine("-------------------------------");
+        #endregion
     }
 
 }

@@ -161,6 +161,9 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonPanel?.Remove();
             PipeTestServer?.Dispose();
             RevitBusyControl.Control.PropertyChanged -= RevitBusyControlPropertyChanged;
+
+            Log.Finish();
+
             return Result.Succeeded;
         }
 
