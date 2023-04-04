@@ -124,6 +124,8 @@ namespace ricaun.RevitTest.Application.Revit
                     {
                         try
                         {
+                            if (UserUtils.IsNotValid(uiapp)) throw new Exception("UserUtils.IsNotValid");
+
                             var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
                             return tests;
                         }
