@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Application
 [x] App - RibbonPanel/RibbonItem
 [x] PipeServer - Shared
+[x] UserUtils - IsValid/ISNotValid
 [x] PipeClient - PropertyChanged
 [x] Run Tests - ricaun.NUnit
 [x] Run Tests - Filter Tests
