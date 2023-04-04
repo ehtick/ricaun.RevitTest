@@ -15,6 +15,8 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         {
             try
             {
+                if (AdapterSettings.Settings.NUnit.Metadata == false) return;
+
                 var assembly = Assembly.Load(File.ReadAllBytes(source));
                 var assemblyMetadataAttributes = assembly.GetCustomAttributes(typeof(AssemblyMetadataAttribute), false)
                         .OfType<AssemblyMetadataAttribute>().ToArray();
@@ -27,12 +29,13 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
                 //var metadataRunSettings = MetadataXmlUtils.CreateXml("RunSettings", assemblyMetadataAttributes);
                 //AdapterLogger.Logger.Info(metadataRunSettings);
 
-                MetadataMapper.Map(assemblyMetadataAttributes, AdapterSettings.Settings.NUnit);
-
                 //Mapper.Map(metadataRunSettings.DeserializeXml<RunSettingsModel>(), AdapterSettings.Settings);
 
                 if (assemblyMetadataAttributes.Any())
+                {
+                    MetadataMapper.Map(assemblyMetadataAttributes, AdapterSettings.Settings.NUnit);
                     AdapterLogger.Logger.Info($"AdapterSettings: {AdapterSettings.Settings}");
+                }
             }
             catch { }
         }

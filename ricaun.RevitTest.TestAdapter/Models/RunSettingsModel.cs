@@ -25,6 +25,9 @@
 
             [XmlElement("Application")]
             public string Application { get; set; }
+
+            [XmlElement("Metadata")]
+            public XmlBool Metadata { get; set; } = true;
         }
 
         public override string ToString()

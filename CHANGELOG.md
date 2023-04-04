@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] / 2023-02-27 - 2023-04-03
+## [1.0.0] / 2023-02-27 - 2023-04-04
 ### Features
 ### Application
 [x] App - RibbonPanel/RibbonItem
@@ -45,7 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestAdapter - Logger (AdapterLogger)
 [x] TestAdapter - TestCaseUtils
 [x] TestAdapter - RunSettings (AdapterSettings, XmlExtension, RunSettingModel, XmlBool)
-[x] TestAdapter - RunSettingsModel (Version, Open, Close, Verbosity, Application)
+[x] TestAdapter - RunSettingsModel (Version, Open, Close, Verbosity, Application, Metadata)
 [x] TestAdapter - Custom Application Process (Download Zip)
 [x] TestAdapter - Add Debugger in executor if needed
 [X] TestAdapter - MetadataMapper (AssemblyMetadataAttribute)

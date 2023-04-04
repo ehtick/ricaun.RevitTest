@@ -119,6 +119,8 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 		<Open>true</Open>
 		<Close>true</Close>
 		<Verbosity>1</Verbosity>
+        <Application></Application>
+        <Metadata>false</Metadata>
 	</NUnit>
 </RunSettings>
 ```
