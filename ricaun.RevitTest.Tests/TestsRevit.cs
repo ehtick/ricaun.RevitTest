@@ -1,6 +1,7 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI;
 using NUnit.Framework;
+using System;
 
 namespace ricaun.RevitTest.Tests
 {
@@ -38,6 +39,13 @@ namespace ricaun.RevitTest.Tests
         {
             Assert.IsNotNull(application);
             Assert.Pass(application.VersionBuild);
+        }
+
+        [Test]
+        public void TestRevit5(IDisposable disposable)
+        {
+            Assert.IsTrue(disposable is UIApplication);
+            Assert.Pass(disposable.ToString());
         }
     }
 }

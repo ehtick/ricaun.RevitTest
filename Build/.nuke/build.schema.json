@@ -123,8 +123,8 @@
               "Clean",
               "Compile",
               "GitRelease",
-              "Pack",
               "PackageBuilder",
+              "PackRelease",
               "Release",
               "Sign"
             ]
@@ -146,8 +146,8 @@
               "Clean",
               "Compile",
               "GitRelease",
-              "Pack",
               "PackageBuilder",
+              "PackRelease",
               "Release",
               "Sign"
             ]

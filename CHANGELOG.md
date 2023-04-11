@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] / 2023-04-11
+### Features
+[x] Update `ricaun.NUnit` to 1.2.6
+### Tests
+[x] TestRevit - Similar Parameter `(IDisposable is UIApplication)`
+
 ## [1.0.0] / 2023-02-27 - 2023-04-04
 ### Features
 ### Application
@@ -67,4 +73,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.1]: ../../compare/1.0.0...1.0.1
 [1.0.0]: ../../compare/1.0.0
