@@ -35,6 +35,12 @@ flowchart LR
 <PackageReference Include="ricaun.RevitTest.TestAdapter" Version="*" />
 ```
 
+### PropertyGroup
+```xml
+<IsTestProject>true</IsTestProject>
+```
+
+
 ## Installation
 
 * Download and install [ricaun.RevitTest.Console.exe](https://github.com/ricaun-io/ricaun.RevitTest/releases/latest/download/ricaun.RevitTest.Console.zip)
@@ -115,23 +121,39 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<NUnit>
-		<Version>2021</Version>
-		<Open>true</Open>
-		<Close>true</Close>
-		<Verbosity>1</Verbosity>
+        <Version>2021</Version>
+        <Open>true</Open>
+        <Close>true</Close>
+        <Verbosity>1</Verbosity>
         <Application></Application>
         <Metadata>false</Metadata>
 	</NUnit>
 </RunSettings>
 ```
 
-AssemblyMetadata
+### AssemblyMetadata
+.cs
 ```c#
 [assembly: AssemblyMetadata("NUnit.Version", "2021")]
 [assembly: AssemblyMetadata("NUnit.Open", "true")]
 [assembly: AssemblyMetadata("NUnit.Close", "true")]
 [assembly: AssemblyMetadata("NUnit.Verbosity", "1")]
 ```
+.csproj
+```xml
+<!-- Release -->
+<ItemGroup Condition="!$(Configuration.Contains('Debug'))">
+  <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+    <_Parameter1>NUnit.Open</_Parameter1>
+    <_Parameter2>true</_Parameter2>
+  </AssemblyAttribute>
+  <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+    <_Parameter1>NUnit.Close</_Parameter1>
+    <_Parameter2>true</_Parameter2>
+  </AssemblyAttribute>
+</ItemGroup>
+```
+
 
 
 

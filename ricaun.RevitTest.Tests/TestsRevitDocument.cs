@@ -5,7 +5,6 @@ using System;
 
 namespace ricaun.RevitTest.Tests
 {
-    [Explicit]
     public class TestsRevitDocument
     {
         private readonly Application application;

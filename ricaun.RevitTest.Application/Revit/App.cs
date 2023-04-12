@@ -44,17 +44,7 @@ namespace ricaun.RevitTest.Application.Revit
 
             PipeTestServer_Initialize();
 
-            ribbonPanel = application.CreatePanel(this.GetType().Name);
-            ribbonPanel.Title = "ricaun";
-            ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
-            ribbonItem.SetContextualHelp("https://ricaun.com")
-                .SetToolTip("Open RevitTest.log File");
-
-            UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
-
-#if DEBUG
-            ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
-#endif
+            CreateRibbonPanel(application);
 
             return Result.Succeeded;
         }
@@ -158,6 +148,21 @@ namespace ricaun.RevitTest.Application.Revit
             Log.WriteLine();
         }
 
+        private void CreateRibbonPanel(UIControlledApplication application)
+        {
+            ribbonPanel = application.CreatePanel(this.GetType().Name);
+            ribbonPanel.Title = "ricaun";
+            ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
+            ribbonItem.SetContextualHelp("https://ricaun.com")
+                .SetToolTip("Open RevitTest.log File");
+
+            UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
+
+#if DEBUG
+            ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
+#endif
+        }
+
         public Result OnShutdown(UIControlledApplication application)
         {
             PipeTestServer.Update(response =>
@@ -206,7 +211,5 @@ namespace ricaun.RevitTest.Application.Revit
             else
                 ribbonItem.SetLargeImage(LargeImageNoBusy);
         }
-
     }
-
 }
