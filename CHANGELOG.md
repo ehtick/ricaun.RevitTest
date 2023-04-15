@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] / 2023-04-15
+### Features
+[x] Update `ricaun.NUnit` to 1.2.7
+### Tests
+[x] TestsCase - TestCase with string and null
+### Update
+[x] Update `TestAdapter` to work with `ricaun.NUnit` 1.2.7
+[x] Update `ProcessStart` in `TestAdapter` to work with `"` in the filter.
+
 ## [1.0.1] / 2023-04-11
 ### Features
 [x] Update `ricaun.NUnit` to 1.2.6
@@ -73,5 +82,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.2]: ../../compare/1.0.1...1.0.2
 [1.0.1]: ../../compare/1.0.0...1.0.1
 [1.0.0]: ../../compare/1.0.0
