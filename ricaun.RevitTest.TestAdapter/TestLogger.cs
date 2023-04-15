@@ -19,7 +19,6 @@ namespace ricaun.RevitTest.TestAdapter
         void Warning(string message);
         void Warning(string message, Exception ex);
         void Info(string message);
-        void Info(string message, int verbosity);
         int Verbosity { get; set; }
         void Debug(string message);
     }
@@ -78,13 +77,8 @@ namespace ricaun.RevitTest.TestAdapter
 
         public void Info(string message)
         {
-            Info(message, 1);
-        }
-
-        public void Info(string message, int verbosity)
-        {
             //if (adapterSettings?.Verbosity >= 0)
-            if (Verbosity >= verbosity)
+            if (Verbosity >= 1)
                 SendMessage(TestMessageLevel.Informational, message);
         }
 

@@ -19,11 +19,8 @@ namespace ricaun.RevitTest.TestAdapter.Services
             }
             string ConvertValue(object value)
             {
-                if (value is string valueString)
-                {
-                    value = valueString.Replace("\"", "\\\"");
+                if (value is string)
                     return $"\"{value}\"";
-                }
                 return $"{value}";
             }
             var arguments = "";
@@ -37,7 +34,6 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 arguments += $"{ConvertKey(item.Key)} ";
                 arguments += $"{ConvertValue(item.Value)} ";
             }
-            AdapterLogger.Logger.Debug($"\tCreateArguments: {arguments}");
             return arguments;
         }
 

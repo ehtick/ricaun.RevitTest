@@ -50,10 +50,6 @@ namespace ricaun.RevitTest.TestAdapter
             {
             }
 
-            public void Info(string message, int verbosity)
-            {
-            }
-
             public void Warning(string message)
             {
             }
