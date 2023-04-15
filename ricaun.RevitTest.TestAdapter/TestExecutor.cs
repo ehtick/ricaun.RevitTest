@@ -78,12 +78,23 @@ namespace ricaun.RevitTest.TestAdapter
             tests = tests ?? new List<TestCase>();
 
             AdapterLogger.Logger.Info($"RunTest: {source} [TestCase: {tests.Count}]");
-
+            foreach (var test in tests)
+            {
+                AdapterLogger.Logger.Info($"Test: {test.FullyQualifiedName}.{test.DisplayName}");
+            }
             Metadatas.MetadataSettings.Create(source);
+
+            AdapterLogger.Logger.Info("---------");
+            AdapterLogger.Logger.Info($"RevitTestConsole: {AdapterSettings.Settings.NUnit.Application}");
+            AdapterLogger.Logger.Info("---------");
 
             using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
             {
-                var filters = tests.Select(e => $"{e.FullyQualifiedName}.{e.DisplayName}").ToArray();
+                var filters = tests.Select(TestCaseUtils.GetFullName).ToArray();
+                foreach (var filter in filters)
+                {
+                    AdapterLogger.Logger.Debug($"\tTestFilter: {filter}");
+                }
 
                 Action<string> outputConsole = (item) =>
                 {
@@ -99,14 +110,14 @@ namespace ricaun.RevitTest.TestAdapter
                     {
                         if (item.Deserialize<TestModel>() is TestModel testModel)
                         {
-                            var testCase = tests.FirstOrDefault(e => $"{e.FullyQualifiedName}.{e.DisplayName}".Equals(testModel.FullName));
+                            var testCase = tests.FirstOrDefault(e => TestCaseUtils.GetFullName(e).Equals(testModel.FullName));
 
                             if (testCase is null)
                             {
                                 testCase = TestCaseUtils.Create(source, testModel.FullName);
                             }
 
-                            AdapterLogger.Logger.Info($"TestCase: {testCase}");
+                            AdapterLogger.Logger.Info($"\tTestCase: {testCase}");
 
                             var testResult = new TestResult(testCase);
 
@@ -131,12 +142,16 @@ namespace ricaun.RevitTest.TestAdapter
                     }
                 };
 
+                AdapterLogger.Logger.Info($"RunRevitTest: {source} [Version: {AdapterSettings.Settings.NUnit.Version}] [TestFilter: {filters.Length}]");
+
                 await revit.RunTestAction(source,
                     AdapterSettings.Settings.NUnit.Version,
                     AdapterSettings.Settings.NUnit.Open,
                     AdapterSettings.Settings.NUnit.Close,
                     outputConsole, filters);
             }
+
+            AdapterLogger.Logger.Info("---------");
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ricaun.RevitTest.TestAdapter
             AdapterSettings.Create(discoveryContext);
             AdapterLogger.Create(messageLogger, AdapterSettings.Settings.NUnit.Verbosity);
 
-            AdapterLogger.Logger.Info($"TestAdapter: {this.AdapterVersion}");
+            AdapterLogger.Logger.Info($"TestAdapter: {this.AdapterVersion}", 0);
             AdapterLogger.Logger.Info($"AdapterSettings: {AdapterSettings.Settings}");
             //AdapterLogger.Logger.Debug($"SettingsXml: {discoveryContext.RunSettings.SettingsXml}");
         }
