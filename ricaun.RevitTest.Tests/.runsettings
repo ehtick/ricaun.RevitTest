@@ -4,7 +4,7 @@
     <Version>2023</Version>
     <Open>false</Open>
     <Close>false</Close>
-    <Verbosity>1</Verbosity>
+    <Verbosity>2</Verbosity>
     <!--
     <Application></Application>
     -->

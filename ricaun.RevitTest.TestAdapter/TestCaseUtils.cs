@@ -4,6 +4,10 @@ namespace ricaun.RevitTest.TestAdapter
 {
     public static class TestCaseUtils
     {
+        public static string GetFullName(TestCase testCase)
+        {
+            return $"{testCase.FullyQualifiedName}.{testCase.DisplayName}";
+        }
         public static TestCase Create(string source, string testName)
         {
             var fullyQualifiedName = testName.Substring(0, testName.LastIndexOf('.'));
