@@ -1,7 +1,6 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using NamedPipeWrapper.Json;
 using Revit.Busy;
 using ricaun.NUnit;
 using ricaun.NUnit.Models;
@@ -11,7 +10,6 @@ using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
