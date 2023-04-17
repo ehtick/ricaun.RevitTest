@@ -16,7 +16,7 @@ namespace ricaun.RevitTest.Shared
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         #endregion
         public string Info { get; set; }
-        public string TestFilter { get; set; }
+        public string[] TestFilters { get; set; }
         public string TestPathFile { get; set; }
         public override string ToString()
         {

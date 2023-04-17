@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using System.Collections.Generic;
 
 namespace ricaun.RevitTest.Console.Command
 {
@@ -41,8 +42,8 @@ namespace ricaun.RevitTest.Console.Command
         public bool Read { get; set; }
 
         [Option('t', "test",
-          HelpText = "Filter tests using wildcard pattern separated by comma. (Example: '*.Test1,*.Test2')")]
-        public string Test { get; set; }
+          HelpText = "Filter tests using wildcard pattern separated by space. \n(Example: \"*.Test1\" \"*.Test2\")")]
+        public IEnumerable<string> Test { get; set; }
 
         [Option("open",
           Default = false,

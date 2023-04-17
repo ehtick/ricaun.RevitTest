@@ -7,8 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.3] / 2023-04-17
 ### Features
 [x] Update `TestAdapter` to work with '.' in the TestName. ('TestCaseUtils') 
+[x] Update `RevitTest` to work with ',' and '\\' in the TestName.
+### Application
+[x] Update `Tests` without Split(',')
+### Console
+[x] Update Command `Test` to multiple parameters using `IEnumerable`.
 ### Shared
 [x] Add Info to `TestRequest`
+[x] Update `TestFilter` to `TestFilters` with `string[]`
+### TestAdapter
+[x] Update `ProcessStart` to work with `IEnumerable` arguments, join with ' '.
+[x] Update `RevitTestProcessStart` to work filters `string[]`. 
 
 ## [1.0.2] / 2023-04-15
 ### Features

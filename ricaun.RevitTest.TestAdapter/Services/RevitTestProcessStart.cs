@@ -32,7 +32,9 @@
         }
         public RevitTestProcessStart SetTestFilter(string[] testFilters)
         {
-            return SetTestFilter(string.Join(",", testFilters));
+            if (testFilters.Length == 0)
+                return this;
+            return SetRevitArgument("test", testFilters);
         }
         public RevitTestProcessStart SetTestFilter(string testFilter)
         {

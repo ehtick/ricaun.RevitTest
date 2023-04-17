@@ -70,7 +70,7 @@ namespace ricaun.RevitTest.Console.Command
                 options.ForceToOpen,
                 options.ForceToWait,
                 options.ForceToClose,
-                options.Test);
+                options.Test.ToArray());
 
             return false;
         }

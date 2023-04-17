@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Services
@@ -21,8 +23,16 @@ namespace ricaun.RevitTest.TestAdapter.Services
             {
                 if (value is string valueString)
                 {
+                    valueString = valueString.Replace("\\", "\\\\");
                     value = valueString.Replace("\"", "\\\"");
                     return $"\"{value}\"";
+                }
+                else if (value is IEnumerable enumerable)
+                {
+                    var strValues = enumerable.Cast<object>()
+                        .Select(v => ConvertValue(v))
+                        .ToArray();
+                    return string.Join(" ", strValues);
                 }
                 return $"{value}";
             }

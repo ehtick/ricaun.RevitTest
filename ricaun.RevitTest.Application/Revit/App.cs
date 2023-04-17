@@ -90,10 +90,14 @@ namespace ricaun.RevitTest.Application.Revit
                     Log.WriteLine($"Execute: {message.TestPathFile}");
 
                     string[] testFilterNames = new string[] { };
-                    if (string.IsNullOrEmpty(message.TestFilter) == false)
+                    if (message.TestFilters is not null)
                     {
-                        testFilterNames = TestFilterUtils.GetFilters(message.TestFilter);
-                        Log.WriteLine($"ExecuteFilter: {message.TestFilter}");
+                        testFilterNames = message.TestFilters;
+                        Log.WriteLine($"ExecuteFilter: {message.TestFilters.Length}");
+                        foreach (var testFilterName in testFilterNames)
+                        {
+                            Log.WriteLine($"FilterName: {testFilterName}");
+                        }
                     }
 
                     PipeTestServer.Update((response) =>
