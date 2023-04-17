@@ -10,8 +10,9 @@ namespace ricaun.RevitTest.TestAdapter
         }
         public static TestCase Create(string source, string testName)
         {
-            var fullyQualifiedName = testName.Substring(0, testName.LastIndexOf('.'));
-            var displayName = testName.Substring(testName.LastIndexOf('.') + 1);
+            var indexOf = LastIndexOfDisplayName(testName);
+            var fullyQualifiedName = testName.Substring(0, indexOf);
+            var displayName = testName.Substring(indexOf + 1);
 
             var testCase = new TestCase(fullyQualifiedName, TestAdapter.ExecutorUri, source)
             {
@@ -20,6 +21,18 @@ namespace ricaun.RevitTest.TestAdapter
             };
 
             return testCase;
+        }
+
+        private static int LastIndexOfDisplayName(string testName)
+        {
+            var lastIndexOfDot = testName.LastIndexOf('.');
+            var indexOf = testName.IndexOf('"');
+            if (indexOf != -1)
+            {
+                lastIndexOfDot = testName.LastIndexOf('.', indexOf);
+            }
+
+            return lastIndexOfDot;
         }
 
         private static System.Guid GetGuid(string name)

@@ -15,5 +15,18 @@ namespace ricaun.RevitTest.Tests
             Assert.IsTrue(string.IsNullOrWhiteSpace(value));
         }
 
+        [TestCase("a")]
+        [TestCase("1")]
+        [TestCase("_")]
+        [TestCase("/")]
+        [TestCase("\\")]
+        [TestCase("\"")]
+        //[TestCase("\n")]
+        [TestCase(".")]
+        [TestCase(",")]
+        public void TestStringCase_IsNot(string value)
+        {
+            Assert.IsFalse(string.IsNullOrWhiteSpace(value));
+        }
     }
 }

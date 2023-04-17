@@ -45,9 +45,8 @@ namespace ricaun.RevitTest.Console
         {
             await Task.Delay(0);
 
-            var assemblyName = typeof(Program).Assembly.GetName();
             Log.WriteLine();
-            Log.WriteLine($"{assemblyName.Name} {assemblyName.Version.ToString(3)}");
+            Log.WriteLine($"{AppUtils.GetInfo()}");
 
             Log.WriteLine();
             Log.WriteLine($"DebuggerUtils: {DebuggerUtils.IsDebuggerAttached}");

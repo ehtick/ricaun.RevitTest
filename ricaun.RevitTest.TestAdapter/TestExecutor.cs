@@ -117,7 +117,7 @@ namespace ricaun.RevitTest.TestAdapter
                                 testCase = TestCaseUtils.Create(source, testModel.FullName);
                             }
 
-                            AdapterLogger.Logger.Info($"\tTestCase: {testCase}");
+                            AdapterLogger.Logger.Info($"\tTestCase: {testCase} [{testCase.DisplayName}]");
 
                             var testResult = new TestResult(testCase);
 

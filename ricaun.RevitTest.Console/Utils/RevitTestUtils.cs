@@ -160,6 +160,7 @@ namespace ricaun.RevitTest.Console.Utils
                                 {
                                     request.TestFilter = testFilter;
                                     request.TestPathFile = fileToTest;
+                                    request.Info = AppUtils.GetInfo();
                                 });
                                 sendFileWhenCreatedOrUpdated = false;
                             }

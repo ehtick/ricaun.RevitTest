@@ -8,7 +8,7 @@ using System.Reflection;
 //[assembly: AssemblyMetadata("NUnit.Open", "true")]
 //[assembly: AssemblyMetadata("NUnit.Close", "true")]
 //[assembly: AssemblyMetadata("NUnit.Verbosity", "1")]
-[assembly: AssemblyMetadata("NUnit.Application", "")]
+//[assembly: AssemblyMetadata("NUnit.Application", "D:\\Users\\ricau\\source\\repos\\ricaun.RevitTest\\ricaun.RevitTest.Console\\bin\\Debug\\ricaun.RevitTest.Console.exe")]
 #endif
 
 namespace ricaun.RevitTest.Tests
