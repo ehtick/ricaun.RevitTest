@@ -10,7 +10,6 @@ using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
@@ -31,6 +30,9 @@ namespace ricaun.RevitTest.Application.Revit
             RevitBusyControl.Initialize(application);
             RevitBusyControl.Control.PropertyChanged += RevitBusyControlPropertyChanged;
             RevitTask.Initialize(application);
+
+            Log.WriteLine();
+            Log.WriteLine($"{AppUtils.GetInfo()}");
 
             NUnitUtils.Initialize();
 
@@ -71,6 +73,11 @@ namespace ricaun.RevitTest.Application.Revit
                     var message = s as TestRequest;
                     if (message is null) return;
 
+                    if (e.PropertyName == nameof(TestRequest.Info))
+                    {
+                        Log.WriteLine($"Info: {message.Info}");
+                    }
+
                     if (e.PropertyName != nameof(TestRequest.TestPathFile)) return;
 
                     if (string.IsNullOrEmpty(message.TestPathFile))
@@ -81,10 +88,14 @@ namespace ricaun.RevitTest.Application.Revit
                     Log.WriteLine($"Execute: {message.TestPathFile}");
 
                     string[] testFilterNames = new string[] { };
-                    if (string.IsNullOrEmpty(message.TestFilter) == false)
+                    if (message.TestFilters is not null)
                     {
-                        testFilterNames = message.TestFilter.Split(',');
-                        Log.WriteLine($"ExecuteFilter: {message.TestFilter}");
+                        testFilterNames = message.TestFilters;
+                        Log.WriteLine($"ExecuteFilter: {message.TestFilters.Length}");
+                        foreach (var testFilterName in testFilterNames)
+                        {
+                            Log.WriteLine($"FilterName: {testFilterName}");
+                        }
                     }
 
                     PipeTestServer.Update((response) =>

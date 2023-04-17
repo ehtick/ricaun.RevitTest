@@ -69,7 +69,7 @@ namespace ricaun.RevitTest.Shared.Mappers
                             var destinationValue = destinationPropInfo.GetValue(destination, null);
                             if (!MapValueEqual(sourceValue, destinationValue))
                             {
-                                Debug.WriteLine($"{sourcePropInfo.Name}: {sourceValue} >> {destinationPropInfo.Name}: {destinationValue} | {!IsValueEqual(sourceValue, destinationValue)}");
+                                Debug.WriteLine($"Map: {sourcePropInfo.Name}: {sourceValue} >> {destinationPropInfo.Name}: {destinationValue} | {!IsValueEqual(sourceValue, destinationValue)}");
                                 destinationPropInfo.SetValue(destination, sourceValue, null);
                                 notifyPropertyChanged?.Invoke(destinationPropInfo.Name, sourceValue);
                             }

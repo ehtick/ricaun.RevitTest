@@ -52,7 +52,7 @@ namespace ricaun.RevitTest.Console.Utils
             bool forceToOpenNewRevit = false,
             bool forceToWaitRevit = false,
             bool forceToCloseRevit = false,
-            string testFilter = null)
+            params string[] testFilters)
         {
             int timeoutCountMax = forceToWaitRevit ? 0 : 1;
 
@@ -154,12 +154,13 @@ namespace ricaun.RevitTest.Console.Utils
                             if (sendFileWhenCreatedOrUpdated)
                             {
                                 i = 0;
-                                Log.WriteLine($"{revitInstallation}: TestFile {Path.GetFileName(fileToTest)}");
+                                Log.WriteLine($"{revitInstallation}: TestFile: {Path.GetFileName(fileToTest)} TestFilters:{testFilters.ToJson()}");
                                 process.AttachDTE();
                                 client.Update((request) =>
                                 {
-                                    request.TestFilter = testFilter;
+                                    request.TestFilters = testFilters;
                                     request.TestPathFile = fileToTest;
+                                    request.Info = AppUtils.GetInfo();
                                 });
                                 sendFileWhenCreatedOrUpdated = false;
                             }

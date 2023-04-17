@@ -1,5 +1,6 @@
 ﻿using ricaun.RevitTest.TestAdapter.Extensions;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -24,7 +25,9 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
                 if (File.Exists(applicationNewPath))
                 {
-                    AdapterLogger.Logger.Warning($"Application Process: {Path.GetFileName(applicationNewPath)}");
+                    var fileVersionInfo = FileVersionInfo.GetVersionInfo(applicationNewPath);
+                    var productVersion = $"{fileVersionInfo.ProductVersion}";
+                    AdapterLogger.Logger.Warning($"Application Process: {Path.GetFileName(applicationNewPath)} {productVersion}");
                     return applicationNewPath;
                 }
             }
