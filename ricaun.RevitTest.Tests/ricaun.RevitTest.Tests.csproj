@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
-    <RevitVersion>2017</RevitVersion>
+    <TargetFramework>net48</TargetFramework>
+    <RevitVersion>2024</RevitVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
@@ -53,6 +53,7 @@
   </ItemGroup>
 
   <!--.runsettings-->
+  <!--
   <PropertyGroup>
     <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
   </PropertyGroup>
@@ -61,5 +62,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  -->
 
 </Project>

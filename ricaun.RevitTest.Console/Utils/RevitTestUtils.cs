@@ -3,14 +3,19 @@ using ricaun.Revit.Installation;
 using ricaun.RevitTest.Console.Extensions;
 using ricaun.RevitTest.Shared;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace ricaun.RevitTest.Console.Utils
 {
     public static class RevitTestUtils
     {
+        private const int RevitMinVersionReference = 2021;
+        private const int RevitMaxVersionReference = 2023;
+
         /// <summary>
         /// Get Test Full Names using RevitInstallation if needed (Revit +2021)
         /// </summary>
@@ -25,16 +30,49 @@ namespace ricaun.RevitTest.Console.Utils
                 if (tests.Length == 0)
                 {
                     // Problem with AnavRes.dll / adui22res.dll (version -2020)
-                    revitVersion = Math.Max(revitVersion, 2021);
+                    revitVersion = Math.Min(Math.Max(revitVersion, RevitMinVersionReference), RevitMaxVersionReference);
+                    LoggerTest($"Version {revitVersion}");
                     if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersion, out RevitInstallation revitInstallation))
                     {
                         Log.WriteLine($"RevitTestUtils: {revitInstallation.InstallLocation}");
                         tests = TestEngine.GetTestFullNames(filePath, revitInstallation.InstallLocation);
                     }
                 }
+                if (tests.Length == 0)
+                {
+                    // Problem with version 2024
+                    revitVersion = RevitMinVersionReference;
+                    LoggerTest($"Version {revitVersion} << ");
+                    if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersion, out RevitInstallation revitInstallation))
+                    {
+                        Log.WriteLine($"RevitTestUtils: {revitInstallation.InstallLocation}");
+                        tests = TestEngine.GetTestFullNames(filePath, revitInstallation.InstallLocation);
+                    }
+                }
+                LoggerTest($"Length {tests.Length}");
             }
+
+#if DEBUG
+            if (LoggerTests.Any())
+            {
+                LoggerTests.AddRange(tests);
+                return LoggerTests.ToArray();
+            }
+#endif
+
             return tests;
         }
+
+        #region Debug
+        private static List<string> LoggerTests = new List<string>();
+        [Conditional("DEBUG")]
+        private static void LoggerTest(object logger)
+        {
+            var loggerTest = $"ricaun.Logger.Tests.Tests(\"{logger}\")";
+            Debug.WriteLine(loggerTest);
+            LoggerTests.Add(loggerTest);
+        }
+        #endregion
 
         /// <summary>
         /// Create Revit Server
