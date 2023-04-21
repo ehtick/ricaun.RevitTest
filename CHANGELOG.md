@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Updated
 - [x] Update `ricaun.NUnit` to 1.2.8 (`GetTestFullNames` get tests with *)
 ### Fixed
-- [] Fix Version Revit 2024 no Tests
+- [x] Fix Version Revit 2024 no Tests
 ### Console
 - [x] Add Debug Tests in `RevitTestUtils`
 - [x] Update `RevitTestUtils` to min and max (2021-2023)
