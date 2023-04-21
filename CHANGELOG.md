@@ -5,12 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [1.0.4] / 2023-04-20
+### Updated
+- [x] Update `ricaun.NUnit` to 1.2.8 (`GetTestFullNames` get tests with *)
 ### Fixed
 - [] Fix Version Revit 2024 no Tests
 ### Console
-- [x] Add Debug Tests
+- [x] Add Debug Tests in `RevitTestUtils`
+- [x] Update `RevitTestUtils` to min and max (2021-2023)
 ### TestAdapter
 - [x] Add Metadata Discovery Tests
+- [x] Add `IsSimilarTestName` in `TestCaseUtils` (Make work with *)
 
 ## [1.0.3] / 2023-04-17
 ### Features
