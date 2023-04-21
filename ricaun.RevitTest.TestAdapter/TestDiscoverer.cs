@@ -19,11 +19,6 @@ namespace ricaun.RevitTest.TestAdapter
         {
             Initialize(discoveryContext, messageLogger);
 
-            foreach (var source in sources)
-            {
-                AdapterLogger.Logger.Info($"DiscoverTests: {source}");
-            }
-
             var tests = GetTests(sources, discoverySink);
 
             if (tests.Any() == false)
@@ -47,6 +42,8 @@ namespace ricaun.RevitTest.TestAdapter
             {
                 foreach (var source in sources)
                 {
+                    Metadatas.MetadataSettings.Create(source);
+                    AdapterLogger.Logger.Info($"DiscoverTests: {source}");
                     using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
                     {
                         var testNames = await revit.RunTestRead(source);

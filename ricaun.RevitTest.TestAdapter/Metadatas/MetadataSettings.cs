@@ -31,13 +31,17 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
 
                 //Mapper.Map(metadataRunSettings.DeserializeXml<RunSettingsModel>(), AdapterSettings.Settings);
 
-                if (assemblyMetadataAttributes.Any())
+                if (assemblyMetadataAttributes.Any(e => e.Key.StartsWith(nameof(AdapterSettings.Settings.NUnit))))
                 {
                     MetadataMapper.Map(assemblyMetadataAttributes, AdapterSettings.Settings.NUnit);
+                    AdapterLogger.SetVerbosity(AdapterSettings.Settings.NUnit.Verbosity);
                     AdapterLogger.Logger.Info($"AdapterSettings: {AdapterSettings.Settings}");
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                AdapterLogger.Logger.Info($"Metadata: {ex}", 0);
+            }
         }
     }
 }

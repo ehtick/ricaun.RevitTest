@@ -3,14 +3,22 @@ using ricaun.Revit.Installation;
 using ricaun.RevitTest.Console.Extensions;
 using ricaun.RevitTest.Shared;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace ricaun.RevitTest.Console.Utils
 {
+    /// <summary>
+    /// RevitTestUtils
+    /// </summary>
     public static class RevitTestUtils
     {
+        private const int RevitMinVersionReference = 2021;
+        private const int RevitMaxVersionReference = 2023;
+
         /// <summary>
         /// Get Test Full Names using RevitInstallation if needed (Revit +2021)
         /// </summary>
@@ -22,19 +30,48 @@ namespace ricaun.RevitTest.Console.Utils
             if (RevitUtils.TryGetRevitVersion(filePath, out var revitVersion))
             {
                 Log.WriteLine($"RevitTestUtils: {revitVersion}");
-                if (tests.Length == 0)
+                LoggerTest($"RevitTestUtils: {revitVersion}");
+
+                // Problem with AnavRes.dll / adui22res.dll (version -2020)
+                // Problem with UI (version 2024)
+                var revitVersionMinMax = Math.Min(Math.Max(revitVersion, RevitMinVersionReference), RevitMaxVersionReference);
+                if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionMinMax, out RevitInstallation revitInstallationMinMax))
                 {
-                    // Problem with AnavRes.dll / adui22res.dll (version -2020)
-                    revitVersion = Math.Max(revitVersion, 2021);
-                    if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersion, out RevitInstallation revitInstallation))
-                    {
-                        Log.WriteLine($"RevitTestUtils: {revitInstallation.InstallLocation}");
-                        tests = TestEngine.GetTestFullNames(filePath, revitInstallation.InstallLocation);
-                    }
+                    LoggerTest($"GetTest Version {revitVersionMinMax}");
+                    Log.WriteLine($"RevitTestUtils: {revitInstallationMinMax.InstallLocation}");
+                    tests = TestEngine.GetTestFullNames(filePath, revitInstallationMinMax.InstallLocation);
+                }
+                else if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersion, out RevitInstallation revitInstallation))
+                {
+                    LoggerTest($"GetTest Version {revitVersion}");
+                    Log.WriteLine($"RevitTestUtils: {revitInstallation.InstallLocation}");
+                    tests = TestEngine.GetTestFullNames(filePath, revitInstallation.InstallLocation);
                 }
             }
+
+#if DEBUG
+            LoggerTest($"Length {tests.Length}");
+            LoggerTest($"TestEngine {TestEngine.Version.ToString(3)}");
+            if (LoggerTests.Any())
+            {
+                LoggerTests.AddRange(tests);
+                return LoggerTests.ToArray();
+            }
+#endif
+
             return tests;
         }
+
+        #region Debug
+        private static List<string> LoggerTests = new List<string>();
+        [Conditional("DEBUG")]
+        private static void LoggerTest(object logger)
+        {
+            var loggerTest = $"{typeof(RevitTestUtils).FullName}(\"{logger}\")";
+            Debug.WriteLine(loggerTest);
+            LoggerTests.Add(loggerTest);
+        }
+        #endregion
 
         /// <summary>
         /// Create Revit Server

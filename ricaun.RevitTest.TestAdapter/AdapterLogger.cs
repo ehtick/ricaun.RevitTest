@@ -20,6 +20,14 @@ namespace ricaun.RevitTest.TestAdapter
             {
                 Instance = new AdapterLogger();
                 Instance.Initialize(messageLogger);
+                SetVerbosity(verbosity);
+            }
+        }
+
+        public static void SetVerbosity(int verbosity = 0)
+        {
+            if (Instance != null)
+            {
                 Instance.TestLogger.Verbosity = verbosity;
             }
         }

@@ -110,7 +110,10 @@ namespace ricaun.RevitTest.TestAdapter
                     {
                         if (item.Deserialize<TestModel>() is TestModel testModel)
                         {
-                            var testCase = tests.FirstOrDefault(e => TestCaseUtils.GetFullName(e).Equals(testModel.FullName));
+                            // If test nof found try to find similar test with only FullyQualifiedName
+                            var testCase =
+                                tests.FirstOrDefault(e => TestCaseUtils.IsSimilarTestName(e, testModel.FullName)) ??
+                                tests.FirstOrDefault(e => TestCaseUtils.IsSimilarTestName(e, testModel.FullName, true));
 
                             if (testCase is null)
                             {

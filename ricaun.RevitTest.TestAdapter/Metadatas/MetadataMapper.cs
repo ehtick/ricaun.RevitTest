@@ -26,7 +26,6 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         }
         private static object GetValue(AssemblyMetadataAttribute attribute, PropertyInfo propertyInfo)
         {
-            Debug.WriteLine(propertyInfo.PropertyType);
             var type = propertyInfo.PropertyType;
             if (type == typeof(int))
             {
