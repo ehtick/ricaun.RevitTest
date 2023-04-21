@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### TestAdapter
 - [x] Add Metadata Discovery Tests
 - [x] Add `IsSimilarTestName` in `TestCaseUtils` (Make work with *)
+### Tests
+- [x] Add `TestRevitConstructor`
+- [x] Add `TestRevitOneTimeSetUp`
 
 ## [1.0.3] / 2023-04-17
 ### Features
