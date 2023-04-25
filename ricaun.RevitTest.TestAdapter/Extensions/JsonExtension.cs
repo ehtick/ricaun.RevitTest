@@ -5,7 +5,7 @@
     /// JsonExtension
     /// <code>Reference Include="System.Web.Extensions"</code>
     /// </summary>
-    public static class JsonExtension
+    internal static class JsonExtension
     {
         private static JavaScriptSerializer JavaScriptSerializer { get; set; } = Create();
 

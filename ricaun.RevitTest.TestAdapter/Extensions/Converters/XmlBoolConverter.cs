@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Web.Script.Serialization;
 
-    public class XmlBoolConverter : JavaScriptConverter
+    internal class XmlBoolConverter : JavaScriptConverter
     {
         public override IEnumerable<Type> SupportedTypes => new[] { typeof(XmlBool) };
 

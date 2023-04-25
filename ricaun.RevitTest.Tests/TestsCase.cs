@@ -24,6 +24,7 @@ namespace ricaun.RevitTest.Tests
         //[TestCase("\n")]
         [TestCase(".")]
         [TestCase(",")]
+        [TestCase("°C")]
         public void TestStringCase_IsNot(string value)
         {
             Assert.IsFalse(string.IsNullOrWhiteSpace(value));

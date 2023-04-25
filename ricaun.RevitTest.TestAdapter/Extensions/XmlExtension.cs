@@ -3,7 +3,7 @@
     using System.IO;
     using System.Xml.Serialization;
 
-    public static class XmlExtension
+    internal static class XmlExtension
     {
         /// <summary>
         /// Deserialize

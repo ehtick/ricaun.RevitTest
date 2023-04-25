@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] / 2023-04-25
+### Fixed
+- [x] Fix Tests with special char, example `°C`
+### TestAdapter
+- [x] Update `ProcessStart` to default Encoding.
+- [x] Update Extensions to internal
+### Tests
+- [x] Add Test with special char `°C`
+
 ## [1.0.4] / 2023-04-21
 ### Updated
 - [x] Update `ricaun.NUnit` to 1.2.8 (`GetTestFullNames` get tests with *)
@@ -112,6 +121,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.5]: ../../compare/1.0.4...1.0.5
 [1.0.4]: ../../compare/1.0.3...1.0.4
 [1.0.3]: ../../compare/1.0.2...1.0.3
 [1.0.2]: ../../compare/1.0.1...1.0.2

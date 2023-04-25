@@ -50,6 +50,7 @@ namespace ricaun.RevitTest.Console.Utils
             }
 
 #if DEBUG
+            LoggerTest($"Test °C");
             LoggerTest($"Length {tests.Length}");
             LoggerTest($"TestEngine {TestEngine.Version.ToString(3)}");
             if (LoggerTests.Any())
