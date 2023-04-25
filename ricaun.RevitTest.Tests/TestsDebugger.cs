@@ -7,7 +7,7 @@ using System.Reflection;
 //[assembly: AssemblyMetadata("NUnit.Version", "2021")]
 //[assembly: AssemblyMetadata("NUnit.Open", "true")]
 //[assembly: AssemblyMetadata("NUnit.Close", "true")]
-[assembly: AssemblyMetadata("NUnit.Version", "2024")]
+//[assembly: AssemblyMetadata("NUnit.Version", "2024")]
 [assembly: AssemblyMetadata("NUnit.Verbosity", "2")]
 [assembly: AssemblyMetadata("NUnit.Application", "D:\\Users\\ricau\\source\\repos\\ricaun.RevitTest\\ricaun.RevitTest.Console\\bin\\Debug\\ricaun.RevitTest.Console.exe")]
 //[assembly: AssemblyMetadata("NUnit.Application", "..\\..\\..\\ricaun.RevitTest.Console\\bin\\Debug\\ricaun.RevitTest.Console.exe")]

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ricaun.RevitTest.TestAdapter.Extensions
 {
-    public static class ResourcesExtension
+    internal static class ResourcesExtension
     {
         /// <summary>
         /// Copy <paramref name="stream"/> to <paramref name="path"/>
