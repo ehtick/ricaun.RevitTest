@@ -51,6 +51,9 @@
         "IssConfiguration": {
           "type": "string"
         },
+        "MiddleVersions": {
+          "type": "boolean"
+        },
         "Name": {
           "type": "string"
         },
