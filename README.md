@@ -106,28 +106,28 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 ### `.runsettings`
 .csproj
 ```xml
-  <!--.runsettings-->
-  <PropertyGroup>
-    <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Update=".runsettings">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+<!--.runsettings-->
+<PropertyGroup>
+  <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
+</PropertyGroup>
+<ItemGroup>
+  <None Update=".runsettings">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
 ```
 .runsettings
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
-	<NUnit>
-        <Version>2021</Version>
-        <Open>true</Open>
-        <Close>true</Close>
-        <Verbosity>1</Verbosity>
-        <Application></Application>
-        <Metadata>false</Metadata>
-	</NUnit>
+  <NUnit>
+    <Version>2021</Version>
+    <Open>true</Open>
+    <Close>true</Close>
+    <Verbosity>1</Verbosity>
+    <Application></Application>
+    <Metadata>false</Metadata>
+  </NUnit>
 </RunSettings>
 ```
 
