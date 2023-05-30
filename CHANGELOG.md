@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] / 2023-05-30
+### Updated
+- [x] Update `ricaun.NUnit` to 1.2.9 (`MultipleSetUp`)
+### Tests
+- [x] Add Test `TestsRevitSetUp`
+- [x] Add Test `TestsRevitIdling`
+
 ## [1.0.5] / 2023-04-25
 ### Fixed
 - [x] Fix Tests with special char, example `°C`
@@ -121,6 +128,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.6]: ../../compare/1.0.5...1.0.6
 [1.0.5]: ../../compare/1.0.4...1.0.5
 [1.0.4]: ../../compare/1.0.3...1.0.4
 [1.0.3]: ../../compare/1.0.2...1.0.3

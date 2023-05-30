@@ -110,10 +110,7 @@ namespace ricaun.RevitTest.TestAdapter
                     {
                         if (item.Deserialize<TestModel>() is TestModel testModel)
                         {
-                            // If test nof found try to find similar test with only FullyQualifiedName
-                            var testCase =
-                                tests.FirstOrDefault(e => TestCaseUtils.IsSimilarTestName(e, testModel.FullName)) ??
-                                tests.FirstOrDefault(e => TestCaseUtils.IsSimilarTestName(e, testModel.FullName, true));
+                            TestCase testCase = TryFindSimilarTestCaseUsingTestModel(tests, testModel);
 
                             if (testCase is null)
                             {
@@ -155,6 +152,20 @@ namespace ricaun.RevitTest.TestAdapter
             }
 
             AdapterLogger.Logger.Info("---------");
+        }
+
+        /// <summary>
+        /// Try find SimilarTestName
+        /// </summary>
+        /// <param name="tests"></param>
+        /// <param name="testModel"></param>
+        /// <returns></returns>
+        private static TestCase TryFindSimilarTestCaseUsingTestModel(List<TestCase> tests, TestModel testModel)
+        {
+            // if test not found try to find similar test with only FullyQualifiedName
+            return
+                tests.FirstOrDefault(e => TestCaseUtils.IsSimilarTestName(e, testModel.FullName)) ??
+                tests.FirstOrDefault(e => TestCaseUtils.IsSimilarTestName(e, testModel.FullName, true));
         }
     }
 }
