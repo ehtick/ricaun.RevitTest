@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Console
 - Decouple using interface `IRunTestService`
 - Add `Command` project reference
-- Clear old `Command` refereces
+- Clear old `Command` references
 ### Command
 - Command library to run tests with `IRunTestService`
 - Create build for package `ricaun.RevitTest.Command`
