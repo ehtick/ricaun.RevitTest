@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ricaun.RevitTest.TestAdapte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ricaun.RevitTest.Tests", "ricaun.RevitTest.Tests\ricaun.RevitTest.Tests.csproj", "{8EB7DB2E-64A7-4239-9885-E66ACFC634E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ricaun.RevitTest.Command", "ricaun.RevitTest.Command\ricaun.RevitTest.Command.csproj", "{61A17E5A-9181-420B-B977-180730FE76F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{8EB7DB2E-64A7-4239-9885-E66ACFC634E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EB7DB2E-64A7-4239-9885-E66ACFC634E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EB7DB2E-64A7-4239-9885-E66ACFC634E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A17E5A-9181-420B-B977-180730FE76F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A17E5A-9181-420B-B977-180730FE76F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A17E5A-9181-420B-B977-180730FE76F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A17E5A-9181-420B-B977-180730FE76F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@ using ricaun.RevitTest.Console.Extensions;
 using System;
 using System.IO;
 
-namespace ricaun.RevitTest.Console.Revit
+namespace ricaun.RevitTest.Console.Revit.Services
 {
     public class ApplicationPluginsDisposable : IDisposable
     {

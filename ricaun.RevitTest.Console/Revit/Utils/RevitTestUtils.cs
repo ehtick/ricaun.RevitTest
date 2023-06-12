@@ -1,6 +1,7 @@
 ﻿using ricaun.NUnit;
 using ricaun.Revit.Installation;
 using ricaun.RevitTest.Console.Extensions;
+using ricaun.RevitTest.Console.Revit.Services;
 using ricaun.RevitTest.Console.Utils;
 using ricaun.RevitTest.Shared;
 using System;
@@ -10,7 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 
-namespace ricaun.RevitTest.Console.Revit
+namespace ricaun.RevitTest.Console.Revit.Utils
 {
     /// <summary>
     /// RevitTestUtils

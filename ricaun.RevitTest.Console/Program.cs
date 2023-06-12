@@ -1,6 +1,4 @@
-﻿using CommandLine;
-using ricaun.RevitTest.Console.Command;
-using System.Collections.Generic;
+﻿using ricaun.RevitTest.Console.Command;
 
 namespace ricaun.RevitTest.Console
 {
@@ -12,7 +10,9 @@ namespace ricaun.RevitTest.Console
 
 #if DEBUG
             if (!result)
-                Revit.RevitDebug.ProcessServerSelect();
+            {
+                Revit.Utils.RevitDebugUtils.ProcessServerSelect();
+            }
 #endif
         }
     }

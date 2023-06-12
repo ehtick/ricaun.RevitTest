@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ricaun.RevitTest.Console.Utils
+namespace ricaun.RevitTest.Command.Utils
 {
     public static class DebuggerUtils
     {
@@ -10,7 +10,5 @@ namespace ricaun.RevitTest.Console.Utils
             DebuggerAttached = debugger;
         }
         public static bool IsDebuggerAttached { get { return System.Diagnostics.Debugger.IsAttached | DebuggerAttached; } }
-
     }
-
 }

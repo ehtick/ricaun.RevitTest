@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ricaun.RevitTest.Console.Revit
+namespace ricaun.RevitTest.Console.Revit.Services
 {
     public class FileWatcher : IDisposable
     {

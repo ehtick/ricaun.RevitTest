@@ -5,9 +5,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ricaun.RevitTest.Console.Revit
+namespace ricaun.RevitTest.Console.Revit.Utils
 {
-    public static class RevitDebug
+    public static class RevitDebugUtils
     {
         public static class App
         {
@@ -32,8 +32,7 @@ namespace ricaun.RevitTest.Console.Revit
 
             if (DebuggerUtils.IsDebuggerAttached)
             {
-                var dte = DebuggerUtils.GetDTE();
-                Log.WriteLine($"DebuggerUtils: {dte.GetName()}");
+                Log.WriteLine($"DebuggerUtils: {VisualStudioDebugUtils.GetName()}");
             }
 
             var fileToTest = App.FilePath;
