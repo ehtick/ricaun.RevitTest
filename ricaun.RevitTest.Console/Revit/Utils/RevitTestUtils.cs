@@ -1,8 +1,9 @@
 ﻿using ricaun.NUnit;
 using ricaun.Revit.Installation;
-using ricaun.RevitTest.Console.Extensions;
+using ricaun.RevitTest.Command;
+using ricaun.RevitTest.Command.Extensions;
+using ricaun.RevitTest.Command.Utils;
 using ricaun.RevitTest.Console.Revit.Services;
-using ricaun.RevitTest.Console.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,6 @@
 ﻿using ricaun.Revit.Installation;
-using ricaun.RevitTest.Console.Utils;
+using ricaun.RevitTest.Command;
+using ricaun.RevitTest.Command.Utils;
 using System;
 using System.IO;
 using System.Threading;

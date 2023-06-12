@@ -121,6 +121,7 @@
             "type": "string",
             "enum": [
               "Build",
+              "BuildCommand",
               "BuildConsole",
               "BuildTests",
               "Clean",
@@ -144,6 +145,7 @@
             "type": "string",
             "enum": [
               "Build",
+              "BuildCommand",
               "BuildConsole",
               "BuildTests",
               "Clean",

@@ -44,11 +44,26 @@
     <Copyright>Copyright © $(CopyrightYears) $(Company)</Copyright>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Product>$(PackageId)</Product>
+    <Copyright>Copyright (C) $(Company) $(CopyrightYears)</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GitHubRepository>$(PackageId)</GitHubRepository>
+    <GitHubRepositoryOwner>ricaun-io</GitHubRepositoryOwner>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/$(GitHubRepositoryOwner)/$(GitHubRepository)</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/$(GitHubRepositoryOwner)/$(GitHubRepository)</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <PackageIcon></PackageIcon>
+    <PackageIconUrl />
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
   </ItemGroup>
-
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.Web.Extensions" />

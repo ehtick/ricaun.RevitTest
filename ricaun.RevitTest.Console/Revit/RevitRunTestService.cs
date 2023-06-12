@@ -1,4 +1,4 @@
-﻿using ricaun.RevitTest.Console.Command;
+﻿using ricaun.RevitTest.Command;
 using ricaun.RevitTest.Console.Revit.Utils;
 using System;
 

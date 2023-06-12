@@ -1,5 +1,5 @@
 ﻿using ricaun.Revit.Installation;
-using ricaun.RevitTest.Console.Extensions;
+using ricaun.RevitTest.Command.Extensions;
 using System;
 using System.IO;
 
