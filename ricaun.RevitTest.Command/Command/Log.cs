@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ricaun.RevitTest.Console
+namespace ricaun.RevitTest.Command
 {
     public static class Log
     {

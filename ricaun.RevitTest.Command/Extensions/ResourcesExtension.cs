@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace ricaun.RevitTest.Console.Extensions
+namespace ricaun.RevitTest.Command.Extensions
 {
     public static class ResourcesExtension
     {

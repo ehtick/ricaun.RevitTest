@@ -1,9 +1,9 @@
 ﻿using ricaun.Revit.Installation;
-using ricaun.RevitTest.Console.Extensions;
+using ricaun.RevitTest.Command.Extensions;
 using System;
 using System.IO;
 
-namespace ricaun.RevitTest.Console.Utils
+namespace ricaun.RevitTest.Console.Revit.Services
 {
     public class ApplicationPluginsDisposable : IDisposable
     {

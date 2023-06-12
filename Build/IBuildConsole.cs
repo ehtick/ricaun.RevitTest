@@ -13,7 +13,7 @@ public interface IBuildConsole : IHazExample, IRevitPackageBuilder
             var project = Solution.GetOtherProject("ricaun.RevitTest.Console");
 
             var releaseDirectory = GetReleaseDirectory(MainProject);
-            PathConstruction.GlobFiles(releaseDirectory, "**/*.bundle.zip")
+            Globbing.GlobFiles(releaseDirectory, "**/*.bundle.zip")
                 .ForEach(file =>
                 {
                     var resourcesDirectory = project.Directory / "Resources";
@@ -35,7 +35,7 @@ public interface IBuildConsole : IHazExample, IRevitPackageBuilder
             var projectTestAdapter = Solution.GetOtherProject("ricaun.RevitTest.TestAdapter");
 
             var releaseDirectoryConsole = GetExampleDirectory(Solution.GetOtherProject("ricaun.RevitTest.Console"));
-            PathConstruction.GlobFiles(releaseDirectoryConsole, "**/*.exe")
+            Globbing.GlobFiles(releaseDirectoryConsole, "**/*.exe")
                 .ForEach(file =>
                 {
                     var resourcesDirectory = projectTestAdapter.Directory / "Resources";
@@ -53,7 +53,7 @@ public interface IBuildConsole : IHazExample, IRevitPackageBuilder
                 var releaseFileName = CreateReleaseFromDirectory(exampleDirectory, fileName, version);
                 Serilog.Log.Information($"Release: {releaseFileName}");
 
-                PathConstruction.GlobFiles(exampleDirectory, "**/*.nupkg")
+                Globbing.GlobFiles(exampleDirectory, "**/*.nupkg")
                     .ForEach(file =>
                     {
                         Serilog.Log.Information($"Copy nupkg: {file} to {releaseDirectory}");
