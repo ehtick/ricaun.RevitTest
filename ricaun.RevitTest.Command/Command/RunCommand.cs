@@ -1,17 +1,19 @@
-﻿using ricaun.RevitTest.Console.Extensions;
-using ricaun.RevitTest.Console.Utils;
+﻿using ricaun.RevitTest.Command.Extensions;
+using ricaun.RevitTest.Command.Utils;
 using System;
 using System.IO;
 using System.Linq;
 
-namespace ricaun.RevitTest.Console.Command
+namespace ricaun.RevitTest.Command
 {
-    public class RunCommand
+    public class RunCommand<T> where T : IRunTestService, new()
     {
         private readonly Options options;
+        private readonly IRunTestService testService;
 
         public RunCommand(Options options)
         {
+            this.testService = new T();
             this.options = options;
             ValidadeOptions();
             Initialize();
@@ -28,7 +30,7 @@ namespace ricaun.RevitTest.Console.Command
 
         private void Initialize()
         {
-            var assemblyName = typeof(RunCommand).Assembly.GetName();
+            var assemblyName = this.GetType().Assembly.GetName();
             NUnit.TestEngine.Initialize(out string init);
 
             Log.WriteLine();
@@ -48,7 +50,7 @@ namespace ricaun.RevitTest.Console.Command
 
             if (options.Read)
             {
-                var tests = RevitTestUtils.GetTestFullNames(options.File);
+                var tests = testService.GetTests(options.File);
                 Log.WriteLine();
                 foreach (var test in tests)
                 {
@@ -63,7 +65,7 @@ namespace ricaun.RevitTest.Console.Command
 
             DebuggerUtils.AttachedDebugger(options.DebuggerAttach);
 
-            RevitTestUtils.CreateRevitServer(
+            testService.RunTests(
                 options.File,
                 options.RevitVersion,
                 outputAction,

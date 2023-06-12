@@ -3,7 +3,7 @@ using Nuke.Common.Execution;
 using ricaun.Nuke;
 using ricaun.Nuke.Components;
 
-class Build : NukeBuild, IPublishRevit, IBuildConsole, IBuildLocalTests, IPackRelease
+class Build : NukeBuild, IPublishRevit, IBuildConsole, IBuildLocalTests, IPackRelease, IBuildCommand
 {
     string IHazRevitPackageBuilder.Application => "Revit.App";
     bool IHazPackageBuilderProject.ReleasePackageBuilder => false;

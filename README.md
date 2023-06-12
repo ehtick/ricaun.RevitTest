@@ -52,12 +52,19 @@ flowchart LR
 * [ricaun.Revit.UI](https://github.com/ricaun-io/ricaun.Revit.UI)
 * [ricaun.Revit.Async](https://github.com/ricaun-io/ricaun.Revit.Async)
 * [Revit.Busy](https://github.com/ricaun-io/Revit.Busy)
+* [ricaun.RevitTest.Shared](ricaun.RevitTest.Shared)
 #### Console
+* [ricaun.RevitTest.Command](ricaun.RevitTest.Command)
+* [ricaun.RevitTest.Shared](ricaun.RevitTest.Shared)
+* [ricaun.RevitTest.Application.bundle.zip](ricaun.RevitTest.Application)
+#### Command
 * [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
 * [ricaun.Revit.Installation](https://github.com/ricaun-io/ricaun.Revit.Installation)
 #### Shared
 * [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
 * [NamedPipeWrapper.Json](https://github.com/ricaun-io/named-pipe-wrapper-json)
+#### TestAdapter
+* [ricaun.RevitTest.Console.exe](ricaun.RevitTest.Console)
 
 ## CommandLine
 

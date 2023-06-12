@@ -41,18 +41,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="*" />
     <PackageReference Include="ricaun.Revit.Installation" Version="*" />
-    <!--
-    <Reference Include="ricaun.Revit.Installation.1.0.3">
-      <HintPath>..\..\ricaun.Revit.Installation\ricaun.Revit.Installation\bin\Release\net45\ricaun.Revit.Installation.1.0.3.dll</HintPath>
-    </Reference>
-    -->
-    <PackageReference Include="ricaun.NUnit" Version="*" />
     <PackageReference Include="Microsoft.VisualStudio.Interop" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ricaun.RevitTest.Command\ricaun.RevitTest.Command.csproj" />
     <ProjectReference Include="..\ricaun.RevitTest.Shared\ricaun.RevitTest.Shared.csproj" />
   </ItemGroup>
 

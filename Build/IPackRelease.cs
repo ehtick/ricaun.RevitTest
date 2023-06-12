@@ -24,7 +24,7 @@ public interface IPackRelease : IHazPack, IHazContent, ISign, IHazGitRepository,
         .Executes(() =>
         {
             var releaseDirectory = GetReleaseDirectory(MainProject);
-            PathConstruction.GlobFiles(releaseDirectory, "**/*.nupkg")
+            Globbing.GlobFiles(releaseDirectory, "**/*.nupkg")
                .ForEach(x =>
                {
                    Serilog.Log.Information($"DotNetNuGetPush: {x}");

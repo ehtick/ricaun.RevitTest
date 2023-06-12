@@ -1,23 +1,17 @@
 ﻿using EnvDTE;
-using System;
+using ricaun.RevitTest.Command.Utils;
 using System.Diagnostics;
 using System.Linq;
 
-namespace ricaun.RevitTest.Console.Utils
+namespace ricaun.RevitTest.Console.Revit.Utils
 {
-    public static class DebuggerUtils
+    public static class VisualStudioDebugUtils
     {
-        private static bool DebuggerAttached { get; set; }
-        public static void AttachedDebugger(bool debugger)
-        {
-            DebuggerAttached = debugger;
-        }
-        public static bool IsDebuggerAttached { get { return System.Diagnostics.Debugger.IsAttached | DebuggerAttached; } }
         public static DTE DTE { get; set; } = GetDTE();
 
         public static System.Diagnostics.Process AttachDTE(this System.Diagnostics.Process process, DTE dte = null)
         {
-            if (IsDebuggerAttached == false) return process;
+            if (DebuggerUtils.IsDebuggerAttached == false) return process;
             dte = dte ?? DTE;
             try
             {
@@ -31,7 +25,7 @@ namespace ricaun.RevitTest.Console.Utils
 
         public static System.Diagnostics.Process DetachDTE(this System.Diagnostics.Process process, DTE dte = null)
         {
-            if (IsDebuggerAttached == false) return process;
+            if (DebuggerUtils.IsDebuggerAttached == false) return process;
             dte = dte ?? DTE;
             try
             {
@@ -65,6 +59,11 @@ namespace ricaun.RevitTest.Console.Utils
                 catch { }
             }
             return null;
+        }
+
+        public static string GetName()
+        {
+            return DTE.GetName();
         }
 
         public static string GetName(this DTE dte)

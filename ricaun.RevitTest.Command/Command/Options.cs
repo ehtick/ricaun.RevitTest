@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using System.Collections.Generic;
 
-namespace ricaun.RevitTest.Console.Command
+namespace ricaun.RevitTest.Command
 {
     public class Options
     {
