@@ -1,5 +1,6 @@
 ﻿using Nuke.Common;
 using Nuke.Common.Tools.DotNet;
+using ricaun.Nuke.Components;
 
 public interface IBuildLocalTests : IBuildConsole, IHazTest
 {

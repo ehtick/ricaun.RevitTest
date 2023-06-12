@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace ricaun.RevitTest.Console.Extensions
+namespace ricaun.RevitTest.Console.Revit.Extensions
 {
     public class RevitAddinDisable : IDisposable
     {
