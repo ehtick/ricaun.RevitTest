@@ -18,10 +18,10 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
             if (ApplicationUtils.Download(applicationPath, out string directory))
             {
+                AdapterLogger.Logger.Info($"Application Download: {applicationPath}");
+
                 var applicationName = Path.ChangeExtension(Path.GetFileName(applicationPath), "exe");
                 var applicationNewPath = Path.Combine(directory, applicationName);
-
-                AdapterLogger.Logger.Info($"Application Download: {applicationPath}");
 
                 if (File.Exists(applicationNewPath))
                 {
@@ -44,6 +44,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 var file = Path.Combine(directory, Properties.Resources.ricaun_RevitTest_Console_Name);
                 applicationPath = Properties.Resources.ricaun_RevitTest_Console.CopyToFile(file);
             }
+            AdapterLogger.Logger.Info($"Application: {Path.GetFileName(applicationPath)}");
         }
 
         public async Task RunTestAction(
@@ -60,6 +61,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 .SetOutputConsole()
                 .SetOpen(revitOpen)
                 .SetClose(revitClose)
+                .SetLog()
                 .SetTestFilter(filter)
                 .SetDebugger(System.Diagnostics.Debugger.IsAttached)
                 .Run(consoleAction);
@@ -81,8 +83,12 @@ namespace ricaun.RevitTest.TestAdapter.Services
         {
             try
             {
+                AdapterLogger.Logger.Debug($"Dispose: {Path.GetFileName(applicationPath)}");
                 if (File.Exists(applicationPath))
+                {
                     File.Delete(applicationPath);
+                    Directory.Delete(Path.GetDirectoryName(applicationPath), true);
+                }
             }
             catch { }
         }

@@ -17,6 +17,11 @@
             if (!read) return this;
             return SetRevitArgument("read");
         }
+        public RevitTestProcessStart SetLog(bool log = true)
+        {
+            if (!log) return this;
+            return SetRevitArgument("log");
+        }
         public RevitTestProcessStart SetRevitVersion(int revitVersion) => SetRevitArgument("version", revitVersion);
         public RevitTestProcessStart SetOutput(string output) => SetRevitArgument("output", output);
         public RevitTestProcessStart SetOutputConsole() => SetOutput("console");

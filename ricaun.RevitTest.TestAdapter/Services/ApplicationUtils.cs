@@ -77,7 +77,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 try
                 {
                     await client.DownloadFileTaskAsync(new Uri(address), zipPath);
-                    ExtractBundleZipToDirectory(zipPath, applicationFolder);
+                    ExtractZipToDirectory(zipPath, applicationFolder);
                     result = true;
                 }
                 catch (Exception ex)
@@ -96,26 +96,22 @@ namespace ricaun.RevitTest.TestAdapter.Services
         /// </summary>
         /// <param name="archiveFileName"></param>
         /// <param name="destinationDirectoryName"></param>
-        private static void ExtractBundleZipToDirectory(string archiveFileName, string destinationDirectoryName)
+        private static void ExtractZipToDirectory(string archiveFileName, string destinationDirectoryName)
         {
             if (Path.GetExtension(archiveFileName) != ZIP_FILE_EXTENSION) return;
 
             using (var archive = ZipFile.OpenRead(archiveFileName))
             {
-                string baseDirectory = null;
                 foreach (var file in archive.Entries)
                 {
-                    if (baseDirectory == null)
-                        baseDirectory = Path.GetDirectoryName(file.FullName);
-                    //if (baseDirectory.EndsWith(CONST_BUNDLE) == false)
-                    //    baseDirectory = "";
-
-                    var fileFullName = file.FullName.Substring(baseDirectory.Length).TrimStart('/');
+                    var fileFullName = file.FullName;
 
                     var completeFileName = Path.Combine(destinationDirectoryName, fileFullName);
                     var directory = Path.GetDirectoryName(completeFileName);
 
-                    Debug.WriteLine($"{fileFullName} |\t {baseDirectory} |\t {completeFileName}");
+                    Debug.WriteLine($"{fileFullName} |\t {completeFileName}");
+
+                    AdapterLogger.Logger.Debug($"ExtractZip: {fileFullName} |\t {completeFileName}");
 
                     if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
                         Directory.CreateDirectory(directory);
