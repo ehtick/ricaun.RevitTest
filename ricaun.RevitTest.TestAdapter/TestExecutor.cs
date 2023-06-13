@@ -100,45 +100,27 @@ namespace ricaun.RevitTest.TestAdapter
                 {
                     if (string.IsNullOrEmpty(item)) return;
 
-                    AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
-
                     if (item.StartsWith("{\"FileName"))
                     {
+                        AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
                         var testAssembly = item.Deserialize<TestAssemblyModel>();
+
+                        foreach (var testModel in testAssembly.Tests.SelectMany(e => e.Tests))
+                        {
+                            RecordResultTestModel(frameworkHandle, source, tests, testModel);
+                        }
                     }
-                    if (item.StartsWith("{\"Name"))
+                    else if (item.StartsWith("{\"Name"))
                     {
+                        AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
                         if (item.Deserialize<TestModel>() is TestModel testModel)
                         {
-                            TestCase testCase = TryFindSimilarTestCaseUsingTestModel(tests, testModel);
-
-                            if (testCase is null)
-                            {
-                                testCase = TestCaseUtils.Create(source, testModel.FullName);
-                            }
-
-                            AdapterLogger.Logger.Info($"\tTestCase: {testCase} [{testCase.DisplayName}]");
-
-                            var testResult = new TestResult(testCase);
-
-                            testResult.Outcome = TestOutcome.Failed;
-                            if (testModel.Success)
-                                testResult.Outcome = TestOutcome.Passed;
-                            if (testModel.Skipped)
-                                testResult.Outcome = TestOutcome.Skipped;
-
-                            testResult.Duration = new TimeSpan((long)(TimeSpan.TicksPerMillisecond * testModel.Time));
-
-                            testResult.ErrorStackTrace = testModel.Message;
-                            testResult.Messages.Clear();
-
-                            if (testModel.Skipped)
-                                testResult.ErrorMessage = testModel.Message;
-
-                            testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testModel.Console));
-
-                            frameworkHandle.RecordResult(testResult);
+                            RecordResultTestModel(frameworkHandle, source, tests, testModel);
                         }
+                    }
+                    else
+                    {
+                        AdapterLogger.Logger.Info($"OutputConsole: {item}");
                     }
                 };
 
@@ -152,6 +134,38 @@ namespace ricaun.RevitTest.TestAdapter
             }
 
             AdapterLogger.Logger.Info("---------");
+        }
+
+        private static void RecordResultTestModel(IFrameworkHandle frameworkHandle, string source, List<TestCase> tests, TestModel testModel)
+        {
+            TestCase testCase = TryFindSimilarTestCaseUsingTestModel(tests, testModel);
+
+            if (testCase is null)
+            {
+                testCase = TestCaseUtils.Create(source, testModel.FullName);
+            }
+
+            AdapterLogger.Logger.Info($"\tTestCase: {testCase} [{testCase.DisplayName}]");
+
+            var testResult = new TestResult(testCase);
+
+            testResult.Outcome = TestOutcome.Failed;
+            if (testModel.Success)
+                testResult.Outcome = TestOutcome.Passed;
+            if (testModel.Skipped)
+                testResult.Outcome = TestOutcome.Skipped;
+
+            testResult.Duration = new TimeSpan((long)(TimeSpan.TicksPerMillisecond * testModel.Time));
+
+            testResult.ErrorStackTrace = testModel.Message;
+            testResult.Messages.Clear();
+
+            if (testModel.Skipped)
+                testResult.ErrorMessage = testModel.Message;
+
+            testResult.Messages.Add(new TestResultMessage(TestResultMessage.StandardOutCategory, testModel.Console));
+
+            frameworkHandle.RecordResult(testResult);
         }
 
         /// <summary>
