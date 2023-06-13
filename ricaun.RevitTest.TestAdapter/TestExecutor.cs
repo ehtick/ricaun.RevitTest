@@ -96,6 +96,7 @@ namespace ricaun.RevitTest.TestAdapter
                     AdapterLogger.Logger.Debug($"\tTestFilter: {filter}");
                 }
 
+                bool testAssemblyEnabled = true;
                 Action<string> outputConsole = (item) =>
                 {
                     if (string.IsNullOrEmpty(item)) return;
@@ -104,6 +105,8 @@ namespace ricaun.RevitTest.TestAdapter
                     {
                         AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
                         var testAssembly = item.Deserialize<TestAssemblyModel>();
+
+                        if (testAssemblyEnabled == false) return;
 
                         AdapterLogger.Logger.Info($"TestAssembly: {testAssembly}");
                         foreach (var testModel in testAssembly.Tests.SelectMany(e => e.Tests))
@@ -117,6 +120,7 @@ namespace ricaun.RevitTest.TestAdapter
                         if (item.Deserialize<TestModel>() is TestModel testModel)
                         {
                             RecordResultTestModel(frameworkHandle, source, tests, testModel);
+                            testAssemblyEnabled = false;
                         }
                     }
                     else

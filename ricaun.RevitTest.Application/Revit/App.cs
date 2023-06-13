@@ -85,6 +85,8 @@ namespace ricaun.RevitTest.Application.Revit
                         return;
                     }
 
+                    ribbonItem.SetLargeImage(LargeImageRun);
+
                     Log.WriteLine($"Execute: {message.TestPathFile}");
 
                     string[] testFilterNames = new string[] { };
@@ -151,6 +153,8 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Info = null;
                         response.Tests = null;
                     });
+
+                    ribbonItem.SetLargeImage(LargeImageNoBusy);
                 };
             }
 
@@ -212,11 +216,12 @@ namespace ricaun.RevitTest.Application.Revit
             }
         }
 
+        const string LargeImageIsBusy = "/UIFrameworkRes;component/ribbon/images/close.ico";
+        const string LargeImageNoBusy = "/UIFrameworkRes;component/ribbon/images/add.ico";
+        const string LargeImageRun = "/UIFrameworkRes;component/ribbon/images/element_rotate.ico";
         private static void UpdateLargeImageBusy(RibbonItem ribbonItem, RevitBusyService control)
         {
             if (ribbonItem is null) return;
-            const string LargeImageIsBusy = "/UIFrameworkRes;component/ribbon/images/close.ico";
-            const string LargeImageNoBusy = "/UIFrameworkRes;component/ribbon/images/add.ico";
             if (control.IsRevitBusy)
                 ribbonItem.SetLargeImage(LargeImageIsBusy);
             else
