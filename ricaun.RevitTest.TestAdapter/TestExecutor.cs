@@ -105,6 +105,7 @@ namespace ricaun.RevitTest.TestAdapter
                         AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
                         var testAssembly = item.Deserialize<TestAssemblyModel>();
 
+                        AdapterLogger.Logger.Info($"TestAssembly: {testAssembly}");
                         foreach (var testModel in testAssembly.Tests.SelectMany(e => e.Tests))
                         {
                             RecordResultTestModel(frameworkHandle, source, tests, testModel);
@@ -120,7 +121,7 @@ namespace ricaun.RevitTest.TestAdapter
                     }
                     else
                     {
-                        AdapterLogger.Logger.Info($"OutputConsole: {item}");
+                        AdapterLogger.Logger.Debug($"OutputConsole: {item}");
                     }
                 };
 

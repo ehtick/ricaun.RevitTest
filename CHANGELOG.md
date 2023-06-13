@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.8] / 2023-06-13
 ### TestAdapter
-- Update to show OutputConsole in the Log.
+- Update to show OutputConsole in the Debug (NUnit.Verbosity = 2).
 - Update `TestModels`, `TestAssemblyModel` and `TestCaseModel`
 - Update `TestAssemblyModel` to record TestCase with the method `RecordResultTestModel`
 - Fix Download Application File
