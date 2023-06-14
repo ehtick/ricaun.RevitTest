@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.10] / 2023-06-13
 ### TestAdapter
 - Change everything to internal to remove possible Reference
+### Application
+- Create `RibbonUtils` with custom images for `pass`, `fail`, `skip`, and `wait`.
 
 ## [1.0.9] / 2023-06-13
 ### TestAdapter

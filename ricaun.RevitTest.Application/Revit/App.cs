@@ -10,6 +10,7 @@ using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
@@ -216,9 +217,10 @@ namespace ricaun.RevitTest.Application.Revit
             }
         }
 
-        const string LargeImageIsBusy = "/UIFrameworkRes;component/ribbon/images/close.ico";
-        const string LargeImageNoBusy = "/UIFrameworkRes;component/ribbon/images/add.ico";
-        const string LargeImageRun = "/UIFrameworkRes;component/ribbon/images/element_rotate.ico";
+        #region ribbons
+        static string LargeImageNoBusy = RibbonUtils.TestPass;
+        static string LargeImageIsBusy = RibbonUtils.TestFail;
+        static string LargeImageRun = RibbonUtils.TestWait;
         private static void UpdateLargeImageBusy(RibbonItem ribbonItem, RevitBusyService control)
         {
             if (ribbonItem is null) return;
@@ -227,5 +229,6 @@ namespace ricaun.RevitTest.Application.Revit
             else
                 ribbonItem.SetLargeImage(LargeImageNoBusy);
         }
+        #endregion
     }
 }
