@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<NUnit>
+    <!--
     <Version>2023</Version>
     <Open>false</Open>
     <Close>false</Close>
     <Verbosity>2</Verbosity>
-    <!--
     <Application></Application>
     -->
 	</NUnit>

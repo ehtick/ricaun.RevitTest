@@ -15,10 +15,10 @@
             public int Version { get; set; }
 
             [XmlElement("Open")]
-            public XmlBool Open { get; set; }
+            public bool Open { get; set; }
 
             [XmlElement("Close")]
-            public XmlBool Close { get; set; }
+            public bool Close { get; set; }
 
             [XmlElement("Verbosity")]
             public int Verbosity { get; set; }
@@ -27,7 +27,7 @@
             public string Application { get; set; }
 
             [XmlElement("Metadata")]
-            public XmlBool Metadata { get; set; } = true;
+            public bool Metadata { get; set; } = true;
         }
 
         public override string ToString()

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using ricaun.RevitTest.TestAdapter.Extensions;
+using ricaun.RevitTest.TestAdapter.Metadatas;
 using ricaun.RevitTest.TestAdapter.Models;
 
 namespace ricaun.RevitTest.TestAdapter
@@ -7,7 +8,7 @@ namespace ricaun.RevitTest.TestAdapter
     internal class AdapterSettings : IAdapterSettings
     {
         #region static
-        private static AdapterSettings Instance { get; set; }
+        internal static AdapterSettings Instance { get; set; }
         public static RunSettingsModel Settings
         {
             get
@@ -37,7 +38,12 @@ namespace ricaun.RevitTest.TestAdapter
 
             if (discoveryContext.RunSettings is IRunSettings runSettings)
             {
-                RunSettings = runSettings.SettingsXml.DeserializeXml<RunSettingsModel>();
+                //RunSettings = runSettings.SettingsXml.DeserializeXml<RunSettingsModel>();
+                try
+                {
+                    MapperKey.Map(this, XmlUtils.ParseKeyValues(runSettings.SettingsXml));
+                }
+                catch { }
             }
         }
     }

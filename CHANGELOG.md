@@ -4,9 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.0.10] / 2023-06-13
+## [1.0.10] / 2023-06-14
 ### TestAdapter
 - Change everything to internal to remove possible Reference
+- Problem with `DeserializeXml` only work with public classes
+- Create new `MapperKey` to work with KeyValue
+- Create `XmlUtils` to transform xml to KeyValue
 ### Application
 - Create `RibbonUtils` with custom images for `pass`, `fail`, `skip`, and `wait`.
 
