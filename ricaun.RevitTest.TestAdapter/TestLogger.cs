@@ -12,7 +12,7 @@ namespace ricaun.RevitTest.TestAdapter
     /// <summary>
     /// ITestLogger
     /// </summary>
-    public interface ITestLogger
+    internal interface ITestLogger
     {
         void Error(string message);
         void Error(string message, Exception ex);
@@ -33,7 +33,7 @@ namespace ricaun.RevitTest.TestAdapter
     /// simply swallows all messages without sending them
     /// anywhere.
     /// </summary>
-    public class TestLogger : IMessageLogger, ITestLogger
+    internal class TestLogger : IMessageLogger, ITestLogger
     {
         private const string EXCEPTION_FORMAT = "Exception {0}, {1}";
 

@@ -4,7 +4,7 @@ using ricaun.RevitTest.TestAdapter.Models;
 
 namespace ricaun.RevitTest.TestAdapter
 {
-    public class AdapterSettings : IAdapterSettings
+    internal class AdapterSettings : IAdapterSettings
     {
         #region static
         private static AdapterSettings Instance { get; set; }
@@ -42,7 +42,7 @@ namespace ricaun.RevitTest.TestAdapter
         }
     }
 
-    public interface IAdapterSettings
+    internal interface IAdapterSettings
     {
         void Initialize(IDiscoveryContext discoveryContext);
         RunSettingsModel RunSettings { get; }

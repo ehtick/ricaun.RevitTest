@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Metadatas
 {
-    public static class MetadataSettings
+    internal static class MetadataSettings
     {
         public static void Create(string source)
         {

@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace ricaun.RevitTest.TestAdapter.Metadatas
 {
-    public static class MetadataXmlUtils
+    internal static class MetadataXmlUtils
     {
         private static Dictionary<string, object> GroupByNamesAndKeys(Dictionary<string, string> input)
         {

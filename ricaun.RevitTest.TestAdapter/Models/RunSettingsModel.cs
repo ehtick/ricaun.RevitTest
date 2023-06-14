@@ -4,7 +4,7 @@
     using System.Xml.Serialization;
 
     [XmlRoot("RunSettings")]
-    public class RunSettingsModel
+    internal class RunSettingsModel
     {
         [XmlElement("NUnit")]
         public NUnitModel NUnit { get; set; } = new NUnitModel();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Services
 {
-    public class RevitTestConsole : IDisposable
+    internal class RevitTestConsole : IDisposable
     {
         private readonly string applicationPath;
 

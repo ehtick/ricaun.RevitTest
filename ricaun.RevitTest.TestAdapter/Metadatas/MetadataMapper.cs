@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace ricaun.RevitTest.TestAdapter.Metadatas
 {
-    public static class MetadataMapper
+    internal static class MetadataMapper
     {
         private static bool IsPropertyInfoEqualAttribute(AssemblyMetadataAttribute attribute, PropertyInfo propertyInfo)
         {

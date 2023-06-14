@@ -8,7 +8,7 @@
     /// XmlBool
     /// <code>https://stackoverflow.com/questions/1155227/xml-serialization-vs-true-and-false</code>
     /// </summary>
-    public struct XmlBool : IXmlSerializable
+    internal struct XmlBool : IXmlSerializable
     {
         private bool _value;
 

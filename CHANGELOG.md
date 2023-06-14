@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.10] / 2023-06-13
+### TestAdapter
+- Change everything to internal to remove possible Reference
+
 ## [1.0.9] / 2023-06-13
 ### TestAdapter
 - Fix duplicated result by using double `RecordResultTestModel` 
@@ -150,6 +154,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.10]: ../../compare/1.0.9...1.0.10
 [1.0.9]: ../../compare/1.0.8...1.0.9
 [1.0.8]: ../../compare/1.0.7...1.0.8
 [1.0.7]: ../../compare/1.0.6...1.0.7
