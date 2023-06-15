@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.11] / 2023-06-15
 ### TestAdapter
-- Fix Metadata problem not working...
+- Fix Metadata problem not working... From `1.0.10`
 
 ## [1.0.10] / 2023-06-14
 ### TestAdapter
