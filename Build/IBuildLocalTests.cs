@@ -21,7 +21,7 @@ public interface IBuildLocalTests : IBuildConsole, IHazTest
                 return setting
                     //.SetRunSetting("NUnit.Version", 2021)
                     //.SetVerbosity(DotNetVerbosity.Normal)
-                    //.SetRunSetting("NUnit.Verbosity", 1)
+                    .SetRunSetting("NUnit.Verbosity", 2)
                     .SetRunSetting("NUnit.Open", true)
                     .SetRunSetting("NUnit.Close", true);
             });

@@ -11,7 +11,7 @@ namespace ricaun.RevitTest.TestAdapter
 {
     [DefaultExecutorUri(ExecutorUriString)]
     [FileExtension(".dll")]
-    public class TestDiscoverer : TestAdapter, ITestDiscoverer
+    internal class TestDiscoverer : TestAdapter, ITestDiscoverer
     {
         public void DiscoverTests(
             IEnumerable<string> sources, IDiscoveryContext discoveryContext,

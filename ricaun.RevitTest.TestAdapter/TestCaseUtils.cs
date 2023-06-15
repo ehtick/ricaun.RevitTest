@@ -2,7 +2,7 @@
 
 namespace ricaun.RevitTest.TestAdapter
 {
-    public static class TestCaseUtils
+    internal static class TestCaseUtils
     {
         public static bool IsSimilarTestName(TestCase testCase, string testName, bool onlyFullyQualifiedName = false)
         {

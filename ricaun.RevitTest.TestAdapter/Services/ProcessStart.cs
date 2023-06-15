@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Services
 {
-    public class ProcessStart
+    internal class ProcessStart
     {
         private string processPath;
         private Dictionary<string, object> argumentsPair = new Dictionary<string, object>();

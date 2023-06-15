@@ -104,6 +104,9 @@ dotnet test ricaun.RevitTest.Tests.dll -- NUnit.Version=2021 NUnit.Open=true NUn
 dotnet test ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.Version=2021 NUnit.Open=True NUnit.Close=True NUnit.Verbosity=1
 ```
 ```bash
+dotnet test ricaun.RevitTest.Tests.dll --verbosity Normal -- NUnit.Verbosity=2 NUnit.Open=True NUnit.Close=True
+```
+```bash
 dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings
 ```
 ```bash

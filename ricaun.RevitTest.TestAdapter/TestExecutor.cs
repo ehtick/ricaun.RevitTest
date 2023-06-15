@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ricaun.RevitTest.TestAdapter
 {
     [ExtensionUri(ExecutorUriString)]
-    public class TestExecutor : TestAdapter, ITestExecutor
+    internal class TestExecutor : TestAdapter, ITestExecutor
     {
         /// <summary>
         /// RunTests

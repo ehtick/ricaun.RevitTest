@@ -118,6 +118,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\test-fail.png" />
+    <None Remove="Images\test-pass.png" />
+    <None Remove="Images\test-skip.png" />
+    <None Remove="Images\test-wait.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Revit.Busy" Version="*" />
     <PackageReference Include="ricaun.Revit.UI" Version="0.4.0" />
     <PackageReference Include="ricaun.Revit.Async" Version="*" />
@@ -161,6 +168,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ricaun.RevitTest.Shared\ricaun.RevitTest.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\test-fail.png" />
+    <Resource Include="Images\test-pass.png" />
+    <Resource Include="Images\test-skip.png" />
+    <Resource Include="Images\test-wait.png" />
   </ItemGroup>
 
 </Project>

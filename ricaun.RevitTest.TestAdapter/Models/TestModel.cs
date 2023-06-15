@@ -7,7 +7,7 @@ namespace ricaun.RevitTest.TestAdapter.Models
     /// <summary>
     /// TestAssemblyModel
     /// </summary>
-    public class TestAssemblyModel : TestModel
+    internal class TestAssemblyModel : TestModel
     {
         /// <summary>
         /// FileName
@@ -70,7 +70,7 @@ namespace ricaun.RevitTest.TestAdapter.Models
     /// <summary>
     /// TestTypeModel
     /// </summary>
-    public class TestTypeModel : TestModel
+    internal class TestTypeModel : TestModel
     {
         /// <summary>
         /// Tests
@@ -97,7 +97,7 @@ namespace ricaun.RevitTest.TestAdapter.Models
     /// <summary>
     /// Test Model
     /// </summary>
-    public class TestModel
+    internal class TestModel
     {
         /// <summary>
         /// Test Name

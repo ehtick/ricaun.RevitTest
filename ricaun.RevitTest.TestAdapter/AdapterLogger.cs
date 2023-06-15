@@ -3,7 +3,7 @@ using System;
 
 namespace ricaun.RevitTest.TestAdapter
 {
-    public class AdapterLogger
+    internal class AdapterLogger
     {
         private static AdapterLogger Instance { get; set; }
         public static ITestLogger Logger

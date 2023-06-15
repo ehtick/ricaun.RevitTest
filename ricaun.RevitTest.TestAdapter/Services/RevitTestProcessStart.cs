@@ -1,6 +1,6 @@
 ﻿namespace ricaun.RevitTest.TestAdapter.Services
 {
-    public class RevitTestProcessStart : ProcessStart
+    internal class RevitTestProcessStart : ProcessStart
     {
         public RevitTestProcessStart(string processPath) : base(processPath)
         {

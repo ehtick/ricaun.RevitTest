@@ -10,7 +10,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
     /// <summary>
     /// ApplicationUtils
     /// </summary>
-    public static class ApplicationUtils
+    internal static class ApplicationUtils
     {
         private const string ZIP_FILE_EXTENSION = ".zip";
 
