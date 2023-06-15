@@ -16,6 +16,8 @@ namespace ricaun.RevitTest.TestAdapter.Services
             if (string.IsNullOrWhiteSpace(applicationPath))
                 return null;
 
+            AdapterLogger.Logger.Info($"Application: {Path.GetFileName(applicationPath)}", 0);
+
             if (ApplicationUtils.Download(applicationPath, out string directory))
             {
                 AdapterLogger.Logger.Info($"Application Download: {applicationPath}");

@@ -15,7 +15,11 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         {
             try
             {
-                if (AdapterSettings.Settings.NUnit.Metadata == false) return;
+                if (AdapterSettings.Settings.NUnit.Metadata == false)
+                {
+                    AdapterLogger.Logger.Warning($"NUnit.Metadata: Disabled");
+                    return;
+                }
 
                 var assembly = Assembly.Load(File.ReadAllBytes(source));
                 var assemblyMetadataAttributes = assembly.GetCustomAttributes(typeof(AssemblyMetadataAttribute), false)
@@ -26,12 +30,26 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
                     AdapterLogger.Logger.Info($"Metadata: {assemblyMetadataAttribute.Key} \t {assemblyMetadataAttribute.Value}");
                 }
 
+#if DEBUG
+                AdapterLogger.Logger.Warning($"-");
+                foreach (var assemblyMetadataAttribute in assemblyMetadataAttributes)
+                {
+                    AdapterLogger.Logger.Warning($"Metadata: {assemblyMetadataAttribute.Key} \t {assemblyMetadataAttribute.Value}");
+                }
+                AdapterLogger.Logger.Warning($"-");
+#endif
+
                 if (assemblyMetadataAttributes.Any(e => e.Key.StartsWith(nameof(AdapterSettings.Settings.NUnit))))
                 {
-                    MetadataMapper.Map(AdapterSettings.Settings.NUnit, assemblyMetadataAttributes);
+                    MetadataMapper.Map(AdapterSettings.Settings, assemblyMetadataAttributes);
                     AdapterLogger.SetVerbosity(AdapterSettings.Settings.NUnit.Verbosity);
                     AdapterLogger.Logger.Info($"AdapterSettings: {AdapterSettings.Settings}");
                 }
+
+#if DEBUG
+                AdapterLogger.Logger.Warning($"AdapterSettings: {AdapterSettings.Settings}");
+                AdapterLogger.Logger.Warning($"-");
+#endif
             }
             catch (Exception ex)
             {
