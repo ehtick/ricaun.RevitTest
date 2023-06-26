@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.12] / 2023-06-26
+### Features
+- Add authentication with `ricaun.Auth`
+### Application
+- Add `ApsApplication` with `ricaun.Auth.Aps.UI`
+- Add `TestExceptionUtils` to show `Exception` in the `TextExplorer`
+
 ## [1.0.11] / 2023-06-15
 ### TestAdapter
 - Fix Metadata problem not working... From `1.0.10`
@@ -163,6 +170,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.12]: ../../compare/1.0.11...1.0.12
 [1.0.11]: ../../compare/1.0.10...1.0.11
 [1.0.10]: ../../compare/1.0.9...1.0.10
 [1.0.9]: ../../compare/1.0.8...1.0.9

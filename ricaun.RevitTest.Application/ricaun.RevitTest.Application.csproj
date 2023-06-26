@@ -126,7 +126,8 @@
 
   <ItemGroup>
     <PackageReference Include="Revit.Busy" Version="*" />
-    <PackageReference Include="ricaun.Revit.UI" Version="0.4.0" />
+    <PackageReference Include="ricaun.Auth.Aps.UI" Version="*" />
+    <PackageReference Include="ricaun.Revit.UI" Version="0.5.2" />
     <PackageReference Include="ricaun.Revit.Async" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
     <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
@@ -155,6 +156,7 @@
         <!--
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" ExcludeAssemblies="nunit.framework" />
         <Costura IncludeAssemblies="" />
+        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" IncludeAssemblies=""/>
         -->
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" />
       </Weavers>
