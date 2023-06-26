@@ -6,6 +6,7 @@ using ricaun.NUnit;
 using ricaun.NUnit.Models;
 using ricaun.Revit.Async;
 using ricaun.Revit.UI;
+using ricaun.RevitTest.Application.Revit.ApsApplication;
 using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
@@ -48,6 +49,11 @@ namespace ricaun.RevitTest.Application.Revit
             PipeTestServer_Initialize();
 
             CreateRibbonPanel(application);
+
+            Task.Run(async () =>
+            {
+                await ApsApplication.ApsApplication.Initialize();
+            });
 
             return Result.Succeeded;
         }
@@ -128,7 +134,17 @@ namespace ricaun.RevitTest.Application.Revit
                     {
                         try
                         {
-                            if (UserUtils.IsNotValid(uiapp)) throw new Exception("UserUtils.IsNotValid");
+                            if (ApsApplication.ApsApplication.IsConnected == false)
+                            {
+                                var ex = new Exception("The user is not connected with 'ricaun.Auth'.");
+                                return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
+                            }
+
+                            //if (UserUtils.IsNotValid(uiapp))
+                            //{
+                            //    var ex = new Exception("UserUtils.IsNotValid");
+                            //    return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
+                            //}
 
                             var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
                             return tests;
@@ -171,6 +187,11 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
             ribbonItem.SetContextualHelp("https://ricaun.com")
                 .SetToolTip("Open RevitTest.log File");
+
+            var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandView>("ricaun.Auth")
+                .SetToolTip("Open dialog to Login/Logout with Autodesk Platform Service.");
+            ribbonPanel.GetRibbonPanel().Source.DialogLauncher = ribbon.GetRibbonItem<Autodesk.Windows.RibbonCommandItem>();
+            ribbonPanel.Remove(ribbon);
 
             UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
 
