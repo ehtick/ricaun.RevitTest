@@ -53,7 +53,7 @@ namespace ricaun.RevitTest.Application.Revit
             Task.Run(async () =>
             {
                 await ApsApplication.ApsApplication.Initialize();
-            });
+            }).GetAwaiter().GetResult();
 
             return Result.Succeeded;
         }
@@ -137,8 +137,14 @@ namespace ricaun.RevitTest.Application.Revit
                             if (ApsApplication.ApsApplication.IsConnected == false)
                             {
                                 var ex = new Exception("The user is not connected with 'ricaun.Auth'.");
+                                ApsApplication.ApsApplicationView.OpenApsView();
                                 return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
                             }
+
+                            Task.Run(async () =>
+                            {
+                                await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", testFilterNames.Length);
+                            });
 
                             //if (UserUtils.IsNotValid(uiapp))
                             //{
@@ -188,7 +194,7 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonItem.SetContextualHelp("https://ricaun.com")
                 .SetToolTip("Open RevitTest.log File");
 
-            var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandView>("ricaun.Auth")
+            var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandApsView>("ricaun.Auth")
                 .SetToolTip("Open dialog to Login/Logout with Autodesk Platform Service.");
             ribbonPanel.GetRibbonPanel().Source.DialogLauncher = ribbon.GetRibbonItem<Autodesk.Windows.RibbonCommandItem>();
             ribbonPanel.Remove(ribbon);
