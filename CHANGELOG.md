@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `ApsApplicationLogger`
 ### Console
 - Add time delay close and Kill process
+### TestAdapter
+- Add `OrdinalIgnoreCase` to fix Metadata Mapper
 
 ## [1.0.12] / 2023-06-26
 ### Features
