@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add aps logger test
 ### Application
 - Add `ApsApplicationLogger`
+### Console
+- Add time delay close and Kill process
 
 ## [1.0.12] / 2023-06-26
 ### Features

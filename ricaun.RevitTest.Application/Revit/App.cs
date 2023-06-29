@@ -11,6 +11,7 @@ using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -141,11 +142,6 @@ namespace ricaun.RevitTest.Application.Revit
                                 return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
                             }
 
-                            Task.Run(async () =>
-                            {
-                                await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", testFilterNames.Length);
-                            });
-
                             //if (UserUtils.IsNotValid(uiapp))
                             //{
                             //    var ex = new Exception("UserUtils.IsNotValid");
@@ -153,6 +149,21 @@ namespace ricaun.RevitTest.Application.Revit
                             //}
 
                             var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
+
+                            try
+                            {
+                                var task = Task.Run(async () =>
+                                {
+                                    if (tests is TestAssemblyModel modelTest)
+                                    {
+                                        var modelTests = modelTest.Tests.SelectMany(e => e.Tests).ToArray();
+                                        await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
+                                    }
+                                });
+                                task.GetAwaiter().GetResult();
+                            }
+                            catch { }
+
                             return tests;
                         }
                         catch { Log.WriteLine("TestExecuteUtils: Fail"); }
