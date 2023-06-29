@@ -8,13 +8,13 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication.Services
         /// Instance
         /// </summary>
         public static IJsonService Instance { get; set; } = new JsonService();
-        public T ToJson<T>(string content)
+        public T FromJson<T>(string content)
         {
             if (content is null) return default(T);
             if (content is T contentT) return contentT;
             return JsonConvert.DeserializeObject<T>(content);
         }
-        public string FromJson<T>(T content)
+        public string ToJson<T>(T content)
         {
             if (content is null) return null;
             if (content is string contentS) return contentS;
@@ -24,7 +24,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication.Services
 
     public interface IJsonService
     {
-        T ToJson<T>(string content);
-        string FromJson<T>(T content);
+        T FromJson<T>(string content);
+        string ToJson<T>(T content);
     }
 }

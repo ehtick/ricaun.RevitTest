@@ -51,11 +51,11 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication.Services
         private async Task<T> ReadAsJsonAsync<T>(HttpContent content)
         {
             var result = await content.ReadAsStringAsync();
-            return jsonService.ToJson<T>(result);
+            return jsonService.FromJson<T>(result);
         }
         private StringContent JsonStringContent(object content)
         {
-            var json = jsonService.FromJson(content);
+            var json = jsonService.ToJson(content);
             if (json is null) return null;
             var stringContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             return stringContent;
