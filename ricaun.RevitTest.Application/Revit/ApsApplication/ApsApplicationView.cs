@@ -1,4 +1,5 @@
 ﻿using ricaun.Auth.Aps.UI;
+using System.Diagnostics;
 
 namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
@@ -15,6 +16,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         {
             if (apsView is null)
             {
+                Debug.WriteLine($"{typeof(ApsView).Assembly}");
                 apsView = new ApsView(Autodesk.Windows.ComponentManager.ApplicationWindow);
                 apsView.SetApsConfiguration(ApsApplication.ClientId, ApsApplication.ClientPort, ApsApplication.ClientScopes);
                 apsView.Closed += (s, e) => { apsView = null; };

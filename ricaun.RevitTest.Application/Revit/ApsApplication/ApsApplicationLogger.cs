@@ -1,5 +1,4 @@
-﻿using ricaun.RevitTest.Application.Revit.ApsApplication.Services;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -21,10 +20,12 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                 {
                     var apsLog = ApsLogUtils.New(type, message, appCount);
 
-                    var client = ApsApplication.ApsService.GetHttpClient();
-                    var service = new RequestService(client);
+                    var service = await ApsApplication.ApsService.ApsClient.GetRequestServiceAsync();
+
+                    //var client = ApsApplication.ApsService.GetHttpClient();
+                    //var service = new RequestService(client);
                     result = await service.PostAsync<string>(requestUri, apsLog);
-                    client.Dispose();
+                    service.Dispose();
                 }
                 catch (Exception ex)
                 {
@@ -34,19 +35,14 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
             return result;
         }
 
-        public static async Task Get()
-        {
-            if (ApsApplication.IsConnected)
-            {
-                var str = await ApsApplication.ApsService.ApsClient.Get<string>(requestUri);
-                System.Console.WriteLine(str);
-            }
-        }
-
-
-
-
-
+        //public static async Task Get()
+        //{
+        //    if (ApsApplication.IsConnected)
+        //    {
+        //        var str = await ApsApplication.ApsService.ApsClient.Get<string>(requestUri);
+        //        System.Console.WriteLine(str);
+        //    }
+        //}
     }
 
     public static class ApsLogUtils
