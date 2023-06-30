@@ -11,6 +11,7 @@ using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -53,7 +54,7 @@ namespace ricaun.RevitTest.Application.Revit
             Task.Run(async () =>
             {
                 await ApsApplication.ApsApplication.Initialize();
-            });
+            }).GetAwaiter().GetResult();
 
             return Result.Succeeded;
         }
@@ -137,6 +138,7 @@ namespace ricaun.RevitTest.Application.Revit
                             if (ApsApplication.ApsApplication.IsConnected == false)
                             {
                                 var ex = new Exception("The user is not connected with 'ricaun.Auth'.");
+                                ApsApplication.ApsApplicationView.OpenApsView();
                                 return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
                             }
 
@@ -147,6 +149,21 @@ namespace ricaun.RevitTest.Application.Revit
                             //}
 
                             var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
+
+                            try
+                            {
+                                var task = Task.Run(async () =>
+                                {
+                                    if (tests is TestAssemblyModel modelTest)
+                                    {
+                                        var modelTests = modelTest.Tests.SelectMany(e => e.Tests).ToArray();
+                                        await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
+                                    }
+                                });
+                                task.GetAwaiter().GetResult();
+                            }
+                            catch { }
+
                             return tests;
                         }
                         catch { Log.WriteLine("TestExecuteUtils: Fail"); }
@@ -188,7 +205,7 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonItem.SetContextualHelp("https://ricaun.com")
                 .SetToolTip("Open RevitTest.log File");
 
-            var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandView>("ricaun.Auth")
+            var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandApsView>("ricaun.Auth")
                 .SetToolTip("Open dialog to Login/Logout with Autodesk Platform Service.");
             ribbonPanel.GetRibbonPanel().Source.DialogLauncher = ribbon.GetRibbonItem<Autodesk.Windows.RibbonCommandItem>();
             ribbonPanel.Remove(ribbon);

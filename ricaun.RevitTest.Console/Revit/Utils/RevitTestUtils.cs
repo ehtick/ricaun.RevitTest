@@ -217,7 +217,10 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         if (forceToCloseRevit)
                         {
                             if (!process.HasExited)
+                            {
+                                Thread.Sleep(1000);
                                 process.Kill();
+                            }
 
                             Log.WriteLine($"{revitInstallation}: Exited");
                         }

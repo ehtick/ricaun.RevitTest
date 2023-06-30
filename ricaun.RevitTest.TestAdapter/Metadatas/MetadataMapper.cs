@@ -13,7 +13,10 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
             if (attributes is null)
                 return destination;
 
-            return MapperKey.Map(destination, attributes.ToDictionary(e => e.Key, e => e.Value));
+            var metadataDictionary = attributes
+                .ToDictionary(e => e.Key, e => e.Value, StringComparer.OrdinalIgnoreCase);
+
+            return MapperKey.Map(destination, metadataDictionary);
         }
     }
 }

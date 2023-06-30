@@ -1,11 +1,7 @@
-﻿using ricaun.RevitTest.TestAdapter.Extensions;
-using ricaun.RevitTest.TestAdapter.Models;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Metadatas
 {
