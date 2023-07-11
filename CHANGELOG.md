@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.0.14] / 2023-07-11
 ### Features
 - Update Logger to another server to improve speed.
+### Application
+- Logger when `Login` with `ApsView`
 
 ## [1.0.13] / 2023-06-30
 ### Features

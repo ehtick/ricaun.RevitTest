@@ -171,6 +171,7 @@
           <IncludeAssemblies>
             nunit.framework
             NamedPipeWrapper.Json.*
+            ricaun.Auth*
           </IncludeAssemblies>
         </Costura>
       </Weavers>
