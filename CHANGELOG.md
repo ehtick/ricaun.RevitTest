@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update Logger to another server to improve speed.
 ### Application
 - Logger when `Login` with `ApsView`
+- Update `ApsLog` with product info.
 
 ## [1.0.13] / 2023-06-30
 ### Features

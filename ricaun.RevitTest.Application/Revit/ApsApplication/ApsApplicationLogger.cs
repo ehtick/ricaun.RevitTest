@@ -58,10 +58,12 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                 appId = assembly.GetName().Name.Split(new[] { ".Dev." }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault(),
                 appVersion = assembly.GetName().Version.ToString(3),
                 appCount = appCount,
-                userName = Environment.UserName,
                 //userVersion = revitApiAssembly.GetName().Version.ToString(),
-                userVersion = Environment.Version.ToString(),
-                userLanguage = System.Globalization.CultureInfo.CurrentUICulture.Name,
+                //userVersion = Environment.Version.ToString(),
+                productId = "Autodesk.Revit",
+                productVersion = revitApiAssembly.GetName().Version.ToString(),
+                productLanguage = System.Globalization.CultureInfo.CurrentUICulture.Name,
+                userName = Environment.UserName,
                 userMachine = Environment.MachineName,
                 type = type,
                 message = message
@@ -71,6 +73,20 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
     }
 
     public class ApsLog
+    {
+        public string appId { get; set; }
+        public string appVersion { get; set; }
+        public int appCount { get; set; }
+        public string productId { get; set; }
+        public string productVersion { get; set; }
+        public string productLanguage { get; set; }
+        public string userName { get; set; }
+        public string userMachine { get; set; }
+        public string type { get; set; }
+        public string message { get; set; }
+    }
+
+    public class ApsLogOld
     {
         public string appId { get; set; }
         public string appVersion { get; set; }
