@@ -164,8 +164,15 @@
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" ExcludeAssemblies="nunit.framework" />
         <Costura IncludeAssemblies="" />
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" IncludeAssemblies=""/>
-        -->
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" />
+          IncludeAssemblies="nunit.framework|NamedPipeWrapper.Json.1.5.3"
+        -->
+        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false">
+          <IncludeAssemblies>
+            nunit.framework
+            NamedPipeWrapper.Json.*
+          </IncludeAssemblies>
+        </Costura>
       </Weavers>
     </WeaverConfiguration>
   </PropertyGroup>

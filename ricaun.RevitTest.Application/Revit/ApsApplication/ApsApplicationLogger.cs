@@ -8,8 +8,10 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
     public static class ApsApplicationLogger
     {
-        private static string requestUri = "https://webfastminimal.azurewebsites.net/logger";
+        //private static string requestUri = "https://webfastminimal.azurewebsites.net/logger";
         //private static string requestUri = "https://localhost:7059/logger";
+        private static string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/Logger/{0}";
+
         public static async Task<string> Log(string type, string message, int appCount = 1)
         {
             var result = string.Empty;
@@ -24,7 +26,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
 
                     //var client = ApsApplication.ApsService.GetHttpClient();
                     //var service = new RequestService(client);
-                    result = await service.PostAsync<string>(requestUri, apsLog);
+                    result = await service.PostAsync<string>(string.Format(requestUri, type), apsLog);
                     service.Dispose();
                 }
                 catch (Exception ex)

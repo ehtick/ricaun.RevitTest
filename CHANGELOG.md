@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.14] / 2023-07-11
+### Features
+- Update Logger to another server to improve speed.
+
 ## [1.0.13] / 2023-06-30
 ### Features
 - Add Aps Loggin and logger test count
@@ -181,6 +185,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.14]: ../../compare/1.0.13...1.0.14
 [1.0.13]: ../../compare/1.0.12...1.0.13
 [1.0.12]: ../../compare/1.0.11...1.0.12
 [1.0.11]: ../../compare/1.0.10...1.0.11
