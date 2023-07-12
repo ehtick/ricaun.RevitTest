@@ -11,7 +11,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         {
             UIApplication uiapp = commandData.Application;
 
-            ApsApplicationView.OpenApsView();
+            ApsApplicationView.OpenApsView(true);
 
             return Result.Succeeded;
         }

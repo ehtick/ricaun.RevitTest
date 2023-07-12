@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <IsTestProject>true</IsTestProject>
     <TargetFramework>net48</TargetFramework>
     <RevitVersion>2021</RevitVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -31,14 +32,15 @@
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" IncludeAssets="build; compile" PrivateAssets="All" />
-    <!--
-    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
-    -->
     <ProjectReference Include="..\ricaun.RevitTest.TestAdapter\ricaun.RevitTest.TestAdapter.csproj">
       <Private></Private>
       <PrivateAssets>true</PrivateAssets>
     </ProjectReference>
+    
+    <!--
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" IncludeAssets="build; compile" PrivateAssets="All" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    -->
     <!--
     <Reference Include="ricaun.RevitTest.TestAdapter">
       <HintPath>..\ricaun.RevitTest.TestAdapter\bin\Debug\ricaun.RevitTest.TestAdapter.dll</HintPath>

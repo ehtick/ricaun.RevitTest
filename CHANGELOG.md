@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.15] / 2023-07-12
+### Features
+- Open `ApsView` if not connected and wait for `Login` or close.
+### Updated
+- Update `ricaun.NUnit` to 1.3.0 (`TestEngine.Fail`)
+### Application
+- Fail tests with `TestEngine.Fail` when NUnit is not valid.
+- Open `ApsView` when not `Login` when tests.
+
 ## [1.0.14] / 2023-07-11
 ### Features
 - Update Logger to another server to improve speed.
@@ -188,6 +197,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.15]: ../../compare/1.0.14...1.0.15
 [1.0.14]: ../../compare/1.0.13...1.0.14
 [1.0.13]: ../../compare/1.0.12...1.0.13
 [1.0.12]: ../../compare/1.0.11...1.0.12

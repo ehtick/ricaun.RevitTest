@@ -137,9 +137,18 @@ namespace ricaun.RevitTest.Application.Revit
                         {
                             if (ApsApplication.ApsApplication.IsConnected == false)
                             {
-                                var ex = new Exception("The user is not connected with 'ricaun.Auth'.");
-                                ApsApplication.ApsApplicationView.OpenApsView();
-                                return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
+                                PipeTestServer.Update((response) =>
+                                {
+                                    response.Info = "The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.";
+                                });
+
+                                ApsApplication.ApsApplicationView.OpenApsView(true);
+                            }
+
+                            if (ApsApplication.ApsApplication.IsConnected == false)
+                            {
+                                var ex = new Exception("The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.");
+                                return TestEngine.Fail(message.TestPathFile, ex, testFilterNames);
                             }
 
                             //if (UserUtils.IsNotValid(uiapp))
