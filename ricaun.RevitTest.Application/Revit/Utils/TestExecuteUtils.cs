@@ -140,8 +140,18 @@ namespace ricaun.RevitTest.Application.Revit
                         {
                             Log.WriteLine($"\t {test.Time}\t {test}");
                         }
-                    }
 
+                        if (tests.Any() == false)
+                        {
+                            Log.WriteLine($"Error: {modelTest.Message}");
+                            try
+                            {
+                                var ex = new Exception(modelTest.Message.Split('\n').FirstOrDefault());
+                                modelTest = TestEngine.Fail(filePath, ex);
+                            }
+                            catch { }
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

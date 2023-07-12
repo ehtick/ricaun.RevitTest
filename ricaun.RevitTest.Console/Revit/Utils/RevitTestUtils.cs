@@ -166,6 +166,11 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         {
                             Thread.Sleep(1000);
 
+                            if (i % 30 == 0 && i > 0)
+                            {
+                                Log.WriteLine($"{revitInstallation}: Wait {i}s");
+                            }
+
                             if (process.HasExited) break;
 
                             if (client.ServerMessage is null)
