@@ -6,13 +6,11 @@ using ricaun.NUnit;
 using ricaun.NUnit.Models;
 using ricaun.Revit.Async;
 using ricaun.Revit.UI;
-using ricaun.RevitTest.Application.Revit.ApsApplication;
 using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
@@ -83,6 +81,9 @@ namespace ricaun.RevitTest.Application.Revit
 
                     if (e.PropertyName == nameof(TestRequest.Info))
                     {
+                        if (string.IsNullOrEmpty(message.Info))
+                            return;
+
                         Log.WriteLine($"Info: {message.Info}");
                     }
 

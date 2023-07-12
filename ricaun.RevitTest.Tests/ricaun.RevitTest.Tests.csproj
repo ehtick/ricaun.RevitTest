@@ -36,34 +36,10 @@
       <Private></Private>
       <PrivateAssets>true</PrivateAssets>
     </ProjectReference>
-    
-    <!--
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.0" IncludeAssets="build; compile" PrivateAssets="All" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
-    -->
-    <!--
-    <Reference Include="ricaun.RevitTest.TestAdapter">
-      <HintPath>..\ricaun.RevitTest.TestAdapter\bin\Debug\ricaun.RevitTest.TestAdapter.dll</HintPath>
-      <Private></Private>
-      <PrivateAssets>true</PrivateAssets>
-    </Reference>
-    -->
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*" IncludeAssets="build; compile" PrivateAssets="All" />
   </ItemGroup>
-
-  <!--.runsettings-->
-  <!--
-  <PropertyGroup>
-    <RunSettingsFilePath>$(MSBuildProjectDirectory)\.runsettings</RunSettingsFilePath>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Update=".runsettings">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  -->
 
 </Project>

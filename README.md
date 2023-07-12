@@ -94,7 +94,7 @@ flowchart LR
 
 * `ricaun.RevitTest.TestAdapter`
 * `NUnit` need to be 3.13.3
-* `Microsoft.NET.Test.Sdk` works with 17.3.0
+* `IsTestProject` true
 
 ### `dotnet test`
 ```bash
