@@ -27,12 +27,11 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
                 }
 
 #if DEBUG
-                AdapterLogger.Logger.Warning($"-");
+                AdapterLogger.Logger.Warning($"-DEBUG-");
                 foreach (var assemblyMetadataAttribute in assemblyMetadataAttributes)
                 {
-                    AdapterLogger.Logger.Warning($"Metadata: {assemblyMetadataAttribute.Key} \t {assemblyMetadataAttribute.Value}");
+                    AdapterLogger.Logger.Warning($"\tMetadata: {assemblyMetadataAttribute.Key} \t {assemblyMetadataAttribute.Value}");
                 }
-                AdapterLogger.Logger.Warning($"-");
 #endif
 
                 if (assemblyMetadataAttributes.Any(e => e.Key.StartsWith(nameof(AdapterSettings.Settings.NUnit))))
@@ -43,8 +42,8 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
                 }
 
 #if DEBUG
-                AdapterLogger.Logger.Warning($"AdapterSettings: {AdapterSettings.Settings}");
-                AdapterLogger.Logger.Warning($"-");
+                AdapterLogger.Logger.Warning($"\tAdapterSettings: {AdapterSettings.Settings}");
+                AdapterLogger.Logger.Warning($"-DEBUG-");
 #endif
             }
             catch (Exception ex)

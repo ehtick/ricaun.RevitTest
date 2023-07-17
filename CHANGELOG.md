@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.16] / 2023-07-17
+### Features
+- `TestAdapter` configuration `Application` works with `EnvironmentVariable`.
+### TestAdapter
+- Update `ValidadeApplication` to work with `EnvironmentVariable`.
+- Fix `Metadata` with same key problem.
+
 ## [1.0.15] / 2023-07-12
 ### Features
 - Open `ApsView` if not connected and wait for `Login` or close.
@@ -197,6 +204,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.16]: ../../compare/1.0.15...1.0.16
 [1.0.15]: ../../compare/1.0.14...1.0.15
 [1.0.14]: ../../compare/1.0.13...1.0.14
 [1.0.13]: ../../compare/1.0.12...1.0.13
