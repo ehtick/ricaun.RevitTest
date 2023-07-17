@@ -5,6 +5,7 @@
 
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace ricaun.RevitTest.TestAdapter
@@ -155,5 +156,17 @@ namespace ricaun.RevitTest.TestAdapter
             Info($"   NUnit couldn't find any tests in {assemblyPath}");
         }
         #endregion
+    }
+
+    /// <summary>
+    /// ITestLoggerExtension
+    /// </summary>
+    internal static class ITestLoggerExtension
+    {
+        [Conditional("DEBUG")]
+        internal static void DebugOnlyLocal(this ITestLogger logger, string message)
+        {
+            logger.Warning($"\tDEBUG: {message}");
+        }
     }
 }

@@ -111,7 +111,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
                     Debug.WriteLine($"{fileFullName} |\t {completeFileName}");
 
-                    AdapterLogger.Logger.Debug($"ExtractZip: {fileFullName} |\t {completeFileName}");
+                    AdapterLogger.Logger.DebugOnlyLocal($"ExtractZip: {fileFullName} |\t {completeFileName}");
 
                     if (!Directory.Exists(directory) && !string.IsNullOrEmpty(directory))
                         Directory.CreateDirectory(directory);

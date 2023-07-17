@@ -22,6 +22,8 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         private const int RevitMinVersionReference = 2021;
         private const int RevitMaxVersionReference = 2023;
 
+        private const int SleepMillisecondsBeforeFinish = 1000;
+
         /// <summary>
         /// Get Test Full Names using RevitInstallation if needed (Revit +2021)
         /// </summary>
@@ -100,6 +102,17 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             if (revitVersionNumber == 0)
             {
                 RevitUtils.TryGetRevitVersion(fileToTest, out revitVersionNumber);
+            }
+
+            if (!RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallationNotExist))
+            {
+                var exceptionRevitNotExist = new Exception($"Installed Revit with version {revitVersionNumber} or greater not found.");
+
+                var failTests = TestEngine.Fail(fileToTest, exceptionRevitNotExist, testFilters);
+                actionOutput.Invoke(failTests.ToJson());
+
+                Thread.Sleep(SleepMillisecondsBeforeFinish);
+                return;
             }
 
             int timeoutCount = 0;
@@ -223,7 +236,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         {
                             if (!process.HasExited)
                             {
-                                Thread.Sleep(1000);
+                                Thread.Sleep(SleepMillisecondsBeforeFinish);
                                 process.Kill();
                             }
 
