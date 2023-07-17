@@ -14,7 +14,8 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
                 return destination;
 
             var metadataDictionary = attributes
-                .ToDictionary(e => e.Key, e => e.Value, StringComparer.OrdinalIgnoreCase);
+                .GroupBy(attr => attr.Key)
+                .ToDictionary(group => group.Key, group => group.Last().Value);
 
             return MapperKey.Map(destination, metadataDictionary);
         }

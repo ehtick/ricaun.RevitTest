@@ -11,6 +11,21 @@ namespace ricaun.RevitTest.TestAdapter.Services
     {
         private readonly string applicationPath;
 
+        private string GetEnvironmentVariable(string applicationPath)
+        {
+            try
+            {
+                var enviromentVariable = Environment.GetEnvironmentVariable(applicationPath);
+                if (!string.IsNullOrEmpty(enviromentVariable))
+                {
+                    AdapterLogger.Logger.Info($"Application Environment: {Path.GetFileName(enviromentVariable)}");
+                    return enviromentVariable;
+                }
+            }
+            catch { }
+            return applicationPath;
+        }
+
         private string ValidadeApplication(string applicationPath)
         {
             if (string.IsNullOrWhiteSpace(applicationPath))
@@ -18,9 +33,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
             AdapterLogger.Logger.Info($"Application: {Path.GetFileName(applicationPath)}", 0);
 
+            applicationPath = GetEnvironmentVariable(applicationPath);
+
             if (ApplicationUtils.Download(applicationPath, out string directory))
             {
-                AdapterLogger.Logger.Info($"Application Download: {applicationPath}");
+                AdapterLogger.Logger.Info($"Application Download: {Path.GetFileName(applicationPath)}");
 
                 var applicationName = Path.ChangeExtension(Path.GetFileName(applicationPath), "exe");
                 var applicationNewPath = Path.Combine(directory, applicationName);

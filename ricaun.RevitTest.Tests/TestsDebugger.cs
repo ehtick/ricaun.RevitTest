@@ -10,6 +10,7 @@ using System.Reflection;
 //[assembly: AssemblyMetadata("NUnit.Version", "2024")]
 
 //[assembly: AssemblyMetadata("NUnit.Verbosity", "2")]
+[assembly: AssemblyMetadata("NUnit.Application", "NUNIT_APPLICATION_TEST")]
 [assembly: AssemblyMetadata("NUnit.Application", "D:\\Users\\ricau\\source\\repos\\ricaun.RevitTest\\ricaun.RevitTest.Console\\bin\\Debug\\ricaun.RevitTest.Console.exe")]
 
 //[assembly: AssemblyMetadata("NUnit.Application", "C:\\Users\\ricau\\Downloads\\SampleTest\\ricaun.DA4R.NUnit.Console.zip")]

@@ -39,22 +39,23 @@ namespace ricaun.RevitTest.TestAdapter
             }
 
 #if DEBUG
-            AdapterLogger.Logger.Warning($"TestAdapter: {this.AdapterVersion}");
-            AdapterLogger.Logger.Warning($"AdapterSettings: {AdapterSettings.Settings}");
+            AdapterLogger.Logger.Warning("-DEBUG-");
+            AdapterLogger.Logger.Warning($"\tTestAdapter: {this.AdapterVersion}");
+            AdapterLogger.Logger.Warning($"\tAdapterSettings: {AdapterSettings.Settings}");
 
-            AdapterLogger.Logger.Warning("-");
             var collection = Metadatas.XmlUtils.ParseKeyValues(discoveryContext.RunSettings.SettingsXml);
             foreach (var item in collection)
             {
-                AdapterLogger.Logger.Warning($"{item.Key}: {item.Value}");
+                AdapterLogger.Logger.Warning($"\t{item.Key}: {item.Value}");
             }
-            AdapterLogger.Logger.Warning("-");
+
+            AdapterLogger.Logger.Warning("\t-");
 
             foreach (var item in Metadatas.MapperKey.GetNames(AdapterSettings.Instance))
             {
-                AdapterLogger.Logger.Warning($"{item}");
+                AdapterLogger.Logger.Warning($"\t{item}");
             }
-            AdapterLogger.Logger.Warning("-");
+            AdapterLogger.Logger.Warning("-DEBUG-");
 
             //var RunSettings = Metadatas.Mapper.Map(collection, new RunSettingsModel());
             //AdapterLogger.Logger.Warning($"RunSettings: {RunSettings}");
