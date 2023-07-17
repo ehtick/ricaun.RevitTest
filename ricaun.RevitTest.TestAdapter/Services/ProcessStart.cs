@@ -94,6 +94,9 @@ namespace ricaun.RevitTest.TestAdapter.Services
         {
             var arguments = CreateArguments();
             Debug.WriteLine($"Run: {arguments}");
+#if DEBUG
+            AdapterLogger.Logger.Warning($"ProcessStart.Run: {arguments}");
+#endif
             await Run(arguments, consoleAction, errorAction);
         }
 
