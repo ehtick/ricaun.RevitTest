@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [1.0.17] / 2023-07-17
+### Features
+- Installed Revit Version not found show error in the Tests.
+### Console
+- Update `RevitTestUtils` to show error when Revit Version not found.
 ### TestAdapter
 - Add `ITestLoggerExtension` with `DebugOnlyLocal`
 - Change `Logger` in the `ExtractZipToDirectory` to `DebugOnlyLocal`
