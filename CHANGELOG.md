@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.18] / 2023-07-18
+### Features
+- Application `zip` downloads with any `exe` file.
+
 ## [1.0.17] / 2023-07-17
 ### Features
 - Installed Revit Version not found show error in the Tests.
@@ -213,6 +217,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.18]: ../../compare/1.0.17...1.0.18
 [1.0.17]: ../../compare/1.0.16...1.0.17
 [1.0.16]: ../../compare/1.0.15...1.0.16
 [1.0.15]: ../../compare/1.0.14...1.0.15

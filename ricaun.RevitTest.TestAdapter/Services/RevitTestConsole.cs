@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -39,8 +40,8 @@ namespace ricaun.RevitTest.TestAdapter.Services
             {
                 AdapterLogger.Logger.Info($"Application Download: {Path.GetFileName(applicationPath)}");
 
-                var applicationName = Path.ChangeExtension(Path.GetFileName(applicationPath), "exe");
-                var applicationNewPath = Path.Combine(directory, applicationName);
+                var applicationNewPath = Directory.GetFiles(directory, "*.exe", SearchOption.TopDirectoryOnly)
+                    .FirstOrDefault();
 
                 if (File.Exists(applicationNewPath))
                 {
