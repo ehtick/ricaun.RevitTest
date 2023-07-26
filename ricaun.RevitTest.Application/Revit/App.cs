@@ -4,7 +4,7 @@ using Autodesk.Revit.UI;
 using Revit.Busy;
 using ricaun.NUnit;
 using ricaun.NUnit.Models;
-using ricaun.Revit.Async;
+using ricaun.Revit.Async.Services;
 using ricaun.Revit.UI;
 using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
@@ -21,8 +21,10 @@ namespace ricaun.RevitTest.Application.Revit
         private static RibbonPanel ribbonPanel;
         private static RibbonItem ribbonItem;
         private static PipeTestServer PipeTestServer;
+        private static RevitTaskService RevitTask;
 
         private const int TestThreadSleepMin = 50;
+        private const int TestAfterFinishSleepTime = 100;
 
         public Result OnStartup(UIControlledApplication application)
         {
@@ -30,7 +32,9 @@ namespace ricaun.RevitTest.Application.Revit
 
             RevitBusyControl.Initialize(application);
             RevitBusyControl.Control.PropertyChanged += RevitBusyControlPropertyChanged;
-            RevitTask.Initialize(application);
+
+            RevitTask = new RevitTaskService();
+            RevitTask.Initialize();
 
             Log.WriteLine();
             Log.WriteLine($"{AppUtils.GetInfo()}");
@@ -189,7 +193,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Tests = tests as TestAssemblyModel;
                     });
                     // Todo: Send back the zip files
-                    await Task.Delay(50);
+                    await Task.Delay(TestAfterFinishSleepTime);
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = false;
@@ -242,6 +246,8 @@ namespace ricaun.RevitTest.Application.Revit
 
             Log.Finish();
 
+            RevitTask?.Dispose();
+
             return Result.Succeeded;
         }
 
@@ -251,7 +257,7 @@ namespace ricaun.RevitTest.Application.Revit
             UpdateLargeImageBusy(ribbonItem, control);
             try
             {
-                PipeTestServer.Update(response =>
+                PipeTestServer?.Update(response =>
                 {
                     response.IsBusy = control.IsRevitBusy;
                     response.Test = null;
