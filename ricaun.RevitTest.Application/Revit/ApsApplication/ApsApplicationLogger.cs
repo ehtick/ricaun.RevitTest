@@ -8,13 +8,11 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
     public static class ApsApplicationLogger
     {
-        //private static string requestUri = "https://webfastminimal.azurewebsites.net/logger";
-        //private static string requestUri = "https://localhost:7059/logger";
-        private static string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/Logger/{0}";
+        private const string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/logger/{0}";
 
-        public static async Task<ApsResponse> Log(string type, string message, int appCount = 1)
+        public static async Task<string> Log(string type, string message, int appCount = 1)
         {
-            ApsResponse result = null;
+            string result = null;
             Debug.WriteLine($"Log[{ApsApplication.IsConnected}]: {type} {message}");
             if (ApsApplication.IsConnected)
             {
@@ -23,11 +21,10 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                     var apsLog = ApsLogUtils.New(type, message, appCount);
 
                     var service = await ApsApplication.ApsService.ApsClient.GetRequestServiceAsync();
-
-                    //var client = ApsApplication.ApsService.GetHttpClient();
-                    //var service = new RequestService(client);
-                    result = await service.PostAsync<ApsResponse>(string.Format(requestUri, type), apsLog);
-                    service.Dispose();
+                    using (service)
+                    {
+                        result = await service.PostAsync<string>(string.Format(requestUri, type), apsLog);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -36,15 +33,6 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
             }
             return result;
         }
-
-        //public static async Task Get()
-        //{
-        //    if (ApsApplication.IsConnected)
-        //    {
-        //        var str = await ApsApplication.ApsService.ApsClient.Get<string>(requestUri);
-        //        System.Console.WriteLine(str);
-        //    }
-        //}
     }
 
     public static class ApsLogUtils

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
     [Transaction(TransactionMode.Manual)]
-    public class CommandApsLog : IExternalCommand
+    public class CommandApsCheck : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elementSet)
         {
@@ -18,7 +18,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
             var task = Task.Run(async () =>
             {
                 var now = DateTime.UtcNow;
-                var result = await ApsApplicationLogger.Log("Null", "This is a message test to the server");
+                var result = await ApsApplicationCheck.Check();
                 Console.WriteLine($"Result: {result}");
                 Console.WriteLine($"Time: {(DateTime.UtcNow - now).TotalMilliseconds}");
             });
