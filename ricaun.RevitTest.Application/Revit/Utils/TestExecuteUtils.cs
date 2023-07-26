@@ -1,4 +1,5 @@
 ﻿using ricaun.NUnit;
+using ricaun.NUnit.Models;
 using System;
 using System.IO;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace ricaun.RevitTest.Application.Revit
 {
     public static class TestExecuteUtils
     {
-        public static object Execute(string filePath, string versionNumber, params object[] parameters)
+        public static TestAssemblyModel Execute(string filePath, string versionNumber, params object[] parameters)
         {
             if (filePath is null)
                 return null;
@@ -34,7 +35,7 @@ namespace ricaun.RevitTest.Application.Revit
 
             //var tests = UnZipAndTestFiles(directory, versionNumber, parameters);
 
-            object tests = null;
+            TestAssemblyModel tests = null;
 
             if (ZipExtension.ExtractToTempFolder(copyPath, out string zipDestination))
             {
@@ -102,7 +103,7 @@ namespace ricaun.RevitTest.Application.Revit
             return null;
         }
 
-        private static object TestDirectory(string directory, params object[] parameters)
+        private static TestAssemblyModel TestDirectory(string directory, params object[] parameters)
         {
             NUnit.Models.TestAssemblyModel modelTest = null;
 

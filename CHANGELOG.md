@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ricaun.Revit.Async` to `1.0.4`
 - Update `RevitTask` to `RevitTaskService`
 - Update `RevitBusyControl` to `RevitBusyService`
+- Update to use `TestAssemblyModel` in `TestExecuteUtils`
 - Add `ApsResponse` with `isValid`
 - [] Validate the `ApsResponse` in the `ApsApplication`
 

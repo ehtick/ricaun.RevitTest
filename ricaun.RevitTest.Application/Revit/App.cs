@@ -137,7 +137,7 @@ namespace ricaun.RevitTest.Application.Revit
                     {
                         ricaun.NUnit.TestEngineFilter.Add(testFilterName);
                     }
-                    var tests = await RevitTask.Run((uiapp) =>
+                    var testAssemblyModel = await RevitTask.Run((uiapp) =>
                     {
                         try
                         {
@@ -153,8 +153,8 @@ namespace ricaun.RevitTest.Application.Revit
 
                             if (ApsApplication.ApsApplication.IsConnected == false)
                             {
-                                var ex = new Exception("The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.");
-                                return TestEngine.Fail(message.TestPathFile, ex, testFilterNames);
+                                var exceptionNeedAuth = new Exception("The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.");
+                                return TestEngine.Fail(message.TestPathFile, exceptionNeedAuth, testFilterNames);
                             }
 
                             //if (UserUtils.IsNotValid(uiapp))
@@ -163,21 +163,22 @@ namespace ricaun.RevitTest.Application.Revit
                             //    return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
                             //}
 
-                            var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
+                            TestAssemblyModel tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
 
                             try
                             {
                                 var task = Task.Run(async () =>
                                 {
-                                    if (tests is TestAssemblyModel modelTest)
-                                    {
-                                        var modelTests = modelTest.Tests.SelectMany(e => e.Tests).ToArray();
-                                        await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                    }
+                                    var modelTests = tests.Tests.SelectMany(e => e.Tests).ToArray();
+                                    var apsResponse = await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
+                                    Debug.WriteLine(apsResponse);
                                 });
                                 task.GetAwaiter().GetResult();
                             }
-                            catch { }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine(ex);
+                            }
 
                             return tests;
                         }
@@ -191,7 +192,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.IsBusy = true;
                         response.Test = null;
                         response.Info = null;
-                        response.Tests = tests as TestAssemblyModel;
+                        response.Tests = testAssemblyModel;
                     });
                     // Todo: Send back the zip files
                     await Task.Delay(TestAfterFinishSleepTime);

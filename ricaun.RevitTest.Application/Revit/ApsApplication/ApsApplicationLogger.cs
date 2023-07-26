@@ -12,9 +12,9 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         //private static string requestUri = "https://localhost:7059/logger";
         private static string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/Logger/{0}";
 
-        public static async Task<string> Log(string type, string message, int appCount = 1)
+        public static async Task<ApsResponse> Log(string type, string message, int appCount = 1)
         {
-            var result = string.Empty;
+            ApsResponse result = null;
             Debug.WriteLine($"Log[{ApsApplication.IsConnected}]: {type} {message}");
             if (ApsApplication.IsConnected)
             {
@@ -26,7 +26,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
 
                     //var client = ApsApplication.ApsService.GetHttpClient();
                     //var service = new RequestService(client);
-                    result = await service.PostAsync<string>(string.Format(requestUri, type), apsLog);
+                    result = await service.PostAsync<ApsResponse>(string.Format(requestUri, type), apsLog);
                     service.Dispose();
                 }
                 catch (Exception ex)
@@ -58,8 +58,6 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                 appId = assembly.GetName().Name.Split(new[] { ".Dev." }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault(),
                 appVersion = assembly.GetName().Version.ToString(3),
                 appCount = appCount,
-                //userVersion = revitApiAssembly.GetName().Version.ToString(),
-                //userVersion = Environment.Version.ToString(),
                 productId = "Autodesk.Revit",
                 productVersion = revitApiAssembly.GetName().Version.ToString(),
                 productLanguage = System.Globalization.CultureInfo.CurrentUICulture.Name,
@@ -98,6 +96,10 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         {
             public string Url { get; set; }
             public string Text { get; set; }
+        }
+        public override string ToString()
+        {
+            return $"[{userId}] {appId} {isValid} {message}";
         }
     }
 }
