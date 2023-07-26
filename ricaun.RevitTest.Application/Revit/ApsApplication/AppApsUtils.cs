@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
-    public static class AppUtils
+    public static class AppApsUtils
     {
         public static string AppId =>
             Assembly.GetExecutingAssembly().GetName().Name.Split(new[] { ".Dev." }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();

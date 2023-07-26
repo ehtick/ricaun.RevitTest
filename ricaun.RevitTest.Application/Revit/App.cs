@@ -6,6 +6,7 @@ using ricaun.NUnit;
 using ricaun.NUnit.Models;
 using ricaun.Revit.Async.Services;
 using ricaun.Revit.UI;
+using ricaun.RevitTest.Application.Revit.ApsApplication;
 using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
@@ -157,6 +158,20 @@ namespace ricaun.RevitTest.Application.Revit
                                 return TestEngine.Fail(message.TestPathFile, exceptionNeedAuth, testFilterNames);
                             }
 
+                            if (ApsApplication.ApsApplication.IsConnected == true)
+                            {
+                                var task = Task.Run(async () =>
+                                {
+                                    return await ApsApplicationCheck.Check();
+                                });
+                                var apsResponse = task.GetAwaiter().GetResult();
+                                if (apsResponse is null || apsResponse.isValid == false)
+                                {
+                                    var exceptionNotValid = new Exception($"The user is not valid, {apsResponse.message}");
+                                    return TestEngine.Fail(message.TestPathFile, exceptionNotValid, testFilterNames);
+                                }
+                            }
+
                             //if (UserUtils.IsNotValid(uiapp))
                             //{
                             //    var ex = new Exception("UserUtils.IsNotValid");
@@ -170,8 +185,7 @@ namespace ricaun.RevitTest.Application.Revit
                                 var task = Task.Run(async () =>
                                 {
                                     var modelTests = tests.Tests.SelectMany(e => e.Tests).ToArray();
-                                    var apsResponse = await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                    Debug.WriteLine(apsResponse);
+                                    await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
                                 });
                                 task.GetAwaiter().GetResult();
                             }

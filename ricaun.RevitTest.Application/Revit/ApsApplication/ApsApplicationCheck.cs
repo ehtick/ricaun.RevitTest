@@ -12,7 +12,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         public static async Task<ApsResponse> Check()
         {
             ApsResponse result = null;
-            Debug.WriteLine($"Log[{ApsApplication.IsConnected}]: Check");
+            Debug.WriteLine($"Check[{ApsApplication.IsConnected}]: check/{AppApsUtils.AppId}/{AppApsUtils.AppVersion}");
             if (ApsApplication.IsConnected)
             {
                 try
@@ -20,7 +20,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                     var service = await ApsApplication.ApsService.ApsClient.GetRequestServiceAsync();
                     using (service)
                     {
-                        var request = string.Format(requestUri, AppUtils.AppId, AppUtils.AppVersion);
+                        var request = string.Format(requestUri, AppApsUtils.AppId, AppApsUtils.AppVersion);
                         result = await service.GetAsync<ApsResponse>(request);
                     }
                 }

@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update to use `TestAssemblyModel` in `TestExecuteUtils`
 - Add `ApsResponse` with `isValid`
 - Add `ApsApplicationCheck` with `Check`
-- [] Validate the `ApsResponse` in the `ApsApplication`
+- Validate the `ApsResponse` before each test using `ApsApplicationCheck`
 
 ## [1.0.18] / 2023-07-18
 ### Features
