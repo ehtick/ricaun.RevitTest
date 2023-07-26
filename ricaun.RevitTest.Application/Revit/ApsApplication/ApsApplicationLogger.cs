@@ -86,16 +86,18 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         public string message { get; set; }
     }
 
-    public class ApsLogOld
+    public class ApsResponse
     {
+        public string userId { get; set; }
         public string appId { get; set; }
-        public string appVersion { get; set; }
-        public int appCount { get; set; }
-        public string userName { get; set; }
-        public string userVersion { get; set; }
-        public string userLanguage { get; set; }
-        public string userMachine { get; set; }
-        public string type { get; set; }
+        public bool isValid { get; set; }
         public string message { get; set; }
+
+        public OtherResponse[] Other { get; set; }
+        public class OtherResponse
+        {
+            public string Url { get; set; }
+            public string Text { get; set; }
+        }
     }
 }
