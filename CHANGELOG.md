@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `RevitTaskService` to run `Tests`
 ### Application
 - Update `ricaun.Revit.Async` to `1.0.4`
+- Update `RevitTask` to `RevitTaskService`
+- Update `RevitBusyControl` to `RevitBusyService`
 - Add `ApsResponse` with `isValid`
+- [] Validate the `ApsResponse` in the `ApsApplication`
 
 ## [1.0.18] / 2023-07-18
 ### Features

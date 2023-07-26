@@ -22,6 +22,7 @@ namespace ricaun.RevitTest.Application.Revit
         private static RibbonItem ribbonItem;
         private static PipeTestServer PipeTestServer;
         private static RevitTaskService RevitTask;
+        private static RevitBusyService RevitBusyService;
 
         private const int TestThreadSleepMin = 50;
         private const int TestAfterFinishSleepTime = 100;
@@ -30,8 +31,8 @@ namespace ricaun.RevitTest.Application.Revit
         {
             Log.Initilize(application);
 
-            RevitBusyControl.Initialize(application);
-            RevitBusyControl.Control.PropertyChanged += RevitBusyControlPropertyChanged;
+            RevitBusyService = new RevitBusyService(application);
+            RevitBusyService.PropertyChanged += RevitBusyControlPropertyChanged;
 
             RevitTask = new RevitTaskService();
             RevitTask.Initialize();
@@ -66,7 +67,7 @@ namespace ricaun.RevitTest.Application.Revit
             PipeTestServer = new PipeTestServer();
             PipeTestServer.Update(response =>
             {
-                response.IsBusy = RevitBusyControl.Control.IsRevitBusy;
+                response.IsBusy = RevitBusyService.IsRevitBusy;
                 response.Info = AppUtils.GetInfo() + $" [{TestUtils.GetInitialize()}]";
                 response.Test = null;
                 response.Tests = null;
@@ -224,7 +225,7 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonPanel.GetRibbonPanel().Source.DialogLauncher = ribbon.GetRibbonItem<Autodesk.Windows.RibbonCommandItem>();
             ribbonPanel.Remove(ribbon);
 
-            UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
+            UpdateLargeImageBusy(ribbonItem, RevitBusyService);
 
 #if DEBUG
             ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
@@ -242,11 +243,11 @@ namespace ricaun.RevitTest.Application.Revit
 
             ribbonPanel?.Remove();
             PipeTestServer?.Dispose();
-            RevitBusyControl.Control.PropertyChanged -= RevitBusyControlPropertyChanged;
-
-            Log.Finish();
+            RevitBusyService?.Dispose();
 
             RevitTask?.Dispose();
+
+            Log.Finish();
 
             return Result.Succeeded;
         }
