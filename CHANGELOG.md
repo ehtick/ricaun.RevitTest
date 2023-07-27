@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.19] / 2023-07-26
 ### Features
+- Validate `ApsUser` with `ApsApplicationCheck`
 - `RevitTaskService` to run `Tests`
 ### Application
 - Update `ricaun.Revit.Async` to `1.0.4`
