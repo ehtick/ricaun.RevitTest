@@ -8,13 +8,11 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
     public static class ApsApplicationLogger
     {
-        //private static string requestUri = "https://webfastminimal.azurewebsites.net/logger";
-        //private static string requestUri = "https://localhost:7059/logger";
-        private static string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/Logger/{0}";
+        private const string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/logger/{0}";
 
         public static async Task<string> Log(string type, string message, int appCount = 1)
         {
-            var result = string.Empty;
+            string result = null;
             Debug.WriteLine($"Log[{ApsApplication.IsConnected}]: {type} {message}");
             if (ApsApplication.IsConnected)
             {
@@ -23,11 +21,10 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                     var apsLog = ApsLogUtils.New(type, message, appCount);
 
                     var service = await ApsApplication.ApsService.ApsClient.GetRequestServiceAsync();
-
-                    //var client = ApsApplication.ApsService.GetHttpClient();
-                    //var service = new RequestService(client);
-                    result = await service.PostAsync<string>(string.Format(requestUri, type), apsLog);
-                    service.Dispose();
+                    using (service)
+                    {
+                        result = await service.PostAsync<string>(string.Format(requestUri, type), apsLog);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -36,15 +33,6 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
             }
             return result;
         }
-
-        //public static async Task Get()
-        //{
-        //    if (ApsApplication.IsConnected)
-        //    {
-        //        var str = await ApsApplication.ApsService.ApsClient.Get<string>(requestUri);
-        //        System.Console.WriteLine(str);
-        //    }
-        //}
     }
 
     public static class ApsLogUtils
@@ -58,8 +46,6 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                 appId = assembly.GetName().Name.Split(new[] { ".Dev." }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault(),
                 appVersion = assembly.GetName().Version.ToString(3),
                 appCount = appCount,
-                //userVersion = revitApiAssembly.GetName().Version.ToString(),
-                //userVersion = Environment.Version.ToString(),
                 productId = "Autodesk.Revit",
                 productVersion = revitApiAssembly.GetName().Version.ToString(),
                 productLanguage = System.Globalization.CultureInfo.CurrentUICulture.Name,
@@ -86,16 +72,22 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         public string message { get; set; }
     }
 
-    public class ApsLogOld
+    public class ApsResponse
     {
+        public string userId { get; set; }
         public string appId { get; set; }
-        public string appVersion { get; set; }
-        public int appCount { get; set; }
-        public string userName { get; set; }
-        public string userVersion { get; set; }
-        public string userLanguage { get; set; }
-        public string userMachine { get; set; }
-        public string type { get; set; }
+        public bool isValid { get; set; }
         public string message { get; set; }
+
+        public OtherResponse[] Other { get; set; }
+        public class OtherResponse
+        {
+            public string Url { get; set; }
+            public string Text { get; set; }
+        }
+        public override string ToString()
+        {
+            return $"[{userId}] {appId} {isValid} {message}";
+        }
     }
 }

@@ -135,7 +135,7 @@
     <PackageReference Include="Revit.Busy" Version="*" />
     <PackageReference Include="ricaun.Auth.Aps.UI" Version="*" />
     <PackageReference Include="ricaun.Revit.UI" Version="0.5.2" />
-    <PackageReference Include="ricaun.Revit.Async" Version="*" />
+    <PackageReference Include="ricaun.Revit.Async" Version="1.0.4" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
     <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
   </ItemGroup>

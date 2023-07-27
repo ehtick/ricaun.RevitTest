@@ -4,8 +4,9 @@ using Autodesk.Revit.UI;
 using Revit.Busy;
 using ricaun.NUnit;
 using ricaun.NUnit.Models;
-using ricaun.Revit.Async;
+using ricaun.Revit.Async.Services;
 using ricaun.Revit.UI;
+using ricaun.RevitTest.Application.Revit.ApsApplication;
 using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
@@ -21,16 +22,21 @@ namespace ricaun.RevitTest.Application.Revit
         private static RibbonPanel ribbonPanel;
         private static RibbonItem ribbonItem;
         private static PipeTestServer PipeTestServer;
+        private static RevitTaskService RevitTask;
+        private static RevitBusyService RevitBusyService;
 
         private const int TestThreadSleepMin = 50;
+        private const int TestAfterFinishSleepTime = 100;
 
         public Result OnStartup(UIControlledApplication application)
         {
             Log.Initilize(application);
 
-            RevitBusyControl.Initialize(application);
-            RevitBusyControl.Control.PropertyChanged += RevitBusyControlPropertyChanged;
-            RevitTask.Initialize(application);
+            RevitBusyService = new RevitBusyService(application);
+            RevitBusyService.PropertyChanged += RevitBusyControlPropertyChanged;
+
+            RevitTask = new RevitTaskService();
+            RevitTask.Initialize();
 
             Log.WriteLine();
             Log.WriteLine($"{AppUtils.GetInfo()}");
@@ -62,7 +68,7 @@ namespace ricaun.RevitTest.Application.Revit
             PipeTestServer = new PipeTestServer();
             PipeTestServer.Update(response =>
             {
-                response.IsBusy = RevitBusyControl.Control.IsRevitBusy;
+                response.IsBusy = RevitBusyService.IsRevitBusy;
                 response.Info = AppUtils.GetInfo() + $" [{TestUtils.GetInitialize()}]";
                 response.Test = null;
                 response.Tests = null;
@@ -132,7 +138,7 @@ namespace ricaun.RevitTest.Application.Revit
                     {
                         ricaun.NUnit.TestEngineFilter.Add(testFilterName);
                     }
-                    var tests = await RevitTask.Run((uiapp) =>
+                    var testAssemblyModel = await RevitTask.Run((uiapp) =>
                     {
                         try
                         {
@@ -148,8 +154,22 @@ namespace ricaun.RevitTest.Application.Revit
 
                             if (ApsApplication.ApsApplication.IsConnected == false)
                             {
-                                var ex = new Exception("The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.");
-                                return TestEngine.Fail(message.TestPathFile, ex, testFilterNames);
+                                var exceptionNeedAuth = new Exception("The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.");
+                                return TestEngine.Fail(message.TestPathFile, exceptionNeedAuth, testFilterNames);
+                            }
+
+                            if (ApsApplication.ApsApplication.IsConnected == true)
+                            {
+                                var task = Task.Run(async () =>
+                                {
+                                    return await ApsApplicationCheck.Check();
+                                });
+                                var apsResponse = task.GetAwaiter().GetResult();
+                                if (apsResponse is null || apsResponse.isValid == false)
+                                {
+                                    var exceptionNotValid = new Exception($"The user is not valid, {apsResponse.message}");
+                                    return TestEngine.Fail(message.TestPathFile, exceptionNotValid, testFilterNames);
+                                }
                             }
 
                             //if (UserUtils.IsNotValid(uiapp))
@@ -158,21 +178,21 @@ namespace ricaun.RevitTest.Application.Revit
                             //    return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
                             //}
 
-                            var tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
+                            TestAssemblyModel tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
 
                             try
                             {
                                 var task = Task.Run(async () =>
                                 {
-                                    if (tests is TestAssemblyModel modelTest)
-                                    {
-                                        var modelTests = modelTest.Tests.SelectMany(e => e.Tests).ToArray();
-                                        await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                    }
+                                    var modelTests = tests.Tests.SelectMany(e => e.Tests).ToArray();
+                                    await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
                                 });
                                 task.GetAwaiter().GetResult();
                             }
-                            catch { }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine(ex);
+                            }
 
                             return tests;
                         }
@@ -186,10 +206,10 @@ namespace ricaun.RevitTest.Application.Revit
                         response.IsBusy = true;
                         response.Test = null;
                         response.Info = null;
-                        response.Tests = tests as TestAssemblyModel;
+                        response.Tests = testAssemblyModel;
                     });
                     // Todo: Send back the zip files
-                    await Task.Delay(50);
+                    await Task.Delay(TestAfterFinishSleepTime);
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = false;
@@ -220,7 +240,7 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonPanel.GetRibbonPanel().Source.DialogLauncher = ribbon.GetRibbonItem<Autodesk.Windows.RibbonCommandItem>();
             ribbonPanel.Remove(ribbon);
 
-            UpdateLargeImageBusy(ribbonItem, RevitBusyControl.Control);
+            UpdateLargeImageBusy(ribbonItem, RevitBusyService);
 
 #if DEBUG
             ribbonPanel.GetRibbonPanel().CustomPanelTitleBarBackground = System.Windows.Media.Brushes.Salmon;
@@ -238,7 +258,9 @@ namespace ricaun.RevitTest.Application.Revit
 
             ribbonPanel?.Remove();
             PipeTestServer?.Dispose();
-            RevitBusyControl.Control.PropertyChanged -= RevitBusyControlPropertyChanged;
+            RevitBusyService?.Dispose();
+
+            RevitTask?.Dispose();
 
             Log.Finish();
 
@@ -251,7 +273,7 @@ namespace ricaun.RevitTest.Application.Revit
             UpdateLargeImageBusy(ribbonItem, control);
             try
             {
-                PipeTestServer.Update(response =>
+                PipeTestServer?.Update(response =>
                 {
                     response.IsBusy = control.IsRevitBusy;
                     response.Test = null;

@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.19] / 2023-07-26
+### Features
+- Validate `ApsUser` with `ApsApplicationCheck`
+- `RevitTaskService` to run `Tests`
+### Application
+- Update `ricaun.Revit.Async` to `1.0.4`
+- Update `RevitTask` to `RevitTaskService`
+- Update `RevitBusyControl` to `RevitBusyService`
+- Update to use `TestAssemblyModel` in `TestExecuteUtils`
+- Add `ApsResponse` with `isValid`
+- Add `ApsApplicationCheck` with `Check`
+- Validate the `ApsResponse` before each test using `ApsApplicationCheck`
+
 ## [1.0.18] / 2023-07-18
 ### Features
 - Application `zip` downloads with any `exe` file.
@@ -217,6 +230,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.19]: ../../compare/1.0.18...1.0.19
 [1.0.18]: ../../compare/1.0.17...1.0.18
 [1.0.17]: ../../compare/1.0.16...1.0.17
 [1.0.16]: ../../compare/1.0.15...1.0.16
