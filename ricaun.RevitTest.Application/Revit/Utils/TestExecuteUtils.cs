@@ -9,7 +9,7 @@ namespace ricaun.RevitTest.Application.Revit
 {
     public static class TestExecuteUtils
     {
-        public static TestAssemblyModel Execute(string filePath, string versionNumber, params object[] parameters)
+        public static TestAssemblyModel Execute(string filePath, params object[] parameters)
         {
             if (filePath is null)
                 return null;
@@ -17,21 +17,30 @@ namespace ricaun.RevitTest.Application.Revit
             var location = Assembly.GetExecutingAssembly().Location;
             var directory = Path.GetDirectoryName(location);
 
-            var copyPathBack = false;
-            string copyPath = null;
-            if (Path.GetExtension(filePath).EndsWith("zip"))
-            {
-                copyPath = CopyFile(filePath, directory);
-            }
-            else if (Path.GetExtension(filePath).EndsWith("dll"))
-            {
-                copyPathBack = true;
-                copyPath = ZipExtension.CreateFromDirectory(
-                    Path.GetDirectoryName(filePath),
-                    Path.Combine(directory, Path.GetFileName(filePath))
-                    );
-            }
-            else return null;
+            if (Path.GetExtension(filePath).EndsWith("dll") == false)
+                return null;
+
+            var copyPathBack = true;
+            var copyPath = ZipExtension.CreateFromDirectory(
+                Path.GetDirectoryName(filePath),
+                Path.Combine(directory, Path.GetFileName(filePath))
+                );
+
+            //var copyPathBack = false;
+            //string copyPath = null;
+            //if (Path.GetExtension(filePath).EndsWith("zip"))
+            //{
+            //    copyPath = CopyFile(filePath, directory);
+            //}
+            //else if (Path.GetExtension(filePath).EndsWith("dll"))
+            //{
+            //    copyPathBack = true;
+            //    copyPath = ZipExtension.CreateFromDirectory(
+            //        Path.GetDirectoryName(filePath),
+            //        Path.Combine(directory, Path.GetFileName(filePath))
+            //        );
+            //}
+            //else return null;
 
             //var tests = UnZipAndTestFiles(directory, versionNumber, parameters);
 
@@ -71,37 +80,37 @@ namespace ricaun.RevitTest.Application.Revit
             return tests;
         }
 
-        private static string CopyFile(string filePath, string directory)
-        {
-            var copy = Path.Combine(directory, Path.GetFileName(filePath));
-            File.Copy(filePath, copy, true);
-            return copy;
-        }
+        //private static string CopyFile(string filePath, string directory)
+        //{
+        //    var copy = Path.Combine(directory, Path.GetFileName(filePath));
+        //    File.Copy(filePath, copy, true);
+        //    return copy;
+        //}
 
-        private static object UnZipAndTestFiles(string directory, string versionNumber, params object[] parameters)
-        {
-            if (Directory.GetFiles(directory, "*.zip").FirstOrDefault() is string zipFile)
-            {
-                if (ZipExtension.ExtractToTempFolder(zipFile, out string zipDestination))
-                {
-                    if (string.IsNullOrEmpty(versionNumber) == false)
-                    {
-                        foreach (var versionDirectory in Directory.GetDirectories(zipDestination))
-                        {
-                            if (Path.GetFileName(versionDirectory).Equals(versionNumber))
-                            {
-                                Log.WriteLine($"Test VersionNumber: {versionNumber}");
-                                return TestDirectory(versionDirectory, parameters);
-                            }
-                        }
-                    }
+        //private static object UnZipAndTestFiles(string directory, string versionNumber, params object[] parameters)
+        //{
+        //    if (Directory.GetFiles(directory, "*.zip").FirstOrDefault() is string zipFile)
+        //    {
+        //        if (ZipExtension.ExtractToTempFolder(zipFile, out string zipDestination))
+        //        {
+        //            if (string.IsNullOrEmpty(versionNumber) == false)
+        //            {
+        //                foreach (var versionDirectory in Directory.GetDirectories(zipDestination))
+        //                {
+        //                    if (Path.GetFileName(versionDirectory).Equals(versionNumber))
+        //                    {
+        //                        Log.WriteLine($"Test VersionNumber: {versionNumber}");
+        //                        return TestDirectory(versionDirectory, parameters);
+        //                    }
+        //                }
+        //            }
 
-                    return TestDirectory(zipDestination, parameters);
-                }
-            }
+        //            return TestDirectory(zipDestination, parameters);
+        //        }
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         private static TestAssemblyModel TestDirectory(string directory, params object[] parameters)
         {
