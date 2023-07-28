@@ -1,14 +1,39 @@
 ﻿using ricaun.NUnit;
 using ricaun.NUnit.Models;
+using ricaun.Revit.Async.Services;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
 {
     public static class TestExecuteUtils
     {
+        public static async Task<TestAssemblyModel> ExecuteAsync(IRevitTask revitTask, string filePath, params object[] parameters)
+        {
+            var zipFile = await revitTask.Run(() => CopyFilesUsingZipFolder(filePath));
+
+            if (zipFile is null)
+                return null;
+
+            string zipDestination = null;
+            var extractToTempSucess = await revitTask.Run(() => ZipExtension.ExtractToTempFolder(zipFile, out zipDestination));
+
+            if (extractToTempSucess == false)
+                return null;
+
+            TestAssemblyModel tests = await revitTask.Run(() => TestDirectory(zipDestination, parameters));
+            //TestAssemblyModel tests = TestDirectory(zipDestination, parameters);
+
+            await revitTask.Run(() => CopyFilesBackUsingZip(filePath, zipDestination));
+
+            return tests;
+        }
+
+
+
         public static TestAssemblyModel Execute(string filePath, params object[] parameters)
         {
             var zipFile = CopyFilesUsingZipFolder(filePath);
@@ -71,7 +96,7 @@ namespace ricaun.RevitTest.Application.Revit
 
         private static TestAssemblyModel TestDirectory(string directory, params object[] parameters)
         {
-            NUnit.Models.TestAssemblyModel modelTest = null;
+            TestAssemblyModel modelTest = null;
 
             Log.WriteLine("----------------------------------");
             Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
@@ -89,6 +114,8 @@ namespace ricaun.RevitTest.Application.Revit
                         //{
                         //    Log.WriteLine($"\t{testName}");
                         //}
+
+                        TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(1);
 
                         modelTest = TestEngine.TestAssembly(filePath, parameters);
 

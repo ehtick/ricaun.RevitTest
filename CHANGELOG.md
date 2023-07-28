@@ -11,8 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `CopyFilesUsingZipFolder` and `CopyFilesBackUsingZip` to `TestExecuteUtils`
 - Update `ZipExtension` to delete `zip` file after extract
 - Clear run tests in `App`
+- Update `TestEngineFilter.CancellationTokenTimeOut` to set 1 minute
+- Update `TestExecuteUtils` with `ExecuteAsync`
 ### Tests
 - Update `TestsRevitIdling`
+- Add `TestsAsync`
 
 ## [1.0.19] / 2023-07-26
 ### Features
