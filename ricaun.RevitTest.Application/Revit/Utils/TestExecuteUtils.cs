@@ -114,42 +114,51 @@ namespace ricaun.RevitTest.Application.Revit
                         TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(3);
 #endif
 
-                        string containTestNameForNoRevitContext = FileVersionInfoUtils.GetComments(filePath);
-                        if (string.IsNullOrEmpty(containTestNameForNoRevitContext) == false)
+                        if (FileVersionInfoUtils.TryGetComments(filePath, out ConfigurationComments comments))
                         {
-                            if (TestEngineFilter.ExplicitEnabled == false)
+                            if (comments.TimeOut > 0)
                             {
-                                TestEngineFilter.ExplicitEnabled = false;
-                                TestEngineFilter.TestNames.AddRange(TestEngine.GetTestFullNames(filePath));
+                                TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(comments.TimeOut);
+                                Log.WriteLine($"TimeOut: {comments.TimeOut}");
                             }
 
-                            var originalTestNames = TestEngineFilter.TestNames.ToArray();
-                            var testGroupNoContext = originalTestNames
-                                .GroupBy(str => str.Contains(containTestNameForNoRevitContext))
-                                .ToDictionary(group => group.Key, group => group.ToList());
-
-                            if (testGroupNoContext.TryGetValue(false, out var inContextTests))
+                            string containTestNameForNoRevitContext = comments.TestAsync;
+                            if (string.IsNullOrEmpty(containTestNameForNoRevitContext) == false)
                             {
-                                TestEngineFilter.TestNames.Clear();
-                                TestEngineFilter.TestNames.AddRange(inContextTests);
-                                modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
-                            }
-
-                            if (testGroupNoContext.TryGetValue(true, out var asyncTests))
-                            {
-                                Log.WriteLine($"AsyncTests: [{string.Join(",", asyncTests)}]");
-                                TestEngineFilter.TestNames.Clear();
-                                TestEngineFilter.TestNames.AddRange(asyncTests);
-                                var modelTestAsync = TestEngine.TestAssembly(filePath, parameters);
-                                if (modelTest is null) modelTest = modelTestAsync;
-                                else
+                                if (TestEngineFilter.ExplicitEnabled == false)
                                 {
-                                    modelTest.Tests.AddRange(modelTestAsync.Tests);
+                                    TestEngineFilter.ExplicitEnabled = false;
+                                    TestEngineFilter.TestNames.AddRange(TestEngine.GetTestFullNames(filePath));
                                 }
-                            }
 
-                            TestEngineFilter.TestNames.Clear();
-                            TestEngineFilter.TestNames.AddRange(originalTestNames);
+                                var originalTestNames = TestEngineFilter.TestNames.ToArray();
+                                var testGroupNoContext = originalTestNames
+                                    .GroupBy(str => str.Contains(containTestNameForNoRevitContext))
+                                    .ToDictionary(group => group.Key, group => group.ToList());
+
+                                if (testGroupNoContext.TryGetValue(false, out var inContextTestNames))
+                                {
+                                    TestEngineFilter.TestNames.Clear();
+                                    TestEngineFilter.TestNames.AddRange(inContextTestNames);
+                                    modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
+                                }
+
+                                if (testGroupNoContext.TryGetValue(true, out var testAsyncNames))
+                                {
+                                    Log.WriteLine($"TestAsync: [{string.Join(",", testAsyncNames)}]");
+                                    TestEngineFilter.TestNames.Clear();
+                                    TestEngineFilter.TestNames.AddRange(testAsyncNames);
+                                    var modelTestAsync = TestEngine.TestAssembly(filePath, parameters);
+                                    if (modelTest is null) modelTest = modelTestAsync;
+                                    else
+                                    {
+                                        modelTest.Tests.AddRange(modelTestAsync.Tests);
+                                    }
+                                }
+
+                                TestEngineFilter.TestNames.Clear();
+                                TestEngineFilter.TestNames.AddRange(originalTestNames);
+                            }
                         }
 
                         if (modelTest is null)
@@ -252,6 +261,12 @@ namespace ricaun.RevitTest.Application.Revit
             Log.WriteLine("----------------------------------");
 
             return modelTest;
+        }
+
+        private class ConfigurationComments
+        {
+            public string TestAsync { get; set; }
+            public double TimeOut { get; set; }
         }
     }
 }

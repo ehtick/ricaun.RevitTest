@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `TestEngineFilter.CancellationTokenTimeOut` to set 1 minute
 - Update `TestExecuteUtils` with `ExecuteAsync`
 - Add `FileVersionInfoUtils` to configurate `TestAsync` using `AssemblyDescriptionAttribute`
+- Add `ConfigurationComments` with `TimeOut` and `TestAsync`
 ### Tests
 - Add `TestRevitTask` tests with `RevitTask`, async, Idling, and `Dialog_API_MacroManager`
 

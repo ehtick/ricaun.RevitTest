@@ -4,7 +4,7 @@ using ricaun.Revit.Async;
 using System;
 using System.Threading.Tasks;
 
-[assembly: System.Reflection.AssemblyDescription("TestAsync")]
+[assembly: System.Reflection.AssemblyDescription("{\"TestAsync\":\"TestAsync\",\"TimeOut\":60.0}")]
 
 namespace ricaun.RevitTest.Tests
 {
