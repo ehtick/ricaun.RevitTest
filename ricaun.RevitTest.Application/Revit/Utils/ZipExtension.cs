@@ -37,6 +37,7 @@ namespace ricaun.RevitTest.Application.Revit
             try
             {
                 ZipFile.ExtractToDirectory(zipFile, zipDestination);
+                File.Delete(zipFile);
                 return true;
             }
             catch { }

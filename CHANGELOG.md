@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 ### Application
 - Update `TestExecuteUtils`
+- Add `CopyFilesUsingZipFolder` and `CopyFilesBackUsingZip` to `TestExecuteUtils`
+- Update `ZipExtension` to delete `zip` file after extract
 - Clear run tests in `App`
 ### Tests
 - Update `TestsRevitIdling`

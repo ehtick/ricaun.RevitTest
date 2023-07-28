@@ -1,8 +1,6 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System;
-using System.Diagnostics;
 
 namespace ricaun.RevitTest.Application.Revit.Commands
 {

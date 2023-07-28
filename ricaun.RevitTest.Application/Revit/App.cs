@@ -194,24 +194,27 @@ namespace ricaun.RevitTest.Application.Revit
                                 {
                                     TestAssemblyModel tests = TestExecuteUtils.Execute(message.TestPathFile, RevitParameters.Parameters);
 
-                                    try
-                                    {
-                                        var task = Task.Run(async () =>
-                                        {
-                                            var modelTests = tests.Tests.SelectMany(e => e.Tests).ToArray();
-                                            await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                        });
-                                        task.GetAwaiter().GetResult();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        Debug.WriteLine(ex);
-                                    }
-
                                     return tests;
                                 }
                                 catch { Log.WriteLine("TestExecuteUtils: Fail"); }
                                 return null;
+                            });
+
+                            await RevitTask.Run((uiapp) =>
+                            {
+                                try
+                                {
+                                    var task = Task.Run(async () =>
+                                    {
+                                        var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
+                                        await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
+                                    });
+                                    task.GetAwaiter().GetResult();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine(ex);
+                                }
                             });
 
                             ricaun.NUnit.TestEngineFilter.Reset();
