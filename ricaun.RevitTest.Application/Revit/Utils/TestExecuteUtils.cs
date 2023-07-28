@@ -110,6 +110,9 @@ namespace ricaun.RevitTest.Application.Revit
                     if (TestEngine.ContainNUnit(filePath))
                     {
                         TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(1);
+#if DEBUG
+                        TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(3);
+#endif
 
                         // Custom Configuration
                         {
@@ -135,6 +138,7 @@ namespace ricaun.RevitTest.Application.Revit
 
                             if (groupedStrings.TryGetValue(true, out var asyncTests))
                             {
+                                Log.WriteLine($"AsyncTests: [{string.Join(",", asyncTests)}]");
                                 TestEngineFilter.TestNames.Clear();
                                 TestEngineFilter.TestNames.AddRange(asyncTests);
                                 var modelTestAsync = TestEngine.TestAssembly(filePath, parameters);

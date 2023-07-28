@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `TestExecuteUtils` with `ExecuteAsync`
 ### Tests
 - Update `TestsRevitIdling`
-- Add `TestsAsync`
+- Add `TestsAsync` with `RevitTask` with `Dialog_API_MacroManager`
 
 ## [1.0.19] / 2023-07-26
 ### Features

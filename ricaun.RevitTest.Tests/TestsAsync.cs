@@ -3,6 +3,7 @@ using NUnit.Framework;
 using ricaun.Revit.Async;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ricaun.RevitTest.Tests
 {
@@ -23,9 +24,19 @@ namespace ricaun.RevitTest.Tests
             await RevitTask.Run((uiapp) =>
             {
                 uiapp.PostCommand(RevitCommandId.LookupPostableCommandId(PostableCommand.MacroManager));
+                uiapp.DialogBoxShowing += DialogBoxShowingForceClose;
             });
+
             var inContext = await RevitTask.Run((uiapp) => { return InContext(uiapp); });
             Assert.IsTrue(inContext);
+        }
+
+        private void DialogBoxShowingForceClose(object sender, Autodesk.Revit.UI.Events.DialogBoxShowingEventArgs e)
+        {
+            var uiapp = sender as UIApplication;
+            uiapp.DialogBoxShowing -= DialogBoxShowingForceClose;
+            Console.WriteLine($"DialogBoxShowing {e.DialogId}");
+            e.OverrideResult((int)TaskDialogResult.Close);
         }
 
         [Test]
@@ -45,6 +56,7 @@ namespace ricaun.RevitTest.Tests
             var inContext = await RevitTask.Run((app) => { return InContext(app); });
             Console.WriteLine(inContext);
             Assert.IsTrue(inContext);
+
         }
 
         private bool InContext(UIApplication uiapp)
