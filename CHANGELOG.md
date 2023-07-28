@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.20] / 2023-07-28
 ### Features
+- Enable to run async tests outside the Revit Context.
 ### Application
 - Update `TestExecuteUtils`
 - Add `CopyFilesUsingZipFolder` and `CopyFilesBackUsingZip` to `TestExecuteUtils`

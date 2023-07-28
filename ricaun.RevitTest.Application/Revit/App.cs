@@ -37,6 +37,7 @@ namespace ricaun.RevitTest.Application.Revit
 
             RevitTask = new RevitTaskService();
             RevitTask.Initialize();
+            ricaun.Revit.Async.RevitTask.Initialize();
 
             Log.WriteLine();
             Log.WriteLine($"{AppUtils.GetInfo()}");
