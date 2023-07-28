@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Application
 - Update `TestExecuteUtils`
 - Clear run tests in `App`
+### Tests
+- Update `TestsRevitIdling`
 
 ## [1.0.19] / 2023-07-26
 ### Features

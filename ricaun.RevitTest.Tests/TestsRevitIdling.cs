@@ -28,6 +28,7 @@ namespace ricaun.RevitTest.Tests
         {
             Assert.IsNotNull(uiapp);
             Assert.IsTrue(uiapp.IsValidObject);
+            System.Console.WriteLine($"GetHashCode: {this.GetType().Assembly.GetHashCode()}");
         }
 
         [TestCase(1)]
@@ -39,7 +40,7 @@ namespace ricaun.RevitTest.Tests
         {
             Assert.IsNotNull(uiapp);
             Assert.IsTrue(uiapp.IsValidObject);
-            System.Console.WriteLine($"RevitTests: {this.GetHashCode()}");
+            System.Console.WriteLine($"GetHashCode: {this.GetHashCode()}");
         }
     }
 }

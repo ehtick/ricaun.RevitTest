@@ -1,6 +1,7 @@
 ﻿using ricaun.NUnit;
 using ricaun.NUnit.Models;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -133,11 +134,7 @@ namespace ricaun.RevitTest.Application.Revit
                         //    Log.WriteLine($"\t{testName}");
                         //}
 
-                        modelTest = TestEngine.TestAssembly(
-                            filePath, parameters);
-
-                        //System.Windows.Clipboard.SetText(Newtonsoft.Json.JsonConvert.SerializeObject(modelTest));
-                        //System.Windows.Clipboard.SetText(modelTest.AsString());
+                        modelTest = TestEngine.TestAssembly(filePath, parameters);
 
                         var passed = modelTest.Success ? "Passed" : "Failed";
                         if (modelTest.TestCount == 0) { passed = "No Tests"; }
@@ -149,6 +146,7 @@ namespace ricaun.RevitTest.Application.Revit
                         foreach (var test in tests)
                         {
                             Log.WriteLine($"\t {test.Time}\t {test}");
+                            //Debug.WriteLine($"Debug:\t {test}\t {test.Console.Trim()}");
                         }
 
                         if (tests.Any() == false)
