@@ -114,10 +114,9 @@ namespace ricaun.RevitTest.Application.Revit
                         TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(3);
 #endif
 
-                        // Custom Configuration
+                        string containTestNameForNoRevitContext = FileVersionInfoUtils.GetComments(filePath);
+                        if (string.IsNullOrEmpty(containTestNameForNoRevitContext) == false)
                         {
-                            string targetSubstring = "Async";
-
                             if (TestEngineFilter.ExplicitEnabled == false)
                             {
                                 TestEngineFilter.ExplicitEnabled = false;
@@ -125,18 +124,18 @@ namespace ricaun.RevitTest.Application.Revit
                             }
 
                             var originalTestNames = TestEngineFilter.TestNames.ToArray();
-                            var groupedStrings = originalTestNames
-                                .GroupBy(str => str.Contains(targetSubstring))
+                            var testGroupNoContext = originalTestNames
+                                .GroupBy(str => str.Contains(containTestNameForNoRevitContext))
                                 .ToDictionary(group => group.Key, group => group.ToList());
 
-                            if (groupedStrings.TryGetValue(false, out var inContextTests))
+                            if (testGroupNoContext.TryGetValue(false, out var inContextTests))
                             {
                                 TestEngineFilter.TestNames.Clear();
                                 TestEngineFilter.TestNames.AddRange(inContextTests);
                                 modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
                             }
 
-                            if (groupedStrings.TryGetValue(true, out var asyncTests))
+                            if (testGroupNoContext.TryGetValue(true, out var asyncTests))
                             {
                                 Log.WriteLine($"AsyncTests: [{string.Join(",", asyncTests)}]");
                                 TestEngineFilter.TestNames.Clear();
@@ -151,6 +150,11 @@ namespace ricaun.RevitTest.Application.Revit
 
                             TestEngineFilter.TestNames.Clear();
                             TestEngineFilter.TestNames.AddRange(originalTestNames);
+                        }
+
+                        if (modelTest is null)
+                        {
+                            modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
                         }
 
                         var passed = modelTest.Success ? "Passed" : "Failed";

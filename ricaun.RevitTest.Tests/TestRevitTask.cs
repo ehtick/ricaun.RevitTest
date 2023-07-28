@@ -3,7 +3,8 @@ using NUnit.Framework;
 using ricaun.Revit.Async;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+
+[assembly: System.Reflection.AssemblyDescription("TestAsync")]
 
 namespace ricaun.RevitTest.Tests
 {
@@ -14,10 +15,7 @@ namespace ricaun.RevitTest.Tests
         {
             RevitTask.Initialize();
         }
-    }
 
-    public class TestsAsync
-    {
         [Test]
         public async Task TestAsync_MacroManager()
         {
@@ -37,6 +35,29 @@ namespace ricaun.RevitTest.Tests
             uiapp.DialogBoxShowing -= DialogBoxShowingForceClose;
             Console.WriteLine($"DialogBoxShowing {e.DialogId}");
             e.OverrideResult((int)TaskDialogResult.Close);
+        }
+
+        [Test]
+        public async Task TestAsync_Idling()
+        {
+            await RevitTask.Run((uiapp) =>
+            {
+                uiapp.Idling += Uiapp_Idling;
+            });
+
+            await RevitTask.Run((uiapp) =>
+            {
+                uiapp.Idling -= Uiapp_Idling;
+            });
+
+            Console.WriteLine(Index);
+            Assert.AreEqual(1, Index);
+        }
+
+        private int Index;
+        private void Uiapp_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
+        {
+            Index++;
         }
 
         [Test]
