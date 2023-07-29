@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.20] / 2023-07-28
+### Features
+- Enable to run async tests outside the Revit Context.
+### Application
+- Update `TestExecuteUtils`
+- Add `CopyFilesUsingZipFolder` and `CopyFilesBackUsingZip` to `TestExecuteUtils`
+- Update `ZipExtension` to delete `zip` file after extract
+- Clear run tests in `App`
+- Update `TestEngineFilter.CancellationTokenTimeOut` to set 1 minute
+- Update `TestExecuteUtils` with `ExecuteAsync`
+- Add `FileVersionInfoUtils` to configurate `TestAsync` using `AssemblyDescriptionAttribute`
+- Add `ConfigurationComments` with `TimeOut` and `TestAsync`
+### Tests
+- Add `TestRevitTask` tests with `RevitTask`, async, Idling, and `Dialog_API_MacroManager`
+
 ## [1.0.19] / 2023-07-26
 ### Features
 - Validate `ApsUser` with `ApsApplicationCheck`
@@ -230,6 +245,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.20]: ../../compare/1.0.19...1.0.20
 [1.0.19]: ../../compare/1.0.18...1.0.19
 [1.0.18]: ../../compare/1.0.17...1.0.18
 [1.0.17]: ../../compare/1.0.16...1.0.17

@@ -1,15 +1,59 @@
 ﻿using ricaun.NUnit;
 using ricaun.NUnit.Models;
+using ricaun.Revit.Async.Services;
 using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit
 {
     public static class TestExecuteUtils
     {
-        public static TestAssemblyModel Execute(string filePath, string versionNumber, params object[] parameters)
+        public static async Task<TestAssemblyModel> ExecuteAsync(IRevitTask revitTask, string filePath, params object[] parameters)
+        {
+            var zipFile = await revitTask.Run(() => CopyFilesUsingZipFolder(filePath));
+
+            if (zipFile is null)
+                return null;
+
+            string zipDestination = null;
+            var extractToTempSucess = await revitTask.Run(() => ZipExtension.ExtractToTempFolder(zipFile, out zipDestination));
+
+            if (extractToTempSucess == false)
+                return null;
+
+            //TestAssemblyModel tests = await revitTask.Run(() => TestDirectory(zipDestination, parameters));
+            TestAssemblyModel tests = await TestDirectoryAsync(revitTask, zipDestination, parameters);
+
+            await revitTask.Run(() => CopyFilesBackUsingZip(filePath, zipDestination));
+
+            return tests;
+        }
+
+
+
+        public static TestAssemblyModel Execute(string filePath, params object[] parameters)
+        {
+            var zipFile = CopyFilesUsingZipFolder(filePath);
+
+            if (zipFile is null)
+                return null;
+
+            var extractToTempSucess = ZipExtension.ExtractToTempFolder(zipFile, out string zipDestination);
+
+            if (extractToTempSucess == false)
+                return null;
+
+            TestAssemblyModel tests = TestDirectory(zipDestination, parameters);
+
+            CopyFilesBackUsingZip(filePath, zipDestination);
+
+            return tests;
+        }
+
+        private static string CopyFilesUsingZipFolder(string filePath)
         {
             if (filePath is null)
                 return null;
@@ -17,95 +61,42 @@ namespace ricaun.RevitTest.Application.Revit
             var location = Assembly.GetExecutingAssembly().Location;
             var directory = Path.GetDirectoryName(location);
 
-            var copyPathBack = false;
-            string copyPath = null;
-            if (Path.GetExtension(filePath).EndsWith("zip"))
-            {
-                copyPath = CopyFile(filePath, directory);
-            }
-            else if (Path.GetExtension(filePath).EndsWith("dll"))
-            {
-                copyPathBack = true;
-                copyPath = ZipExtension.CreateFromDirectory(
-                    Path.GetDirectoryName(filePath),
-                    Path.Combine(directory, Path.GetFileName(filePath))
-                    );
-            }
-            else return null;
+            if (Path.GetExtension(filePath).EndsWith("dll") == false)
+                return null;
 
-            //var tests = UnZipAndTestFiles(directory, versionNumber, parameters);
+            var zipFile = ZipExtension.CreateFromDirectory(
+                Path.GetDirectoryName(filePath),
+                Path.Combine(directory, Path.GetFileName(filePath))
+                );
 
-            TestAssemblyModel tests = null;
-
-            if (ZipExtension.ExtractToTempFolder(copyPath, out string zipDestination))
-            {
-                tests = TestDirectory(zipDestination, parameters);
-            }
-
-            if (copyPath is not null)
-                File.Delete(copyPath);
-
-            if (copyPathBack)
-            {
-                try
-                {
-                    var zipCopyBack = zipDestination + ".zip";
-
-                    if (File.Exists(zipCopyBack))
-                        File.Delete(zipCopyBack);
-
-                    var zipCopyPathBack = ZipExtension.CreateFromDirectory(zipDestination, zipCopyBack);
-
-                    ZipExtension.ExtractToDirectoryIfNewer(zipCopyPathBack, Path.GetDirectoryName(filePath));
-
-                    if (File.Exists(zipCopyPathBack))
-                        File.Delete(zipCopyPathBack);
-                }
-                catch (Exception ex)
-                {
-                    Log.WriteLine(ex);
-                }
-
-            }
-
-            return tests;
+            return zipFile;
         }
 
-        private static string CopyFile(string filePath, string directory)
+        private static void CopyFilesBackUsingZip(string filePath, string zipDestination)
         {
-            var copy = Path.Combine(directory, Path.GetFileName(filePath));
-            File.Copy(filePath, copy, true);
-            return copy;
-        }
-
-        private static object UnZipAndTestFiles(string directory, string versionNumber, params object[] parameters)
-        {
-            if (Directory.GetFiles(directory, "*.zip").FirstOrDefault() is string zipFile)
+            try
             {
-                if (ZipExtension.ExtractToTempFolder(zipFile, out string zipDestination))
-                {
-                    if (string.IsNullOrEmpty(versionNumber) == false)
-                    {
-                        foreach (var versionDirectory in Directory.GetDirectories(zipDestination))
-                        {
-                            if (Path.GetFileName(versionDirectory).Equals(versionNumber))
-                            {
-                                Log.WriteLine($"Test VersionNumber: {versionNumber}");
-                                return TestDirectory(versionDirectory, parameters);
-                            }
-                        }
-                    }
+                var zipCopyBack = zipDestination + ".zip";
 
-                    return TestDirectory(zipDestination, parameters);
-                }
+                if (File.Exists(zipCopyBack))
+                    File.Delete(zipCopyBack);
+
+                var zipCopyPathBack = ZipExtension.CreateFromDirectory(zipDestination, zipCopyBack);
+
+                ZipExtension.ExtractToDirectoryIfNewer(zipCopyPathBack, Path.GetDirectoryName(filePath));
+
+                if (File.Exists(zipCopyPathBack))
+                    File.Delete(zipCopyPathBack);
             }
-
-            return null;
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex);
+            }
         }
 
-        private static TestAssemblyModel TestDirectory(string directory, params object[] parameters)
+        private static async Task<TestAssemblyModel> TestDirectoryAsync(IRevitTask revitTask, string directory, params object[] parameters)
         {
-            NUnit.Models.TestAssemblyModel modelTest = null;
+            TestAssemblyModel modelTest = null;
 
             Log.WriteLine("----------------------------------");
             Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
@@ -118,17 +109,62 @@ namespace ricaun.RevitTest.Application.Revit
                 {
                     if (TestEngine.ContainNUnit(filePath))
                     {
-                        //Log.WriteLine($"Test File: {fileName}");
-                        //foreach (var testName in TestEngine.GetTestFullNames(filePath))
-                        //{
-                        //    Log.WriteLine($"\t{testName}");
-                        //}
+                        TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(1);
+#if DEBUG
+                        TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(3);
+#endif
 
-                        modelTest = TestEngine.TestAssembly(
-                            filePath, parameters);
+                        if (FileVersionInfoUtils.TryGetComments(filePath, out ConfigurationComments comments))
+                        {
+                            if (comments.TimeOut > 0)
+                            {
+                                TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(comments.TimeOut);
+                                Log.WriteLine($"TimeOut: {comments.TimeOut}");
+                            }
 
-                        //System.Windows.Clipboard.SetText(Newtonsoft.Json.JsonConvert.SerializeObject(modelTest));
-                        //System.Windows.Clipboard.SetText(modelTest.AsString());
+                            string containTestNameForNoRevitContext = comments.TestAsync;
+                            if (string.IsNullOrEmpty(containTestNameForNoRevitContext) == false)
+                            {
+                                if (TestEngineFilter.ExplicitEnabled == false)
+                                {
+                                    TestEngineFilter.ExplicitEnabled = false;
+                                    TestEngineFilter.TestNames.AddRange(TestEngine.GetTestFullNames(filePath));
+                                }
+
+                                var originalTestNames = TestEngineFilter.TestNames.ToArray();
+                                var testGroupNoContext = originalTestNames
+                                    .GroupBy(str => str.Contains(containTestNameForNoRevitContext))
+                                    .ToDictionary(group => group.Key, group => group.ToList());
+
+                                if (testGroupNoContext.TryGetValue(false, out var inContextTestNames))
+                                {
+                                    TestEngineFilter.TestNames.Clear();
+                                    TestEngineFilter.TestNames.AddRange(inContextTestNames);
+                                    modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
+                                }
+
+                                if (testGroupNoContext.TryGetValue(true, out var testAsyncNames))
+                                {
+                                    Log.WriteLine($"TestAsync: [{string.Join(",", testAsyncNames)}]");
+                                    TestEngineFilter.TestNames.Clear();
+                                    TestEngineFilter.TestNames.AddRange(testAsyncNames);
+                                    var modelTestAsync = TestEngine.TestAssembly(filePath, parameters);
+                                    if (modelTest is null) modelTest = modelTestAsync;
+                                    else
+                                    {
+                                        modelTest.Tests.AddRange(modelTestAsync.Tests);
+                                    }
+                                }
+
+                                TestEngineFilter.TestNames.Clear();
+                                TestEngineFilter.TestNames.AddRange(originalTestNames);
+                            }
+                        }
+
+                        if (modelTest is null)
+                        {
+                            modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
+                        }
 
                         var passed = modelTest.Success ? "Passed" : "Failed";
                         if (modelTest.TestCount == 0) { passed = "No Tests"; }
@@ -140,6 +176,7 @@ namespace ricaun.RevitTest.Application.Revit
                         foreach (var test in tests)
                         {
                             Log.WriteLine($"\t {test.Time}\t {test}");
+                            //Debug.WriteLine($"Debug:\t {test}\t {test.Console.Trim()}");
                         }
 
                         if (tests.Any() == false)
@@ -163,6 +200,73 @@ namespace ricaun.RevitTest.Application.Revit
             Log.WriteLine("----------------------------------");
 
             return modelTest;
+        }
+
+        private static TestAssemblyModel TestDirectory(string directory, params object[] parameters)
+        {
+            TestAssemblyModel modelTest = null;
+
+            Log.WriteLine("----------------------------------");
+            Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
+            Log.WriteLine("----------------------------------");
+
+            foreach (var filePath in Directory.GetFiles(directory, "*.dll"))
+            {
+                var fileName = Path.GetFileName(filePath);
+                try
+                {
+                    if (TestEngine.ContainNUnit(filePath))
+                    {
+                        //Log.WriteLine($"Test File: {fileName}");
+                        //foreach (var testName in TestEngine.GetTestFullNames(filePath))
+                        //{
+                        //    Log.WriteLine($"\t{testName}");
+                        //}
+
+                        TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(1);
+
+                        modelTest = TestEngine.TestAssembly(filePath, parameters);
+
+                        var passed = modelTest.Success ? "Passed" : "Failed";
+                        if (modelTest.TestCount == 0) { passed = "No Tests"; }
+
+                        Log.WriteLine($"{modelTest}\t {passed}");
+
+                        var tests = modelTest.Tests.SelectMany(e => e.Tests);
+
+                        foreach (var test in tests)
+                        {
+                            Log.WriteLine($"\t {test.Time}\t {test}");
+                            //Debug.WriteLine($"Debug:\t {test}\t {test.Console.Trim()}");
+                        }
+
+                        if (tests.Any() == false)
+                        {
+                            Log.WriteLine($"Error: {modelTest.Message}");
+                            try
+                            {
+                                var ex = new Exception(modelTest.Message.Split('\n').FirstOrDefault());
+                                modelTest = TestEngine.Fail(filePath, ex);
+                            }
+                            catch { }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.WriteLine($"Error: {fileName} {ex}");
+                }
+            }
+
+            Log.WriteLine("----------------------------------");
+
+            return modelTest;
+        }
+
+        private class ConfigurationComments
+        {
+            public string TestAsync { get; set; }
+            public double TimeOut { get; set; }
         }
     }
 }

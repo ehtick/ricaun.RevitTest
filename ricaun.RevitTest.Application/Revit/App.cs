@@ -37,6 +37,7 @@ namespace ricaun.RevitTest.Application.Revit
 
             RevitTask = new RevitTaskService();
             RevitTask.Initialize();
+            ricaun.Revit.Async.RevitTask.Initialize();
 
             Log.WriteLine();
             Log.WriteLine($"{AppUtils.GetInfo()}");
@@ -123,22 +124,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Tests = null;
                     });
 
-                    ricaun.NUnit.TestEngine.Result = new TestModelResult((test) =>
-                    {
-                        PipeTestServer.Update((response) =>
-                        {
-                            response.IsBusy = true;
-                            response.Test = test;
-                            response.Info = null;
-                            response.Tests = null;
-                        });
-                        if (test.Time < TestThreadSleepMin) System.Threading.Thread.Sleep(TestThreadSleepMin);
-                    });
-                    foreach (var testFilterName in testFilterNames)
-                    {
-                        ricaun.NUnit.TestEngineFilter.Add(testFilterName);
-                    }
-                    var testAssemblyModel = await RevitTask.Run((uiapp) =>
+                    TestAssemblyModel ApsApplicationCheckTest()
                     {
                         try
                         {
@@ -171,36 +157,75 @@ namespace ricaun.RevitTest.Application.Revit
                                     return TestEngine.Fail(message.TestPathFile, exceptionNotValid, testFilterNames);
                                 }
                             }
-
-                            //if (UserUtils.IsNotValid(uiapp))
-                            //{
-                            //    var ex = new Exception("UserUtils.IsNotValid");
-                            //    return TestExceptionUtils.CreateTestAssemblyModelWithException(message.TestPathFile, testFilterNames, ex);
-                            //}
-
-                            TestAssemblyModel tests = TestExecuteUtils.Execute(message.TestPathFile, uiapp.Application.VersionNumber, RevitParameters.Parameters);
-
-                            try
-                            {
-                                var task = Task.Run(async () =>
-                                {
-                                    var modelTests = tests.Tests.SelectMany(e => e.Tests).ToArray();
-                                    await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                });
-                                task.GetAwaiter().GetResult();
-                            }
-                            catch (Exception ex)
-                            {
-                                Debug.WriteLine(ex);
-                            }
-
-                            return tests;
                         }
-                        catch { Log.WriteLine("TestExecuteUtils: Fail"); }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex);
+                        }
                         return null;
+                    }
+                    var testAssemblyModel = await RevitTask.Run((uiapp) =>
+                    {
+                        return ApsApplicationCheckTest();
                     });
-                    ricaun.NUnit.TestEngine.Result = null;
-                    ricaun.NUnit.TestEngineFilter.Reset();
+
+                    if (testAssemblyModel is null)
+                    {
+                        ricaun.NUnit.TestEngine.Result = new TestModelResult((test) =>
+                        {
+                            PipeTestServer.Update((response) =>
+                            {
+                                response.IsBusy = true;
+                                response.Test = test;
+                                response.Info = null;
+                                response.Tests = null;
+                            });
+                            if (test.Time < TestThreadSleepMin) System.Threading.Thread.Sleep(TestThreadSleepMin);
+                        });
+
+                        {
+                            foreach (var testFilterName in testFilterNames)
+                            {
+                                ricaun.NUnit.TestEngineFilter.Add(testFilterName);
+                            }
+
+                            testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
+
+                            //testAssemblyModel = await RevitTask.Run((uiapp) =>
+                            //{
+                            //    try
+                            //    {
+                            //        TestAssemblyModel tests = TestExecuteUtils.Execute(message.TestPathFile, RevitParameters.Parameters);
+
+                            //        return tests;
+                            //    }
+                            //    catch { Log.WriteLine("TestExecuteUtils: Fail"); }
+                            //    return null;
+                            //});
+
+                            await RevitTask.Run((uiapp) =>
+                            {
+                                try
+                                {
+                                    var task = Task.Run(async () =>
+                                    {
+                                        var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
+                                        await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
+                                    });
+                                    task.GetAwaiter().GetResult();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine(ex);
+                                }
+                            });
+
+                            ricaun.NUnit.TestEngineFilter.Reset();
+                        }
+
+                        ricaun.NUnit.TestEngine.Result = null;
+                    }
+
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = true;
@@ -208,6 +233,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Info = null;
                         response.Tests = testAssemblyModel;
                     });
+
                     // Todo: Send back the zip files
                     await Task.Delay(TestAfterFinishSleepTime);
                     PipeTestServer.Update((response) =>

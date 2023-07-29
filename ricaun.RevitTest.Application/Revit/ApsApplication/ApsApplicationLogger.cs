@@ -13,7 +13,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         public static async Task<string> Log(string type, string message, int appCount = 1)
         {
             string result = null;
-            Debug.WriteLine($"Log[{ApsApplication.IsConnected}]: {type} {message}");
+            Debug.WriteLine($"Log[{ApsApplication.IsConnected}]: {type} {message} | {appCount}");
             if (ApsApplication.IsConnected)
             {
                 try
