@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.22] / 2023-08-08
+### Fixed
+- Fix `AssemblyResolveEvent handlers cannot return Assemblies loaded for reflection only.` in version 2021 by not using `ContainNUnit` in each file.
+### Application
+- Change `TestDirectoryAsync` and add filePattern to filter files and test only the original file.
+
 ## [1.0.21] / 2023-08-07
 ### Fixed
 - Fix buzy problem when `TestAsync` is running.
@@ -255,6 +261,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.22]: ../../compare/1.0.21...1.0.22
 [1.0.21]: ../../compare/1.0.20...1.0.21
 [1.0.20]: ../../compare/1.0.19...1.0.20
 [1.0.19]: ../../compare/1.0.18...1.0.19

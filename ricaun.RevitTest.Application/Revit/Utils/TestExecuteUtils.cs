@@ -26,34 +26,12 @@ namespace ricaun.RevitTest.Application.Revit
                 return null;
 
             //TestAssemblyModel tests = await revitTask.Run(() => TestDirectory(zipDestination, parameters));
-            TestAssemblyModel tests = await TestDirectoryAsync(revitTask, zipDestination, parameters);
+            TestAssemblyModel tests = await TestDirectoryAsync(revitTask, zipDestination, Path.GetFileName(filePath), parameters);
 
             await revitTask.Run(() => CopyFilesBackUsingZip(filePath, zipDestination));
 
             return tests;
         }
-
-
-
-        public static TestAssemblyModel Execute(string filePath, params object[] parameters)
-        {
-            var zipFile = CopyFilesUsingZipFolder(filePath);
-
-            if (zipFile is null)
-                return null;
-
-            var extractToTempSucess = ZipExtension.ExtractToTempFolder(zipFile, out string zipDestination);
-
-            if (extractToTempSucess == false)
-                return null;
-
-            TestAssemblyModel tests = TestDirectory(zipDestination, parameters);
-
-            CopyFilesBackUsingZip(filePath, zipDestination);
-
-            return tests;
-        }
-
         private static string CopyFilesUsingZipFolder(string filePath)
         {
             if (filePath is null)
@@ -95,7 +73,7 @@ namespace ricaun.RevitTest.Application.Revit
             }
         }
 
-        private static async Task<TestAssemblyModel> TestDirectoryAsync(IRevitTask revitTask, string directory, params object[] parameters)
+        private static async Task<TestAssemblyModel> TestDirectoryAsync(IRevitTask revitTask, string directory, string filePattern, params object[] parameters)
         {
             TestAssemblyModel modelTest = null;
 
@@ -103,7 +81,7 @@ namespace ricaun.RevitTest.Application.Revit
             Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
             Log.WriteLine("----------------------------------");
 
-            foreach (var filePath in Directory.GetFiles(directory, "*.dll"))
+            foreach (var filePath in Directory.GetFiles(directory, filePattern)) // "*.dll"
             {
                 var fileName = Path.GetFileName(filePath);
                 try
@@ -192,10 +170,10 @@ namespace ricaun.RevitTest.Application.Revit
                         }
                     }
                 }
-                catch (FileNotFoundException ex)
-                {
-                    Debug.WriteLine($"Debug: {fileName} {ex}");
-                }
+                //catch (FileNotFoundException ex)
+                //{
+                //    Debug.WriteLine($"Debug: {fileName} {ex}");
+                //}
                 catch (Exception ex)
                 {
                     Log.WriteLine($"Error: {fileName} {ex}");
@@ -207,66 +185,85 @@ namespace ricaun.RevitTest.Application.Revit
             return modelTest;
         }
 
-        private static TestAssemblyModel TestDirectory(string directory, params object[] parameters)
-        {
-            TestAssemblyModel modelTest = null;
+        //public static TestAssemblyModel Execute(string filePath, params object[] parameters)
+        //{
+        //    var zipFile = CopyFilesUsingZipFolder(filePath);
 
-            Log.WriteLine("----------------------------------");
-            Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
-            Log.WriteLine("----------------------------------");
+        //    if (zipFile is null)
+        //        return null;
 
-            foreach (var filePath in Directory.GetFiles(directory, "*.dll"))
-            {
-                var fileName = Path.GetFileName(filePath);
-                try
-                {
-                    if (TestEngine.ContainNUnit(filePath))
-                    {
-                        //Log.WriteLine($"Test File: {fileName}");
-                        //foreach (var testName in TestEngine.GetTestFullNames(filePath))
-                        //{
-                        //    Log.WriteLine($"\t{testName}");
-                        //}
+        //    var extractToTempSucess = ZipExtension.ExtractToTempFolder(zipFile, out string zipDestination);
 
-                        TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(1);
+        //    if (extractToTempSucess == false)
+        //        return null;
 
-                        modelTest = TestEngine.TestAssembly(filePath, parameters);
+        //    TestAssemblyModel tests = TestDirectory(zipDestination, parameters);
 
-                        var passed = modelTest.Success ? "Passed" : "Failed";
-                        if (modelTest.TestCount == 0) { passed = "No Tests"; }
+        //    CopyFilesBackUsingZip(filePath, zipDestination);
 
-                        Log.WriteLine($"{modelTest}\t {passed}");
+        //    return tests;
+        //}
 
-                        var tests = modelTest.Tests.SelectMany(e => e.Tests);
+        //private static TestAssemblyModel TestDirectory(string directory, params object[] parameters)
+        //{
+        //    TestAssemblyModel modelTest = null;
 
-                        foreach (var test in tests)
-                        {
-                            Log.WriteLine($"\t {test.Time}\t {test}");
-                            //Debug.WriteLine($"Debug:\t {test}\t {test.Console.Trim()}");
-                        }
+        //    Log.WriteLine("----------------------------------");
+        //    Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
+        //    Log.WriteLine("----------------------------------");
 
-                        if (tests.Any() == false)
-                        {
-                            Log.WriteLine($"Error: {modelTest.Message}");
-                            try
-                            {
-                                var ex = new Exception(modelTest.Message.Split('\n').FirstOrDefault());
-                                modelTest = TestEngine.Fail(filePath, ex);
-                            }
-                            catch { }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.WriteLine($"Error: {fileName} {ex}");
-                }
-            }
+        //    foreach (var filePath in Directory.GetFiles(directory, "*.dll"))
+        //    {
+        //        var fileName = Path.GetFileName(filePath);
+        //        try
+        //        {
+        //            if (TestEngine.ContainNUnit(filePath))
+        //            {
+        //                //Log.WriteLine($"Test File: {fileName}");
+        //                //foreach (var testName in TestEngine.GetTestFullNames(filePath))
+        //                //{
+        //                //    Log.WriteLine($"\t{testName}");
+        //                //}
 
-            Log.WriteLine("----------------------------------");
+        //                TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(1);
 
-            return modelTest;
-        }
+        //                modelTest = TestEngine.TestAssembly(filePath, parameters);
+
+        //                var passed = modelTest.Success ? "Passed" : "Failed";
+        //                if (modelTest.TestCount == 0) { passed = "No Tests"; }
+
+        //                Log.WriteLine($"{modelTest}\t {passed}");
+
+        //                var tests = modelTest.Tests.SelectMany(e => e.Tests);
+
+        //                foreach (var test in tests)
+        //                {
+        //                    Log.WriteLine($"\t {test.Time}\t {test}");
+        //                    //Debug.WriteLine($"Debug:\t {test}\t {test.Console.Trim()}");
+        //                }
+
+        //                if (tests.Any() == false)
+        //                {
+        //                    Log.WriteLine($"Error: {modelTest.Message}");
+        //                    try
+        //                    {
+        //                        var ex = new Exception(modelTest.Message.Split('\n').FirstOrDefault());
+        //                        modelTest = TestEngine.Fail(filePath, ex);
+        //                    }
+        //                    catch { }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Log.WriteLine($"Error: {fileName} {ex}");
+        //        }
+        //    }
+
+        //    Log.WriteLine("----------------------------------");
+
+        //    return modelTest;
+        //}
 
         private class ConfigurationComments
         {
