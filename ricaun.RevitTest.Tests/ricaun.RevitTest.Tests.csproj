@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <IsTestProject>true</IsTestProject>
-    <UseWPF>true</UseWPF>
     <TargetFramework>net48</TargetFramework>
     <RevitVersion>2021</RevitVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
