@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.21] / 2023-08-07
+### Fixed
+- Fix buzy problem when `TestAsync` is running.
+### Application
+- Add `IsTestRunning` to prevent buzy to turn off when `TestAsync` is running.
+- `IsTestRunning` disable `RevitBusyControlPropertyChanged`
+### Tests
+- Add `TestAsync_Idling_Timeout` to test `IsTestRunning`
+
 ## [1.0.20] / 2023-07-28
 ### Features
 - Enable to run async tests outside the Revit Context.
@@ -245,6 +254,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.0.21]: ../../compare/1.0.20...1.0.21
 [1.0.20]: ../../compare/1.0.19...1.0.20
 [1.0.19]: ../../compare/1.0.18...1.0.19
 [1.0.18]: ../../compare/1.0.17...1.0.18

@@ -24,6 +24,7 @@ namespace ricaun.RevitTest.Application.Revit
         private static PipeTestServer PipeTestServer;
         private static RevitTaskService RevitTask;
         private static RevitBusyService RevitBusyService;
+        private static bool IsTestRunning = false;
 
         private const int TestThreadSleepMin = 50;
         private const int TestAfterFinishSleepTime = 100;
@@ -116,6 +117,7 @@ namespace ricaun.RevitTest.Application.Revit
                         }
                     }
 
+                    IsTestRunning = true;
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = true;
@@ -173,6 +175,7 @@ namespace ricaun.RevitTest.Application.Revit
                     {
                         ricaun.NUnit.TestEngine.Result = new TestModelResult((test) =>
                         {
+                            //Debug.WriteLine($"\t TestModelResult: {test}");
                             PipeTestServer.Update((response) =>
                             {
                                 response.IsBusy = true;
@@ -236,6 +239,7 @@ namespace ricaun.RevitTest.Application.Revit
 
                     // Todo: Send back the zip files
                     await Task.Delay(TestAfterFinishSleepTime);
+                    IsTestRunning = false;
                     PipeTestServer.Update((response) =>
                     {
                         response.IsBusy = false;
@@ -295,6 +299,8 @@ namespace ricaun.RevitTest.Application.Revit
 
         private void RevitBusyControlPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if (IsTestRunning) return;
+
             var control = sender as RevitBusyService;
             UpdateLargeImageBusy(ribbonItem, control);
             try

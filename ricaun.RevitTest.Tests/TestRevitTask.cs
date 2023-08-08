@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using NUnit.Framework;
 using ricaun.Revit.Async;
+using ricaun.Revit.Async.Timeout;
 using System;
 using System.Threading.Tasks;
 
@@ -25,10 +26,15 @@ namespace ricaun.RevitTest.Tests
                 uiapp.DialogBoxShowing += DialogBoxShowingForceClose;
             });
 
+            await RevitTask.Run((uiapp) =>
+            {
+                uiapp.DialogBoxShowing -= DialogBoxShowingForceClose;
+            });
+
             var inContext = await RevitTask.Run((uiapp) => { return InContext(uiapp); });
             Assert.IsTrue(inContext);
-        }
 
+        }
         private void DialogBoxShowingForceClose(object sender, Autodesk.Revit.UI.Events.DialogBoxShowingEventArgs e)
         {
             var uiapp = sender as UIApplication;
@@ -52,6 +58,29 @@ namespace ricaun.RevitTest.Tests
 
             Console.WriteLine(Index);
             Assert.AreEqual(1, Index);
+        }
+
+        /// <summary>
+        /// This test gonna check if the `IsTestRunning` is working
+        /// </summary>
+        [Explicit]
+        [TestCase(2)]
+        public async Task TestAsync_Idling_Timeout(int length)
+        {
+            var timeout = 0;
+            for (int i = 0; i < length; i++)
+            {
+                try
+                {
+                    await RevitTaskTimeout.RunAsync((uiapp) =>
+                    {
+                        TaskDialog.Show("Show", "Close me");
+                    });
+                }
+                catch (Exception) { timeout++; }
+            }
+            Console.WriteLine(timeout);
+            Assert.AreEqual(length, timeout);
         }
 
         private int Index;
