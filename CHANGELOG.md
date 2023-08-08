@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Application
 - Add `IsTestRunning` to prevent buzy to turn off when `TestAsync` is running.
 - `IsTestRunning` disable `RevitBusyControlPropertyChanged`
+- Ignore `FileNotFoundException` in `TestExecuteUtils`.
 ### Tests
 - Add `TestAsync_Idling_Timeout` to test `IsTestRunning`
 

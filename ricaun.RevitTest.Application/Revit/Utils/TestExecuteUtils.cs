@@ -2,6 +2,7 @@
 using ricaun.NUnit.Models;
 using ricaun.Revit.Async.Services;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -190,6 +191,10 @@ namespace ricaun.RevitTest.Application.Revit
                             catch { }
                         }
                     }
+                }
+                catch (FileNotFoundException ex)
+                {
+                    Debug.WriteLine($"Debug: {fileName} {ex}");
                 }
                 catch (Exception ex)
                 {
