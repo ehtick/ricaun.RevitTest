@@ -87,8 +87,8 @@ flowchart LR
 
 ### Test Language
 ```bash
-.\ricaun.RevitTest.Console.exe --file "C:\Users\ricau\source\repos\TestProject.Tests\TestProject.Tests\bin\Debug\TestProject.Tests.dll" -v 2021 -l -o "console" --language "PTB" --open --close
 .\ricaun.RevitTest.Console.exe --file "D:\Users\ricau\source\repos\RevitTest.Language\RevitTest.Language\bin\Debug\net45\RevitTest.Language.dll" -v 2021 -l -o "console" --language "PTB" --open --close
+.\ricaun.RevitTest.Console.exe --file "D:\Users\ricau\source\repos\RevitTest.Language\RevitTest.Language\bin\Debug\net45\RevitTest.Language.dll" -v 2021 -l -o "console" --language "pt" --open --close
 ```
 
 ```
@@ -152,6 +152,7 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 .cs
 ```c#
 [assembly: AssemblyMetadata("NUnit.Version", "2021")]
+[assembly: AssemblyMetadata("NUnit.Language", "ENU")]
 [assembly: AssemblyMetadata("NUnit.Open", "true")]
 [assembly: AssemblyMetadata("NUnit.Close", "true")]
 [assembly: AssemblyMetadata("NUnit.Verbosity", "1")]
