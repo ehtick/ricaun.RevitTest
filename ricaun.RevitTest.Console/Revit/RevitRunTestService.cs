@@ -14,12 +14,15 @@ namespace ricaun.RevitTest.Console.Revit
         public bool RunTests(string fileToTest,
             int revitVersionNumber,
             Action<string> actionOutput = null,
+            string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
             bool forceToWaitRevit = false,
             bool forceToCloseRevit = false,
             params string[] testFilters)
         {
-            RevitTestUtils.CreateRevitServer(fileToTest, revitVersionNumber, actionOutput, forceToOpenNewRevit, forceToWaitRevit, forceToCloseRevit, testFilters);
+            RevitTestUtils.CreateRevitServer(
+                fileToTest, revitVersionNumber, actionOutput, forceLanguageToRevit,
+                forceToOpenNewRevit, forceToWaitRevit, forceToCloseRevit, testFilters);
             return true;
         }
     }

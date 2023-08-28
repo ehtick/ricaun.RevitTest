@@ -92,6 +92,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             string fileToTest,
             int revitVersionNumber,
             Action<string> actionOutput = null,
+            string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
             bool forceToWaitRevit = false,
             bool forceToCloseRevit = false,
@@ -133,8 +134,9 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         //var processStarted = false;
                         if (revitInstallation.TryGetProcess(out Process process) == false || forceToOpenNewRevit)
                         {
-                            Log.WriteLine($"{revitInstallation}: Start");
-                            process = revitInstallation.Start();
+                            var startRevitLanguageArgument = RevitLanguageUtils.GetArgument(forceLanguageToRevit);
+                            Log.WriteLine($"{revitInstallation}: Start {startRevitLanguageArgument}");
+                            process = revitInstallation.Start(startRevitLanguageArgument);
                             //processStarted = true;
                         }
 

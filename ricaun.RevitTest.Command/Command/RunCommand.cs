@@ -69,6 +69,7 @@ namespace ricaun.RevitTest.Command
                 options.File,
                 options.RevitVersion,
                 outputAction,
+                options.RevitLanguage,
                 options.ForceToOpen,
                 options.ForceToWait,
                 options.ForceToClose,
