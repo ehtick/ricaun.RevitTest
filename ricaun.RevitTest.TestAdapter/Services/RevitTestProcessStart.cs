@@ -23,6 +23,13 @@
             return SetRevitArgument("log");
         }
         public RevitTestProcessStart SetRevitVersion(int revitVersion) => SetRevitArgument("version", revitVersion);
+        public RevitTestProcessStart SetRevitLanguage(string revitLanguage)
+        {
+            if (string.IsNullOrWhiteSpace(revitLanguage) == false)
+                SetRevitArgument("language", revitLanguage);
+
+            return this;
+        }
         public RevitTestProcessStart SetOutput(string output) => SetRevitArgument("output", output);
         public RevitTestProcessStart SetOutputConsole() => SetOutput("console");
         public RevitTestProcessStart SetOpen(bool open = true)

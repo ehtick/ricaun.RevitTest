@@ -138,6 +138,7 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 <RunSettings>
   <NUnit>
     <Version>2021</Version>
+    <Language>pt</Language>
     <Open>true</Open>
     <Close>true</Close>
     <Verbosity>1</Verbosity>

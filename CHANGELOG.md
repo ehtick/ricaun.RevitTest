@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update option with RevitLanguage
 ### Console
 - Add `RevitLanguageUtils` to get language argument
+### TestAdapter
+- Add `Language` support in the NUnit adapter executer
 
 ## [1.0.22] / 2023-08-08
 ### Fixed
