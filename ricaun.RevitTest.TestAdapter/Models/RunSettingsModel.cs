@@ -14,6 +14,9 @@
             [XmlElement("Version")]
             public int Version { get; set; }
 
+            [XmlElement("Language")]
+            public string Language { get; set; }
+
             [XmlElement("Open")]
             public bool Open { get; set; }
 

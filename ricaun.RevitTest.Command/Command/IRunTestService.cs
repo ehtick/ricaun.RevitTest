@@ -9,6 +9,7 @@ namespace ricaun.RevitTest.Command
             string fileToTest,
             int revitVersionNumber,
             Action<string> actionOutput = null,
+            string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
             bool forceToWaitRevit = false,
             bool forceToCloseRevit = false,

@@ -133,6 +133,7 @@ namespace ricaun.RevitTest.TestAdapter
 
                 await revit.RunTestAction(source,
                     AdapterSettings.Settings.NUnit.Version,
+                    AdapterSettings.Settings.NUnit.Language,
                     AdapterSettings.Settings.NUnit.Open,
                     AdapterSettings.Settings.NUnit.Close,
                     outputConsole, filters);

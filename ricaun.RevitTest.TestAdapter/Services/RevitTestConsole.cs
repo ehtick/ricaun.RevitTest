@@ -70,6 +70,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
         public async Task RunTestAction(
             string file,
             int version = 0,
+            string language = null,
             bool revitOpen = false,
             bool revitClose = false,
             Action<string> consoleAction = null,
@@ -78,6 +79,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             await new RevitTestProcessStart(applicationPath)
                 .SetFile(file)
                 .SetRevitVersion(version)
+                .SetRevitLanguage(language)
                 .SetOutputConsole()
                 .SetOpen(revitOpen)
                 .SetClose(revitClose)

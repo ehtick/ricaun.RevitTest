@@ -31,6 +31,10 @@ namespace ricaun.RevitTest.Command
           HelpText = "Force to run with Revit version.")]
         public int RevitVersion { get; set; }
 
+        [Option("language",
+          HelpText = "Force to run with Revit with language. (Default: ENU)")]
+        public string RevitLanguage { get; set; }
+
         [Option('l', "log",
           Default = false,
           HelpText = "Prints all messages to log in standard output.")]

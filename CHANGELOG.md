@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] / 2023-08-28
+### Features
+- Support Revit Language 
+### Command 
+- Update option with RevitLanguage
+### Console
+- Add `RevitLanguageUtils` to get language argument
+### TestAdapter
+- Add `Language` support in the NUnit adapter executer
+### Tests
+- Add Language test for Revit UI
+
 ## [1.0.22] / 2023-08-08
 ### Fixed
 - Fix `AssemblyResolveEvent handlers cannot return Assemblies loaded for reflection only.` in version 2021 by not using `ContainNUnit` in each file.
@@ -261,6 +273,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.1.0]: ../../compare/1.0.22...1.1.0
 [1.0.22]: ../../compare/1.0.21...1.0.22
 [1.0.21]: ../../compare/1.0.20...1.0.21
 [1.0.20]: ../../compare/1.0.19...1.0.20

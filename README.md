@@ -85,6 +85,12 @@ flowchart LR
 .\ricaun.RevitTest.Console.exe --file "C:\Users\ricau\source\repos\TestProject.Tests\TestProject.Tests\bin\Debug\TestProject.Tests.dll" -v 2021 -o "console" --close
 ```
 
+### Test Language
+```bash
+.\ricaun.RevitTest.Console.exe --file "D:\Users\ricau\source\repos\RevitTest.Language\RevitTest.Language\bin\Debug\net45\RevitTest.Language.dll" -v 2021 -l -o "console" --language "PTB" --open --close
+.\ricaun.RevitTest.Console.exe --file "D:\Users\ricau\source\repos\RevitTest.Language\RevitTest.Language\bin\Debug\net45\RevitTest.Language.dll" -v 2021 -l -o "console" --language "pt" --open --close
+```
+
 ```
 .\ricaun.RevitTest.Console\bin\Debug\ricaun.RevitTest.Console.exe --file "D:\Users\ricau\source\repos\RevitTest0\RevitTest0\bin\Debug\RevitTest0.dll" -v 2021 -o "console"
 ```
@@ -132,6 +138,7 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 <RunSettings>
   <NUnit>
     <Version>2021</Version>
+    <Language>pt</Language>
     <Open>true</Open>
     <Close>true</Close>
     <Verbosity>1</Verbosity>
@@ -145,6 +152,7 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 .cs
 ```c#
 [assembly: AssemblyMetadata("NUnit.Version", "2021")]
+[assembly: AssemblyMetadata("NUnit.Language", "ENU")]
 [assembly: AssemblyMetadata("NUnit.Open", "true")]
 [assembly: AssemblyMetadata("NUnit.Close", "true")]
 [assembly: AssemblyMetadata("NUnit.Verbosity", "1")]

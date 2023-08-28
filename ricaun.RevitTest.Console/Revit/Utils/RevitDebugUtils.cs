@@ -97,7 +97,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                     revitVersionNumber = installedRevits[number].Version;
                 }
 
-                RevitTestUtils.CreateRevitServer(fileToTest, revitVersionNumber, null, false, true, false);
+                RevitTestUtils.CreateRevitServer(fileToTest, revitVersionNumber, null, null, false, true, false);
 
             } while (keyLoop.Key != ConsoleKey.Escape);
 
