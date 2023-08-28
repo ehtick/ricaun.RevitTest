@@ -14,6 +14,9 @@ namespace ricaun.RevitTest.Tests
         {
             var cultureInfo = System.Globalization.CultureInfo.CurrentUICulture;
             Console.WriteLine(cultureInfo.Name);
+#if !DEBUG
+            Assert.AreEqual("en-US", cultureInfo.Name);
+#endif
         }
     }
 }
