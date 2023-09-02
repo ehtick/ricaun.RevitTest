@@ -7,6 +7,7 @@ ricaun.RevitTest is a Framework to execute NUnit tests using Visual Studio and R
 [![Nuke](https://img.shields.io/badge/Nuke-Build-blue)](https://nuke.build/)
 [![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Build](https://github.com/ricaun-io/ricaun.RevitTest/actions/workflows/Build.yml/badge.svg)](https://github.com/ricaun-io/ricaun.RevitTest/actions)
+[![Release](https://img.shields.io/nuget/v/ricaun.RevitTest.TestAdapter?logo=nuget&label=release&color=blue)](https://www.nuget.org/packages/ricaun.RevitTest.TestAdapter)
 
 ## WorkFlow
 
