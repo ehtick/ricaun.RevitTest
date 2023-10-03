@@ -101,6 +101,18 @@ namespace ricaun.RevitTest.TestAdapter.Services
             return testNames;
         }
 
+        public async Task RunTestReadWithLog(
+            string file,
+            Action<string> consoleAction)
+        {
+            await new RevitTestProcessStart(applicationPath)
+                .SetFile(file)
+                .SetOutputConsole()
+                .SetRead()
+                .SetLog()
+                .Run(consoleAction);
+        }
+
         public void Dispose()
         {
             try
