@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.1.1] / 2023-10-03
 ### Features
 - `TestDiscoverer` enable log feature.
+- `TestAdapter` only execute Application if trusted.
 ### Updated
 - Update `ricaun.NUnit` to `1.3.1`
 ### Command
@@ -17,6 +18,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### TestAdapter
 - Update `TestDiscoverer` with `Log` feature
 - Update `RevitTestConsole` with `RunTestReadWithLog` feature
+- Add `ricaun.Security.WinTrust` package
+- Add `TrustApplicationUtils` to check if application is trusted
 ### Fixed
 - Fix Folder not exist (Fix: #30)
 

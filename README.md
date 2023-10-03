@@ -119,6 +119,9 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings
 ```bash
 dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=2023
 ```
+```bash
+dotnet test ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.Application=""
+```
 
 ### `.runsettings`
 .csproj

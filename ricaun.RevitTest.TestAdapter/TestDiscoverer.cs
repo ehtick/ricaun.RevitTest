@@ -47,20 +47,15 @@ namespace ricaun.RevitTest.TestAdapter
                     AdapterLogger.Logger.Info($"DiscoverTests: {source}");
                     using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
                     {
-                        //var testNames = await revit.RunTestRead(source);
-                        //AdapterLogger.Logger.Info($"DiscoverTests: {testNames.ToJson()}");
-
-                        //foreach (var testName in testNames)
-                        //{
-                        //    AdapterLogger.Logger.Info($"Test: {testName}");
-                        //    var testCase = TestCaseUtils.Create(source, testName);
-
-                        //    discoverySink?.SendTestCase(testCase);
-                        //    tests.Add(testCase);
-                        //}
+                        if (revit.IsTrusted(out string message) == false)
+                        {
+                            AdapterLogger.Logger.Error(message);
+#if !DEBUG
+                            break;
+#endif
+                        }
 
                         var testNames = new string[] { };
-
                         Action<string> outputConsole = (item) =>
                         {
                             if (string.IsNullOrEmpty(item)) return;
