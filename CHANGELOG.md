@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `RevitTestConsole` with `RunTestReadWithLog` feature
 - Add `ricaun.Security.WinTrust` package
 - Add `TrustApplicationUtils` to check if application is trusted
-- Add `DelayAfterExit` in `ProcessStart` with value 100
+- Add `DelayAfterExit` in `ProcessStart` with value `100`
 ### Fixed
 - Fix Folder not exist (Fix: #30)
 
