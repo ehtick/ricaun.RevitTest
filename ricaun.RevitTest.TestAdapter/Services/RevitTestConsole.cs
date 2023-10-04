@@ -71,7 +71,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
         {
             var isTrust = TrustApplicationUtils.IsTrust(applicationPath, out string signedMessage);
 
-            message = $"Application: {Path.GetFileName(applicationPath)} is {(isTrust ? "" : "not")} trusted.";
+            message = $"Application: {Path.GetFileName(applicationPath)} is {(isTrust ? "" : "not ")}trusted.";
 
             AdapterLogger.Logger.DebugOnlyLocal($"Application {signedMessage}");
 

@@ -9,6 +9,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
 {
     internal class ProcessStart
     {
+        private const int DelayAfterExit = 100;
         private string processPath;
         private Dictionary<string, object> argumentsPair = new Dictionary<string, object>();
         private string CreateArguments()
@@ -129,7 +130,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit(int.MaxValue);
-            await Task.Delay(0);
+            await Task.Delay(DelayAfterExit);
         }
     }
 }
