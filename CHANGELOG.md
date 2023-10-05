@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `DelayAfterExit` in `ProcessStart` with value `100`
 ### Fixed
 - Fix Folder not exist (Fix: #30)
+### Build
+- Update to version `1.6.0-rc` enable prerelease
+- Update `IBuildCommand` and `IBuildConsole`
+- Disable `IPackRelease`
 
 ## [1.1.0] / 2023-08-28
 ### Features
