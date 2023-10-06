@@ -24,20 +24,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--
-    <PackageReference Include="nunit.engine" Version="3.15.2" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.2" IncludeAssets="build; compile" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.3" IncludeAssets="compile; build" PrivateAssets="all" />
-    -->
     <PackageReference Include="nunit.engine" Version="3.15.2" IncludeAssets="compile; build" PrivateAssets="all"/>
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.2" IncludeAssets="compile; build" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ricaun.Security.WinTrust" Version="*"/>
+    <PackageReference Include="ricaun.Security.WinTrust" Version="*" PrivateAssets="all" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.IO.Compression" />
   </ItemGroup>
