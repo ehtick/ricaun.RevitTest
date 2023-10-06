@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] / 2023-10-03
+### Features
+- `TestDiscoverer` enable log feature.
+- `TestAdapter` only execute Application if trusted.
+- `TestAdapter` with `net6` support.
+### Updated
+- Update `ricaun.NUnit` to `1.3.1`
+### Command
+- Update TargetFramework added `net5`
+- Update `JsonExtension` with `System.Text.Json`
+### Console
+- Update `ricaun.Revit.Installation` to `1.1.0` (Fix: #30)
+### TestAdapter
+- Update `TestDiscoverer` with `Log` feature
+- Update `RevitTestConsole` with `RunTestReadWithLog` feature
+- Add `ricaun.Security.WinTrust` package with `PrivateAssets` 
+- Add `TrustApplicationUtils` to check if application is trusted
+- Add `DelayAfterExit` in `ProcessStart` with value `100`
+- Remove not used `XmlBool` 
+- Add `JsonService` for net framework and net code.
+- Add `TargetFrameworkUtils` to get `TargetFramework` name.
+### Fixed
+- Fix Folder not exist (Fix: #30)
+### Build
+- Update to version `1.6.1` enable prerelease with filter
+- Update `IBuildCommand` and `IBuildConsole`
+- Disable `IPackRelease`
+
 ## [1.1.0] / 2023-08-28
 ### Features
 - Support Revit Language 
@@ -273,6 +301,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.1.1]: ../../compare/1.1.0...1.1.1
 [1.1.0]: ../../compare/1.0.22...1.1.0
 [1.0.22]: ../../compare/1.0.21...1.0.22
 [1.0.21]: ../../compare/1.0.20...1.0.21

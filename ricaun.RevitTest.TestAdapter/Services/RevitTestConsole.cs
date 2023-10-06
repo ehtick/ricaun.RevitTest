@@ -67,6 +67,26 @@ namespace ricaun.RevitTest.TestAdapter.Services
             AdapterLogger.Logger.Info($"Application: {Path.GetFileName(applicationPath)}");
         }
 
+        public bool IsTrusted(out string message)
+        {
+            var isTrust = TrustApplicationUtils.IsTrust(applicationPath, out string signedMessage);
+
+            message = $"Application: {Path.GetFileName(applicationPath)} is {(isTrust ? "" : "not ")}trusted.";
+
+            AdapterLogger.Logger.DebugOnlyLocal($"Application {signedMessage}");
+
+            if (isTrust == false)
+            {
+                AdapterLogger.Logger.Error($"Application: {signedMessage}");
+            }
+            else
+            {
+                AdapterLogger.Logger.Info($"Application: {signedMessage}");
+                AdapterLogger.Logger.Debug(message);
+            }
+            return isTrust;
+        }
+
         public async Task RunTestAction(
             string file,
             int version = 0,
@@ -99,6 +119,18 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
             var testNames = read.Deserialize<string[]>();
             return testNames;
+        }
+
+        public async Task RunTestReadWithLog(
+            string file,
+            Action<string> consoleAction)
+        {
+            await new RevitTestProcessStart(applicationPath)
+                .SetFile(file)
+                .SetOutputConsole()
+                .SetRead()
+                .SetLog()
+                .Run(consoleAction);
         }
 
         public void Dispose()

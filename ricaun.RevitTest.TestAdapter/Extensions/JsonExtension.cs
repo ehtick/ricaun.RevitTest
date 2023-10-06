@@ -1,20 +1,12 @@
 ﻿namespace ricaun.RevitTest.TestAdapter.Extensions
 {
-    using System.Web.Script.Serialization;
+    using ricaun.RevitTest.TestAdapter.Extensions.Json;
     /// <summary>
     /// JsonExtension
-    /// <code>Reference Include="System.Web.Extensions"</code>
     /// </summary>
     internal static class JsonExtension
     {
-        private static JavaScriptSerializer JavaScriptSerializer { get; set; } = Create();
-
-        private static JavaScriptSerializer Create()
-        {
-            var javaScriptSerializer = new JavaScriptSerializer();
-            javaScriptSerializer.RegisterConverters(new[] { new Converters.XmlBoolConverter() });
-            return javaScriptSerializer;
-        }
+        private static IJsonService jsonService { get; set; } = new JsonService();
 
         /// <summary>
         /// Deserialize
@@ -24,7 +16,7 @@
         /// <returns></returns>
         public static T Deserialize<T>(this string value)
         {
-            return JavaScriptSerializer.Deserialize<T>(value);
+            return jsonService.Deserialize<T>(value);
         }
 
         /// <summary>
@@ -34,7 +26,7 @@
         /// <returns></returns>
         public static string Serialize(object value)
         {
-            return JavaScriptSerializer.Serialize(value);
+            return jsonService.Serialize(value);
         }
 
         /// <summary>

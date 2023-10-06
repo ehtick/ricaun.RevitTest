@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0;net5</TargetFrameworks>
+    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
     <OutputType>Library</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>latest</LangVersion>
@@ -15,7 +16,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants></DefineConstants>
-    <NoWarn>MSB3052</NoWarn>
+    <NoWarn>$(NoWarn);MSB3052</NoWarn>
     <DebugType>None</DebugType>
   </PropertyGroup>
 
@@ -39,12 +40,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyName>$(PackageId)$(PackageAssemblyVersion)</AssemblyName>
-    <Product>$(PackageId)</Product>
-    <Copyright>Copyright © $(CopyrightYears) $(Company)</Copyright>
-  </PropertyGroup>
-
-  <PropertyGroup>
+    <AssemblyName>$(PackageId)</AssemblyName>
     <Product>$(PackageId)</Product>
     <Copyright>Copyright (C) $(Company) $(CopyrightYears)</Copyright>
   </PropertyGroup>

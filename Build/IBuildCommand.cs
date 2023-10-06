@@ -7,6 +7,7 @@ public interface IBuildCommand : IBuildConsole
 {
     Target BuildCommand => _ => _
         .TriggeredBy(BuildConsole)
+        .Before(Release)
         .Executes(() =>
         {
             var project = Solution.GetOtherProject("ricaun.RevitTest.Command");

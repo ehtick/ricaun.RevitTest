@@ -90,6 +90,14 @@ namespace ricaun.RevitTest.TestAdapter
 
             using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
             {
+                if (revit.IsTrusted(out string message) == false)
+                {
+                    AdapterLogger.Logger.Error(message);
+#if !DEBUG
+                    return;
+#endif
+                }
+
                 var filters = tests.Select(TestCaseUtils.GetFullName).ToArray();
                 foreach (var filter in filters)
                 {

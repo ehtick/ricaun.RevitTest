@@ -84,4 +84,46 @@
         }
     }
 #endif
+
+#if NET
+    using System.Text.Json;
+    public static class JsonExtension
+    {
+        /// <summary>
+        /// Settings
+        /// </summary>
+        public static JsonSerializerOptions Settings { get; set; } = new JsonSerializerOptions();
+
+        /// <summary>
+        /// Deserialize
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static T Deserialize<T>(this string value)
+        {
+            return JsonSerializer.Deserialize<T>(value, Settings);
+        }
+
+        /// <summary>
+        /// Serialize
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string Serialize(object value)
+        {
+            return JsonSerializer.Serialize(value, Settings);
+        }
+
+        /// <summary>
+        /// ToJson
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string ToJson(this object value)
+        {
+            return Serialize(value);
+        }
+    }
+#endif
 }

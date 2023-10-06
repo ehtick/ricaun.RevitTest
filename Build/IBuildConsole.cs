@@ -8,6 +8,7 @@ public interface IBuildConsole : IHazExample, IRevitPackageBuilder
 {
     Target BuildConsole => _ => _
         .TriggeredBy(PackageBuilder)
+        .Before(Release)
         .Executes(() =>
         {
             var project = Solution.GetOtherProject("ricaun.RevitTest.Console");

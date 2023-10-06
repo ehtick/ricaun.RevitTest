@@ -6,6 +6,7 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using ricaun.RevitTest.TestAdapter.Models;
+using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Reflection;
 
@@ -22,7 +23,10 @@ namespace ricaun.RevitTest.TestAdapter
         protected TestAdapter()
         {
             var assemblyName = typeof(TestAdapter).GetTypeInfo().Assembly.GetName();
-            AdapterVersion = $"{assemblyName.Name} {assemblyName.Version.ToString(3)}";
+            var version = assemblyName.Version.ToString(3);
+            var frameworkName = TargetFrameworkUtils.GetName();
+
+            AdapterVersion = $"{assemblyName.Name} \t{version} \t[{frameworkName}]";
         }
 
         protected void Initialize(IDiscoveryContext discoveryContext, IMessageLogger messageLogger)

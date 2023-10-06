@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using ricaun.RevitTest.TestAdapter.Extensions;
 using ricaun.RevitTest.TestAdapter.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,17 +47,47 @@ namespace ricaun.RevitTest.TestAdapter
                     AdapterLogger.Logger.Info($"DiscoverTests: {source}");
                     using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
                     {
-                        var testNames = await revit.RunTestRead(source);
+                        if (revit.IsTrusted(out string message) == false)
+                        {
+                            AdapterLogger.Logger.Error(message);
+#if !DEBUG
+                            break;
+#endif
+                        }
+
+                        var testNames = new string[] { };
+                        Action<string> outputConsole = (item) =>
+                        {
+                            if (string.IsNullOrEmpty(item)) return;
+
+                            AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
+
+                            if (item.StartsWith("["))
+                            {
+                                if (item.Deserialize<string[]>() is string[] tests)
+                                {
+                                    testNames = tests;
+                                    AdapterLogger.Logger.Debug($"OutputConsole: Deserialize {testNames.Length} TestNames");
+                                }
+                            }
+                        };
+
+                        await revit.RunTestReadWithLog(source, outputConsole);
+
+                        AdapterLogger.Logger.Debug("DiscoverTests: -------------------------------");
                         AdapterLogger.Logger.Info($"DiscoverTests: {testNames.ToJson()}");
+                        AdapterLogger.Logger.Debug("DiscoverTests: -------------------------------");
 
                         foreach (var testName in testNames)
                         {
-                            AdapterLogger.Logger.Info($"Test: {testName}");
+                            AdapterLogger.Logger.Info($"TestCase: {testName}");
                             var testCase = TestCaseUtils.Create(source, testName);
 
                             discoverySink?.SendTestCase(testCase);
                             tests.Add(testCase);
                         }
+
+                        AdapterLogger.Logger.Debug("DiscoverTests: -------------------------------");
                     }
                 }
             });
