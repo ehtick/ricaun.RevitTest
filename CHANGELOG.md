@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 - `TestDiscoverer` enable log feature.
 - `TestAdapter` only execute Application if trusted.
+- `TestAdapter` with `net6` support.
 ### Updated
 - Update `ricaun.NUnit` to `1.3.1`
 ### Command
@@ -21,6 +22,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `ricaun.Security.WinTrust` package with `PrivateAssets` 
 - Add `TrustApplicationUtils` to check if application is trusted
 - Add `DelayAfterExit` in `ProcessStart` with value `100`
+- Remove not used `XmlBool` 
+- Add `JsonService` for net framework and net code.
 ### Fixed
 - Fix Folder not exist (Fix: #30)
 ### Build

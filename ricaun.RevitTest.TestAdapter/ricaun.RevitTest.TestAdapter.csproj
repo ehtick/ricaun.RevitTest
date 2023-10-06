@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFrameworks>net45;net6</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <!-- Release -->
@@ -11,7 +11,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants></DefineConstants>
-    <NoWarn>MSB3052</NoWarn>
+    <NoWarn>$(NoWarn);MSB3052</NoWarn>
     <DebugType>None</DebugType>
   </PropertyGroup>
 
@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="nunit.engine" Version="3.15.2" IncludeAssets="compile; build" PrivateAssets="all"/>
+    <PackageReference Include="nunit.engine" Version="3.15.2" IncludeAssets="compile; build" PrivateAssets="all" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.3.2" IncludeAssets="compile; build" PrivateAssets="all" />
   </ItemGroup>
 
