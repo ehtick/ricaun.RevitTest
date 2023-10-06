@@ -6,6 +6,7 @@
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using ricaun.RevitTest.TestAdapter.Models;
+using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Reflection;
 
@@ -22,7 +23,10 @@ namespace ricaun.RevitTest.TestAdapter
         protected TestAdapter()
         {
             var assemblyName = typeof(TestAdapter).GetTypeInfo().Assembly.GetName();
-            AdapterVersion = $"{assemblyName.Name} {assemblyName.Version.ToString(3)}";
+            var version = assemblyName.Version.ToString(3);
+            var frameworkName = TargetFrameworkUtils.GetName();
+
+            AdapterVersion = $"{assemblyName.Name} \t{version} \t[{frameworkName}]";
         }
 
         protected void Initialize(IDiscoveryContext discoveryContext, IMessageLogger messageLogger)
@@ -30,11 +34,7 @@ namespace ricaun.RevitTest.TestAdapter
             AdapterSettings.Create(discoveryContext);
             AdapterLogger.Create(messageLogger, AdapterSettings.Settings.NUnit.Verbosity);
 
-            var targetFrameworkAttribute = this.GetType().Assembly
-               .GetCustomAttribute(typeof(System.Runtime.Versioning.TargetFrameworkAttribute)) as System.Runtime.Versioning.TargetFrameworkAttribute;
-
             AdapterLogger.Logger.Info($"TestAdapter: {this.AdapterVersion}", 0);
-            AdapterLogger.Logger.Info($"TargetFramework: {targetFrameworkAttribute?.FrameworkName}");
             AdapterLogger.Logger.Info($"AdapterSettings: {AdapterSettings.Settings}");
 
             if (AdapterSettings.Instance.RunSettings is null)
@@ -45,7 +45,6 @@ namespace ricaun.RevitTest.TestAdapter
 #if DEBUG
             AdapterLogger.Logger.DebugOnlyLocal("-DEBUG-");
             AdapterLogger.Logger.DebugOnlyLocal($"\tTestAdapter: {this.AdapterVersion}");
-            AdapterLogger.Logger.DebugOnlyLocal($"\tTargetFramework: {targetFrameworkAttribute?.FrameworkName}");
             AdapterLogger.Logger.DebugOnlyLocal($"\tAdapterSettings: {AdapterSettings.Settings}");
 
             var collection = Metadatas.XmlUtils.ParseKeyValues(discoveryContext.RunSettings.SettingsXml);

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `DelayAfterExit` in `ProcessStart` with value `100`
 - Remove not used `XmlBool` 
 - Add `JsonService` for net framework and net code.
+- Add `TargetFrameworkUtils` to get `TargetFramework` name.
 ### Fixed
 - Fix Folder not exist (Fix: #30)
 ### Build
