@@ -66,6 +66,7 @@ flowchart LR
 * [NamedPipeWrapper.Json](https://github.com/ricaun-io/named-pipe-wrapper-json)
 #### TestAdapter
 * [ricaun.RevitTest.Console.exe](ricaun.RevitTest.Console)
+* [ricaun.Security.WinTrust](https://github.com/ricaun-io/ricaun.Security.WinTrust)
 
 ## CommandLine
 
