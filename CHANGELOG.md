@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Fix Folder not exist (Fix: #30)
 ### Build
-- Update to version `1.6.0-rc` enable prerelease
+- Update to version `1.6.1` enable prerelease with filter
 - Update `IBuildCommand` and `IBuildConsole`
 - Disable `IPackRelease`
 
