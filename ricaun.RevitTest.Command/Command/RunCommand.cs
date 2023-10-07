@@ -39,11 +39,18 @@ namespace ricaun.RevitTest.Command
 
         public void Run()
         {
-            if (ReadTests())
-                return;
+            try
+            {
+                RunOrReadTests();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex);
+                throw;
+            }
         }
 
-        private bool ReadTests()
+        private bool RunOrReadTests()
         {
             WriteOutput();
 

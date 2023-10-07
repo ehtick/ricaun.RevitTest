@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `net6` to `EnableDynamicLoading` to fix `System.IO.FileNotFoundException` reference. (Fix: #32)
 ### Command
 - Update `AppUtils.GetInfo` to show framework version (Net Framework or Net Core).
+- Update `Run` to show in Log the Exception.
+### Console
+- Remove `KeyAvailable` in the `RevitTestUtils`.
 
 ## [1.1.1] / 2023-10-03
 ### Features
