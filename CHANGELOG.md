@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `AppUtils.GetInfo` to show framework version (Net Framework or Net Core).
 - Update `Run` to show in Log the Exception.
 ### Console
-- Remove `KeyAvailable` in the `RevitTestUtils`.
+- Remove `KeyAvailable` in the `RevitTestUtils`. (Fix issue in Rider.)
 
 ## [1.1.1] / 2023-10-03
 ### Features
