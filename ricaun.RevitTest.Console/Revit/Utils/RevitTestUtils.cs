@@ -202,15 +202,15 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                             if (client.ServerMessage.IsBusy)
                                 continue;
 
-                            if (System.Console.KeyAvailable)
-                            {
-                                var cki = System.Console.ReadKey(true);
-                                if (cki.Key == ConsoleKey.Escape) break;
-                                if (cki.Key == ConsoleKey.Spacebar)
-                                {
-                                    sendFileWhenCreatedOrUpdated = true;
-                                }
-                            }
+                            //if (System.Console.KeyAvailable)
+                            //{
+                            //    var cki = System.Console.ReadKey(true);
+                            //    if (cki.Key == ConsoleKey.Escape) break;
+                            //    if (cki.Key == ConsoleKey.Spacebar)
+                            //    {
+                            //        sendFileWhenCreatedOrUpdated = true;
+                            //    }
+                            //}
 
                             if (sendFileWhenCreatedOrUpdated)
                             {

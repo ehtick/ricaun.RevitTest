@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] / 2023-10-07
+### Features
+- `TestAdapter` with `net6` support.
+### TestAdapter
+- Update `net6` to `EnableDynamicLoading` to fix `System.IO.FileNotFoundException` reference. (Fix: #32)
+### Command
+- Update `AppUtils.GetInfo` to show framework version (Net Framework or Net Core).
+- Update `Run` to show in Log the Exception.
+### Console
+- Remove `KeyAvailable` in the `RevitTestUtils`. (Fix issue in Rider.)
+
 ## [1.1.1] / 2023-10-03
 ### Features
 - `TestDiscoverer` enable log feature.
@@ -301,6 +312,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.1.2]: ../../compare/1.1.1...1.1.2
 [1.1.1]: ../../compare/1.1.0...1.1.1
 [1.1.0]: ../../compare/1.0.22...1.1.0
 [1.0.22]: ../../compare/1.0.21...1.0.22

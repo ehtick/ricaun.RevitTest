@@ -30,21 +30,27 @@ namespace ricaun.RevitTest.Command
 
         private void Initialize()
         {
-            var assemblyName = this.GetType().Assembly.GetName();
             NUnit.TestEngine.Initialize(out string init);
 
             Log.WriteLine();
-            Log.WriteLine($"{assemblyName.Name} {assemblyName.Version.ToString(3)} [{init}]");
+            Log.WriteLine($"{AppUtils.GetInfo()} [{init}]");
             Log.WriteLine();
         }
 
         public void Run()
         {
-            if (ReadTests())
-                return;
+            try
+            {
+                RunOrReadTests();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLine(ex);
+                throw;
+            }
         }
 
-        private bool ReadTests()
+        private bool RunOrReadTests()
         {
             WriteOutput();
 

@@ -4,6 +4,7 @@
     <TargetFrameworks>net45;net6</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <EnableDynamicLoading Condition=" '$(TargetFramework)' == 'net6' ">true</EnableDynamicLoading>
   </PropertyGroup>
 
   <!-- Release -->
