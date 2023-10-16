@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] / 2023-10-16
+### Features
+- Application show error in log if fail.
+### TestAdapter
+- Update `RevitTestConsole` with log application location.
+- Update `ApplicationUtils` clear temp folder.
+### Application
+- Update Log before test Runs.
+
 ## [1.1.2] / 2023-10-07
 ### Features
 - `TestAdapter` with `net6` support.
@@ -312,6 +321,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.1.3]: ../../compare/1.1.2...1.1.3
 [1.1.2]: ../../compare/1.1.1...1.1.2
 [1.1.1]: ../../compare/1.1.0...1.1.1
 [1.1.0]: ../../compare/1.0.22...1.1.0

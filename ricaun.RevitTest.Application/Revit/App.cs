@@ -192,19 +192,14 @@ namespace ricaun.RevitTest.Application.Revit
                                 ricaun.NUnit.TestEngineFilter.Add(testFilterName);
                             }
 
-                            testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
-
-                            //testAssemblyModel = await RevitTask.Run((uiapp) =>
-                            //{
-                            //    try
-                            //    {
-                            //        TestAssemblyModel tests = TestExecuteUtils.Execute(message.TestPathFile, RevitParameters.Parameters);
-
-                            //        return tests;
-                            //    }
-                            //    catch { Log.WriteLine("TestExecuteUtils: Fail"); }
-                            //    return null;
-                            //});
+                            try
+                            {
+                                testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.WriteLine($"TestExecuteUtils: Exception {ex}");
+                            }
 
                             await RevitTask.Run((uiapp) =>
                             {
