@@ -195,28 +195,36 @@ namespace ricaun.RevitTest.Application.Revit
                             try
                             {
                                 testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
+
+                                await RevitTask.Run((uiapp) =>
+                                {
+                                    try
+                                    {
+                                        var task = Task.Run(async () =>
+                                        {
+                                            var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
+                                            await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
+                                        });
+                                        task.GetAwaiter().GetResult();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Debug.WriteLine(ex);
+                                    }
+                                });
                             }
                             catch (Exception ex)
                             {
                                 Log.WriteLine($"TestExecuteUtils: Exception {ex}");
+                                var exceptionFail = new Exception("TestExecuteUtils.Execute Fails", ex);
+                                testAssemblyModel = TestEngine.Fail(message.TestPathFile, exceptionFail, testFilterNames);
                             }
 
-                            await RevitTask.Run((uiapp) =>
+                            if (testAssemblyModel == null)
                             {
-                                try
-                                {
-                                    var task = Task.Run(async () =>
-                                    {
-                                        var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
-                                        await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                    });
-                                    task.GetAwaiter().GetResult();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Debug.WriteLine(ex);
-                                }
-                            });
+                                var exceptionFail = new Exception("TestExecuteUtils.Execute is null");
+                                testAssemblyModel = TestEngine.Fail(message.TestPathFile, exceptionFail, testFilterNames);
+                            }
 
                             ricaun.NUnit.TestEngineFilter.Reset();
                         }
