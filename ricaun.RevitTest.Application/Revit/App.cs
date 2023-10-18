@@ -192,36 +192,39 @@ namespace ricaun.RevitTest.Application.Revit
                                 ricaun.NUnit.TestEngineFilter.Add(testFilterName);
                             }
 
-                            testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
-
-                            //testAssemblyModel = await RevitTask.Run((uiapp) =>
-                            //{
-                            //    try
-                            //    {
-                            //        TestAssemblyModel tests = TestExecuteUtils.Execute(message.TestPathFile, RevitParameters.Parameters);
-
-                            //        return tests;
-                            //    }
-                            //    catch { Log.WriteLine("TestExecuteUtils: Fail"); }
-                            //    return null;
-                            //});
-
-                            await RevitTask.Run((uiapp) =>
+                            try
                             {
-                                try
+                                testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
+
+                                await RevitTask.Run((uiapp) =>
                                 {
-                                    var task = Task.Run(async () =>
+                                    try
                                     {
-                                        var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
-                                        await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                    });
-                                    task.GetAwaiter().GetResult();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Debug.WriteLine(ex);
-                                }
-                            });
+                                        var task = Task.Run(async () =>
+                                        {
+                                            var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
+                                            await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
+                                        });
+                                        task.GetAwaiter().GetResult();
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Debug.WriteLine(ex);
+                                    }
+                                });
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.WriteLine($"TestExecuteUtils: Exception {ex}");
+                                var exceptionFail = new Exception("TestExecuteUtils.Execute Fails", ex);
+                                testAssemblyModel = TestEngine.Fail(message.TestPathFile, exceptionFail, testFilterNames);
+                            }
+
+                            if (testAssemblyModel == null)
+                            {
+                                var exceptionFail = new Exception("TestExecuteUtils.Execute is null");
+                                testAssemblyModel = TestEngine.Fail(message.TestPathFile, exceptionFail, testFilterNames);
+                            }
 
                             ricaun.NUnit.TestEngineFilter.Reset();
                         }

@@ -78,6 +78,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             if (isTrust == false)
             {
                 AdapterLogger.Logger.Error($"Application: {signedMessage}");
+                AdapterLogger.Logger.Debug($"Application: [{File.Exists(applicationPath)}] {applicationPath}");
             }
             else
             {

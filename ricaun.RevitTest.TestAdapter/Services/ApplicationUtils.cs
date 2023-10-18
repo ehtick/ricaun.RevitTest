@@ -14,6 +14,22 @@ namespace ricaun.RevitTest.TestAdapter.Services
     {
         private const string ZIP_FILE_EXTENSION = ".zip";
 
+        private static void ClearTemporaryDirectory(string folderDirectory)
+        {
+            try
+            {
+                foreach (var delete in Directory.GetDirectories(folderDirectory))
+                {
+                    try
+                    {
+                        Directory.Delete(delete);
+                    }
+                    catch { }
+                }
+            }
+            catch { }
+        }
+
         /// <summary>
         /// Create Temporary Directory
         /// </summary>
@@ -23,9 +39,12 @@ namespace ricaun.RevitTest.TestAdapter.Services
         {
             string folderName = typeof(ApplicationUtils).Assembly.GetName().Name;
             if (string.IsNullOrEmpty(file)) file = folderName;
+            string folderDirectory = Path.Combine(Path.GetTempPath(), folderName);
+            ClearTemporaryDirectory(folderDirectory);
+
             string fileName = Path.GetFileNameWithoutExtension(file);
-            string tempFolderName = fileName;
-            string tempDirectory = Path.Combine(Path.GetTempPath(), folderName, tempFolderName);
+            string tempFolderName = $"{fileName}_{DateTime.Now.Ticks}";
+            string tempDirectory = Path.Combine(folderDirectory, tempFolderName);
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;
         }
