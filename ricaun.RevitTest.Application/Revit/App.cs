@@ -153,9 +153,9 @@ namespace ricaun.RevitTest.Application.Revit
                                     return await ApsApplicationCheck.Check();
                                 });
                                 var apsResponse = task.GetAwaiter().GetResult();
-                                if (apsResponse is null || apsResponse.isValid == false)
+                                if (apsResponse is not null && apsResponse.isValid == false)
                                 {
-                                    var exceptionNotValid = new Exception($"The user is not valid, {apsResponse.message}");
+                                    var exceptionNotValid = new Exception($"The user is not valid, {apsResponse?.message}");
                                     return TestEngine.Fail(message.TestPathFile, exceptionNotValid, testFilterNames);
                                 }
                             }

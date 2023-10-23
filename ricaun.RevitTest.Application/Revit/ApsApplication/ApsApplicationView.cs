@@ -19,62 +19,79 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         /// </summary>
         public static void OpenApsView(bool showDialog = false)
         {
-            if (apsView is null)
+            try
             {
-                var apsService = new ApsService(ApsApplication.ClientId, ApsApplication.ClientScopes)
+                if (apsView is null)
                 {
-                    ClientPort = ApsApplication.ClientPort,
-                };
-                var isConnected = ApsApplication.IsConnected;
-                Debug.WriteLine($"ApsView: {typeof(ApsView).Assembly}");
-
-                apsView = new ApsView(Autodesk.Windows.ComponentManager.ApplicationWindow);
-                apsView.SetApsConfiguration(apsService);
-                apsView.Closed += (s, e) => { apsService?.Dispose(); };
-                apsView.Closed += (s, e) => { apsView = null; };
-                apsView.Closed += async (s, e) =>
-                {
-                    if (isConnected == false)
+                    var apsService = new ApsService(ApsApplication.ClientId, ApsApplication.ClientScopes)
                     {
-                        var result = await ApsApplicationLogger.Log("Login", $"Login with ApsView {typeof(ApsView).Assembly.GetName().Version.ToString(3)}");
-                        Debug.WriteLine($"Login: {result}");
-                    }
-                };
+                        ClientPort = ApsApplication.ClientPort,
+                    };
+                    var isConnected = ApsApplication.IsConnected;
+                    Debug.WriteLine($"ApsView: {typeof(ApsView).Assembly}");
 
-                if (showDialog)
-                {
-                    apsService.Connected += async (client) =>
+                    apsView = new ApsView(Autodesk.Windows.ComponentManager.ApplicationWindow);
+                    apsView.SetApsConfiguration(apsService);
+                    apsView.Closed += (s, e) => { apsService?.Dispose(); };
+                    apsView.Closed += (s, e) => { apsView = null; };
+                    apsView.Closed += async (s, e) =>
                     {
-                        Debug.WriteLine($"ApsView: [Connected] was conencted = {isConnected}");
                         if (isConnected == false)
                         {
-                            await Task.Delay(MillisecondsDelayCloseAfterConnected);
-                            apsView?.Close();
+                            var result = await ApsApplicationLogger.Log("Login", $"Login with ApsView {typeof(ApsView).Assembly.GetName().Version.ToString(3)}");
+                            Debug.WriteLine($"Login: {result}");
                         }
                     };
 
-                    Task.Run(async () =>
+                    if (showDialog)
                     {
-                        await Task.Delay(MillisecondsDelayAutoClose);
-                        if (apsView != null)
+                        apsService.Connected += async (client) =>
                         {
-                            Debug.WriteLine($"ApsView: [AutoClose] {MillisecondsDelayAutoClose}");
-                            try
+                            Debug.WriteLine($"ApsView: [Connected] was conencted = {isConnected}");
+                            if (isConnected == false)
                             {
-                                apsView?.Dispatcher?.Invoke(() => { apsView?.Close(); });
+                                await Task.Delay(MillisecondsDelayCloseAfterConnected);
+                                apsView?.Close();
                             }
-                            catch (System.Exception ex)
-                            {
-                                System.Console.WriteLine(ex);
-                            }
-                        }
-                    });
+                        };
 
-                    apsView.ShowDialog();
+                        Task.Run(async () =>
+                        {
+                            await Task.Delay(MillisecondsDelayAutoClose);
+                            if (apsView != null)
+                            {
+                                Debug.WriteLine($"ApsView: [AutoClose] {MillisecondsDelayAutoClose}");
+                                try
+                                {
+                                    apsView?.Dispatcher?.Invoke(() => { apsView?.Close(); });
+                                }
+                                catch (System.Exception ex)
+                                {
+                                    System.Console.WriteLine(ex);
+                                }
+                            }
+                        });
+
+                        apsView.ShowDialog();
+                    }
+                    apsView?.Show();
                 }
-                apsView?.Show();
+                apsView?.Activate();
             }
-            apsView?.Activate();
+            catch (System.Exception)
+            {
+                Task.Run(async () =>
+                {
+                    if (ApsApplication.IsConnected)
+                    {
+                        await ApsApplication.Logout();
+                    }
+                    else
+                    {
+                        await ApsApplication.Login();
+                    }
+                });
+            }
         }
     }
 }
