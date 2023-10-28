@@ -15,6 +15,19 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
 
         public static ApsService ApsService;
         public static bool IsConnected => ApsService?.IsConnected ?? false;
+        public static string LoginUserId => GetLoginUserId();
+        public static string GetLoginUserId()
+        {
+            if (IsConnected == false)
+                return string.Empty;
+
+            var data = ApsService.ApsClient?.GetAccessToken()?.GetDataBase();
+
+            if (data is null)
+                return string.Empty;
+
+            return data.UserId;
+        }
         public static async Task Initialize()
         {
             ApsService = new ApsService(ClientId, ClientScopes) { ClientPort = ClientPort };

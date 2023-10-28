@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.2.0] / 2023-10-23
 ### Features
 - Application works offline.
+- Application force Revit Login.
 ### Application
 - Update `ricaun.Auth.Aps.UI` to 1.0.4
 - Update scope to `OpenId`.
+- Update only with `IsLoggedIn` and same `UserId`.
 
 ## [1.1.3] / 2023-10-16
 ### Features
