@@ -126,10 +126,16 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Tests = null;
                     });
 
-                    TestAssemblyModel ApsApplicationCheckTest()
+                    TestAssemblyModel ApsApplicationCheckTest(UIApplication uiapp)
                     {
                         try
                         {
+                            if (Autodesk.Revit.ApplicationServices.Application.IsLoggedIn == false)
+                            {
+                                var exceptionNeedLoggedIn = new Exception("There is no user connected to Revit.");
+                                return TestEngine.Fail(message.TestPathFile, exceptionNeedLoggedIn, testFilterNames);
+                            }
+
                             if (ApsApplication.ApsApplication.IsConnected == false)
                             {
                                 PipeTestServer.Update((response) =>
@@ -153,10 +159,23 @@ namespace ricaun.RevitTest.Application.Revit
                                     return await ApsApplicationCheck.Check();
                                 });
                                 var apsResponse = task.GetAwaiter().GetResult();
-                                if (apsResponse is null || apsResponse.isValid == false)
+                                if (apsResponse is not null && apsResponse.isValid == false)
                                 {
-                                    var exceptionNotValid = new Exception($"The user is not valid, {apsResponse.message}");
+                                    var exceptionNotValid = new Exception($"The user is not valid, {apsResponse?.message}");
                                     return TestEngine.Fail(message.TestPathFile, exceptionNotValid, testFilterNames);
+                                }
+                            }
+
+                            if (ApsApplication.ApsApplication.IsConnected == true)
+                            {
+                                var revitLoginUserId = uiapp.Application.LoginUserId;
+                                var apsLoginUserId = ApsApplication.ApsApplication.LoginUserId;
+                                var isSameUserId = apsLoginUserId.Equals(revitLoginUserId);
+
+                                if (isSameUserId == false)
+                                {
+                                    var exceptionDifferentLoginUserId = new Exception($"The user connected to Revit is different from the user connected to 'ricaun.Auth'.");
+                                    return TestEngine.Fail(message.TestPathFile, exceptionDifferentLoginUserId, testFilterNames);
                                 }
                             }
                         }
@@ -166,10 +185,7 @@ namespace ricaun.RevitTest.Application.Revit
                         }
                         return null;
                     }
-                    var testAssemblyModel = await RevitTask.Run((uiapp) =>
-                    {
-                        return ApsApplicationCheckTest();
-                    });
+                    var testAssemblyModel = await RevitTask.Run(ApsApplicationCheckTest);
 
                     if (testAssemblyModel is null)
                     {
