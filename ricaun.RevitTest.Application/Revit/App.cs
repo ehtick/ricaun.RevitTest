@@ -168,12 +168,23 @@ namespace ricaun.RevitTest.Application.Revit
 
                             if (ApsApplication.ApsApplication.IsConnected == true)
                             {
+                                var task = Task.Run(async () =>
+                                {
+                                    return await ApsApplication.ApsApplication.EnsureApsUserHaveOpenId();
+                                });
+                                var userHaveOpenId = task.GetAwaiter().GetResult();
+                                if (userHaveOpenId == false)
+                                {
+                                    var exceptionUserWithoutOpenId = new Exception($"The user was disconnected, reconnect the user to 'ricaun.Auth' and Autodesk Platform Service.");
+                                    return TestEngine.Fail(message.TestPathFile, exceptionUserWithoutOpenId, testFilterNames);
+                                }
+
                                 var revitLoginUserId = uiapp.Application.LoginUserId;
                                 var apsLoginUserId = ApsApplication.ApsApplication.LoginUserId;
                                 var isSameUserId = apsLoginUserId.Equals(revitLoginUserId);
-
                                 if (isSameUserId == false)
                                 {
+                                    Log.WriteLine($"ApsApplication: '{revitLoginUserId}' != '{apsLoginUserId}'");
                                     var exceptionDifferentLoginUserId = new Exception($"The user connected to Revit is different from the user connected to 'ricaun.Auth'.");
                                     return TestEngine.Fail(message.TestPathFile, exceptionDifferentLoginUserId, testFilterNames);
                                 }

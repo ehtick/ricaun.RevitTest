@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] / 2023-11-21
+### Features
+- Support `net7.0-windows` for Revit 2025.
+### Application
+- Add `EnsureApsUserHaveOpenId` to make sure `OpenId` has data.
+- Update `net7.0-windows` for Revit 2025.
+### Shared
+- Update `net6.0-windows` framework.
+
 ## [1.2.0] / 2023-10-28
 ### Features
 - Application works offline.
@@ -330,6 +339,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.2.1]: ../../compare/1.2.0...1.2.1
 [1.2.0]: ../../compare/1.1.3...1.2.0
 [1.1.3]: ../../compare/1.1.2...1.1.3
 [1.1.2]: ../../compare/1.1.1...1.1.2

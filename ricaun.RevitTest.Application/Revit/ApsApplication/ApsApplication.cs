@@ -1,6 +1,7 @@
 ﻿using ricaun.Aps;
 using ricaun.Aps.Extensions;
 using ricaun.Auth.Aps;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit.ApsApplication
@@ -21,12 +22,43 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
             if (IsConnected == false)
                 return string.Empty;
 
-            var data = ApsService.ApsClient?.GetAccessToken()?.GetDataBase();
-
+            var data = ApsService.ApsClient?.GetOpenIdData();
             if (data is null)
+            {
                 return string.Empty;
+            }
 
             return data.UserId;
+        }
+
+        public static async Task<bool> EnsureApsUserHaveOpenId()
+        {
+            if (IsConnected == false)
+                return false;
+
+            async Task DisconnectUser()
+            {
+                Debug.WriteLine($"EnsureApsUserHaveOpenId: Force to disconnect User.");
+                await Logout();
+            }
+
+            var tokenData = ApsService.ApsClient?.GetAccessToken()?.GetAccessTokenData();
+            if (tokenData is null)
+            {
+                Debug.WriteLine($"EnsureApsUserHaveOpenId: AccessTokenData is empty.");
+                await DisconnectUser();
+                return false;
+            }
+
+            var data = ApsService.ApsClient?.GetOpenIdData();
+            if (data is null)
+            {
+                Debug.WriteLine($"EnsureApsUserHaveOpenId: OpenIdData is empty.");
+                await DisconnectUser();
+                return false;
+            }
+
+            return true;
         }
         public static async Task Initialize()
         {
