@@ -1,10 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;net6</TargetFrameworks>
+    <TargetFrameworks>net45;net7</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
-    <EnableDynamicLoading Condition=" '$(TargetFramework)' == 'net6' ">true</EnableDynamicLoading>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(TargetFramework.StartsWith('net7'))">
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
   </PropertyGroup>
 
   <!-- Release -->
@@ -51,18 +56,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\NetFramework\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
+    <EmbeddedResource Update="Properties\NetFramework\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Compile Update="Properties\NetCore\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="Properties\NetCore\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup Condition="(!$(TargetFramework.StartsWith('net4')) and !$(Configuration.Contains('Debug')))">
+    <Compile Remove="Properties\NetFramework\**" />
+    <EmbeddedResource Remove="Properties\NetFramework\**" />
+    <None Remove="Properties\NetFramework\**" />
+  </ItemGroup>
+
+  <ItemGroup Condition="(!$(TargetFramework.StartsWith('net7')) and !$(Configuration.Contains('Debug')))">
+    <Compile Remove="Properties\NetCore\**" />
+    <EmbeddedResource Remove="Properties\NetCore\**" />
+    <None Remove="Properties\NetCore\**" />
   </ItemGroup>
 
   <PropertyGroup>

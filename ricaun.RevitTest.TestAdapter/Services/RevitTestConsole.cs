@@ -60,9 +60,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
             applicationPath = ValidadeApplication(application);
             if (applicationPath is null)
             {
-                var directory = ApplicationUtils.CreateTemporaryDirectory(Properties.Resources.ricaun_RevitTest_Console_Name);
-                var file = Path.Combine(directory, Properties.Resources.ricaun_RevitTest_Console_Name);
-                applicationPath = Properties.Resources.ricaun_RevitTest_Console.CopyToFile(file);
+                var name = ResourceConsoleUtils.Name;
+                var directory = ApplicationUtils.CreateTemporaryDirectory(name);
+                var file = Path.Combine(directory, name);
+                applicationPath = ResourceConsoleUtils.CopyToFile(file);
+                applicationPath = ValidadeApplication(applicationPath);
             }
             AdapterLogger.Logger.Info($"Application: {Path.GetFileName(applicationPath)}");
         }

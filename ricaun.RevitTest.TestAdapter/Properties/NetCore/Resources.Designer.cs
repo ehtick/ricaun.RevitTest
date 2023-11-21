@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ricaun.RevitTest.TestAdapter.Properties {
+namespace ricaun.RevitTest.TestAdapter.Properties.NetCore {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ricaun.RevitTest.TestAdapter.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ricaun.RevitTest.TestAdapter.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ricaun.RevitTest.TestAdapter.Properties.NetCore.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,12 @@ namespace ricaun.RevitTest.TestAdapter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ricaun.RevitTest.Console.zip.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static string ricaun_RevitTest_Console_Name {
+        internal static byte[] ricaun_RevitTest_Console {
             get {
-                return ResourceManager.GetString("ricaun_RevitTest_Console_Name", resourceCulture);
+                object obj = ResourceManager.GetObject("ricaun_RevitTest_Console", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

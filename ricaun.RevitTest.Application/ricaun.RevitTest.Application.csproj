@@ -13,6 +13,12 @@
     </Configurations>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(TargetFramework.StartsWith('net7'))">
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+
   <!-- RevitVersion -->
   <PropertyGroup>
     <TargetFrameworks>net46;net7.0-windows</TargetFrameworks>

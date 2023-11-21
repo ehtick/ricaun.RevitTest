@@ -44,6 +44,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
         internal static DTE GetDTE(int versionMax = 23, int versionMin = 9)
         {
+#if NETFRAMEWORK
             for (int i = versionMax; i >= versionMin; i--)
             {
                 try
@@ -58,6 +59,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                 }
                 catch { }
             }
+#endif
             return null;
         }
 
