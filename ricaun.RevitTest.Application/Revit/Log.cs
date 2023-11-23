@@ -78,7 +78,14 @@ namespace ricaun.RevitTest.Application.Revit
         {
             if (File.Exists(FilePath))
             {
-                Process.Start(FilePath);
+                try
+                {
+                    Process.Start(FilePath);
+                }
+                catch (Exception)
+                {
+                    Process.Start(new ProcessStartInfo("cmd", $"/c start {FilePath}"));
+                }
             }
         }
         #endregion

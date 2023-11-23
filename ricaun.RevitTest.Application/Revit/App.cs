@@ -133,6 +133,10 @@ namespace ricaun.RevitTest.Application.Revit
                             if (Autodesk.Revit.ApplicationServices.Application.IsLoggedIn == false)
                             {
                                 var exceptionNeedLoggedIn = new Exception("There is no user connected to Revit.");
+                                //#if DEBUG // NETCOREAPP && 
+                                //                                Log.WriteLine($"NetCore Preview: {exceptionNeedLoggedIn}");
+                                //                                return null;
+                                //#endif
                                 return TestEngine.Fail(message.TestPathFile, exceptionNeedLoggedIn, testFilterNames);
                             }
 

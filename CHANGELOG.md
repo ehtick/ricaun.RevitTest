@@ -4,11 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.2.1] / 2023-11-21
+## [1.2.1] / 2023-11-21 - 2023-11-22
 ### Features
 - Support `net7.0-windows` for Revit 2025.
 ### Application
-- Add `EnsureApsUserHaveOpenId` to make sure `OpenId` has data. - Not working
+- Add `EnsureApsUserHaveOpenId` to make sure `OpenId` has data. 
+- Disable `EnsureApsUserHaveOpenId`, not working `OpenId` is null after `Refresh`.
+- Update `OpenFile` in `Log`.
 - Update `net7.0-windows` for Revit 2025.
 - Update `csproj`.
 ### Shared
@@ -17,11 +19,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `net7.0-windows` framework.
 - Update `csproj`.
 - Update `MarshalUtils` in `net7.0`
+- Update `RevitTestUtils` with `hiddenRevitArgument`
 ### Build
 - Update `net48` and `net7.0-windows` console zip.
 ### TestAdapter
 - Select resource console zip for NetFramework and NetCore.
 - Update `ResourceConsoleUtils`
+- Update `RevitTestConsole` to remove `+` in FileInfo.
 ### Warning
 - Ignore `Newtonsoft.Json` warning in `Application` project.
 

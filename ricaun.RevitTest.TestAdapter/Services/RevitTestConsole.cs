@@ -46,7 +46,8 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 if (File.Exists(applicationNewPath))
                 {
                     var fileVersionInfo = FileVersionInfo.GetVersionInfo(applicationNewPath);
-                    var productVersion = $"{fileVersionInfo.ProductVersion}";
+                    AdapterLogger.Logger.DebugOnlyLocal($"Application FileVersionInfo: {fileVersionInfo}");
+                    var productVersion = $"{fileVersionInfo.ProductVersion.Split('+')[0]}";
                     AdapterLogger.Logger.Warning($"Application Process: {Path.GetFileName(applicationNewPath)} {productVersion}");
                     return applicationNewPath;
                 }

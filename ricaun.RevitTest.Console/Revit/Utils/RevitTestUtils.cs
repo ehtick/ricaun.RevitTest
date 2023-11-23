@@ -135,8 +135,9 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         if (revitInstallation.TryGetProcess(out Process process) == false || forceToOpenNewRevit)
                         {
                             var startRevitLanguageArgument = RevitLanguageUtils.GetArgument(forceLanguageToRevit);
+                            var hiddenRevitArgument = "/hosted";
                             Log.WriteLine($"{revitInstallation}: Start {startRevitLanguageArgument}");
-                            process = revitInstallation.Start(startRevitLanguageArgument);
+                            process = revitInstallation.Start(startRevitLanguageArgument + " " + hiddenRevitArgument);
                             //processStarted = true;
                         }
 
