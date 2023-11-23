@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 - Support `net7.0-windows` for Revit 2025.
 ### Application
-- Add `EnsureApsUserHaveOpenId` to make sure `OpenId` has data.
+- Add `EnsureApsUserHaveOpenId` to make sure `OpenId` has data. - Not working
 - Update `net7.0-windows` for Revit 2025.
 - Update `csproj`.
 ### Shared
@@ -16,11 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Console
 - Update `net7.0-windows` framework.
 - Update `csproj`.
+- Update `MarshalUtils` in `net7.0`
 ### Build
 - Update `net48` and `net7.0-windows` console zip.
 ### TestAdapter
 - Select resource console zip for NetFramework and NetCore.
 - Update `ResourceConsoleUtils`
+### Warning
+- Ignore `Newtonsoft.Json` warning in `Application` project.
 
 ## [1.2.0] / 2023-10-28
 ### Features

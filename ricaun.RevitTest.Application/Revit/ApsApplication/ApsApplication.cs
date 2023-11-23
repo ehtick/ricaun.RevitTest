@@ -25,7 +25,13 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
             var data = ApsService.ApsClient?.GetOpenIdData();
             if (data is null)
             {
-                return string.Empty;
+                Debug.WriteLine($"OpenIdData: is null.");
+                var tokenData = ApsService.ApsClient?.GetAccessToken()?.GetAccessTokenData();
+                if (tokenData is null)
+                {
+                    return string.Empty;
+                }
+                return tokenData.UserId;
             }
 
             return data.UserId;
@@ -36,27 +42,31 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
             if (IsConnected == false)
                 return false;
 
-            async Task DisconnectUser()
-            {
-                Debug.WriteLine($"EnsureApsUserHaveOpenId: Force to disconnect User.");
-                await Logout();
-            }
+            //async Task DisconnectUser()
+            //{
+            //    Debug.WriteLine($"EnsureApsUserHaveOpenId: Force to disconnect User.");
+            //    await Logout();
+            //}
 
             var tokenData = ApsService.ApsClient?.GetAccessToken()?.GetAccessTokenData();
             if (tokenData is null)
             {
                 Debug.WriteLine($"EnsureApsUserHaveOpenId: AccessTokenData is empty.");
-                await DisconnectUser();
-                return false;
+                //await DisconnectUser();
+                //return false;
             }
+
+            Debug.WriteLine($"AccessTokenData Timeout: {tokenData.Timeout()}.");
 
             var data = ApsService.ApsClient?.GetOpenIdData();
             if (data is null)
             {
                 Debug.WriteLine($"EnsureApsUserHaveOpenId: OpenIdData is empty.");
-                await DisconnectUser();
-                return false;
+                //await DisconnectUser();
+                //return false;
             }
+
+            await Task.Delay(0);
 
             return true;
         }

@@ -44,13 +44,12 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
         internal static DTE GetDTE(int versionMax = 23, int versionMin = 9)
         {
-#if NETFRAMEWORK
             for (int i = versionMax; i >= versionMin; i--)
             {
                 try
                 {
                     var objectDTE = $"VisualStudio.DTE.{i}.0";
-                    var dte = (DTE)System.Runtime.InteropServices.Marshal.GetActiveObject(objectDTE);
+                    var dte = GetActiveDTEObject(objectDTE);
                     if (dte is not null)
                     {
                         Debug.WriteLine($"DTE.Debugger: {objectDTE}");
@@ -59,8 +58,16 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                 }
                 catch { }
             }
-#endif
             return null;
+        }
+
+        private static DTE GetActiveDTEObject(string objectDTE)
+        {
+#if NETFRAMEWORK
+            return (DTE)System.Runtime.InteropServices.Marshal.GetActiveObject(objectDTE);
+#elif NETCOREAPP
+            return (DTE)MarshalUtils.GetActiveObject(objectDTE);
+#endif
         }
 
         public static string GetName()
@@ -74,5 +81,4 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             return string.Format("{0} {1}", dte.Name, dte.Version);
         }
     }
-
 }
