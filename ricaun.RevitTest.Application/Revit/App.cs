@@ -133,18 +133,33 @@ namespace ricaun.RevitTest.Application.Revit
                             if (Autodesk.Revit.ApplicationServices.Application.IsLoggedIn == false)
                             {
                                 var exceptionNeedLoggedIn = new Exception("There is no user connected to Revit.");
-                                //#if DEBUG // NETCOREAPP && 
-                                //                                Log.WriteLine($"NetCore Preview: {exceptionNeedLoggedIn}");
-                                //                                return null;
-                                //#endif
-                                return TestEngine.Fail(message.TestPathFile, exceptionNeedLoggedIn, testFilterNames);
+                                Log.WriteLine(exceptionNeedLoggedIn.Message);
+                                PipeTestServer.Update((response) =>
+                                {
+                                    response.Info = exceptionNeedLoggedIn.Message;
+                                });
+
+                                var isPreviewRelease = ApplicationPreviewUtils.IsPreviewRelease();
+                                if (isPreviewRelease)
+                                {
+                                    var previewReleaseMessage = "Preview Release allow Revit user not logged.";
+                                    Log.WriteLine(previewReleaseMessage);
+                                    PipeTestServer.Update((response) =>
+                                    {
+                                        response.Info = previewReleaseMessage;
+                                    });
+                                }
+                                else
+                                {
+                                    return TestEngine.Fail(message.TestPathFile, exceptionNeedLoggedIn, testFilterNames);
+                                }
                             }
 
                             if (ApsApplication.ApsApplication.IsConnected == false)
                             {
                                 PipeTestServer.Update((response) =>
                                 {
-                                    response.Info = "The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.";
+                                    response.Info = "The user is not connected with 'ricaun.Auth' and Autodesk Platform Service. 'ricaun.Auth' opened in Revit and waiting for the login...";
                                 });
 
                                 ApsApplication.ApsApplicationView.OpenApsView(true);
@@ -172,21 +187,28 @@ namespace ricaun.RevitTest.Application.Revit
 
                             if (ApsApplication.ApsApplication.IsConnected == true)
                             {
-                                var task = Task.Run(async () =>
-                                {
-                                    return await ApsApplication.ApsApplication.EnsureApsUserHaveOpenId();
-                                });
-                                var userHaveOpenId = task.GetAwaiter().GetResult();
-                                if (userHaveOpenId == false)
-                                {
-                                    var exceptionUserWithoutOpenId = new Exception($"The user was disconnected, reconnect the user to 'ricaun.Auth' and Autodesk Platform Service.");
-                                    return TestEngine.Fail(message.TestPathFile, exceptionUserWithoutOpenId, testFilterNames);
-                                }
+                                //var task = Task.Run(async () =>
+                                //{
+                                //    return await ApsApplication.ApsApplication.EnsureApsUserHaveOpenId();
+                                //});
+                                //var userHaveOpenId = task.GetAwaiter().GetResult();
+                                //if (userHaveOpenId == false)
+                                //{
+                                //    var exceptionUserWithoutOpenId = new Exception($"The user was disconnected, reconnect the user to 'ricaun.Auth' and Autodesk Platform Service.");
+                                //    return TestEngine.Fail(message.TestPathFile, exceptionUserWithoutOpenId, testFilterNames);
+                                //}
 
                                 var revitLoginUserId = uiapp.Application.LoginUserId;
                                 var apsLoginUserId = ApsApplication.ApsApplication.LoginUserId;
                                 var isSameUserId = apsLoginUserId.Equals(revitLoginUserId);
-                                if (isSameUserId == false)
+                                var isRevitLoginUserIdEmpty = string.IsNullOrEmpty(revitLoginUserId);
+
+                                if (isRevitLoginUserIdEmpty)
+                                {
+                                    Log.WriteLine($"Revit Login UserId is empty.");
+                                }
+
+                                if (isSameUserId == false && isRevitLoginUserIdEmpty == false)
                                 {
                                     Log.WriteLine($"ApsApplication: '{revitLoginUserId}' != '{apsLoginUserId}'");
                                     var exceptionDifferentLoginUserId = new Exception($"The user connected to Revit is different from the user connected to 'ricaun.Auth'.");

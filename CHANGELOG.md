@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `OpenFile` in `Log`.
 - Update `net7.0-windows` for Revit 2025.
 - Update `csproj`.
+- Add `ApplicationPreviewUtils` to enable know if Revit application is preview.
+- Enable run without `LoginUserId` when `IsPreviewRelease`.
 ### Shared
 - Update `net6.0-windows` framework.
 ### Console
