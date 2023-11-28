@@ -84,7 +84,8 @@ namespace ricaun.RevitTest.Application.Revit
                 }
                 catch (Exception)
                 {
-                    Process.Start(new ProcessStartInfo("cmd", $"/c start {FilePath}"));
+                    Process.Start(new ProcessStartInfo(FilePath) { UseShellExecute = true });
+                    //Process.Start(new ProcessStartInfo("cmd", $"/c start {FilePath}"));
                 }
             }
         }
