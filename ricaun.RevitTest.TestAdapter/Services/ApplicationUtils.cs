@@ -58,7 +58,10 @@ namespace ricaun.RevitTest.TestAdapter.Services
         public static bool Download(string address, out string temporaryDirectory)
         {
             temporaryDirectory = CreateTemporaryDirectory();
-            return Download(temporaryDirectory, address);
+            return Download(temporaryDirectory, address, (ex) =>
+            {
+                AdapterLogger.Logger.DebugOnlyLocal($"Download Exception: {ex.Message}");
+            });
         }
 
         /// <summary>
@@ -98,6 +101,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
                     if (File.Exists(address))
                     {
                         File.Copy(address, zipPath, true);
+                        AdapterLogger.Logger.DebugOnlyLocal($"Download File Exists: {address}");
                     }
                     else
                     {
@@ -109,6 +113,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
                                 await s.CopyToAsync(fs);
                             }
                         }
+                        AdapterLogger.Logger.DebugOnlyLocal($"Download File: {address}");
                     }
                     ExtractZipToDirectory(zipPath, applicationFolder);
                     result = true;

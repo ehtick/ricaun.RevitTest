@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `RevitTestConsole` to remove `+` in FileInfo.
 - Add `FileVersionInfoUtils` to remove `+` in FileInfo.
 - Update to `HttpClient`.
+- Update `RevitTestConsole` to use `HttpClient`.
+- Update `Log` to show download fail and the `ProductVersion`.
 ### Warning
 - Ignore `Newtonsoft.Json` warning in `Application` project.
 
