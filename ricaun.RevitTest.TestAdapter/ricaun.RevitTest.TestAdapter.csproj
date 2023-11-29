@@ -6,7 +6,7 @@
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('net7'))">
+  <PropertyGroup Condition="!$(TargetFramework.StartsWith('net4'))">
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateDependencyFile>false</GenerateDependencyFile>
@@ -92,7 +92,7 @@
     <None Remove="Properties\NetFramework\**" />
   </ItemGroup>
 
-  <ItemGroup Condition="(!$(TargetFramework.StartsWith('net7')) and !$(Configuration.Contains('Debug')))">
+  <ItemGroup Condition="($(TargetFramework.StartsWith('net4')) and !$(Configuration.Contains('Debug')))">
     <Compile Remove="Properties\NetCore\**" />
     <EmbeddedResource Remove="Properties\NetCore\**" />
     <None Remove="Properties\NetCore\**" />

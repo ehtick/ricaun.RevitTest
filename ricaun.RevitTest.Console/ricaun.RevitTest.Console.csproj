@@ -8,7 +8,7 @@
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(TargetFramework.StartsWith('net7'))">
+  <PropertyGroup Condition="!$(TargetFramework.StartsWith('net4'))">
     <EnableDynamicLoading>false</EnableDynamicLoading>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <GenerateDependencyFile>false</GenerateDependencyFile>
