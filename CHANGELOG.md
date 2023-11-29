@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `csproj`.
 - Add `ApplicationPreviewUtils` to enable know if Revit application is preview.
 - Enable run without `LoginUserId` when `IsPreviewRelease`.
+- Update `ricaun.Revit.UI`
+- Update `RibbonUtils` with updated `ricaun.Revit.UI`
 ### Shared
 - Update `net6.0-windows` framework.
 ### Console
@@ -29,6 +31,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ResourceConsoleUtils`
 - Update `RevitTestConsole` to remove `+` in FileInfo.
 - Add `FileVersionInfoUtils` to remove `+` in FileInfo.
+- Update to `HttpClient`.
 ### Warning
 - Ignore `Newtonsoft.Json` warning in `Application` project.
 
