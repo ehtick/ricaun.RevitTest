@@ -60,7 +60,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             temporaryDirectory = CreateTemporaryDirectory();
             return Download(temporaryDirectory, address, (ex) =>
             {
-                AdapterLogger.Logger.DebugOnlyLocal($"Download Exception: {ex.Message}");
+                AdapterLogger.Logger.Warning($"Download {ex.GetType().Name}: {ex.Message}");
             });
         }
 
