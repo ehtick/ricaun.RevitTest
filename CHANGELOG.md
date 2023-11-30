@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Build
 - Update `net48` and `net7.0-windows` console zip.
 ### TestAdapter
+- Update `TestAdapter` to `net6.0`
 - Select resource console zip for NetFramework and NetCore.
 - Update `ResourceConsoleUtils`
 - Update `RevitTestConsole` to remove `+` in FileInfo.

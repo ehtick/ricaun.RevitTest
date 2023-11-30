@@ -13,7 +13,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
         public static string CopyToFile(string file)
         {
-#if NET7_0_OR_GREATER
+#if NETCOREAPP
             return Properties.NetCore.Resources.ricaun_RevitTest_Console.CopyToFile(file);
 #elif NETFRAMEWORK
             return Properties.NetFramework.Resources.ricaun_RevitTest_Console.CopyToFile(file);

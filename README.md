@@ -52,7 +52,7 @@ flowchart LR
 * [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
 * [ricaun.Revit.UI](https://github.com/ricaun-io/ricaun.Revit.UI)
 * [ricaun.Revit.Async](https://github.com/ricaun-io/ricaun.Revit.Async)
-* [ricaun.Auth](https://github.com/ricaun-io/ricaun.Auth)
+* [ricaun.Auth.Aps.UI](https://github.com/ricaun-io/ricaun.Auth)
 * [Revit.Busy](https://github.com/ricaun-io/Revit.Busy)
 * [ricaun.RevitTest.Shared](ricaun.RevitTest.Shared)
 #### Console
