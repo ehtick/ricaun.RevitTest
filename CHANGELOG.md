@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `net7.0-windows` framework.
 - Update `csproj`.
 - Update `MarshalUtils` in `net7.0`
-- Update `RevitTestUtils` with `hiddenRevitArgument`
+- Update `RevitTestUtils` with no `hiddenRevitArgument`, use `NUnit.Language` to add extra arguments to open Revit.
 ### Build
 - Update `net48` and `net7.0-windows` console zip.
 ### TestAdapter

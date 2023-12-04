@@ -131,14 +131,12 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                     if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallation))
                     {
                         Log.WriteLine(revitInstallation);
-                        //var processStarted = false;
+
                         if (revitInstallation.TryGetProcess(out Process process) == false || forceToOpenNewRevit)
                         {
                             var startRevitLanguageArgument = RevitLanguageUtils.GetArgument(forceLanguageToRevit);
-                            var hiddenRevitArgument = "/hosted";
                             Log.WriteLine($"{revitInstallation}: Start {startRevitLanguageArgument}");
-                            process = revitInstallation.Start(startRevitLanguageArgument + " " + hiddenRevitArgument);
-                            //processStarted = true;
+                            process = revitInstallation.Start(startRevitLanguageArgument);
                         }
 
                         var client = new PipeTestClient(process);
