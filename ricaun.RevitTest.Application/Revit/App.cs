@@ -324,8 +324,9 @@ namespace ricaun.RevitTest.Application.Revit
 
             var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandApsView>("ricaun.Auth")
                 .SetToolTip("Open dialog to Login/Logout with Autodesk Platform Service.");
-            ribbonPanel.GetRibbonPanel().Source.DialogLauncher = ribbon.GetRibbonItem<Autodesk.Windows.RibbonCommandItem>();
-            ribbonPanel.Remove(ribbon);
+            //ribbonPanel.GetRibbonPanel().Source.DialogLauncher = ribbon.GetRibbonItem<Autodesk.Windows.RibbonCommandItem>();
+            //ribbonPanel.Remove(ribbon);
+            ribbonPanel.SetDialogLauncher(ribbon);
 
             UpdateLargeImageBusy(ribbonItem, RevitBusyService);
 
