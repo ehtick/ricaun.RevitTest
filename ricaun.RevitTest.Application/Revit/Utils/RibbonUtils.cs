@@ -13,10 +13,5 @@ namespace ricaun.RevitTest.Application.Revit
         {
             return string.Format("Images/{0}.ico", imageName);
         }
-        static string GetComponentImagePack(string imageName)
-        {
-            var assemblyName = Assembly.GetCallingAssembly().GetName().Name;
-            return string.Format("pack://application:,,,/{0};component/Images/{1}.png", assemblyName, imageName);
-        }
     }
 }
