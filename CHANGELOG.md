@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Enable run without `LoginUserId` when `IsPreviewRelease`.
 - Update `ricaun.Revit.UI`
 - Update `RibbonUtils` with updated `ricaun.Revit.UI`
+- Update images to `ico`.
 ### Shared
 - Update `net6.0-windows` framework.
 ### Console
