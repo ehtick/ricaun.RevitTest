@@ -319,7 +319,8 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonPanel.Title = "ricaun";
             ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
             ribbonItem.SetContextualHelp("https://ricaun.com")
-                .SetToolTip("Open RevitTest.log File");
+                .SetToolTip("Open RevitTest.log File")
+                .SetLargeImage(RibbonUtils.RevitTest);
 
             var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandApsView>("ricaun.Auth")
                 .SetToolTip("Open dialog to Login/Logout with Autodesk Platform Service.");

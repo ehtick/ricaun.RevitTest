@@ -4,13 +4,14 @@ namespace ricaun.RevitTest.Application.Revit
 {
     public static class RibbonUtils
     {
+        public static string RevitTest { get; } = GetComponentImage("test-pass");
         public static string TestPass { get; } = GetComponentImage("test-pass");
         public static string TestFail { get; } = GetComponentImage("test-fail");
         public static string TestSkip { get; } = GetComponentImage("test-skip");
         public static string TestWait { get; } = GetComponentImage("test-wait");
         public static string GetComponentImage(string imageName)
         {
-            return string.Format("Images/{0}.png", imageName);
+            return string.Format("Images/{0}.ico", imageName);
         }
         static string GetComponentImagePack(string imageName)
         {

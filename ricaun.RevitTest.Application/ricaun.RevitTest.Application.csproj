@@ -89,16 +89,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\test-fail.png" />
-    <None Remove="Images\test-pass.png" />
-    <None Remove="Images\test-skip.png" />
-    <None Remove="Images\test-wait.png" />
+    <None Remove="Images\test-fail.ico" />
+    <None Remove="Images\test-pass.ico" />
+    <None Remove="Images\test-skip.ico" />
+    <None Remove="Images\test-wait.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Revit.Busy" Version="*" />
     <PackageReference Include="ricaun.Auth.Aps.UI" Version="*" />
-    <PackageReference Include="ricaun.Revit.UI" Version="*-*" />
+    <PackageReference Include="ricaun.Revit.UI" Version="*" />
     <PackageReference Include="ricaun.Revit.Async" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
     <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
@@ -149,10 +149,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\test-fail.png" />
-    <Resource Include="Images\test-pass.png" />
-    <Resource Include="Images\test-skip.png" />
-    <Resource Include="Images\test-wait.png" />
+    <Resource Include="Images\test-fail.ico" />
+    <Resource Include="Images\test-pass.ico" />
+    <Resource Include="Images\test-skip.ico" />
+    <Resource Include="Images\test-wait.ico" />
   </ItemGroup>
 
 </Project>
