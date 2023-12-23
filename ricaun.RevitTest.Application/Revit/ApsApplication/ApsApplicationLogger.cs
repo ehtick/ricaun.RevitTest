@@ -8,7 +8,8 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
     public static class ApsApplicationLogger
     {
-        private const string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/logger/{0}";
+        //private const string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/logger/{0}";
+        private const string requestUri = "https://ricaun.com/aps/v1/logger/{0}";
 
         public static async Task<string> Log(string type, string message, int appCount = 1)
         {
