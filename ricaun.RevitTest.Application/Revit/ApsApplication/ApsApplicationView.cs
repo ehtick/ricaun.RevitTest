@@ -31,6 +31,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                     Debug.WriteLine($"ApsView: {typeof(ApsView).Assembly}");
 
                     apsView = new ApsView(Autodesk.Windows.ComponentManager.ApplicationWindow);
+                    apsView.SetAppName("RevitTest");
                     apsView.SetApsConfiguration(apsService);
                     apsView.Closed += (s, e) => { apsService?.Dispose(); };
                     apsView.Closed += (s, e) => { apsView = null; };

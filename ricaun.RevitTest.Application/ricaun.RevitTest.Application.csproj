@@ -97,7 +97,7 @@
 
   <ItemGroup>
     <PackageReference Include="Revit.Busy" Version="*" />
-    <PackageReference Include="ricaun.Auth.Aps.UI" Version="*" />
+    <PackageReference Include="ricaun.Auth.Aps.UI" Version="*-*" />
     <PackageReference Include="ricaun.Revit.UI" Version="*" />
     <PackageReference Include="ricaun.Revit.Async" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />

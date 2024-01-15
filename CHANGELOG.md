@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ricaun.Revit.UI`
 - Update `RibbonUtils` with updated `ricaun.Revit.UI`
 - Update images to `ico`.
+- Update `ricaun.Auth` to beta - `LicenseAgreement` enable.
 ### Shared
 - Update `net6.0-windows` framework.
 ### Console
