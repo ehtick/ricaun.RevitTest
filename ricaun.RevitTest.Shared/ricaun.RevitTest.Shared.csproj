@@ -9,7 +9,7 @@
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Configurations>Debug; Release</Configurations>
-    <TargetFrameworks>net46;net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net46;net6.0-windows;net8.0-windows</TargetFrameworks>
   </PropertyGroup>
 
   <!-- Release -->
@@ -64,7 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
+    <PackageReference Include="NamedPipeWrapper.Json" Version="*-*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
   </ItemGroup>
 

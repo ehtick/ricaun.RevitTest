@@ -101,7 +101,6 @@
     <PackageReference Include="ricaun.Revit.UI" Version="*" />
     <PackageReference Include="ricaun.Revit.Async" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
-    <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
   </ItemGroup>
 
   <ItemGroup>

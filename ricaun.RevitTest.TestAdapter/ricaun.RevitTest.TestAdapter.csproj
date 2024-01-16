@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;net6</TargetFrameworks>
+    <TargetFrameworks>net45;net6;net8</TargetFrameworks>
     <LangVersion>Latest</LangVersion>
     <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>

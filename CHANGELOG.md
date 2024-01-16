@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ricaun.Auth` to beta - `LicenseAgreement` enable.
 ### Shared
 - Update `net6.0-windows` framework.
+- Update support `net8.0-windows` framework.
 ### Console
 - Update `net7.0-windows` framework.
 - Update `csproj`.
