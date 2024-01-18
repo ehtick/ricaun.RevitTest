@@ -4,14 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.2.1] / 2023-11-21 - 2023-11-22
+## [1.2.1] / 2023-11-21 - 2024-01-18
 ### Features
-- Support `net7.0-windows` for Revit 2025.
+- Support `net8.0-windows` for Revit 2025.
 ### Application
 - Add `EnsureApsUserHaveOpenId` to make sure `OpenId` has data. 
 - Disable `EnsureApsUserHaveOpenId`, not working `OpenId` is null after `Refresh`.
 - Update `OpenFile` in `Log` with `UseShellExecute=true`.
-- Update `net7.0-windows` for Revit 2025.
+- Update `net8.0-windows` for Revit 2025.
 - Update `csproj`.
 - Add `ApplicationPreviewUtils` to enable know if Revit application is preview.
 - Enable run without `LoginUserId` when `IsPreviewRelease`.
@@ -23,14 +23,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `net6.0-windows` framework.
 - Update support `net8.0-windows` framework.
 ### Console
-- Update `net7.0-windows` framework.
+- Update `net8.0-windows` framework.
 - Update `csproj`.
 - Update `MarshalUtils` in `net7.0`
 - Update `RevitTestUtils` with no `hiddenRevitArgument`, use `NUnit.Language` to add extra arguments to open Revit.
 ### Build
-- Update `net48` and `net7.0-windows` console zip.
+- Update `net48` and `net8.0-windows` console zip.
 ### TestAdapter
-- Update `TestAdapter` to `net6.0`
+- Update `TestAdapter` to `net6.0` and `net8.0`
 - Select resource console zip for NetFramework and NetCore.
 - Update `ResourceConsoleUtils`
 - Update `RevitTestConsole` to remove `+` in FileInfo.
