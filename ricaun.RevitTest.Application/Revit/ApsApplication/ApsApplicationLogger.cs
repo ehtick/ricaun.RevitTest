@@ -73,22 +73,4 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         public string message { get; set; }
     }
 
-    public class ApsResponse
-    {
-        public string userId { get; set; }
-        public string appId { get; set; }
-        public bool isValid { get; set; }
-        public string message { get; set; }
-
-        public OtherResponse[] Other { get; set; }
-        public class OtherResponse
-        {
-            public string Url { get; set; }
-            public string Text { get; set; }
-        }
-        public override string ToString()
-        {
-            return $"[{userId}] {appId} {isValid} {message}";
-        }
-    }
 }
