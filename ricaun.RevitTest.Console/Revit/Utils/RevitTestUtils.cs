@@ -23,6 +23,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         private const int RevitMaxVersionReference = 2023;
 
         private const int SleepMillisecondsBeforeFinish = 1000;
+        private const int SleepMillisecondsDebuggerAttached = 1000;
 
         /// <summary>
         /// Get Test Full Names using RevitInstallation if needed (Revit +2021)
@@ -216,6 +217,8 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                 i = 0;
                                 Log.WriteLine($"{revitInstallation}: TestFile: {Path.GetFileName(fileToTest)} TestFilters:{testFilters.ToJson()}");
                                 process.AttachDTE();
+                                if (DebuggerUtils.IsDebuggerAttached) Thread.Sleep(SleepMillisecondsDebuggerAttached);
+
                                 client.Update((request) =>
                                 {
                                     request.TestFilters = testFilters;
@@ -232,6 +235,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         //    processStarted = true;
 
                         process.DetachDTE();
+                        if (DebuggerUtils.IsDebuggerAttached) Thread.Sleep(SleepMillisecondsDebuggerAttached);
 
                         if (forceToCloseRevit)
                         {

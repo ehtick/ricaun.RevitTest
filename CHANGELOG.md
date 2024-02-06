@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `RibbonUtils` with updated `ricaun.Revit.UI`
 - Update images to `ico`.
 - Update `ricaun.Auth` to beta - `LicenseAgreement` enable.
+- Add `ApsApplicationPipeTest` class.
 ### Shared
 - Update `net6.0-windows` framework.
 - Update support `net8.0-windows` framework.
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `csproj`.
 - Update `MarshalUtils` in `net7.0`
 - Update `RevitTestUtils` with no `hiddenRevitArgument`, use `NUnit.Language` to add extra arguments to open Revit.
+- Add `SleepMillisecondsDebuggerAttached` to wait for debugger.
 ### Build
 - Update `net48` and `net8.0-windows` console zip.
 ### TestAdapter

@@ -17,7 +17,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         public static ApsService ApsService;
         public static bool IsConnected => ApsService?.IsConnected ?? false;
         public static string LoginUserId => GetLoginUserId();
-        public static string GetLoginUserId()
+        private static string GetLoginUserId()
         {
             if (IsConnected == false)
                 return string.Empty;
