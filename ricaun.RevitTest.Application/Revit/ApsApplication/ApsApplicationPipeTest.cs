@@ -68,20 +68,20 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                     return TestEngine.Fail(testPathFile, exceptionNeedAuth, testFilterNames);
                 }
 
-                // Validation Aps Application
-                if (ApsApplication.IsConnected == true)
-                {
-                    var task = Task.Run(async () =>
-                    {
-                        return await ApsApplicationCheck.Check();
-                    });
-                    var apsResponse = task.GetAwaiter().GetResult();
-                    if (apsResponse is not null && apsResponse.isValid == false)
-                    {
-                        var exceptionNotValid = new Exception($"The user is not valid, {apsResponse?.message}");
-                        return TestEngine.Fail(testPathFile, exceptionNotValid, testFilterNames);
-                    }
-                }
+                //// Validation Aps Application Check
+                //if (ApsApplication.IsConnected == true)
+                //{
+                //    var task = Task.Run(async () =>
+                //    {
+                //        return await ApsApplicationCheck.Check();
+                //    });
+                //    var apsResponse = task.GetAwaiter().GetResult();
+                //    if (apsResponse is not null && apsResponse.isValid == false)
+                //    {
+                //        var exceptionNotValid = new Exception($"The user is not valid, {apsResponse?.message}");
+                //        return TestEngine.Fail(testPathFile, exceptionNotValid, testFilterNames);
+                //    }
+                //}
 
                 // Validate the Aps User is equals to the Revit User
                 if (ApsApplication.IsConnected == true)

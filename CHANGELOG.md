@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.2.1] / 2023-11-21 - 2024-01-18
+## [1.2.1] / 2023-11-21 - 2024-02-06
 ### Features
 - Support `net8.0-windows` for Revit 2025.
 ### Application
@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update images to `ico`.
 - Update `ricaun.Auth` to beta - `LicenseAgreement` enable.
 - Add `ApsApplicationPipeTest` class.
+- Remove `ApsApplicationCheck`
 ### Shared
 - Update `net6.0-windows` framework.
 - Update support `net8.0-windows` framework.
