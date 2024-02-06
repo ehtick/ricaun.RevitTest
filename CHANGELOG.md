@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `RevitTestConsole` to use `HttpClient`.
 - Update `Log` to show download fail and the `ProductVersion`.
 - Update `Download` exception to Warning.
+- Add `EncodeParameterArgumentExtension` to fix `[TestCase(@"C:\help.pdf")]` issue. (Fix #36)
 ### Warning
 - Ignore `Newtonsoft.Json` warning in `Application` project.
 

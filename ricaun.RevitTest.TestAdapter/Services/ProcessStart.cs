@@ -24,9 +24,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             {
                 if (value is string valueString)
                 {
-                    valueString = valueString.Replace("\\", "\\\\");
-                    value = valueString.Replace("\"", "\\\"");
-                    return $"\"{value}\"";
+                    return valueString.EncodeParameterArgument();
                 }
                 else if (value is IEnumerable enumerable)
                 {

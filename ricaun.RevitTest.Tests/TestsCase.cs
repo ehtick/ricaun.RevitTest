@@ -21,10 +21,16 @@ namespace ricaun.RevitTest.Tests
         [TestCase("/")]
         [TestCase("\\")]
         [TestCase("\"")]
+        [TestCase("\"\"")]
         //[TestCase("\n")]
         [TestCase(".")]
         [TestCase(",")]
         [TestCase("°C")]
+        [TestCase("a\\a")]
+        [TestCase("\\a")]
+        [TestCase("\\\\")]
+        [TestCase("\\\\b")]
+        [TestCase(@"C:\help.pdf")]
         public void TestStringCase_IsNot(string value)
         {
             Console.WriteLine(value);
