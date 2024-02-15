@@ -48,7 +48,7 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
             }
             catch (Exception ex)
             {
-                AdapterLogger.Logger.Info($"Metadata: {ex}", 0);
+                AdapterLogger.Logger.InfoAny($"Metadata: {ex}");
             }
         }
     }

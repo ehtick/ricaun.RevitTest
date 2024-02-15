@@ -4,6 +4,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] / 2023-11-21 - 2024-02-06
+### Features
+- Support `net8.0-windows` for Revit 2025.
+### Application
+- Add `EnsureApsUserHaveOpenId` to make sure `OpenId` has data. 
+- Disable `EnsureApsUserHaveOpenId`, not working `OpenId` is null after `Refresh`.
+- Update `OpenFile` in `Log` with `UseShellExecute=true`.
+- Update `net8.0-windows` for Revit 2025.
+- Update `csproj`.
+- Add `ApplicationPreviewUtils` to enable know if Revit application is preview.
+- Enable run without `LoginUserId` when `IsPreviewRelease`.
+- Update `ricaun.Revit.UI`
+- Update `RibbonUtils` with updated `ricaun.Revit.UI`
+- Update images to `ico`.
+- Update `ricaun.Auth` to beta - `LicenseAgreement` enable.
+- Add `ApsApplicationPipeTest` class.
+- Remove `ApsApplicationCheck`
+### Shared
+- Update `net6.0-windows` framework.
+- Update support `net8.0-windows` framework.
+### Console
+- Update `net8.0-windows` framework.
+- Update `csproj`.
+- Update `MarshalUtils` in `net7.0`
+- Update `RevitTestUtils` with no `hiddenRevitArgument`, use `NUnit.Language` to add extra arguments to open Revit.
+- Add `SleepMillisecondsDebuggerAttached` to wait for debugger.
+### Build
+- Update `net48` and `net8.0-windows` console zip.
+### TestAdapter
+- Update `TestAdapter` to `net6.0` and `net8.0`
+- Select resource console zip for NetFramework and NetCore.
+- Update `ResourceConsoleUtils`
+- Update `RevitTestConsole` to remove `+` in FileInfo.
+- Add `FileVersionInfoUtils` to remove `+` in FileInfo.
+- Update to `HttpClient`.
+- Update `RevitTestConsole` to use `HttpClient`.
+- Update `Log` to show download fail and the `ProductVersion`.
+- Update `Download` exception to Warning.
+- Add `EncodeParameterArgumentExtension` to fix `[TestCase(@"C:\help.pdf")]` issue. (Fix #36)
+### Warning
+- Ignore `Newtonsoft.Json` warning in `Application` project.
+
 ## [1.2.0] / 2023-10-28
 ### Features
 - Application works offline.
@@ -330,6 +372,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.2.1]: ../../compare/1.2.0...1.2.1
 [1.2.0]: ../../compare/1.1.3...1.2.0
 [1.1.3]: ../../compare/1.1.2...1.1.3
 [1.1.2]: ../../compare/1.1.1...1.1.2

@@ -168,5 +168,10 @@ namespace ricaun.RevitTest.TestAdapter
         {
             logger.Warning($"\tDEBUG: {message}");
         }
+
+        internal static void InfoAny(this ITestLogger logger, string message)
+        {
+            logger.Info(message, 0);
+        }
     }
 }

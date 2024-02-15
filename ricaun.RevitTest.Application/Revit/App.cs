@@ -126,66 +126,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Tests = null;
                     });
 
-                    TestAssemblyModel ApsApplicationCheckTest(UIApplication uiapp)
-                    {
-                        try
-                        {
-                            if (Autodesk.Revit.ApplicationServices.Application.IsLoggedIn == false)
-                            {
-                                var exceptionNeedLoggedIn = new Exception("There is no user connected to Revit.");
-                                return TestEngine.Fail(message.TestPathFile, exceptionNeedLoggedIn, testFilterNames);
-                            }
-
-                            if (ApsApplication.ApsApplication.IsConnected == false)
-                            {
-                                PipeTestServer.Update((response) =>
-                                {
-                                    response.Info = "The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.";
-                                });
-
-                                ApsApplication.ApsApplicationView.OpenApsView(true);
-                            }
-
-                            if (ApsApplication.ApsApplication.IsConnected == false)
-                            {
-                                var exceptionNeedAuth = new Exception("The user is not connected with 'ricaun.Auth' and Autodesk Platform Service.");
-                                return TestEngine.Fail(message.TestPathFile, exceptionNeedAuth, testFilterNames);
-                            }
-
-                            if (ApsApplication.ApsApplication.IsConnected == true)
-                            {
-                                var task = Task.Run(async () =>
-                                {
-                                    return await ApsApplicationCheck.Check();
-                                });
-                                var apsResponse = task.GetAwaiter().GetResult();
-                                if (apsResponse is not null && apsResponse.isValid == false)
-                                {
-                                    var exceptionNotValid = new Exception($"The user is not valid, {apsResponse?.message}");
-                                    return TestEngine.Fail(message.TestPathFile, exceptionNotValid, testFilterNames);
-                                }
-                            }
-
-                            if (ApsApplication.ApsApplication.IsConnected == true)
-                            {
-                                var revitLoginUserId = uiapp.Application.LoginUserId;
-                                var apsLoginUserId = ApsApplication.ApsApplication.LoginUserId;
-                                var isSameUserId = apsLoginUserId.Equals(revitLoginUserId);
-
-                                if (isSameUserId == false)
-                                {
-                                    var exceptionDifferentLoginUserId = new Exception($"The user connected to Revit is different from the user connected to 'ricaun.Auth'.");
-                                    return TestEngine.Fail(message.TestPathFile, exceptionDifferentLoginUserId, testFilterNames);
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine(ex);
-                        }
-                        return null;
-                    }
-                    var testAssemblyModel = await RevitTask.Run(ApsApplicationCheckTest);
+                    var testAssemblyModel = await RevitTask.Run((uiapp) => ApsApplicationPipeTest.ApsApplicationCheckTest(uiapp, PipeTestServer, message));
 
                     if (testAssemblyModel is null)
                     {
@@ -282,12 +223,12 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonPanel.Title = "ricaun";
             ribbonItem = ribbonPanel.CreatePushButton<Commands.Command>("RevitTest");
             ribbonItem.SetContextualHelp("https://ricaun.com")
-                .SetToolTip("Open RevitTest.log File");
+                .SetToolTip("Open RevitTest.log File")
+                .SetLargeImage(RibbonUtils.RevitTest);
 
             var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandApsView>("ricaun.Auth")
                 .SetToolTip("Open dialog to Login/Logout with Autodesk Platform Service.");
-            ribbonPanel.GetRibbonPanel().Source.DialogLauncher = ribbon.GetRibbonItem<Autodesk.Windows.RibbonCommandItem>();
-            ribbonPanel.Remove(ribbon);
+            ribbonPanel.SetDialogLauncher(ribbon);
 
             UpdateLargeImageBusy(ribbonItem, RevitBusyService);
 

@@ -8,7 +8,8 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
     public static class ApsApplicationLogger
     {
-        private const string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/logger/{0}";
+        //private const string requestUri = "https://ricaun-aps-application.web.app/api/v1/aps/logger/{0}";
+        private const string requestUri = "https://ricaun.com/aps/v1/logger/{0}";
 
         public static async Task<string> Log(string type, string message, int appCount = 1)
         {
@@ -72,22 +73,4 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         public string message { get; set; }
     }
 
-    public class ApsResponse
-    {
-        public string userId { get; set; }
-        public string appId { get; set; }
-        public bool isValid { get; set; }
-        public string message { get; set; }
-
-        public OtherResponse[] Other { get; set; }
-        public class OtherResponse
-        {
-            public string Url { get; set; }
-            public string Text { get; set; }
-        }
-        public override string ToString()
-        {
-            return $"[{userId}] {appId} {isValid} {message}";
-        }
-    }
 }

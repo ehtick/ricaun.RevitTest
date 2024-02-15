@@ -117,7 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ricaun_RevitTest_Console_Name" xml:space="preserve">
-    <value>ricaun.RevitTest.Console.zip</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ricaun_RevitTest_Console" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\..\Resources\net8.0-windows\ricaun.RevitTest.Console.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

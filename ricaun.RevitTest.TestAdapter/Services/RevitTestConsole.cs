@@ -32,10 +32,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
             if (string.IsNullOrWhiteSpace(applicationPath))
                 return null;
 
-            AdapterLogger.Logger.Info($"Application: {Path.GetFileName(applicationPath)}", 0);
+            AdapterLogger.Logger.InfoAny($"Application: {Path.GetFileName(applicationPath)}");
 
             applicationPath = GetEnvironmentVariable(applicationPath);
 
+            AdapterLogger.Logger.DebugOnlyLocal($"Application Environment: {applicationPath}");
             if (ApplicationUtils.Download(applicationPath, out string directory))
             {
                 AdapterLogger.Logger.Info($"Application Download: {Path.GetFileName(applicationPath)}");
@@ -46,12 +47,14 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 if (File.Exists(applicationNewPath))
                 {
                     var fileVersionInfo = FileVersionInfo.GetVersionInfo(applicationNewPath);
-                    var productVersion = $"{fileVersionInfo.ProductVersion}";
-                    AdapterLogger.Logger.Warning($"Application Process: {Path.GetFileName(applicationNewPath)} {productVersion}");
+                    AdapterLogger.Logger.DebugOnlyLocal($"Application FileVersionInfo: {fileVersionInfo}");
+                    var productVersion = fileVersionInfo.GetSafeProductVersion();
+                    AdapterLogger.Logger.Info($"Application Process: {Path.GetFileName(applicationNewPath)} {productVersion}");
                     return applicationNewPath;
                 }
             }
 
+            AdapterLogger.Logger.Info($"Application Download: Fail");
             return null;
         }
 
@@ -60,9 +63,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
             applicationPath = ValidadeApplication(application);
             if (applicationPath is null)
             {
-                var directory = ApplicationUtils.CreateTemporaryDirectory(Properties.Resources.ricaun_RevitTest_Console_Name);
-                var file = Path.Combine(directory, Properties.Resources.ricaun_RevitTest_Console_Name);
-                applicationPath = Properties.Resources.ricaun_RevitTest_Console.CopyToFile(file);
+                var name = ResourceConsoleUtils.Name;
+                var directory = ApplicationUtils.CreateTemporaryDirectory(name);
+                var file = Path.Combine(directory, name);
+                applicationPath = ResourceConsoleUtils.CopyToFile(file);
+                applicationPath = ValidadeApplication(applicationPath);
             }
             AdapterLogger.Logger.Info($"Application: {Path.GetFileName(applicationPath)}");
         }

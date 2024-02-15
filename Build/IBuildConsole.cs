@@ -41,7 +41,13 @@ public interface IBuildConsole : IHazExample, IRevitPackageBuilder
                 {
                     var resourcesDirectory = projectTestAdapter.Directory / "Resources";
                     Serilog.Log.Information($"Copy Exe: {file} to {resourcesDirectory}");
-                    FileSystemTasks.CopyFileToDirectory(file, resourcesDirectory, FileExistsPolicy.OverwriteIfNewer);
+
+                    var directory = file.Parent;
+                    var resourceNet = resourcesDirectory / directory.Name;
+                    resourceNet.DeleteDirectory();
+
+                    var zipPath = resourceNet / file.Name;
+                    ZipExtension.CreateFromDirectory(directory, zipPath);
                 });
 
             Solution.BuildProject(projectTestAdapter, (project) =>

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Services
@@ -57,7 +58,10 @@ namespace ricaun.RevitTest.TestAdapter.Services
         public static bool Download(string address, out string temporaryDirectory)
         {
             temporaryDirectory = CreateTemporaryDirectory();
-            return Download(temporaryDirectory, address);
+            return Download(temporaryDirectory, address, (ex) =>
+            {
+                AdapterLogger.Logger.Warning($"Download {ex.GetType().Name}: {ex.Message}");
+            });
         }
 
         /// <summary>
@@ -89,6 +93,56 @@ namespace ricaun.RevitTest.TestAdapter.Services
             var zipPath = Path.Combine(applicationFolder, fileName);
             var result = false;
 
+            using (var client = new HttpClient())
+            {
+                System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
+                try
+                {
+                    if (File.Exists(address))
+                    {
+                        File.Copy(address, zipPath, true);
+                        AdapterLogger.Logger.DebugOnlyLocal($"Download File Exists: {address}");
+                    }
+                    else
+                    {
+                        client.DefaultRequestHeaders.Add("User-Agent", nameof(ApplicationUtils));
+                        using (var s = await client.GetStreamAsync(address))
+                        {
+                            using (var fs = new FileStream(zipPath, FileMode.Create))
+                            {
+                                await s.CopyToAsync(fs);
+                            }
+                        }
+                        AdapterLogger.Logger.DebugOnlyLocal($"Download File: {address}");
+                    }
+                    ExtractZipToDirectory(zipPath, applicationFolder);
+                    result = true;
+                }
+                catch (Exception ex)
+                {
+                    downloadFileException?.Invoke(ex);
+                }
+                if (Path.GetExtension(zipPath) == ZIP_FILE_EXTENSION)
+                    if (File.Exists(zipPath)) File.Delete(zipPath);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Download and unzip Application Async
+        /// </summary>
+        /// <param name="applicationFolder">Folder of the Application</param>
+        /// <param name="address"></param>
+        /// <param name="downloadFileException"></param>
+        /// <returns></returns>
+        public static async Task<bool> DownloadAsyncWeb(string applicationFolder, string address, Action<Exception> downloadFileException = null)
+        {
+            var fileName = Path.GetFileName(address);
+            var zipPath = Path.Combine(applicationFolder, fileName);
+            var result = false;
+
+#pragma warning disable SYSLIB0014 // Type or member is obsolete
             using (var client = new WebClient())
             {
                 System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
@@ -106,6 +160,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 if (Path.GetExtension(zipPath) == ZIP_FILE_EXTENSION)
                     if (File.Exists(zipPath)) File.Delete(zipPath);
             }
+#pragma warning restore SYSLIB0014 // Type or member is obsolete
 
             return result;
         }

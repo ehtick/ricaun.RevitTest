@@ -6,61 +6,33 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <UseWPF>true</UseWPF>
     <LangVersion>latest</LangVersion>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Configurations>
       Debug; Release;
     </Configurations>
   </PropertyGroup>
 
+   <!-- Net Core -->
+  <PropertyGroup Condition="!$(TargetFramework.StartsWith('net4'))">
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+
   <!-- RevitVersion -->
+  <PropertyGroup>
+    <TargetFrameworks>net46;net8.0-windows</TargetFrameworks>
+  </PropertyGroup>
   <Choose>
-    <When Condition="$(Configuration.Contains('2017'))">
+    <When Condition="$(TargetFramework.StartsWith('net4'))">
       <PropertyGroup>
         <RevitVersion>2017</RevitVersion>
-        <TargetFramework>net46</TargetFramework>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(Configuration.Contains('2018'))">
-      <PropertyGroup>
-        <RevitVersion>2018</RevitVersion>
-        <TargetFramework>net46</TargetFramework>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(Configuration.Contains('2019'))">
-      <PropertyGroup>
-        <RevitVersion>2019</RevitVersion>
-        <TargetFramework>net47</TargetFramework>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(Configuration.Contains('2020'))">
-      <PropertyGroup>
-        <RevitVersion>2020</RevitVersion>
-        <TargetFramework>net47</TargetFramework>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(Configuration.Contains('2021'))">
-      <PropertyGroup>
-        <RevitVersion>2021</RevitVersion>
-        <TargetFramework>net48</TargetFramework>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(Configuration.Contains('2022'))">
-      <PropertyGroup>
-        <RevitVersion>2022</RevitVersion>
-        <TargetFramework>net48</TargetFramework>
-      </PropertyGroup>
-    </When>
-    <When Condition="$(Configuration.Contains('2023'))">
-      <PropertyGroup>
-        <RevitVersion>2023</RevitVersion>
-        <TargetFramework>net48</TargetFramework>
       </PropertyGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
-        <RevitVersion>2017</RevitVersion>
-        <TargetFramework>net46</TargetFramework>
+        <RevitVersion>2025</RevitVersion>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -68,7 +40,7 @@
   <!-- Release -->
   <PropertyGroup Condition="!$(Configuration.Contains('Debug'))">
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\Release\$(RevitVersion)</OutputPath>
     <DefineConstants>REVIT$(RevitVersion)</DefineConstants>
     <NoWarn>MSB3052</NoWarn>
     <DebugType>None</DebugType>
@@ -118,26 +90,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Revit\ApsApplication\Services\**" />
-    <EmbeddedResource Remove="Revit\ApsApplication\Services\**" />
-    <None Remove="Revit\ApsApplication\Services\**" />
-    <Page Remove="Revit\ApsApplication\Services\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Images\test-fail.png" />
-    <None Remove="Images\test-pass.png" />
-    <None Remove="Images\test-skip.png" />
-    <None Remove="Images\test-wait.png" />
+    <None Remove="Images\test-fail.ico" />
+    <None Remove="Images\test-pass.ico" />
+    <None Remove="Images\test-skip.ico" />
+    <None Remove="Images\test-wait.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Revit.Busy" Version="*" />
-    <PackageReference Include="ricaun.Auth.Aps.UI" Version="1.0.3" />
-    <PackageReference Include="ricaun.Revit.UI" Version="0.5.2" />
-    <PackageReference Include="ricaun.Revit.Async" Version="1.0.4" />
+    <PackageReference Include="ricaun.Auth.Aps.UI" Version="*-*" />
+    <PackageReference Include="ricaun.Revit.UI" Version="*" />
+    <PackageReference Include="ricaun.Revit.Async" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
-    <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -160,27 +124,24 @@
     <WeaverConfiguration Condition="$(Configuration.Contains('Debug'))">
       <Weavers>
         <PropertyChanged />
-        <!--
-        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" ExcludeAssemblies="nunit.framework" />
-        <Costura IncludeAssemblies="" />
-        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" IncludeAssemblies=""/>
-        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" />
-          IncludeAssemblies="nunit.framework|NamedPipeWrapper.Json.1.5.3"
-        -->
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false">
+          <!--
           <IncludeAssemblies>
             nunit.framework
             NamedPipeWrapper.Json.*
             ricaun.Auth*
           </IncludeAssemblies>
+          -->
         </Costura>
       </Weavers>
     </WeaverConfiguration>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="9.*" IncludeAssets="build; compile" PrivateAssets="All" />
-    <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*" IncludeAssets="build; compile" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.*" IncludeAssets="build; compile" PrivateAssets="All">
+      <NoWarn>NU1903</NoWarn>
+    </PackageReference>
+    <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*-*" IncludeAssets="build; compile" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -188,10 +149,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\test-fail.png" />
-    <Resource Include="Images\test-pass.png" />
-    <Resource Include="Images\test-skip.png" />
-    <Resource Include="Images\test-wait.png" />
+    <Resource Include="Images\test-fail.ico" />
+    <Resource Include="Images\test-pass.ico" />
+    <Resource Include="Images\test-skip.ico" />
+    <Resource Include="Images\test-wait.ico" />
   </ItemGroup>
 
 </Project>

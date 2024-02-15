@@ -22,9 +22,17 @@ namespace ricaun.RevitTest.TestAdapter
         // Our logger used to display messages
         protected TestAdapter()
         {
-            var assemblyName = typeof(TestAdapter).GetTypeInfo().Assembly.GetName();
+            var assembly = typeof(TestAdapter).Assembly;
+            var assemblyName = assembly.GetName();
             var version = assemblyName.Version.ToString(3);
             var frameworkName = TargetFrameworkUtils.GetName();
+
+            try
+            {
+                var fileVersionInfo = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
+                version = fileVersionInfo.GetSafeProductVersion();
+            }
+            catch { }
 
             AdapterVersion = $"{assemblyName.Name} \t{version} \t[{frameworkName}]";
         }
@@ -34,7 +42,7 @@ namespace ricaun.RevitTest.TestAdapter
             AdapterSettings.Create(discoveryContext);
             AdapterLogger.Create(messageLogger, AdapterSettings.Settings.NUnit.Verbosity);
 
-            AdapterLogger.Logger.Info($"TestAdapter: {this.AdapterVersion}", 0);
+            AdapterLogger.Logger.InfoAny($"TestAdapter: {this.AdapterVersion}");
             AdapterLogger.Logger.Info($"AdapterSettings: {AdapterSettings.Settings}");
 
             if (AdapterSettings.Instance.RunSettings is null)

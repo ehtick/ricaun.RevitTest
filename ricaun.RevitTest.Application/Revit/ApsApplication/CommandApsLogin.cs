@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Application.Revit.ApsApplication
 {
@@ -11,7 +12,7 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         {
             UIApplication uiapp = commandData.Application;
 
-            ApsApplication.Login();
+            ApsApplication.Login().RunAndForget();
 
             return Result.Succeeded;
         }
@@ -24,10 +25,9 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
         {
             UIApplication uiapp = commandData.Application;
 
-            ApsApplication.Logout();
+            ApsApplication.Logout().RunAndForget();
 
             return Result.Succeeded;
         }
     }
-
 }

@@ -2,13 +2,19 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
     <LangVersion>latest</LangVersion>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
-  <!-- Release -->
+  <PropertyGroup Condition="!$(TargetFramework.StartsWith('net4'))">
+    <EnableDynamicLoading>false</EnableDynamicLoading>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+
+    <!-- Release -->
   <PropertyGroup Condition="!$(Configuration.Contains('Debug'))">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -48,10 +54,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ricaun.RevitTest.Command\ricaun.RevitTest.Command.csproj" />
     <ProjectReference Include="..\ricaun.RevitTest.Shared\ricaun.RevitTest.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
 
   <ItemGroup>
