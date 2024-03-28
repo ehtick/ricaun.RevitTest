@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] / 2024-03-28
+### Features
+- Readme information to wiki.
+### Application
+- Add class `ApplicationValidUser` to validate user.
+### Removed
+- Remove all `ricaun.Auth` references.
+
 ## [1.2.1] / 2023-11-21 - 2024-02-06
 ### Features
 - Support `net8.0-windows` for Revit 2025.
@@ -372,6 +380,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.3.0]: ../../compare/1.2.1...1.3.0
 [1.2.1]: ../../compare/1.2.0...1.2.1
 [1.2.0]: ../../compare/1.1.3...1.2.0
 [1.1.3]: ../../compare/1.1.2...1.1.3
