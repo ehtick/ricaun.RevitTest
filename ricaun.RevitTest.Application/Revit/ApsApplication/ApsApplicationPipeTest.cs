@@ -18,6 +18,37 @@ namespace ricaun.RevitTest.Application.Revit.ApsApplication
                 var testPathFile = testRequest.TestPathFile;
                 var testFilterNames = testRequest.TestFilters ?? new string[] { };
 
+                {
+                    var isPreviewReleaseOrLoggedIn = ApplicationPreviewUtils.IsPreviewReleaseOrLoggedIn();
+                    if (isPreviewReleaseOrLoggedIn)
+                    {
+                        var isPreviewRelease = ApplicationPreviewUtils.IsPreviewRelease();
+                        if (isPreviewRelease)
+                        {
+                            const string PreviewReleaseMessage = "Preview Release allow Revit user not logged.";
+                            Log.WriteLine(PreviewReleaseMessage);
+                            PipeTestServer.Update((response) =>
+                            {
+                                response.Info = PreviewReleaseMessage;
+                            });
+                        }
+                        return null;
+                    }
+                    else
+                    {
+                        var exceptionNeedLoggedIn = new Exception("There is no user connected to Revit.");
+
+                        Log.WriteLine(exceptionNeedLoggedIn.Message);
+                        PipeTestServer.Update((response) =>
+                        {
+                            response.Info = exceptionNeedLoggedIn.Message;
+                        });
+
+                        return TestEngine.Fail(testPathFile, exceptionNeedLoggedIn, testFilterNames);
+                    }
+                }
+
+
                 // Revit User not connected.
                 if (Autodesk.Revit.ApplicationServices.Application.IsLoggedIn == false)
                 {

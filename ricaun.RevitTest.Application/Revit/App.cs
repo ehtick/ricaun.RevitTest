@@ -153,22 +153,22 @@ namespace ricaun.RevitTest.Application.Revit
                             {
                                 testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
 
-                                await RevitTask.Run((uiapp) =>
-                                {
-                                    try
-                                    {
-                                        var task = Task.Run(async () =>
-                                        {
-                                            var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
-                                            await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                        });
-                                        task.GetAwaiter().GetResult();
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        Debug.WriteLine(ex);
-                                    }
-                                });
+                                //await RevitTask.Run((uiapp) =>
+                                //{
+                                //    try
+                                //    {
+                                //        var task = Task.Run(async () =>
+                                //        {
+                                //            var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
+                                //            await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
+                                //        });
+                                //        task.GetAwaiter().GetResult();
+                                //    }
+                                //    catch (Exception ex)
+                                //    {
+                                //        Debug.WriteLine(ex);
+                                //    }
+                                //});
                             }
                             catch (Exception ex)
                             {

@@ -30,5 +30,14 @@
         {
             return Application.IsLoggedIn == false && IsPreviewRelease();
         }
+
+        /// <summary>
+        /// Is PreviewRelease or IsLoggedIn
+        /// </summary>
+        /// <returns></returns>
+        public static bool IsPreviewReleaseOrLoggedIn()
+        {
+            return IsPreviewRelease() || Application.IsLoggedIn;
+        }
     }
 }
