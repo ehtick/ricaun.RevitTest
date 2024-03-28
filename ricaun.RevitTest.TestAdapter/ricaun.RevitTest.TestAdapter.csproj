@@ -111,7 +111,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <GitHubRepository>$(PackageId)</GitHubRepository>
+    <GitHubRepository>ricaun.RevitTest</GitHubRepository>
     <GitHubRepositoryOwner>ricaun-io</GitHubRepositoryOwner>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/$(GitHubRepositoryOwner)/$(GitHubRepository)</PackageProjectUrl>

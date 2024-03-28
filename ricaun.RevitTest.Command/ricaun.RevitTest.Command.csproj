@@ -46,7 +46,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <GitHubRepository>$(PackageId)</GitHubRepository>
+    <GitHubRepository>ricaun.RevitTest</GitHubRepository>
     <GitHubRepositoryOwner>ricaun-io</GitHubRepositoryOwner>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/$(GitHubRepositoryOwner)/$(GitHubRepository)</PackageProjectUrl>
@@ -77,6 +77,7 @@
     <None Include="..\ricaun.RevitTest.TestAdapter\Resources\icon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+      <Visible>false</Visible>
     </None>
   </ItemGroup>
 
