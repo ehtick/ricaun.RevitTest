@@ -90,13 +90,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Revit\ApsApplication\**" />
-    <EmbeddedResource Remove="Revit\ApsApplication\**" />
-    <None Remove="Revit\ApsApplication\**" />
-    <Page Remove="Revit\ApsApplication\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Images\test-fail.ico" />
     <None Remove="Images\test-pass.ico" />
     <None Remove="Images\test-skip.ico" />
@@ -105,7 +98,6 @@
 
   <ItemGroup>
     <PackageReference Include="Revit.Busy" Version="*" />
-    <PackageReference Include="ricaun.Auth.Aps.UI" Version="*-*" />
     <PackageReference Include="ricaun.Revit.UI" Version="*" />
     <PackageReference Include="ricaun.Revit.Async" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
@@ -136,7 +128,6 @@
           <IncludeAssemblies>
             nunit.framework
             NamedPipeWrapper.Json.*
-            ricaun.Auth*
           </IncludeAssemblies>
           -->
         </Costura>

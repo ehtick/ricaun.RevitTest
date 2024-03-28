@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.3.0] / 2024-03-28
 ### Features
 - Readme information to wiki.
+### Application
+- Add class `ApplicationValidUser` to validate user.
 ### Removed
-- Remove `ricaun.Auth` and loggin.
+- Remove all `ricaun.Auth` references.
 
 ## [1.2.1] / 2023-11-21 - 2024-02-06
 ### Features
