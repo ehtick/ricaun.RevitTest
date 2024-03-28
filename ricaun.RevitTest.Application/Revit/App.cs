@@ -6,7 +6,6 @@ using ricaun.NUnit;
 using ricaun.NUnit.Models;
 using ricaun.Revit.Async.Services;
 using ricaun.Revit.UI;
-using ricaun.RevitTest.Application.Revit.ApsApplication;
 using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
 using System;
@@ -56,11 +55,6 @@ namespace ricaun.RevitTest.Application.Revit
             PipeTestServer_Initialize();
 
             CreateRibbonPanel(application);
-
-            Task.Run(async () =>
-            {
-                await ApsApplication.ApsApplication.Initialize();
-            }).GetAwaiter().GetResult();
 
             return Result.Succeeded;
         }
@@ -126,7 +120,7 @@ namespace ricaun.RevitTest.Application.Revit
                         response.Tests = null;
                     });
 
-                    var testAssemblyModel = await RevitTask.Run((uiapp) => ApsApplicationPipeTest.ApsApplicationCheckTest(uiapp, PipeTestServer, message));
+                    var testAssemblyModel = await RevitTask.Run((uiapp) => Application.ApplicationValidUser.ApplicationCheckTest(PipeTestServer, message));
 
                     if (testAssemblyModel is null)
                     {
@@ -152,23 +146,6 @@ namespace ricaun.RevitTest.Application.Revit
                             try
                             {
                                 testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
-
-                                //await RevitTask.Run((uiapp) =>
-                                //{
-                                //    try
-                                //    {
-                                //        var task = Task.Run(async () =>
-                                //        {
-                                //            var modelTests = testAssemblyModel.Tests.SelectMany(e => e.Tests).ToArray();
-                                //            await ApsApplication.ApsApplicationLogger.Log("Test", $"{uiapp.Application.VersionName}", modelTests.Length);
-                                //        });
-                                //        task.GetAwaiter().GetResult();
-                                //    }
-                                //    catch (Exception ex)
-                                //    {
-                                //        Debug.WriteLine(ex);
-                                //    }
-                                //});
                             }
                             catch (Exception ex)
                             {
@@ -225,10 +202,6 @@ namespace ricaun.RevitTest.Application.Revit
             ribbonItem.SetContextualHelp("https://ricaun.com")
                 .SetToolTip("Open RevitTest.log File")
                 .SetLargeImage(RibbonUtils.RevitTest);
-
-            var ribbon = ribbonPanel.CreatePushButton<ApsApplication.CommandApsView>("ricaun.Auth")
-                .SetToolTip("Open dialog to Login/Logout with Autodesk Platform Service.");
-            ribbonPanel.SetDialogLauncher(ribbon);
 
             UpdateLargeImageBusy(ribbonItem, RevitBusyService);
 

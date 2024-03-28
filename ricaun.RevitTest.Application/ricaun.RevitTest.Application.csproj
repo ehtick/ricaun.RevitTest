@@ -90,6 +90,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Revit\ApsApplication\**" />
+    <EmbeddedResource Remove="Revit\ApsApplication\**" />
+    <None Remove="Revit\ApsApplication\**" />
+    <Page Remove="Revit\ApsApplication\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\test-fail.ico" />
     <None Remove="Images\test-pass.ico" />
     <None Remove="Images\test-skip.ico" />
