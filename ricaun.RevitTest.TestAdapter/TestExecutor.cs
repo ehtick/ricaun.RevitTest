@@ -131,9 +131,14 @@ namespace ricaun.RevitTest.TestAdapter
                             testAssemblyEnabled = false;
                         }
                     }
-                    else
+                    else if (item.StartsWith(" "))
                     {
                         AdapterLogger.Logger.Debug($"OutputConsole: {item}");
+                    }
+                    else
+                    {
+                        if (System.Diagnostics.Debugger.IsAttached)
+                            AdapterLogger.Logger.Debug($"OutputConsole: Debug: {item}");
                     }
                 };
 

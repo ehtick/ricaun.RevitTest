@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.3.1] / 2024-04-02
 ### Fixed
 - Fix `Installation` Application issue.
+- Fix `Timeout` with issue with `testsFinishedForceToEnd`.
 ### Updated
 - Update `ricaun.Revit.Installation`
+- Update `debugger` with debug logs.
 
 ## [1.3.0] / 2024-03-28
 ### Features
@@ -386,6 +388,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.3.1]: ../../compare/1.3.0...1.3.1
 [1.3.0]: ../../compare/1.2.1...1.3.0
 [1.2.1]: ../../compare/1.2.0...1.2.1
 [1.2.0]: ../../compare/1.1.3...1.2.0

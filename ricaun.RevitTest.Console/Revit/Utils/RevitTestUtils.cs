@@ -99,7 +99,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             bool forceToCloseRevit = false,
             params string[] testFilters)
         {
-            int timeoutCountMax = forceToWaitRevit ? 0 : 1;
+            int timeoutCountMax = forceToWaitRevit ? 0 : 10;
 
             if (revitVersionNumber == 0)
             {
@@ -119,6 +119,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
             int timeoutCount = 0;
             bool sendFileWhenCreatedOrUpdated = true;
+            bool testsFinishedForceToEnd = false;
 
             Action<string, bool> resetSendFile = (file, exists) =>
             {
@@ -157,8 +158,8 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         client.ServerMessage.PropertyChanged += (s, e) =>
                         {
                             var message = s as TestResponse;
-                            Debug.WriteLine($"{revitInstallation}: PropertyChanged[ {e.PropertyName} ]");
-                            Debug.WriteLine($"{revitInstallation}: {message}");
+                            LogDebug.WriteLine($"{revitInstallation}: PropertyChanged[ {e.PropertyName} ]");
+                            LogDebug.WriteLine($"{revitInstallation}: {message}");
                             switch (e.PropertyName)
                             {
                                 case nameof(TestResponse.Test):
@@ -167,6 +168,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                     {
                                         Log.WriteLine($"{revitInstallation}: {test.Time} \t {test}");
                                         actionOutput?.Invoke(test.ToJson());
+                                        testsFinishedForceToEnd = false;
                                     }
                                     break;
                                 case nameof(TestResponse.Tests):
@@ -176,6 +178,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                         Log.WriteLine($"{revitInstallation}: {tests.Time} \t {tests}");
                                         actionOutput?.Invoke(null); // Force to clear file
                                         actionOutput?.Invoke(tests.ToJson());
+                                        testsFinishedForceToEnd = true;
                                     }
                                     break;
                                 case nameof(TestResponse.Info):
@@ -208,10 +211,19 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                 timeoutCount++;
 
                             if (timeoutCountMax > 0 && timeoutCount > timeoutCountMax)
+                            {
+                                Log.WriteLine($"{revitInstallation}: Timeout");
                                 break;
+                            }
 
                             if (client.ServerMessage.IsBusy)
                                 continue;
+
+                            if (testsFinishedForceToEnd)
+                            {
+                                Log.WriteLine($"{revitInstallation}: Tests Finished");
+                                break;
+                            }
 
                             //if (System.Console.KeyAvailable)
                             //{
@@ -281,13 +293,29 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
         private static void ApplicationException(Exception exception)
         {
-            Debug.WriteLine($"Application Error: {exception.Message}");
+            LogDebug.WriteLine($"Application Error: {exception.Message}");
         }
 
         private static void ApplicationLog(string log)
         {
-            Debug.WriteLine($"Application: {log}");
+            LogDebug.WriteLine($"Application: {log}");
         }
         #endregion
+    }
+
+    public static class LogDebug
+    {
+        /// <summary>
+        /// WriteLine
+        /// </summary>
+        /// <param name="value"></param>
+        public static void WriteLine(string value)
+        {
+            Debug.WriteLine(value);
+            if (DebuggerUtils.IsDebuggerAttached)
+            {
+                Log.WriteLine($"Debug: {value}");
+            }
+        }
     }
 }
