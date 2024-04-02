@@ -127,8 +127,19 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
             using (new FileWatcher().Initialize(fileToTest, resetSendFile))
             {
-                using (CreateAppPlugin())
+                using (var appPlugin = CreateApplicationPlugin())
                 {
+                    Debug.WriteLine($"Application Install: {appPlugin.Initialized}");
+
+                    if (appPlugin.Initialized == false)
+                    {
+                        var exceptionAppPlugin = new Exception("Application not initialized.");
+                        var failTests = TestEngine.Fail(fileToTest, exceptionAppPlugin, testFilters);
+                        actionOutput.Invoke(failTests.ToJson());
+                        Thread.Sleep(SleepMillisecondsBeforeFinish);
+                        return;
+                    }
+
                     if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallation))
                     {
                         Log.WriteLine(revitInstallation);
@@ -256,11 +267,26 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         }
 
         #region private
-        private static ApplicationPluginsDisposable CreateAppPlugin()
+        private static ApplicationPluginsDisposable CreateApplicationPlugin()
         {
-            return new ApplicationPluginsDisposable(
-                        Properties.Resources.ricaun_RevitTest_Application_bundle,
-                        "ricaun.RevitTest.Application.bundle.zip");
+            var application = new ApplicationPluginsDisposable(
+                                Properties.Resources.ricaun_RevitTest_Application_bundle,
+                                "ricaun.RevitTest.Application.bundle.zip");
+
+            application.SetException(ApplicationException);
+            application.SetLog(ApplicationLog);
+
+            return application.Initialize();
+        }
+
+        private static void ApplicationException(Exception exception)
+        {
+            Debug.WriteLine($"Application Error: {exception.Message}");
+        }
+
+        private static void ApplicationLog(string log)
+        {
+            Debug.WriteLine($"Application: {log}");
         }
         #endregion
     }
