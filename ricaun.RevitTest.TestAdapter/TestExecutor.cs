@@ -111,7 +111,9 @@ namespace ricaun.RevitTest.TestAdapter
 
                     if (item.StartsWith("{\"FileName"))
                     {
-                        AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
+                        if (System.Diagnostics.Debugger.IsAttached)
+                            AdapterLogger.Logger.Debug($"OutputConsole: Debug: {item.Trim()}");
+
                         var testAssembly = item.Deserialize<TestAssemblyModel>();
 
                         if (testAssemblyEnabled == false) return;
@@ -124,7 +126,9 @@ namespace ricaun.RevitTest.TestAdapter
                     }
                     else if (item.StartsWith("{\"Name"))
                     {
-                        AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
+                        if (System.Diagnostics.Debugger.IsAttached)
+                            AdapterLogger.Logger.Debug($"OutputConsole: Debug: {item.Trim()}");
+
                         if (item.Deserialize<TestModel>() is TestModel testModel)
                         {
                             RecordResultTestModel(frameworkHandle, source, tests, testModel);

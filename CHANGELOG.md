@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Updated
 - Update `ricaun.Revit.Installation`
 - Update `debugger` with debug logs.
+- Update `Command` with `SemanticVersion`.
+- Update `TestAdapter` with debug logs.
 
 ## [1.3.0] / 2024-03-28
 ### Features
