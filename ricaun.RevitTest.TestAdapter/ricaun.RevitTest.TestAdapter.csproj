@@ -102,6 +102,7 @@
     <Company>ricaun</Company>
     <Authors>Luiz Henrique Cassettari</Authors>
     <Description>Multi-version NUnit testing framework for Revit API</Description>
+    <PackageTags>revit;test;testadapter;nunit;dotnet</PackageTags>
     <CopyrightYears>$([System.DateTime]::Now.ToString('yyyy'))</CopyrightYears>
   </PropertyGroup>
 

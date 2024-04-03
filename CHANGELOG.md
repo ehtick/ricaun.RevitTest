@@ -5,14 +5,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [1.3.1] / 2024-04-02
+### Features
+- Support Revit 2025 to 2017.
 ### Fixed
 - Fix `Installation` Application issue.
-- Fix `Timeout` with issue with `testsFinishedForceToEnd`.
+- Fix `Timeout` issue with `testsFinishedForceToEnd`.
 ### Updated
 - Update `ricaun.Revit.Installation`
 - Update `debugger` with debug logs.
 - Update `Command` with `SemanticVersion`.
 - Update `TestAdapter` with debug logs.
+- Update `TestAdapter` with `PackageTags`
 
 ## [1.3.0] / 2024-03-28
 ### Features
