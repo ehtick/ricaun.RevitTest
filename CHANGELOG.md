@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `Command` with `SemanticVersion`.
 - Update `TestAdapter` with debug logs.
 - Update `TestAdapter` with `PackageTags`
+- Update `TestAdapter` with `PackageLicenseFile`
 
 ## [1.3.0] / 2024-03-28
 ### Features
