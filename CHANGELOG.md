@@ -10,13 +10,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Fix `Installation` Application issue.
 - Fix `Timeout` issue with `testsFinishedForceToEnd`.
-### Updated
-- Update `ricaun.Revit.Installation`
+### Command
+- Update `ricaun.Revit.Installation` to `1.1.2`
 - Update `debugger` with debug logs.
 - Update `Command` with `SemanticVersion`.
+### Application
+- Fix `AssemblyResolve` in `.NET Core` updated `AppDomainExtension`.
+### Shared
+- Update `NamedPipeWrapper.Json` to `1.7.0`
+### TestAdapter
 - Update `TestAdapter` with debug logs.
 - Update `TestAdapter` with `PackageTags`
 - Update `TestAdapter` with `PackageLicenseFile`
+
 
 ## [1.3.0] / 2024-03-28
 ### Features

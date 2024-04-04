@@ -12,6 +12,17 @@ namespace ricaun.RevitTest.Application.Extensions
         /// <returns></returns>
         public static AppDomainExtension.DelegatesDisposable AssemblyResolveDisposable()
         {
+#if DEBUG
+            var resolveEventHandler = AppDomain.CurrentDomain.GetResolveEventHandler();
+            Console.WriteLine($"Debug Domain >> {AppDomain.CurrentDomain.FriendlyName}");
+            Console.WriteLine($"Debug Assembly >> {typeof(AppDomainUtils).Assembly.FullName}");
+            Console.WriteLine($"Debug Location >> {typeof(AppDomainUtils).Assembly.Location}");
+            Console.WriteLine($"Debug GetResolveEventHandler >> {resolveEventHandler}");
+            if (resolveEventHandler is not null)
+            {
+                Console.WriteLine($"Debug GetInvocationList >> {resolveEventHandler.GetInvocationList().Length}");
+            }
+#endif
             return AppDomain.CurrentDomain.GetAssemblyResolveDisposable().NotRemoveDelegatesAfterDispose();
         }
     }
@@ -25,12 +36,21 @@ namespace ricaun.RevitTest.Application.Extensions
         /// <returns></returns>
         public static ResolveEventHandler GetResolveEventHandler(this AppDomain appDomain)
         {
+#if NETFRAMEWORK
             var fieldName = "_AssemblyResolve";
 
             var fieldInfo = appDomain.GetType()
                 .GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
 
             return fieldInfo?.GetValue(appDomain) as ResolveEventHandler;
+#elif NET
+            var fieldName = "AssemblyResolve";
+
+            var fieldInfo = typeof(System.Runtime.Loader.AssemblyLoadContext)
+                .GetField(fieldName, BindingFlags.Static | BindingFlags.NonPublic);
+
+            return fieldInfo?.GetValue(null) as ResolveEventHandler;
+#endif
         }
 
         /// <summary>
