@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `TestAdapter` with debug logs.
 - Update `TestAdapter` with `PackageTags`
 - Update `TestAdapter` with `PackageLicenseFile`
+- Add `IsLogDebug` with `Verbosity`.
 
 
 ## [1.3.0] / 2024-03-28
