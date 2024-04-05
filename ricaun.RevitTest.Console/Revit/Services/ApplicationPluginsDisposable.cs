@@ -8,24 +8,47 @@ namespace ricaun.RevitTest.Console.Revit.Services
     public class ApplicationPluginsDisposable : IDisposable
     {
         private readonly string applicationPluginsPath;
+        private readonly bool applicationPluginsPathDelete;
+        private Action<Exception> downloadException;
+        private Action<string> logConsole;
 
+        public bool Initialized { get; private set; }
         public ApplicationPluginsDisposable(string applicationPluginsPath)
         {
             this.applicationPluginsPath = applicationPluginsPath;
-            Initialize();
         }
         public ApplicationPluginsDisposable(byte[] data, string fileName)
         {
             this.applicationPluginsPath = data.CopyToFile(fileName);
-            Initialize();
-            File.Delete(this.applicationPluginsPath);
+            this.applicationPluginsPathDelete = true;
         }
-        private void Initialize()
+
+        public ApplicationPluginsDisposable SetException(Action<Exception> downloadException)
         {
-            if (string.IsNullOrEmpty(applicationPluginsPath)) return;
-            var applicationPluginsFolder = RevitUtils.GetCurrentUserApplicationPluginsFolder();
-            ApplicationPluginsUtils.DownloadBundle(applicationPluginsFolder, applicationPluginsPath);
+            this.downloadException = downloadException;
+            return this;
         }
+
+        public ApplicationPluginsDisposable SetLog(Action<string> logConsole)
+        {
+            this.logConsole = logConsole;
+            return this;
+        }
+
+        public ApplicationPluginsDisposable Initialize()
+        {
+            if (string.IsNullOrEmpty(applicationPluginsPath)) return this;
+            var applicationPluginsFolder = RevitUtils.GetCurrentUserApplicationPluginsFolder();
+            Initialized = ApplicationPluginsUtils.DownloadBundle(applicationPluginsFolder, applicationPluginsPath, downloadException, logConsole);
+
+            if (applicationPluginsPathDelete)
+            {
+                File.Delete(this.applicationPluginsPath);
+            }
+
+            return this;
+        }
+
         public void Dispose()
         {
             if (string.IsNullOrEmpty(applicationPluginsPath)) return;

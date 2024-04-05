@@ -35,7 +35,7 @@
   <PropertyGroup>
     <Company>ricaun</Company>
     <Authors>Luiz Henrique Cassettari</Authors>
-    <Description>Package $(PackageId).</Description>
+    <Description>Contract to create a Console application for package ricaun.RevitTest.TestAdapter.</Description>
     <CopyrightYears>$([System.DateTime]::Now.ToString('yyyy'))</CopyrightYears>
   </PropertyGroup>
 

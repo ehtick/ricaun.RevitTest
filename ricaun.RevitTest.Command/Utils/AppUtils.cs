@@ -1,4 +1,6 @@
-﻿namespace ricaun.RevitTest.Command.Utils
+﻿using System.Reflection;
+
+namespace ricaun.RevitTest.Command.Utils
 {
     public static class AppUtils
     {
@@ -9,8 +11,27 @@
         public static string GetInfo()
         {
             var assemblyName = typeof(AppUtils).Assembly.GetName();
-            var info = $"{assemblyName.Name} {assemblyName.Version.ToString(3)} [{GetTargetFrameworkName()}]";
+            var info = $"{assemblyName.Name} {GetSemanticVersion()} [{GetTargetFrameworkName()}]";
             return info;
+        }
+
+        /// <summary>
+        /// Get Semantic Version
+        /// </summary>
+        /// <returns></returns>
+        public static string GetSemanticVersion() {
+
+            var assembly = typeof(AppUtils).Assembly;
+            var version = assembly.GetName().Version.ToString(3);
+
+            try
+            {
+                var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+                version = informationalVersion.Split('+')[0];
+            }
+            catch { }
+
+            return version;
         }
 
         /// <summary>

@@ -99,7 +99,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             bool forceToCloseRevit = false,
             params string[] testFilters)
         {
-            int timeoutCountMax = forceToWaitRevit ? 0 : 1;
+            int timeoutCountMax = forceToWaitRevit ? 0 : 10;
 
             if (revitVersionNumber == 0)
             {
@@ -119,6 +119,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
             int timeoutCount = 0;
             bool sendFileWhenCreatedOrUpdated = true;
+            bool testsFinishedForceToEnd = false;
 
             Action<string, bool> resetSendFile = (file, exists) =>
             {
@@ -127,8 +128,19 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
             using (new FileWatcher().Initialize(fileToTest, resetSendFile))
             {
-                using (CreateAppPlugin())
+                using (var appPlugin = CreateApplicationPlugin())
                 {
+                    Debug.WriteLine($"Application Install: {appPlugin.Initialized}");
+
+                    if (appPlugin.Initialized == false)
+                    {
+                        var exceptionAppPlugin = new Exception("Application not initialized.");
+                        var failTests = TestEngine.Fail(fileToTest, exceptionAppPlugin, testFilters);
+                        actionOutput.Invoke(failTests.ToJson());
+                        Thread.Sleep(SleepMillisecondsBeforeFinish);
+                        return;
+                    }
+
                     if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallation))
                     {
                         Log.WriteLine(revitInstallation);
@@ -146,8 +158,8 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         client.ServerMessage.PropertyChanged += (s, e) =>
                         {
                             var message = s as TestResponse;
-                            Debug.WriteLine($"{revitInstallation}: PropertyChanged[ {e.PropertyName} ]");
-                            Debug.WriteLine($"{revitInstallation}: {message}");
+                            LogDebug.WriteLine($"{revitInstallation}: PropertyChanged[ {e.PropertyName} ]");
+                            LogDebug.WriteLine($"{revitInstallation}: {message}");
                             switch (e.PropertyName)
                             {
                                 case nameof(TestResponse.Test):
@@ -156,6 +168,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                     {
                                         Log.WriteLine($"{revitInstallation}: {test.Time} \t {test}");
                                         actionOutput?.Invoke(test.ToJson());
+                                        testsFinishedForceToEnd = false;
                                     }
                                     break;
                                 case nameof(TestResponse.Tests):
@@ -165,6 +178,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                         Log.WriteLine($"{revitInstallation}: {tests.Time} \t {tests}");
                                         actionOutput?.Invoke(null); // Force to clear file
                                         actionOutput?.Invoke(tests.ToJson());
+                                        testsFinishedForceToEnd = true;
                                     }
                                     break;
                                 case nameof(TestResponse.Info):
@@ -197,10 +211,19 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                 timeoutCount++;
 
                             if (timeoutCountMax > 0 && timeoutCount > timeoutCountMax)
+                            {
+                                Log.WriteLine($"{revitInstallation}: Timeout");
                                 break;
+                            }
 
                             if (client.ServerMessage.IsBusy)
                                 continue;
+
+                            if (testsFinishedForceToEnd)
+                            {
+                                Log.WriteLine($"{revitInstallation}: Tests Finished");
+                                break;
+                            }
 
                             //if (System.Console.KeyAvailable)
                             //{
@@ -256,12 +279,43 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         }
 
         #region private
-        private static ApplicationPluginsDisposable CreateAppPlugin()
+        private static ApplicationPluginsDisposable CreateApplicationPlugin()
         {
-            return new ApplicationPluginsDisposable(
-                        Properties.Resources.ricaun_RevitTest_Application_bundle,
-                        "ricaun.RevitTest.Application.bundle.zip");
+            var application = new ApplicationPluginsDisposable(
+                                Properties.Resources.ricaun_RevitTest_Application_bundle,
+                                "ricaun.RevitTest.Application.bundle.zip");
+
+            application.SetException(ApplicationException);
+            application.SetLog(ApplicationLog);
+
+            return application.Initialize();
+        }
+
+        private static void ApplicationException(Exception exception)
+        {
+            LogDebug.WriteLine($"Application Error: {exception.Message}");
+        }
+
+        private static void ApplicationLog(string log)
+        {
+            LogDebug.WriteLine($"Application: {log}");
         }
         #endregion
+    }
+
+    public static class LogDebug
+    {
+        /// <summary>
+        /// WriteLine
+        /// </summary>
+        /// <param name="value"></param>
+        public static void WriteLine(string value)
+        {
+            Debug.WriteLine(value);
+            if (DebuggerUtils.IsDebuggerAttached)
+            {
+                Log.WriteLine($"Debug: {value}");
+            }
+        }
     }
 }

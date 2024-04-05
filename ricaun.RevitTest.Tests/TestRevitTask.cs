@@ -17,13 +17,14 @@ namespace ricaun.RevitTest.Tests
             RevitTask.Initialize();
         }
 
+#if !(NET)
         [Test]
         public async Task TestAsync_MacroManager()
         {
             await RevitTask.Run((uiapp) =>
             {
-                uiapp.PostCommand(RevitCommandId.LookupPostableCommandId(PostableCommand.MacroManager));
                 uiapp.DialogBoxShowing += DialogBoxShowingForceClose;
+                uiapp.PostCommand(RevitCommandId.LookupPostableCommandId(PostableCommand.MacroManager));
             });
 
             await RevitTask.Run((uiapp) =>
@@ -42,7 +43,7 @@ namespace ricaun.RevitTest.Tests
             Console.WriteLine($"DialogBoxShowing {e.DialogId}");
             e.OverrideResult((int)TaskDialogResult.Close);
         }
-
+#endif
         [Test]
         public async Task TestAsync_Idling()
         {

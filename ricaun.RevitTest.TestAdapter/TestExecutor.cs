@@ -66,6 +66,8 @@ namespace ricaun.RevitTest.TestAdapter
         {
         }
 
+        private static bool IsLogDebug => System.Diagnostics.Debugger.IsAttached || AdapterSettings.Settings.NUnit.Verbosity > 2;
+
         /// <summary>
         /// Run Tests using RevitTest.Console -t
         /// </summary>
@@ -111,7 +113,9 @@ namespace ricaun.RevitTest.TestAdapter
 
                     if (item.StartsWith("{\"FileName"))
                     {
-                        AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
+                        if (IsLogDebug)
+                            AdapterLogger.Logger.Debug($"OutputConsole: DEBUG: {item.Trim()}");
+
                         var testAssembly = item.Deserialize<TestAssemblyModel>();
 
                         if (testAssemblyEnabled == false) return;
@@ -124,16 +128,23 @@ namespace ricaun.RevitTest.TestAdapter
                     }
                     else if (item.StartsWith("{\"Name"))
                     {
-                        AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
+                        if (IsLogDebug)
+                            AdapterLogger.Logger.Debug($"OutputConsole: DEBUG: {item.Trim()}");
+
                         if (item.Deserialize<TestModel>() is TestModel testModel)
                         {
                             RecordResultTestModel(frameworkHandle, source, tests, testModel);
                             testAssemblyEnabled = false;
                         }
                     }
-                    else
+                    else if (item.StartsWith(" "))
                     {
                         AdapterLogger.Logger.Debug($"OutputConsole: {item}");
+                    }
+                    else
+                    {
+                        if (IsLogDebug)
+                            AdapterLogger.Logger.Debug($"OutputConsole: DEBUG: {item}");
                     }
                 };
 

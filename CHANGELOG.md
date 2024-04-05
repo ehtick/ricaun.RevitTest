@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] / 2024-04-02
+### Features
+- Support Revit 2025 to 2017.
+### Fixed
+- Fix `Installation` Application issue.
+- Fix `Timeout` issue with `testsFinishedForceToEnd`.
+### Command
+- Update `ricaun.Revit.Installation` to `1.1.2`
+- Update `debugger` with debug logs.
+- Update `Command` with `SemanticVersion`.
+### Application
+- Fix `AssemblyResolve` in `.NET Core` updated `AppDomainExtension`.
+### Shared
+- Update `NamedPipeWrapper.Json` to `1.7.0`
+### TestAdapter
+- Update `TestAdapter` with debug logs.
+- Update `TestAdapter` with `PackageTags`
+- Update `TestAdapter` with `PackageLicenseFile`
+- Add `IsLogDebug` with `Verbosity`.
+
+
 ## [1.3.0] / 2024-03-28
 ### Features
 - Readme information to wiki.
@@ -380,6 +401,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.3.1]: ../../compare/1.3.0...1.3.1
 [1.3.0]: ../../compare/1.2.1...1.3.0
 [1.2.1]: ../../compare/1.2.0...1.2.1
 [1.2.0]: ../../compare/1.1.3...1.2.0
