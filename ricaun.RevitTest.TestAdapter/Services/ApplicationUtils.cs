@@ -17,13 +17,19 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
         private static void ClearTemporaryDirectory(string folderDirectory)
         {
+            const int MINUTES = 2;
             try
             {
                 foreach (var delete in Directory.GetDirectories(folderDirectory))
                 {
                     try
                     {
-                        Directory.Delete(delete);
+                        var directoryInfo = new DirectoryInfo(delete);
+                        var isTimeToDeleteDirectory = directoryInfo.CreationTime < DateTime.Now.AddMinutes(-MINUTES);
+                        if (isTimeToDeleteDirectory)
+                        {
+                            Directory.Delete(delete, true);
+                        }
                     }
                     catch { }
                 }
