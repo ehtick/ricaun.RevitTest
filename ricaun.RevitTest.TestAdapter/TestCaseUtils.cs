@@ -26,7 +26,6 @@ namespace ricaun.RevitTest.TestAdapter
             var testCase = new TestCase(fullyQualifiedName, TestAdapter.ExecutorUri, source)
             {
                 DisplayName = displayName,
-                Id = GetGuid(testName),
             };
 
             return testCase;
@@ -51,11 +50,6 @@ namespace ricaun.RevitTest.TestAdapter
             }
 
             return lastIndexOfDot;
-        }
-
-        private static System.Guid GetGuid(string testName)
-        {
-            return new System.Guid(testName.GetHashCode(), 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         }
 
         #endregion

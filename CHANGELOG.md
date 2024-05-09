@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.3.2] / 2024-05-09
 ### Fixed
-- Fix `ApplicationUtils` to clear temp folder after some minutes.
+- Fix `ApplicationUtils` to clear temp folder after some minutes. (Fix: #41)
+- Fix Net Core tests not stay after rebuild. (Fix: #40)
 
 ## [1.3.1] / 2024-04-02
 ### Features
