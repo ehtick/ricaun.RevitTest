@@ -50,7 +50,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             ClearTemporaryDirectory(folderDirectory);
 
             string fileName = Path.GetFileNameWithoutExtension(file);
-            string tempFolderName = $"{fileName}_{DateTime.Now.Ticks}";
+            string tempFolderName = $"{fileName}_{Guid.NewGuid()}";
             string tempDirectory = Path.Combine(folderDirectory, tempFolderName);
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;

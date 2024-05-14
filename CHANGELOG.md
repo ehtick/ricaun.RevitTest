@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Fix Net Core tests not stay after rebuild. (Fix: #40)
 ### TestAdapter
 - Fix application and rebuild issue.
+- Update `ApplicationUtils` to use `Guid` temp folder.
 
 ## [1.3.1] / 2024-04-02
 ### Features
