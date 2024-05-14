@@ -164,13 +164,13 @@ namespace ricaun.RevitTest.TestAdapter
         private static void RecordResultTestModel(IFrameworkHandle frameworkHandle, string source, List<TestCase> tests, TestModel testModel)
         {
             TestCase testCase = TryFindSimilarTestCaseUsingTestModel(tests, testModel);
-
-            if (testCase is null)
+            var needToCreateTestCase = testCase is null;
+            if (needToCreateTestCase)
             {
                 testCase = TestCaseUtils.Create(source, testModel.FullName);
             }
 
-            AdapterLogger.Logger.Info($"\tTestCase: {testCase} [{testCase.DisplayName}]");
+            AdapterLogger.Logger.Info($"\tTestCase: {testCase} [{testCase.DisplayName}] \t{testCase.Id}");
 
             var testResult = new TestResult(testCase);
 

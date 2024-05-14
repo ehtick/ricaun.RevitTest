@@ -27,12 +27,15 @@ namespace ricaun.RevitTest.TestAdapter.Services
             return applicationPath;
         }
 
-        private string ValidadeApplication(string applicationPath)
+        private string ValidadeApplication(string applicationPath, bool showApplicationName = false)
         {
             if (string.IsNullOrWhiteSpace(applicationPath))
                 return null;
 
-            AdapterLogger.Logger.InfoAny($"Application: {Path.GetFileName(applicationPath)}");
+            if (showApplicationName)
+                AdapterLogger.Logger.InfoAny($"Application: {Path.GetFileName(applicationPath)}");
+            else
+                AdapterLogger.Logger.Info($"Application: {Path.GetFileName(applicationPath)}");
 
             applicationPath = GetEnvironmentVariable(applicationPath);
 
@@ -60,7 +63,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
         public RevitTestConsole(string application = null)
         {
-            applicationPath = ValidadeApplication(application);
+            applicationPath = ValidadeApplication(application, true);
             if (applicationPath is null)
             {
                 var name = ResourceConsoleUtils.Name;

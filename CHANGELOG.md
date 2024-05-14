@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.2] / 2024-05-09
+### Fixed
+- Fix `ApplicationUtils` to clear temp folder after some minutes. (Fix: #41)
+- Fix Net Core tests not stay after rebuild. (Fix: #40)
+### TestAdapter
+- Fix application and rebuild issue.
+- Update `ApplicationUtils` to use `Guid` temp folder.
+
 ## [1.3.1] / 2024-04-02
 ### Features
 - Support Revit 2025 to 2017.
@@ -401,6 +409,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.3.2]: ../../compare/1.3.1...1.3.2
 [1.3.1]: ../../compare/1.3.0...1.3.1
 [1.3.0]: ../../compare/1.2.1...1.3.0
 [1.2.1]: ../../compare/1.2.0...1.2.1

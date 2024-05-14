@@ -17,13 +17,19 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
         private static void ClearTemporaryDirectory(string folderDirectory)
         {
+            const int MINUTES = 2;
             try
             {
                 foreach (var delete in Directory.GetDirectories(folderDirectory))
                 {
                     try
                     {
-                        Directory.Delete(delete);
+                        var directoryInfo = new DirectoryInfo(delete);
+                        var isTimeToDeleteDirectory = directoryInfo.CreationTime < DateTime.Now.AddMinutes(-MINUTES);
+                        if (isTimeToDeleteDirectory)
+                        {
+                            Directory.Delete(delete, true);
+                        }
                     }
                     catch { }
                 }
@@ -44,7 +50,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             ClearTemporaryDirectory(folderDirectory);
 
             string fileName = Path.GetFileNameWithoutExtension(file);
-            string tempFolderName = $"{fileName}_{DateTime.Now.Ticks}";
+            string tempFolderName = $"{fileName}_{Guid.NewGuid()}";
             string tempDirectory = Path.Combine(folderDirectory, tempFolderName);
             Directory.CreateDirectory(tempDirectory);
             return tempDirectory;

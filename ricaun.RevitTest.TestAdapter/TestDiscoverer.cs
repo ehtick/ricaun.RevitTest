@@ -80,8 +80,9 @@ namespace ricaun.RevitTest.TestAdapter
 
                         foreach (var testName in testNames)
                         {
-                            AdapterLogger.Logger.Info($"TestCase: {testName}");
                             var testCase = TestCaseUtils.Create(source, testName);
+
+                            AdapterLogger.Logger.Info($"TestCase: {testCase} [{testCase.DisplayName}] \t{testCase.Id}");
 
                             discoverySink?.SendTestCase(testCase);
                             tests.Add(testCase);
