@@ -36,5 +36,16 @@ namespace ricaun.RevitTest.Tests
             Console.WriteLine(value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(value));
         }
+
+        [TestCase(1.0)]
+        [TestCase(2.0)]
+        [TestCase(3.0)]
+        [TestCase(4.2)]
+        [TestCase(5.3)]
+        [TestCase(6.4)]
+        public void TestDoubleCase(double scale)
+        {
+            Assert.NotZero(scale);
+        }
     }
 }
