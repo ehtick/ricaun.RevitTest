@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### TestAdapter
 - Add `GuidFromString` in the `TestCaseUtils`.
 - Update `SplitTestName` to check `(` and `"`.
+- Update Application for `LocalFileExists`.
 ### Tests
 - Add `TestDoubleCase` with double with `.` in the name.
 

@@ -104,10 +104,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
                 try
                 {
-                    if (File.Exists(address))
+                    if (LocalFileExists(address, out string localFilePath))
                     {
-                        File.Copy(address, zipPath, true);
-                        AdapterLogger.Logger.DebugOnlyLocal($"Download File Exists: {address}");
+                        File.Copy(localFilePath, zipPath, true);
+                        AdapterLogger.Logger.DebugOnlyLocal($"Download File CurrentDirectory: {Directory.GetCurrentDirectory()}");
+                        AdapterLogger.Logger.DebugOnlyLocal($"Download File Exists: {localFilePath}");
                     }
                     else
                     {
@@ -133,6 +134,24 @@ namespace ricaun.RevitTest.TestAdapter.Services
             }
 
             return result;
+        }
+
+        private static bool LocalFileExists(string filePath, out string localFilePath)
+        {
+            localFilePath = filePath;
+            if (File.Exists(localFilePath)) return true;
+            try
+            {
+                var assemblyDirectory = Path.GetDirectoryName(typeof(ApplicationUtils).Assembly.Location);
+                localFilePath = Path.Combine(assemblyDirectory, filePath);
+                if (File.Exists(localFilePath))
+                {
+                    AdapterLogger.Logger.DebugOnlyLocal($"Download File AssemblyDirectory: {assemblyDirectory}");
+                    return true;
+                }
+            }
+            catch { }
+            return false;
         }
 
         /// <summary>
