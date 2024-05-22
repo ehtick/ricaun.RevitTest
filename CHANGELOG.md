@@ -6,8 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.3.3] / 2024-05-22
 ### Fixed
-- Fix `TestCase` with the same Guid using `GuidFromString`.
-- Fix `TestCase` with `.` in the name.
+- Fix `TestCase` with the same Guid using `GuidFromString`. (Fix: #43)
+- Fix `TestCase` with `.` in the name. (Fix: #44)
 ### TestAdapter
 - Add `GuidFromString` in the `TestCaseUtils`.
 - Update `SplitTestName` to check `(` and `"`.
