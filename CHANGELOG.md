@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.3] / 2024-05-22
+### Fixed
+- Fix `TestCase` with the same Guid using `GuidFromString`. (Fix: #43)
+- Fix `TestCase` with `.` in the name. (Fix: #44)
+### TestAdapter
+- Add `GuidFromString` in the `TestCaseUtils`.
+- Update `SplitTestName` to check `(` and `"`.
+- Update Application for `LocalFileExists`.
+### Tests
+- Add `TestDoubleCase` with double with `.` in the name.
+
 ## [1.3.2] / 2024-05-09
 ### Fixed
 - Fix `ApplicationUtils` to clear temp folder after some minutes. (Fix: #41)
@@ -409,6 +420,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.3.3]: ../../compare/1.3.2...1.3.3
 [1.3.2]: ../../compare/1.3.1...1.3.2
 [1.3.1]: ../../compare/1.3.0...1.3.1
 [1.3.0]: ../../compare/1.2.1...1.3.0
