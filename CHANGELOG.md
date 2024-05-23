@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.3.4] / 2024-05-23
 ### Console
 - Update `ricaun.Revit.Installation` to fix bundle not loading when Revit is open. 
+- Update `ricaun.Revit.Installation` with a different `RevitInstallationUtils`.
 
 ## [1.3.3] / 2024-05-22
 ### Fixed
