@@ -59,6 +59,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             LoggerTest($"Test °C");
             LoggerTest($"Length {tests.Length}");
             LoggerTest($"TestEngine {TestEngine.Version.ToString(3)}");
+            LoggerTest($"Info {AppUtils.GetInfo()}");
             if (LoggerTests.Any())
             {
                 LoggerTests.AddRange(tests);

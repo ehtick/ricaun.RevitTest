@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ricaun.Revit.UI` with the image auto theme based in the `light` and `dark` in the file name.
 ### TestAdapter
 - Show error when Console fails.
+- Fix local file copy to temporary by zip folder.
 
 ## [1.3.4] / 2024-05-27
 ### Console
