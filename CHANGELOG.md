@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [1.3.5] / 2024-07-22
-### Updated
+### Features
+- Update `Application` images to support `light` and `dark` theme.
+### Application
+- Update project to build `net47` and `net48`.
 - Update `Images` with light and dark theme.
 - Update `ricaun.Revit.UI` with the image auto theme based in the `light` and `dark` in the file name.
 
