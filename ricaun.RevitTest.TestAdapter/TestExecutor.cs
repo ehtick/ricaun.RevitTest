@@ -151,7 +151,7 @@ namespace ricaun.RevitTest.TestAdapter
                 Action<string> outputError = (item) =>
                 {
                     if (string.IsNullOrEmpty(item)) return;
-                    AdapterLogger.Logger.Error($"OutputConsole: ERROR: {item}");
+                    AdapterLogger.Logger.Warning($"OutputConsole: ERROR: {item}");
                 };
 
                 AdapterLogger.Logger.Info($"RunRevitTest: {source} [Version: {AdapterSettings.Settings.NUnit.Version}] [TestFilter: {filters.Length}]");

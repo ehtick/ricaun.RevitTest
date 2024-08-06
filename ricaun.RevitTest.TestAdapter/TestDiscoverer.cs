@@ -75,7 +75,7 @@ namespace ricaun.RevitTest.TestAdapter
                         Action<string> outputError = (item) =>
                         {
                             if (string.IsNullOrEmpty(item)) return;
-                            AdapterLogger.Logger.Error($"OutputConsole: ERROR: {item}");
+                            AdapterLogger.Logger.Warning($"OutputConsole: ERROR: {item}");
                         };
 
                         await revit.RunTestReadWithLog(source, outputConsole, outputError);

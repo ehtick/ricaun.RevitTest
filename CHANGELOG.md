@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Console
 - Throw exception when `RevitTestUtils` is empty.
 ### TestAdapter
-- Show error when Console fails.
+- Show Warning when Console fails.
 - Fix local file copy to temporary by zip folder.
 
 ## [1.3.4] / 2024-05-27
