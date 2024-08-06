@@ -150,7 +150,7 @@ namespace ricaun.RevitTest.Application.Revit
                             catch (Exception ex)
                             {
                                 Log.WriteLine($"TestExecuteUtils: Exception {ex}");
-                                var exceptionFail = new Exception("TestExecuteUtils.Execute Fails", ex);
+                                var exceptionFail = new Exception($"TestExecuteUtils.Execute Fails ({ex.Message})", ex);
                                 testAssemblyModel = TestEngine.Fail(message.TestPathFile, exceptionFail, testFilterNames);
                             }
 

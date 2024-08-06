@@ -16,20 +16,20 @@ namespace ricaun.RevitTest.Application.Revit
         {
             Log.WriteLine($"TestExecuteUtils: {filePath}");
             var zipFile = await revitTask.Run(() => CopyFilesUsingZipFolder(filePath));
-
+            
             if (zipFile is null)
             {
                 Log.WriteLine($"TestExecuteUtils: Copy Zip Fail");
-                return null;
+                throw new Exception("Copy Zip Fail");
             }
 
             string zipDestination = null;
             var extractToTempSucess = await revitTask.Run(() => ZipExtension.ExtractToTempFolder(zipFile, out zipDestination));
-
+            
             if (extractToTempSucess == false)
             {
                 Log.WriteLine($"TestExecuteUtils: Extract Zip Fail");
-                return null;
+                throw new Exception("Extract Zip Fail");
             }
 
             //TestAssemblyModel tests = await revitTask.Run(() => TestDirectory(zipDestination, parameters));
