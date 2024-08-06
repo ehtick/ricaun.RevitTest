@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update project to build `net47` and `net48`.
 - Update `Images` with light and dark theme.
 - Update `ricaun.Revit.UI` with the image auto theme based in the `light` and `dark` in the file name.
+### TestAdapter
+- Show error when Console fails.
 
 ## [1.3.4] / 2024-05-27
 ### Console

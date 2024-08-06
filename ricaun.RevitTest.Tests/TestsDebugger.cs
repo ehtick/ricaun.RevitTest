@@ -9,7 +9,7 @@ using System.Reflection;
 //[assembly: AssemblyMetadata("NUnit.Close", "true")]
 //[assembly: AssemblyMetadata("NUnit.Version", "2024")]
 
-//[assembly: AssemblyMetadata("NUnit.Verbosity", "2")]
+//[assembly: AssemblyMetadata("NUnit.Verbosity", "3")]
 
 [assembly: AssemblyMetadata("NUnit.Application", "RICAUN_REVIT_TEST_APPLICATION_DA4R_LOCAL")]
 [assembly: AssemblyMetadata("NUnit.Application", "NUNIT_APPLICATION_TEST")]

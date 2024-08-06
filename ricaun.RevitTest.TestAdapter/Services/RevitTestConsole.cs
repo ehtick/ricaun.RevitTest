@@ -103,6 +103,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             bool revitOpen = false,
             bool revitClose = false,
             Action<string> consoleAction = null,
+            Action<string> errorAction = null,
             params string[] filter)
         {
             await new RevitTestProcessStart(applicationPath)
@@ -115,10 +116,10 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 .SetLog()
                 .SetTestFilter(filter)
                 .SetDebugger(System.Diagnostics.Debugger.IsAttached)
-                .Run(consoleAction);
+                .Run(consoleAction, errorAction);
         }
 
-        public async Task<string[]> RunTestRead(string file)
+        private async Task<string[]> RunTestRead(string file)
         {
             var read = await new RevitTestProcessStart(applicationPath)
                 .SetFile(file)
@@ -132,14 +133,15 @@ namespace ricaun.RevitTest.TestAdapter.Services
 
         public async Task RunTestReadWithLog(
             string file,
-            Action<string> consoleAction)
+            Action<string> consoleAction,
+            Action<string> errorAction = null)
         {
             await new RevitTestProcessStart(applicationPath)
                 .SetFile(file)
                 .SetOutputConsole()
                 .SetRead()
                 .SetLog()
-                .Run(consoleAction);
+                .Run(consoleAction, errorAction);
         }
 
         public void Dispose()

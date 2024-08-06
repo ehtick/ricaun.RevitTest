@@ -72,7 +72,13 @@ namespace ricaun.RevitTest.TestAdapter
                             }
                         };
 
-                        await revit.RunTestReadWithLog(source, outputConsole);
+                        Action<string> outputError = (item) =>
+                        {
+                            if (string.IsNullOrEmpty(item)) return;
+                            AdapterLogger.Logger.Error($"OutputConsole: ERROR: {item}");
+                        };
+
+                        await revit.RunTestReadWithLog(source, outputConsole, outputError);
 
                         AdapterLogger.Logger.Debug("DiscoverTests: -------------------------------");
                         AdapterLogger.Logger.Info($"DiscoverTests: {testNames.ToJson()}");
