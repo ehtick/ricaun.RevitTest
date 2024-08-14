@@ -12,6 +12,8 @@ namespace ricaun.RevitTest.Application.Revit
 {
     public static class TestExecuteUtils
     {
+        private const string FOLDER_NAME_TEMP = "RevitTest";
+
         public static async Task<TestAssemblyModel> ExecuteAsync(IRevitTask revitTask, string filePath, params object[] parameters)
         {
             Log.WriteLine($"TestExecuteUtils: {filePath}");
@@ -44,8 +46,7 @@ namespace ricaun.RevitTest.Application.Revit
             if (filePath is null)
                 return null;
 
-            var location = Assembly.GetExecutingAssembly().Location;
-            var directory = Path.GetDirectoryName(location);
+            var directory = Path.Combine(Path.GetTempPath(), FOLDER_NAME_TEMP);
 
             if (Path.GetExtension(filePath).EndsWith("dll") == false)
                 return null;

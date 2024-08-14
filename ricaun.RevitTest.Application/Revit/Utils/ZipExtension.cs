@@ -29,7 +29,7 @@ namespace ricaun.RevitTest.Application.Revit
 
             if (Directory.Exists(zipDestination))
             {
-                zipDestination += $"_{DateTime.Now.Ticks}";
+                zipDestination += $"_{DateTime.Now.Ticks:X}";
             }
 
             Directory.CreateDirectory(zipDestination);

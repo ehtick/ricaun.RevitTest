@@ -12,11 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `Images` with light and dark theme.
 - Update `ricaun.Revit.UI` with the image auto theme based in the `light` and `dark` in the file name.
 - Update `Exception` when null.
+- Update timestamp in temp folder to hexadecimal.
+- Update test folder to temporarty the folder `RevitTest` to reduce the `PathTooLongException`. (Fix #48)
 ### Console
 - Throw exception when `RevitTestUtils` is empty.
 ### TestAdapter
 - Show Warning when Console fails.
 - Fix local file copy to temporary by zip folder.
+- Add `TestsFilePathTooLong` to similate long path inside test.
 
 ## [1.3.4] / 2024-05-27
 ### Console
