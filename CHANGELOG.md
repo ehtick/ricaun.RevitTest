@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `Exception` when null.
 - Update timestamp in temp folder to hexadecimal.
 - Update test folder to temporarty the folder `RevitTest` to reduce the `PathTooLongException`. (Fix #48)
+- Update to use `ricaun.Revit.UI.Tasks` library to run async tests.
 ### Console
 - Throw exception when `RevitTestUtils` is empty.
 ### TestAdapter

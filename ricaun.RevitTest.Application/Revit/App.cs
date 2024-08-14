@@ -4,7 +4,7 @@ using Autodesk.Revit.UI;
 using Revit.Busy;
 using ricaun.NUnit;
 using ricaun.NUnit.Models;
-using ricaun.Revit.Async.Services;
+using ricaun.Revit.UI.Tasks;
 using ricaun.Revit.UI;
 using ricaun.RevitTest.Application.Revit.Utils;
 using ricaun.RevitTest.Shared;
@@ -35,9 +35,8 @@ namespace ricaun.RevitTest.Application.Revit
             RevitBusyService = new RevitBusyService(application);
             RevitBusyService.PropertyChanged += RevitBusyControlPropertyChanged;
 
-            RevitTask = new RevitTaskService();
+            RevitTask = new RevitTaskService(application);
             RevitTask.Initialize();
-            ricaun.Revit.Async.RevitTask.Initialize();
 
             Log.WriteLine();
             Log.WriteLine($"{AppUtils.GetInfo()}");

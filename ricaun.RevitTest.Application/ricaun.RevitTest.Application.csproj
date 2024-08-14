@@ -113,7 +113,7 @@
   <ItemGroup>
     <PackageReference Include="Revit.Busy" Version="*" />
     <PackageReference Include="ricaun.Revit.UI" Version="*-*" />
-    <PackageReference Include="ricaun.Revit.Async" Version="*" />
+    <PackageReference Include="ricaun.Revit.UI.Tasks" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
   </ItemGroup>
 
