@@ -1,7 +1,6 @@
 ﻿using Autodesk.Revit.UI;
 using NUnit.Framework;
-using ricaun.Revit.Async;
-using ricaun.Revit.Async.Timeout;
+using ricaun.Revit.UI.Tasks;
 using System;
 using System.Threading.Tasks;
 
@@ -11,10 +10,24 @@ namespace ricaun.RevitTest.Tests
 {
     public class TestRevitTask
     {
-        [Test]
-        public void Initialize()
+        static IRevitTask RevitTask;
+        [OneTimeSetUp]
+        public void Initialize(UIApplication uiapp)
         {
-            RevitTask.Initialize();
+            if (RevitTask is null)
+            {
+                var revitTask = new RevitTaskService(uiapp);
+                revitTask.Initialize();
+                RevitTask = revitTask;
+            }
+        }
+        /// <summary>
+        /// This method is required to initialize the RevitTask
+        /// </summary>
+        [Test]
+        public void Test_Initialize()
+        {
+            Assert.IsNotNull(RevitTask);
         }
 
 #if !(NET)
@@ -73,10 +86,14 @@ namespace ricaun.RevitTest.Tests
             {
                 try
                 {
-                    await RevitTaskTimeout.RunAsync((uiapp) =>
+                    var source = new System.Threading.CancellationTokenSource(200);
+                    var cancellationToken = source.Token;
+                    await Task.Delay(500);
+                    await RevitTask.Run((uiapp) =>
                     {
+                        // This never execute
                         TaskDialog.Show("Show", "Close me");
-                    });
+                    }, cancellationToken);
                 }
                 catch (Exception) { timeout++; }
             }

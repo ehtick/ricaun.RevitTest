@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Show Warning when Console fails.
 - Fix local file copy to temporary by zip folder.
 - Add `TestsFilePathTooLong` to similate long path inside test.
+- Update to use `ricaun.Revit.UI.Tasks` library to run async tests.
 
 ## [1.3.4] / 2024-05-27
 ### Console
