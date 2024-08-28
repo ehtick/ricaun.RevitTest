@@ -5,6 +5,7 @@ using ricaun.RevitTest.TestAdapter.Extensions;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +46,8 @@ namespace ricaun.RevitTest.TestAdapter
                 {
                     Metadatas.MetadataSettings.Create(source);
                     AdapterLogger.Logger.Info($"DiscoverTests: {source}");
-                    using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
+
+                    using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application, source))
                     {
                         if (revit.IsTrusted(out string message) == false)
                         {

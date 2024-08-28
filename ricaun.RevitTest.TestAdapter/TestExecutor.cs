@@ -90,7 +90,7 @@ namespace ricaun.RevitTest.TestAdapter
             AdapterLogger.Logger.Info($"RevitTestConsole: {AdapterSettings.Settings.NUnit.Application}");
             AdapterLogger.Logger.Info("---------");
 
-            using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
+            using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application, source))
             {
                 if (revit.IsTrusted(out string message) == false)
                 {

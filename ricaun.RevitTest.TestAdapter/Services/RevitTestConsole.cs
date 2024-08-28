@@ -61,8 +61,15 @@ namespace ricaun.RevitTest.TestAdapter.Services
             return null;
         }
 
-        public RevitTestConsole(string application = null)
+        public RevitTestConsole(string application = null, string sourceFile = null)
         {
+            if (!string.IsNullOrEmpty(sourceFile))
+            {
+                var directory = Path.GetDirectoryName(sourceFile);
+                if (Directory.Exists(directory))
+                    Directory.SetCurrentDirectory(directory);
+            }
+
             applicationPath = ValidadeApplication(application, true);
             if (applicationPath is null)
             {
