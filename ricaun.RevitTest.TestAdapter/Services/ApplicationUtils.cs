@@ -152,7 +152,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 var assemblyDirectory = Path.GetDirectoryName(typeof(ApplicationUtils).Assembly.Location);
                 localFilePath = Path.Combine(assemblyDirectory, filePath);
                 localFilePath = new FileInfo(localFilePath).FullName;
-                AdapterLogger.Logger.Debug($"Application LocalFileCheck: {assemblyDirectory}");
+                AdapterLogger.Logger.Debug($"Application LocalFileCheck: {localFilePath}");
                 if (File.Exists(localFilePath))
                 {
                     AdapterLogger.Logger.DebugOnlyLocal($"Download File AssemblyDirectory: {assemblyDirectory}");
