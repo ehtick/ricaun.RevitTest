@@ -94,7 +94,13 @@ namespace ricaun.RevitTest.TestAdapter.Services
             var arguments = CreateArguments();
             Debug.WriteLine($"Run: {arguments}");
 
+            AdapterLogger.Logger.DebugOnlyLocal($"ProcessStart: {processPath}");
             AdapterLogger.Logger.DebugOnlyLocal($"ProcessStart.Run: {arguments}");
+
+            foreach (var item in System.IO.Directory.GetFiles(System.IO.Path.GetDirectoryName(processPath)))
+            {
+                AdapterLogger.Logger.DebugOnlyLocal($"ProcessStart.File: {item}");
+            }
 
             await Run(arguments, consoleAction, errorAction);
         }

@@ -22,12 +22,22 @@
 
   <!-- RevitVersion -->
   <PropertyGroup>
-    <TargetFrameworks>net46;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>net46;net47;net48;net8.0-windows</TargetFrameworks>
   </PropertyGroup>
   <Choose>
-    <When Condition="$(TargetFramework.StartsWith('net4'))">
+    <When Condition="$(TargetFramework.StartsWith('net46'))">
       <PropertyGroup>
         <RevitVersion>2017</RevitVersion>
+      </PropertyGroup>
+    </When>
+    <When Condition="$(TargetFramework.StartsWith('net47'))">
+      <PropertyGroup>
+        <RevitVersion>2019</RevitVersion>
+      </PropertyGroup>
+    </When>
+    <When Condition="$(TargetFramework.StartsWith('net48'))">
+      <PropertyGroup>
+        <RevitVersion>2021</RevitVersion>
       </PropertyGroup>
     </When>
     <Otherwise>
@@ -90,16 +100,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\test-fail.ico" />
-    <None Remove="Images\test-pass.ico" />
-    <None Remove="Images\test-skip.ico" />
-    <None Remove="Images\test-wait.ico" />
+    <None Remove="Images\test-fail-dark.ico" />
+    <None Remove="Images\test-fail-light.ico" />
+    <None Remove="Images\test-pass-dark.ico" />
+    <None Remove="Images\test-pass-light.ico" />
+    <None Remove="Images\test-skip-dark.ico" />
+    <None Remove="Images\test-skip-light.ico" />
+    <None Remove="Images\test-wait-dark.ico" />
+    <None Remove="Images\test-wait-light.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Revit.Busy" Version="*" />
     <PackageReference Include="ricaun.Revit.UI" Version="*" />
-    <PackageReference Include="ricaun.Revit.Async" Version="*" />
+    <PackageReference Include="ricaun.Revit.UI.Tasks" Version="*" />
+    <PackageReference Include="ricaun.Revit.UI.Busy" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />
   </ItemGroup>
 
@@ -147,10 +161,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\test-fail.ico" />
-    <Resource Include="Images\test-pass.ico" />
-    <Resource Include="Images\test-skip.ico" />
-    <Resource Include="Images\test-wait.ico" />
+    <Resource Include="Images\test-fail-dark.ico" />
+    <Resource Include="Images\test-fail-light.ico" />
+    <Resource Include="Images\test-pass-dark.ico" />
+    <Resource Include="Images\test-pass-light.ico" />
+    <Resource Include="Images\test-skip-dark.ico" />
+    <Resource Include="Images\test-skip-light.ico" />
+    <Resource Include="Images\test-wait-dark.ico" />
+    <Resource Include="Images\test-wait-light.ico" />
   </ItemGroup>
 
 </Project>

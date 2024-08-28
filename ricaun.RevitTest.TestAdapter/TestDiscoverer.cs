@@ -5,6 +5,7 @@ using ricaun.RevitTest.TestAdapter.Extensions;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -45,7 +46,8 @@ namespace ricaun.RevitTest.TestAdapter
                 {
                     Metadatas.MetadataSettings.Create(source);
                     AdapterLogger.Logger.Info($"DiscoverTests: {source}");
-                    using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
+
+                    using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application, source))
                     {
                         if (revit.IsTrusted(out string message) == false)
                         {
@@ -72,7 +74,13 @@ namespace ricaun.RevitTest.TestAdapter
                             }
                         };
 
-                        await revit.RunTestReadWithLog(source, outputConsole);
+                        Action<string> outputError = (item) =>
+                        {
+                            if (string.IsNullOrEmpty(item)) return;
+                            AdapterLogger.Logger.Warning($"OutputConsole: ERROR: {item}");
+                        };
+
+                        await revit.RunTestReadWithLog(source, outputConsole, outputError);
 
                         AdapterLogger.Logger.Debug("DiscoverTests: -------------------------------");
                         AdapterLogger.Logger.Info($"DiscoverTests: {testNames.ToJson()}");

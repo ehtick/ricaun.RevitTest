@@ -84,4 +84,19 @@ namespace ricaun.RevitTest.Tests
         }
 
     }
+
+    public class TestsFilePathTooLong
+    {
+        const string FILE_NAME = "file-path-too-long.txt";
+        private string GetBigPathFileName() => Path.Combine(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), FILE_NAME);
+        [Test]
+        public void TestFileInfo()
+        {
+            // if path too long the `PathTooLongException` happens. Only in .NET Framework, not in .NET Core.
+            var path = GetBigPathFileName();
+            var fileInfo = new FileInfo(path);
+            var lenght = fileInfo.FullName.Length;
+            Console.WriteLine($"FullLenght: {lenght} TestLenght:{path.Length}");
+        }
+    }
 }

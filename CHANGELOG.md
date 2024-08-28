@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.5] / 2024-07-22 - 2024-08-28
+### Features
+- Update `Application` images to support `light` and `dark` theme.
+### Application
+- Update project to build `net47` and `net48`.
+- Update `Images` with light and dark theme.
+- Update `ricaun.Revit.UI` with the image auto theme based in the `light` and `dark` in the file name.
+- Update `Exception` when null.
+- Update timestamp in temp folder to hexadecimal.
+- Update test folder to temporarty the folder `RevitTest` to reduce the `PathTooLongException`. (Fix #48)
+- Update to use `ricaun.Revit.UI.Tasks` library to run async tests.
+- Update to use `ricaun.Revit.UI.Busy` library to check if revit is busy.
+### Console
+- Throw exception when `RevitTestUtils` is empty.
+### TestAdapter
+- Show Warning when Console fails.
+- Fix local file copy to temporary by zip folder.
+- Add `TestsFilePathTooLong` to similate long path inside test.
+- Update to use `ricaun.Revit.UI.Tasks` library to run async tests.
+- Update `ApplicationUtils` check local file exists.
+- Update `RevitTestConsole` with `SetCurrentDirectory` using the source test file.
+
 ## [1.3.4] / 2024-05-27
 ### Console
 - Update `ricaun.Revit.Installation` to fix bundle not loading when Revit is open. (Fix: #46)
@@ -425,6 +447,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.3.5]: ../../compare/1.3.4...1.3.5
 [1.3.4]: ../../compare/1.3.3...1.3.4
 [1.3.3]: ../../compare/1.3.2...1.3.3
 [1.3.2]: ../../compare/1.3.1...1.3.2

@@ -90,7 +90,7 @@ namespace ricaun.RevitTest.TestAdapter
             AdapterLogger.Logger.Info($"RevitTestConsole: {AdapterSettings.Settings.NUnit.Application}");
             AdapterLogger.Logger.Info("---------");
 
-            using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application))
+            using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application, source))
             {
                 if (revit.IsTrusted(out string message) == false)
                 {
@@ -148,6 +148,12 @@ namespace ricaun.RevitTest.TestAdapter
                     }
                 };
 
+                Action<string> outputError = (item) =>
+                {
+                    if (string.IsNullOrEmpty(item)) return;
+                    AdapterLogger.Logger.Warning($"OutputConsole: ERROR: {item}");
+                };
+
                 AdapterLogger.Logger.Info($"RunRevitTest: {source} [Version: {AdapterSettings.Settings.NUnit.Version}] [TestFilter: {filters.Length}]");
 
                 await revit.RunTestAction(source,
@@ -155,7 +161,7 @@ namespace ricaun.RevitTest.TestAdapter
                     AdapterSettings.Settings.NUnit.Language,
                     AdapterSettings.Settings.NUnit.Open,
                     AdapterSettings.Settings.NUnit.Close,
-                    outputConsole, filters);
+                    outputConsole, outputError, filters);
             }
 
             AdapterLogger.Logger.Info("---------");

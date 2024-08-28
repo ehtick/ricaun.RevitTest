@@ -106,7 +106,15 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 {
                     if (LocalFileExists(address, out string localFilePath))
                     {
-                        File.Copy(localFilePath, zipPath, true);
+                        if (Path.GetExtension(localFilePath) == ZIP_FILE_EXTENSION)
+                        {
+                            File.Copy(localFilePath, zipPath, true);
+                        }
+                        else
+                        {
+                            zipPath = Path.ChangeExtension(zipPath, ZIP_FILE_EXTENSION);
+                            ZipFile.CreateFromDirectory(Path.GetDirectoryName(localFilePath), zipPath);
+                        }
                         AdapterLogger.Logger.DebugOnlyLocal($"Download File CurrentDirectory: {Directory.GetCurrentDirectory()}");
                         AdapterLogger.Logger.DebugOnlyLocal($"Download File Exists: {localFilePath}");
                     }
@@ -139,14 +147,18 @@ namespace ricaun.RevitTest.TestAdapter.Services
         private static bool LocalFileExists(string filePath, out string localFilePath)
         {
             localFilePath = filePath;
+
             if (File.Exists(localFilePath)) return true;
+
             try
             {
-                var assemblyDirectory = Path.GetDirectoryName(typeof(ApplicationUtils).Assembly.Location);
-                localFilePath = Path.Combine(assemblyDirectory, filePath);
+                var currentDirectory = Directory.GetCurrentDirectory();
+                localFilePath = Path.Combine(currentDirectory, filePath);
+                localFilePath = new FileInfo(localFilePath).FullName;
+                AdapterLogger.Logger.Debug($"Application LocalFileCheck: {localFilePath}");
                 if (File.Exists(localFilePath))
                 {
-                    AdapterLogger.Logger.DebugOnlyLocal($"Download File AssemblyDirectory: {assemblyDirectory}");
+                    AdapterLogger.Logger.DebugOnlyLocal($"Download LocalFileCheck: {localFilePath}");
                     return true;
                 }
             }
@@ -161,7 +173,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
         /// <param name="address"></param>
         /// <param name="downloadFileException"></param>
         /// <returns></returns>
-        public static async Task<bool> DownloadAsyncWeb(string applicationFolder, string address, Action<Exception> downloadFileException = null)
+        private static async Task<bool> DownloadAsyncWeb(string applicationFolder, string address, Action<Exception> downloadFileException = null)
         {
             var fileName = Path.GetFileName(address);
             var zipPath = Path.Combine(applicationFolder, fileName);

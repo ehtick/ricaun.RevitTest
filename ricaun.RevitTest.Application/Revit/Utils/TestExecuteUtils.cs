@@ -1,6 +1,6 @@
 ﻿using ricaun.NUnit;
 using ricaun.NUnit.Models;
-using ricaun.Revit.Async.Services;
+using ricaun.Revit.UI.Tasks;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -12,24 +12,26 @@ namespace ricaun.RevitTest.Application.Revit
 {
     public static class TestExecuteUtils
     {
+        private const string FOLDER_NAME_TEMP = "RevitTest";
+
         public static async Task<TestAssemblyModel> ExecuteAsync(IRevitTask revitTask, string filePath, params object[] parameters)
         {
             Log.WriteLine($"TestExecuteUtils: {filePath}");
             var zipFile = await revitTask.Run(() => CopyFilesUsingZipFolder(filePath));
-
+            
             if (zipFile is null)
             {
                 Log.WriteLine($"TestExecuteUtils: Copy Zip Fail");
-                return null;
+                throw new Exception("Copy Zip Fail");
             }
 
             string zipDestination = null;
             var extractToTempSucess = await revitTask.Run(() => ZipExtension.ExtractToTempFolder(zipFile, out zipDestination));
-
+            
             if (extractToTempSucess == false)
             {
                 Log.WriteLine($"TestExecuteUtils: Extract Zip Fail");
-                return null;
+                throw new Exception("Extract Zip Fail");
             }
 
             //TestAssemblyModel tests = await revitTask.Run(() => TestDirectory(zipDestination, parameters));
@@ -44,8 +46,7 @@ namespace ricaun.RevitTest.Application.Revit
             if (filePath is null)
                 return null;
 
-            var location = Assembly.GetExecutingAssembly().Location;
-            var directory = Path.GetDirectoryName(location);
+            var directory = Path.Combine(Path.GetTempPath(), FOLDER_NAME_TEMP);
 
             if (Path.GetExtension(filePath).EndsWith("dll") == false)
                 return null;

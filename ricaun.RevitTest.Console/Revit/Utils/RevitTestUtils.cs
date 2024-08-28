@@ -53,12 +53,18 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                     Log.WriteLine($"RevitTestUtils: {revitInstallation.InstallLocation}");
                     tests = TestEngine.GetTestFullNames(filePath, revitInstallation.InstallLocation);
                 }
+
+                if (tests.Length == 0)
+                {
+                    throw new Exception($"Unable to read tests class using the Revit version {revitVersion}.");
+                }
             }
 
 #if DEBUG
             LoggerTest($"Test °C");
             LoggerTest($"Length {tests.Length}");
             LoggerTest($"TestEngine {TestEngine.Version.ToString(3)}");
+            LoggerTest($"{AppUtils.GetInfo()}");
             if (LoggerTests.Any())
             {
                 LoggerTests.AddRange(tests);
