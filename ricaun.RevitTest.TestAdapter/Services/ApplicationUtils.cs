@@ -147,11 +147,12 @@ namespace ricaun.RevitTest.TestAdapter.Services
         private static bool LocalFileExists(string filePath, out string localFilePath)
         {
             localFilePath = filePath;
-            if (File.Exists(localFilePath)) return true;
             try
             {
                 var assemblyDirectory = Path.GetDirectoryName(typeof(ApplicationUtils).Assembly.Location);
                 localFilePath = Path.Combine(assemblyDirectory, filePath);
+                localFilePath = new FileInfo(localFilePath).FullName;
+                AdapterLogger.Logger.Debug($"Application LocalFileCheck: {assemblyDirectory}");
                 if (File.Exists(localFilePath))
                 {
                     AdapterLogger.Logger.DebugOnlyLocal($"Download File AssemblyDirectory: {assemblyDirectory}");
