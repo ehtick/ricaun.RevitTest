@@ -5,7 +5,7 @@
 [![Nuke](https://img.shields.io/badge/Nuke-Build-blue)](https://nuke.build/)
 [![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Build](https://github.com/ricaun-io/ricaun.RevitTest/actions/workflows/Build.yml/badge.svg)](https://github.com/ricaun-io/ricaun.RevitTest/actions)
-[![Release](https://img.shields.io/nuget/v/ricaun.RevitTest.TestAdapter?logo=nuget&label=release&color=blue)](https://www.nuget.org/packages/ricaun.RevitTest.TestAdapter)
+[![nuget](https://img.shields.io/nuget/v/ricaun.RevitTest.TestAdapter?logo=nuget&label=nuget&color=blue)](https://www.nuget.org/packages/ricaun.RevitTest.TestAdapter)
 
 [![ricaun.RevitTest](https://raw.githubusercontent.com/ricaun/test-assets/main/assets/ricaun.RevitTest.png)](https://github.com/ricaun-io/ricaun.RevitTest)
 
