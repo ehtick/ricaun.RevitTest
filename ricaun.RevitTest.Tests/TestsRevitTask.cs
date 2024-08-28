@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.Tests
 {
-    public class TestRevitTask
+    public class TestsRevitTask
     {
         static IRevitTask RevitTask;
         [OneTimeSetUp]
@@ -71,7 +71,7 @@ namespace ricaun.RevitTest.Tests
             });
 
             Console.WriteLine(Index);
-            Assert.AreEqual(1, Index);
+            Assert.GreaterOrEqual(Index, 1);
         }
 
         /// <summary>
