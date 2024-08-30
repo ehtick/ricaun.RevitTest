@@ -155,10 +155,10 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 var currentDirectory = Directory.GetCurrentDirectory();
                 localFilePath = Path.Combine(currentDirectory, filePath);
                 localFilePath = new FileInfo(localFilePath).FullName;
-                AdapterLogger.Logger.Debug($"Application LocalFileCheck: {localFilePath}");
+                AdapterLogger.Logger.DebugOnlyLocal($"Application LocalFileCheck: {localFilePath}");
                 if (File.Exists(localFilePath))
                 {
-                    AdapterLogger.Logger.DebugOnlyLocal($"Download LocalFileCheck: {localFilePath}");
+                    AdapterLogger.Logger.Debug($"Application LocalFileCheck: {localFilePath}");
                     return true;
                 }
             }
