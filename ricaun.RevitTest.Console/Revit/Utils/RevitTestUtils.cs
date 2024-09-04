@@ -197,7 +197,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                             }
                         };
 
-                        for (int i = 0; i < 10 * 60; i++)
+                        for (int i = 0; i < 120 * 60; i++)
                         {
                             Thread.Sleep(1000);
 
