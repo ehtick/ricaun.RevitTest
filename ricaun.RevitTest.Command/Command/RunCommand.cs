@@ -1,4 +1,5 @@
-﻿using ricaun.RevitTest.Command.Extensions;
+﻿using ricaun.NUnit;
+using ricaun.RevitTest.Command.Extensions;
 using ricaun.RevitTest.Command.Utils;
 using System;
 using System.IO;
@@ -30,7 +31,7 @@ namespace ricaun.RevitTest.Command
 
         private void Initialize()
         {
-            NUnit.TestEngine.Initialize(out string init);
+            TestEngine.Initialize(out string init);
 
             Log.WriteLine();
             Log.WriteLine($"{AppUtils.GetInfo()} [{init}]");

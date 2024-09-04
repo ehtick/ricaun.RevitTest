@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.3.7] / 2024-09-04
 ### Console
 - Change timeout to 120 minutes in the `RevitTestUtils`.
+### Command
+- Add `RevitTestProcessStart` to run tests with `ProcessStart`.
 
 ## [1.3.6] / 2024-08-30
 ### TestAdapter
