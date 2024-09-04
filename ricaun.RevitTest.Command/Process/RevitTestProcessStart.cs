@@ -109,7 +109,12 @@ namespace ricaun.RevitTest.Command.Process
                     debugAction?.Invoke($"OutputConsole: DEBUG: {item}");
                 }
             };
-            return Run(outputConsole, errorAction);
+            Action<string> outputError = (item) =>
+            {
+                if (string.IsNullOrEmpty(item)) return;
+                errorAction?.Invoke($"OutputConsole: ERROR: {item}");
+            };
+            return Run(outputConsole, outputError);
         }
 
         public Task RunReadTests(Action<string[]> actionTests, 
@@ -117,6 +122,12 @@ namespace ricaun.RevitTest.Command.Process
             Action<string> debugAction = null,
             Action<string> errorAction = null)
         {
+            Action<string> outputError = (item) =>
+            {
+                if (string.IsNullOrEmpty(item)) return;
+                errorAction?.Invoke($"OutputConsole: ERROR: {item}");
+            };
+
             Action<string> outputConsole = (item) =>
             {
                 if (string.IsNullOrEmpty(item)) return;
@@ -132,7 +143,7 @@ namespace ricaun.RevitTest.Command.Process
                     }
                 }
             };
-            return Run(outputConsole, errorAction);
+            return Run(outputConsole, outputError);
         }
     }
 }

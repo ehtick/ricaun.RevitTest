@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Change timeout to 120 minutes in the `RevitTestUtils`.
 ### Command
 - Add `RevitTestProcessStart` to run tests with `ProcessStart`.
+### TestAdapter
+- Add project `ricaun.RevitTest.Command` with `ricaun.NUnit`
+- Remove references `CommandLineParser` and `NUnit` not used.
+- Use `RevitTestProcessStartUtils` to start the process.
 
 ## [1.3.6] / 2024-08-30
 ### TestAdapter

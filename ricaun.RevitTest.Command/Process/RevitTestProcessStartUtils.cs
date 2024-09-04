@@ -6,7 +6,17 @@ namespace ricaun.RevitTest.Command.Process
 {
     public static class RevitTestProcessStartUtils
     {
-        public static async Task RunTestReadWithLog(
+        /// <summary>
+        /// Execute read Tests with output console and log.
+        /// </summary>
+        /// <param name="applicationPath"></param>
+        /// <param name="file"></param>
+        /// <param name="testResultAction"></param>
+        /// <param name="consoleAction"></param>
+        /// <param name="debugAction"></param>
+        /// <param name="errorAction"></param>
+        /// <returns></returns>
+        public static async Task RunReadTests(
             string applicationPath,
             string file,
             Action<string[]> testResultAction,
@@ -22,6 +32,22 @@ namespace ricaun.RevitTest.Command.Process
                 .RunReadTests(testResultAction, consoleAction, debugAction, errorAction);
         }
 
+        /// <summary>
+        /// Execute Tests with output console and log.
+        /// </summary>
+        /// <param name="applicationPath"></param>
+        /// <param name="file"></param>
+        /// <param name="testResultAction"></param>
+        /// <param name="version"></param>
+        /// <param name="language"></param>
+        /// <param name="revitOpen"></param>
+        /// <param name="revitClose"></param>
+        /// <param name="debugger"></param>
+        /// <param name="consoleAction"></param>
+        /// <param name="debugAction"></param>
+        /// <param name="errorAction"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public static async Task RunExecuteTests(
             string applicationPath,
             string file,
