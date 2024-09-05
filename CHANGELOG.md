@@ -10,10 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Console
 - Change `TimeoutMinutesDefault` to 10 minutes in the `RevitTestUtils`.
 - Remove deprecated `wait` option and `RevitDebugUtils`.
+- Add `Timeout` option to abort application.
 ### Command
 - Add `RevitTestProcessStart` to run tests with `ProcessStart`.
 - Remove deprecated `wait` option.
-- Add `timeout` option to abort application.
+- Add `Timeout` option to abort application.
 ### TestAdapter
 - Add project `ricaun.RevitTest.Command` with `ricaun.NUnit`
 - Remove references `CommandLineParser` and `NUnit` not used.
