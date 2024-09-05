@@ -111,6 +111,7 @@ namespace ricaun.RevitTest.TestAdapter
                     AdapterSettings.Settings.NUnit.Language,
                     AdapterSettings.Settings.NUnit.Open,
                     AdapterSettings.Settings.NUnit.Close,
+                    AdapterSettings.Settings.NUnit.Timeout,
                     AdapterLogger.Logger.Debug, (message) => { if (IsLogDebug) AdapterLogger.Logger.Debug(message); }, AdapterLogger.Logger.Warning, 
                     filters);
 

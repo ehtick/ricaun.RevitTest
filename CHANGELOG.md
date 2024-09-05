@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add project `ricaun.RevitTest.Command` with `ricaun.NUnit`
 - Remove references `CommandLineParser` and `NUnit` not used.
 - Use `RevitTestProcessStartUtils` to start the process.
+- Add `NUnit.Timeout` option to timeout the application.
 
 ## [1.3.6] / 2024-08-30
 ### TestAdapter

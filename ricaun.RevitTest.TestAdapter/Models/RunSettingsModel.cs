@@ -23,6 +23,9 @@
             [XmlElement("Close")]
             public bool Close { get; set; }
 
+            [XmlElement("Timeout")]
+            public int Timeout { get; set; }
+
             [XmlElement("Verbosity")]
             public int Verbosity { get; set; }
 
