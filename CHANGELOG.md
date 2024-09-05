@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.4.0] / 2024-09-05
 ### Features
-- Support `NUnit.Timeout` option to abort application. (default '10' minutes)
+- Support `NUnit.Timeout` option to abort application. (default '10' minutes) (Fix: #51)
 ### Console
 - Change `TimeoutMinutesDefault` to 10 minutes in the `RevitTestUtils`.
 - Remove deprecated `wait` option and `RevitDebugUtils`.
