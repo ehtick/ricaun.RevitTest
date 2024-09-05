@@ -60,7 +60,7 @@ namespace ricaun.RevitTest.Command
         public bool ForceToClose { get; set; }
 
         [Option("timeout",
-          Default = false,
+          Default = 0,
           HelpText = "Timeout in minutes to abort this application.")]
         public int Timeout { get; set; }
 
