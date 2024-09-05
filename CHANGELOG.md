@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support `Timeout` option to abort application.
 ### Console
 - Change `TimeoutMinutesDefault` to 10 minutes in the `RevitTestUtils`.
+- Remove deprecated `wait` option and `RevitDebugUtils`.
 ### Command
 - Add `RevitTestProcessStart` to run tests with `ProcessStart`.
 - Remove deprecated `wait` option.
