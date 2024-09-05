@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Change `TimeoutMinutesDefault` to 10 minutes in the `RevitTestUtils`.
 - Remove deprecated `wait` option and `RevitDebugUtils`.
 - Add `Timeout` option to abort application.
+- Fail all tests when `Timeout` happen.
 ### Command
 - Add `RevitTestProcessStart` to run tests with `ProcessStart`.
 - Remove deprecated `wait` option.

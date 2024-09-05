@@ -135,7 +135,6 @@
               "Build",
               "BuildCommand",
               "BuildConsole",
-              "BuildTests",
               "Clean",
               "Compile",
               "GitPreRelease",
@@ -161,7 +160,6 @@
               "Build",
               "BuildCommand",
               "BuildConsole",
-              "BuildTests",
               "Clean",
               "Compile",
               "GitPreRelease",
@@ -173,9 +171,6 @@
               "Sign"
             ]
           }
-        },
-        "TestLocalProjectName": {
-          "type": "string"
         },
         "UnlistNuget": {
           "type": "boolean"

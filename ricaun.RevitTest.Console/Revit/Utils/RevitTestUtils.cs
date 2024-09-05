@@ -229,36 +229,37 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
                             if (timeoutNotBusyCountMax > 0 && timeoutNotBusyCount > timeoutNotBusyCountMax)
                             {
-                                //Log.WriteLine($"{revitInstallation}: Timeout");
-                                var timeoutMessage = $"{revitInstallation}: Timeout not busy for too long {timeoutNotBusyCountMax} seconds.";
-                                Log.WriteLine(timeoutMessage);
+                                var timeoutMessage = $"Timeout not busy for too long {timeoutNotBusyCountMax} seconds.";
+                                Log.WriteLine($"{revitInstallation}: {timeoutMessage}");
                                 var exceptionTimeoutTests = new Exception(timeoutMessage);
                                 var timeoutTests = TestEngine.Fail(fileToTest, exceptionTimeoutTests, testFilters);
                                 foreach (var testModel in timeoutTests.Tests.SelectMany(e => e.Tests))
                                 {
                                     actionOutput.Invoke(testModel.ToJson());
                                 }
+                                Thread.Sleep(SleepMillisecondsBeforeFinish);
                                 break;
                             }
 
                             if (i == timeoutSeconds)
                                 timeoutForceToEnd = true;
 
-                            if (client.ServerMessage.IsBusy)
-                                continue;
-
                             if (timeoutForceToEnd)
                             {
-                                var timeoutMessage = $"{revitInstallation}: Timeout {timeoutMinutes} minutes.";
-                                Log.WriteLine(timeoutMessage);
+                                var timeoutMessage = $"Timeout {timeoutMinutes} minutes.";
+                                Log.WriteLine($"{revitInstallation}: {timeoutMessage}");
                                 var exceptionTimeoutTests = new Exception(timeoutMessage);
                                 var timeoutTests = TestEngine.Fail(fileToTest, exceptionTimeoutTests, testFilters);
                                 foreach (var testModel in timeoutTests.Tests.SelectMany(e => e.Tests))
                                 {
-                                    actionOutput.Invoke(testModel.ToJson());
+                                    actionOutput?.Invoke(testModel.ToJson());
                                 }
+                                Thread.Sleep(SleepMillisecondsBeforeFinish);
                                 break;
                             }
+
+                            if (client.ServerMessage.IsBusy)
+                                continue;
 
                             if (testsFinishedForceToEnd)
                             {
