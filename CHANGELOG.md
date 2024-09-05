@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.3.7] / 2024-09-04
+## [1.4.0] / 2024-09-04
+### Features
+- Support `Timeout` option to abort application.
 ### Console
-- Change timeout to 120 minutes in the `RevitTestUtils`.
+- Change `TimeoutMinutesDefault` to 10 minutes in the `RevitTestUtils`.
 ### Command
 - Add `RevitTestProcessStart` to run tests with `ProcessStart`.
+- Remove deprecated `wait` option.
+- Add `timeout` option to abort application.
 ### TestAdapter
 - Add project `ricaun.RevitTest.Command` with `ricaun.NUnit`
 - Remove references `CommandLineParser` and `NUnit` not used.
@@ -461,7 +465,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
-[1.3.7]: ../../compare/1.3.6...1.3.7
+[1.4.0]: ../../compare/1.3.6...1.4.0
 [1.3.6]: ../../compare/1.3.5...1.3.6
 [1.3.5]: ../../compare/1.3.4...1.3.5
 [1.3.4]: ../../compare/1.3.3...1.3.4

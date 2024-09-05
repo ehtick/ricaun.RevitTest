@@ -8,12 +8,12 @@ namespace ricaun.RevitTest.Console
         {
             var result = RunTest.ParseArguments<Revit.RevitRunTestService>(args);
 
-#if DEBUG
-            if (!result)
-            {
-                Revit.Utils.RevitDebugUtils.ProcessServerSelect();
-            }
-#endif
+//#if DEBUG
+//            if (!result)
+//            {
+//                Revit.Utils.RevitDebugUtils.ProcessServerSelect();
+//            }
+//#endif
         }
     }
 }

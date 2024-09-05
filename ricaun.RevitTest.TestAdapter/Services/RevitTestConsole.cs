@@ -114,9 +114,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
             Action<string> errorAction = null,
             params string[] filter)
         {
+            var timeoutMinutes = 0;
             await ricaun.RevitTest.Command.Process.RevitTestProcessStartUtils.RunExecuteTests(
                 applicationPath, file, testResultAction,
-                version, language, revitOpen, revitClose, System.Diagnostics.Debugger.IsAttached,
+                version, language, revitOpen, revitClose, timeoutMinutes,
+                System.Diagnostics.Debugger.IsAttached,
                 consoleAction, debugAction, errorAction, filter);
         }
 

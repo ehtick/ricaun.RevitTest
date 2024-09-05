@@ -54,15 +54,15 @@ namespace ricaun.RevitTest.Command
           HelpText = "Force to open a new Revit process.")]
         public bool ForceToOpen { get; set; }
 
-        [Option("wait",
-          Default = false,
-          HelpText = "Force to wait after test done.")]
-        public bool ForceToWait { get; set; }
-
         [Option("close",
           Default = false,
           HelpText = "Force to close the Revit process.")]
         public bool ForceToClose { get; set; }
+
+        [Option("timeout",
+          Default = false,
+          HelpText = "Timeout in minutes to abort this application.")]
+        public int Timeout { get; set; }
 
         [Option("debugger",
             Default = false,

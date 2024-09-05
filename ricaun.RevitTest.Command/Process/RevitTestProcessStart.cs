@@ -48,6 +48,7 @@ namespace ricaun.RevitTest.Command.Process
             if (!close) return this;
             return SetRevitArgument("close");
         }
+        public RevitTestProcessStart SetTimeout(int timeoutMinutes) => SetRevitArgument("timeout", timeoutMinutes);
         public RevitTestProcessStart SetTestFilter(string[] testFilters)
         {
             if (testFilters.Length == 0)

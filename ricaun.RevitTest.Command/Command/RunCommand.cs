@@ -78,8 +78,8 @@ namespace ricaun.RevitTest.Command
                 outputAction,
                 options.RevitLanguage,
                 options.ForceToOpen,
-                options.ForceToWait,
                 options.ForceToClose,
+                options.Timeout,
                 options.Test.ToArray());
 
             return false;
