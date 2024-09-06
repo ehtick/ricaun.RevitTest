@@ -23,6 +23,7 @@ namespace ricaun.RevitTest.Application.Revit
         private static PipeTestServer PipeTestServer;
         private static RevitTaskService RevitTask;
         private static RevitBusyService RevitBusyService;
+        private static DialogBoxResolver DialogBoxResolver;
         private static bool IsTestRunning = false;
 
         private const int TestThreadSleepMin = 50;
@@ -37,6 +38,9 @@ namespace ricaun.RevitTest.Application.Revit
 
             RevitTask = new RevitTaskService(application);
             RevitTask.Initialize();
+
+            DialogBoxResolver = new DialogBoxResolver(application);
+            DialogBoxResolver.Initialize();
 
             Log.WriteLine();
             Log.WriteLine($"{AppUtils.GetInfo()}");
@@ -219,9 +223,10 @@ namespace ricaun.RevitTest.Application.Revit
             });
 
             ribbonPanel?.Remove();
+
             PipeTestServer?.Dispose();
             RevitBusyService?.Dispose();
-
+            DialogBoxResolver?.Dispose();
             RevitTask?.Dispose();
 
             Log.Finish();
