@@ -58,29 +58,11 @@ namespace ricaun.RevitTest.TestAdapter
                         }
 
                         var testNames = new string[] { };
-                        Action<string> outputConsole = (item) =>
-                        {
-                            if (string.IsNullOrEmpty(item)) return;
 
-                            AdapterLogger.Logger.Debug($"OutputConsole: {item.Trim()}");
-
-                            if (item.StartsWith("["))
-                            {
-                                if (item.Deserialize<string[]>() is string[] tests)
-                                {
-                                    testNames = tests;
-                                    AdapterLogger.Logger.Debug($"OutputConsole: Deserialize {testNames.Length} TestNames");
-                                }
-                            }
-                        };
-
-                        Action<string> outputError = (item) =>
-                        {
-                            if (string.IsNullOrEmpty(item)) return;
-                            AdapterLogger.Logger.Warning($"OutputConsole: ERROR: {item}");
-                        };
-
-                        await revit.RunTestReadWithLog(source, outputConsole, outputError);
+                        await revit.RunReadTests(source, (tests) => { testNames = tests; }, 
+                            AdapterLogger.Logger.Debug, 
+                            AdapterLogger.Logger.Debug, 
+                            AdapterLogger.Logger.Warning);
 
                         AdapterLogger.Logger.Debug("DiscoverTests: -------------------------------");
                         AdapterLogger.Logger.Info($"DiscoverTests: {testNames.ToJson()}");

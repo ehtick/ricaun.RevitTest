@@ -1,9 +1,8 @@
-﻿using ricaun.RevitTest.TestAdapter.Extensions;
+﻿using ricaun.NUnit.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter.Services
@@ -103,52 +102,36 @@ namespace ricaun.RevitTest.TestAdapter.Services
             return isTrust;
         }
 
-        public async Task RunTestAction(
+        public async Task RunExecuteTests(
             string file,
+            Action<TestModel> testResultAction,
             int version = 0,
             string language = null,
             bool revitOpen = false,
             bool revitClose = false,
+            int timeoutMinutes = 0,
             Action<string> consoleAction = null,
+            Action<string> debugAction = null,
             Action<string> errorAction = null,
             params string[] filter)
         {
-            await new RevitTestProcessStart(applicationPath)
-                .SetFile(file)
-                .SetRevitVersion(version)
-                .SetRevitLanguage(language)
-                .SetOutputConsole()
-                .SetOpen(revitOpen)
-                .SetClose(revitClose)
-                .SetLog()
-                .SetTestFilter(filter)
-                .SetDebugger(System.Diagnostics.Debugger.IsAttached)
-                .Run(consoleAction, errorAction);
+            await ricaun.RevitTest.Command.Process.RevitTestProcessStartUtils.RunExecuteTests(
+                applicationPath, file, testResultAction,
+                version, language, revitOpen, revitClose, timeoutMinutes,
+                System.Diagnostics.Debugger.IsAttached,
+                consoleAction, debugAction, errorAction, filter);
         }
 
-        private async Task<string[]> RunTestRead(string file)
-        {
-            var read = await new RevitTestProcessStart(applicationPath)
-                .SetFile(file)
-                .SetOutputConsole()
-                .SetRead()
-                .Run();
-
-            var testNames = read.Deserialize<string[]>();
-            return testNames;
-        }
-
-        public async Task RunTestReadWithLog(
+        public async Task RunReadTests(
             string file,
-            Action<string> consoleAction,
+            Action<string[]> testResultAction,
+            Action<string> consoleAction = null,
+            Action<string> debugAction = null,
             Action<string> errorAction = null)
         {
-            await new RevitTestProcessStart(applicationPath)
-                .SetFile(file)
-                .SetOutputConsole()
-                .SetRead()
-                .SetLog()
-                .Run(consoleAction, errorAction);
+            await ricaun.RevitTest.Command.Process.RevitTestProcessStartUtils.RunReadTests(
+                applicationPath, file, testResultAction,
+                consoleAction, debugAction, errorAction);
         }
 
         public void Dispose()

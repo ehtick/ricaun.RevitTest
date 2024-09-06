@@ -4,11 +4,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ricaun.RevitTest.Command.Extensions;
 
-namespace ricaun.RevitTest.TestAdapter.Services
+namespace ricaun.RevitTest.Command.Process
 {
-    internal class ProcessStart
+    public class ProcessStart
     {
+        protected virtual void WriteLine(string message)
+        {
+            Debug.WriteLine(message);
+        }
+
         private const int DelayAfterExit = 100;
         private string processPath;
         private Dictionary<string, object> argumentsPair = new Dictionary<string, object>();
@@ -46,11 +52,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 arguments += $"{ConvertKey(item.Key)} ";
                 arguments += $"{ConvertValue(item.Value)} ";
             }
-            AdapterLogger.Logger.Debug($"\tCreateArguments: {arguments}");
+            WriteLine($"\tCreateArguments: {arguments}");
             return arguments;
         }
 
-        public ProcessStart SetArgument(string name, object value = null)
+        protected ProcessStart SetArgument(string name, object value = null)
         {
             argumentsPair[name] = value;
             return this;
@@ -76,53 +82,23 @@ namespace ricaun.RevitTest.TestAdapter.Services
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                //StandardOutputEncoding = System.Text.Encoding.UTF8,
-                //StandardErrorEncoding = System.Text.Encoding.UTF8,
             };
-        }
-
-
-        public async Task<string> Run()
-        {
-            var arguments = CreateArguments();
-            Debug.WriteLine($"Run: {arguments}");
-            return await Run(arguments);
         }
 
         public async Task Run(Action<string> consoleAction, Action<string> errorAction = null)
         {
             var arguments = CreateArguments();
-            Debug.WriteLine($"Run: {arguments}");
-
-            AdapterLogger.Logger.DebugOnlyLocal($"ProcessStart: {processPath}");
-            AdapterLogger.Logger.DebugOnlyLocal($"ProcessStart.Run: {arguments}");
-
-            foreach (var item in System.IO.Directory.GetFiles(System.IO.Path.GetDirectoryName(processPath)))
-            {
-                AdapterLogger.Logger.DebugOnlyLocal($"ProcessStart.File: {item}");
-            }
-
+            WriteLine($"ProcessStart: {processPath}");
+            WriteLine($"ProcessStart.Run: {arguments}");
             await Run(arguments, consoleAction, errorAction);
         }
-
-        private async Task<string> Run(string arguments)
-        {
-            if (string.IsNullOrEmpty(processPath)) return string.Empty;
-            var psi = NewProcessStartInfo(arguments);
-            var process = Process.Start(psi);
-            var output = await process.StandardOutput.ReadToEndAsync();
-            //var error = await process.StandardError.ReadToEndAsync();
-            process.WaitForExit(int.MaxValue);
-            return output;
-        }
-
         private async Task Run(string arguments,
             Action<string> consoleAction = null,
             Action<string> errorAction = null)
         {
             if (string.IsNullOrEmpty(processPath)) return;
             var psi = NewProcessStartInfo(arguments);
-            var process = Process.Start(psi);
+            var process = System.Diagnostics.Process.Start(psi);
             process.OutputDataReceived += (sender, e) =>
             {
                 consoleAction?.Invoke(e.Data);

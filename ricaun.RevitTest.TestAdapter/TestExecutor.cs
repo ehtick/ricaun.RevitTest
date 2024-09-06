@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
-using NUnit.Engine.Internal;
-using ricaun.RevitTest.TestAdapter.Extensions;
-using ricaun.RevitTest.TestAdapter.Models;
+using ricaun.NUnit.Models;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Collections.Generic;
@@ -106,62 +104,17 @@ namespace ricaun.RevitTest.TestAdapter
                     AdapterLogger.Logger.Debug($"\tTestFilter: {filter}");
                 }
 
-                bool testAssemblyEnabled = true;
-                Action<string> outputConsole = (item) =>
-                {
-                    if (string.IsNullOrEmpty(item)) return;
-
-                    if (item.StartsWith("{\"FileName"))
-                    {
-                        if (IsLogDebug)
-                            AdapterLogger.Logger.Debug($"OutputConsole: DEBUG: {item.Trim()}");
-
-                        var testAssembly = item.Deserialize<TestAssemblyModel>();
-
-                        if (testAssemblyEnabled == false) return;
-
-                        AdapterLogger.Logger.Info($"TestAssembly: {testAssembly}");
-                        foreach (var testModel in testAssembly.Tests.SelectMany(e => e.Tests))
-                        {
-                            RecordResultTestModel(frameworkHandle, source, tests, testModel);
-                        }
-                    }
-                    else if (item.StartsWith("{\"Name"))
-                    {
-                        if (IsLogDebug)
-                            AdapterLogger.Logger.Debug($"OutputConsole: DEBUG: {item.Trim()}");
-
-                        if (item.Deserialize<TestModel>() is TestModel testModel)
-                        {
-                            RecordResultTestModel(frameworkHandle, source, tests, testModel);
-                            testAssemblyEnabled = false;
-                        }
-                    }
-                    else if (item.StartsWith(" "))
-                    {
-                        AdapterLogger.Logger.Debug($"OutputConsole: {item}");
-                    }
-                    else
-                    {
-                        if (IsLogDebug)
-                            AdapterLogger.Logger.Debug($"OutputConsole: DEBUG: {item}");
-                    }
-                };
-
-                Action<string> outputError = (item) =>
-                {
-                    if (string.IsNullOrEmpty(item)) return;
-                    AdapterLogger.Logger.Warning($"OutputConsole: ERROR: {item}");
-                };
-
                 AdapterLogger.Logger.Info($"RunRevitTest: {source} [Version: {AdapterSettings.Settings.NUnit.Version}] [TestFilter: {filters.Length}]");
 
-                await revit.RunTestAction(source,
+                await revit.RunExecuteTests(source, (testModel) => { RecordResultTestModel(frameworkHandle, source, tests, testModel); },
                     AdapterSettings.Settings.NUnit.Version,
                     AdapterSettings.Settings.NUnit.Language,
                     AdapterSettings.Settings.NUnit.Open,
                     AdapterSettings.Settings.NUnit.Close,
-                    outputConsole, outputError, filters);
+                    AdapterSettings.Settings.NUnit.Timeout,
+                    AdapterLogger.Logger.Debug, (message) => { if (IsLogDebug) AdapterLogger.Logger.Debug(message); }, AdapterLogger.Logger.Warning, 
+                    filters);
+
             }
 
             AdapterLogger.Logger.Info("---------");

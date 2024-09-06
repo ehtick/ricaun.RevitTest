@@ -25,6 +25,8 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         private const int SleepMillisecondsBeforeFinish = 1000;
         private const int SleepMillisecondsDebuggerAttached = 1000;
 
+        private const int TimeoutMinutesDefault = 10;
+
         /// <summary>
         /// Get Test Full Names using RevitInstallation if needed (Revit +2021)
         /// </summary>
@@ -92,20 +94,25 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         /// <param name="fileToTest"></param>
         /// <param name="revitVersionNumber"></param>
         /// <param name="actionOutput"></param>
+        /// <param name="forceLanguageToRevit"></param>
         /// <param name="forceToOpenNewRevit"></param>
-        /// <param name="forceToWaitRevit"></param>
         /// <param name="forceToCloseRevit"></param>
+        /// <param name="timeoutMinutes"></param>
+        /// <param name="testFilters"></param>
         public static void CreateRevitServer(
             string fileToTest,
             int revitVersionNumber,
             Action<string> actionOutput = null,
             string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
-            bool forceToWaitRevit = false,
             bool forceToCloseRevit = false,
+            int timeoutMinutes = 0,
             params string[] testFilters)
         {
-            int timeoutCountMax = forceToWaitRevit ? 0 : 10;
+            int timeoutNotBusyCountMax = 10;
+
+            if (timeoutMinutes <= 0) 
+                timeoutMinutes = TimeoutMinutesDefault;
 
             if (revitVersionNumber == 0)
             {
@@ -123,9 +130,10 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                 return;
             }
 
-            int timeoutCount = 0;
+            int timeoutNotBusyCount = 0;
             bool sendFileWhenCreatedOrUpdated = true;
             bool testsFinishedForceToEnd = false;
+            bool timeoutForceToEnd = false;
 
             Action<string, bool> resetSendFile = (file, exists) =>
             {
@@ -197,13 +205,14 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                             }
                         };
 
-                        for (int i = 0; i < 10 * 60; i++)
+                        var timeoutSeconds = timeoutMinutes * 60;
+                        for (int i = 0; i <= timeoutSeconds; i++)
                         {
                             Thread.Sleep(1000);
 
                             if (i % 30 == 0 && i > 0)
                             {
-                                Log.WriteLine($"{revitInstallation}: Wait {i}s");
+                                Log.WriteLine($"{revitInstallation}: Execution time is {i / 60.0} minutes, maximum {timeoutMinutes} minutes.");
                             }
 
                             if (process.HasExited) break;
@@ -212,13 +221,38 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                 continue;
 
                             if (client.ServerMessage.IsBusy)
-                                timeoutCount = 0;
+                                timeoutNotBusyCount = 0;
                             else
-                                timeoutCount++;
+                                timeoutNotBusyCount++;
 
-                            if (timeoutCountMax > 0 && timeoutCount > timeoutCountMax)
+                            if (timeoutNotBusyCountMax > 0 && timeoutNotBusyCount > timeoutNotBusyCountMax)
                             {
-                                Log.WriteLine($"{revitInstallation}: Timeout");
+                                var timeoutMessage = $"RevitTest: Timeout not busy for too long {timeoutNotBusyCountMax} seconds.";
+                                Log.WriteLine($"{revitInstallation}: {timeoutMessage}");
+                                var exceptionTimeoutTests = new Exception(timeoutMessage);
+                                var timeoutTests = TestEngine.Fail(fileToTest, exceptionTimeoutTests, testFilters);
+                                foreach (var testModel in timeoutTests.Tests.SelectMany(e => e.Tests))
+                                {
+                                    actionOutput.Invoke(testModel.ToJson());
+                                }
+                                Thread.Sleep(SleepMillisecondsBeforeFinish);
+                                break;
+                            }
+
+                            if (i == timeoutSeconds)
+                                timeoutForceToEnd = true;
+
+                            if (timeoutForceToEnd)
+                            {
+                                var timeoutMessage = $"RevitTest: Timeout {timeoutMinutes} minutes.";
+                                Log.WriteLine($"{revitInstallation}: {timeoutMessage}");
+                                var exceptionTimeoutTests = new Exception(timeoutMessage);
+                                var timeoutTests = TestEngine.Fail(fileToTest, exceptionTimeoutTests, testFilters);
+                                foreach (var testModel in timeoutTests.Tests.SelectMany(e => e.Tests))
+                                {
+                                    actionOutput?.Invoke(testModel.ToJson());
+                                }
+                                Thread.Sleep(SleepMillisecondsBeforeFinish);
                                 break;
                             }
 
@@ -230,16 +264,6 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                                 Log.WriteLine($"{revitInstallation}: Tests Finished");
                                 break;
                             }
-
-                            //if (System.Console.KeyAvailable)
-                            //{
-                            //    var cki = System.Console.ReadKey(true);
-                            //    if (cki.Key == ConsoleKey.Escape) break;
-                            //    if (cki.Key == ConsoleKey.Spacebar)
-                            //    {
-                            //        sendFileWhenCreatedOrUpdated = true;
-                            //    }
-                            //}
 
                             if (sendFileWhenCreatedOrUpdated)
                             {

@@ -11,8 +11,8 @@ namespace ricaun.RevitTest.Command
             Action<string> actionOutput = null,
             string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
-            bool forceToWaitRevit = false,
             bool forceToCloseRevit = false,
+            int timeoutMinutes = 0,
             params string[] testFilters);
     }
 }

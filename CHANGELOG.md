@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] / 2024-09-05
+### Features
+- Support `NUnit.Timeout` option to abort application. (default '10' minutes) (Fix: #51)
+- Autoclose `VIEWER MODE` warning dialog box when Revit starts. (Fix: #52)
+### Application
+- Add `DialogBoxResolver` to cancel dialog box before revit initialization.
+### Console
+- Change `TimeoutMinutesDefault` to 10 minutes in the `RevitTestUtils`.
+- Remove deprecated `wait` option and `RevitDebugUtils`.
+- Add `Timeout` option to abort application.
+- Fail all tests when `Timeout` happen.
+- Update execution/timeout message in the log.
+### Command
+- Add `RevitTestProcessStart` to run tests with `ProcessStart`.
+- Remove deprecated `wait` option.
+- Add `Timeout` option to abort application.
+### TestAdapter
+- Add project `ricaun.RevitTest.Command` with `ricaun.NUnit`
+- Remove references `CommandLineParser` and `NUnit` not used.
+- Use `RevitTestProcessStartUtils` to start the process.
+- Add `NUnit.Timeout` option to timeout the application.
+
 ## [1.3.6] / 2024-08-30
 ### TestAdapter
 - Remove log in the `LocalFileExists` in the `ApplicationUtils`.
@@ -451,6 +473,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.4.0]: ../../compare/1.3.6...1.4.0
 [1.3.6]: ../../compare/1.3.5...1.3.6
 [1.3.5]: ../../compare/1.3.4...1.3.5
 [1.3.4]: ../../compare/1.3.3...1.3.4

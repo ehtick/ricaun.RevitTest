@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ricaun.RevitTest.TestAdapter.Services
+namespace ricaun.RevitTest.Command.Extensions
 {
     /// <summary>
     /// EncodeParameterArgumentExtension

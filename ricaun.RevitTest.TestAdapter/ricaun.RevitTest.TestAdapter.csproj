@@ -35,6 +35,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ricaun.RevitTest.Command\ricaun.RevitTest.Command.csproj" />
+    <PackageReference Include="CommandLineParser" Version="*" IncludeAssets="compile; build" PrivateAssets="all" />
+    <PackageReference Include="NUnit" Version="*" IncludeAssets="compile; build" PrivateAssets="all" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="ricaun.Security.WinTrust" Version="*" PrivateAssets="all" />
   </ItemGroup>
 
