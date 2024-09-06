@@ -109,9 +109,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             int timeoutMinutes = 0,
             params string[] testFilters)
         {
-            var forceToWaitRevit = false;
-
-            int timeoutNotBusyCountMax = forceToWaitRevit ? 0 : 10;
+            int timeoutNotBusyCountMax = 10;
 
             if (timeoutMinutes <= 0) 
                 timeoutMinutes = TimeoutMinutesDefault;
@@ -214,7 +212,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
                             if (i % 30 == 0 && i > 0)
                             {
-                                Log.WriteLine($"{revitInstallation}: Wait {i/60.0} / {timeoutMinutes} minutes");
+                                Log.WriteLine($"{revitInstallation}: Execution time is {i / 60.0} minutes, maximum {timeoutMinutes} minutes.");
                             }
 
                             if (process.HasExited) break;
@@ -229,7 +227,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
                             if (timeoutNotBusyCountMax > 0 && timeoutNotBusyCount > timeoutNotBusyCountMax)
                             {
-                                var timeoutMessage = $"Timeout not busy for too long {timeoutNotBusyCountMax} seconds.";
+                                var timeoutMessage = $"RevitTest: Timeout not busy for too long {timeoutNotBusyCountMax} seconds.";
                                 Log.WriteLine($"{revitInstallation}: {timeoutMessage}");
                                 var exceptionTimeoutTests = new Exception(timeoutMessage);
                                 var timeoutTests = TestEngine.Fail(fileToTest, exceptionTimeoutTests, testFilters);
@@ -246,7 +244,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
                             if (timeoutForceToEnd)
                             {
-                                var timeoutMessage = $"Timeout {timeoutMinutes} minutes.";
+                                var timeoutMessage = $"RevitTest: Timeout {timeoutMinutes} minutes.";
                                 Log.WriteLine($"{revitInstallation}: {timeoutMessage}");
                                 var exceptionTimeoutTests = new Exception(timeoutMessage);
                                 var timeoutTests = TestEngine.Fail(fileToTest, exceptionTimeoutTests, testFilters);

@@ -60,18 +60,19 @@ For more information see [Wiki](https://github.com/ricaun-io/ricaun.RevitTest/wi
 * [ricaun.Revit.UI.Tasks](https://github.com/ricaun-io/ricaun.Revit.UI.Tasks)
 * [ricaun.Revit.UI.Busy](https://github.com/ricaun-io/ricaun.Revit.UI.Busy)
 * [ricaun.RevitTest.Shared](ricaun.RevitTest.Shared)
+#### Command
+* [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
 #### Console
 * [ricaun.Revit.Installation](https://github.com/ricaun-io/ricaun.Revit.Installation)
 * [ricaun.RevitTest.Command](ricaun.RevitTest.Command)
 * [ricaun.RevitTest.Shared](ricaun.RevitTest.Shared)
 * [ricaun.RevitTest.Application.bundle.zip](ricaun.RevitTest.Application)
-#### Command
-* [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
 #### Shared
 * [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
 * [NamedPipeWrapper.Json](https://github.com/ricaun-io/named-pipe-wrapper-json)
 #### TestAdapter
 * [ricaun.RevitTest.Console.exe](ricaun.RevitTest.Console)
+* [ricaun.RevitTest.Command](ricaun.RevitTest.Command)
 * [ricaun.Security.WinTrust](https://github.com/ricaun-io/ricaun.Security.WinTrust)
 
 ## CommandLine

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Remove deprecated `wait` option and `RevitDebugUtils`.
 - Add `Timeout` option to abort application.
 - Fail all tests when `Timeout` happen.
+- Update execution/timeout message in the log.
 ### Command
 - Add `RevitTestProcessStart` to run tests with `ProcessStart`.
 - Remove deprecated `wait` option.
