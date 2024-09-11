@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.4.2] / 2024-09-11
+### Features
+- Support tests with `TestCaseSource`.
+### Application
+- Update `ricaun.NUnit` to `1.4.0`.
+
 ## [1.4.1] / 2024-09-06
 ### TestAdapter
 - Update project reference to `PrivateAssets` to remove reference in the package.
@@ -477,6 +483,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.4.2]: ../../compare/1.4.1...1.4.2
 [1.4.1]: ../../compare/1.4.0...1.4.1
 [1.4.0]: ../../compare/1.3.6...1.4.0
 [1.3.6]: ../../compare/1.3.5...1.3.6
