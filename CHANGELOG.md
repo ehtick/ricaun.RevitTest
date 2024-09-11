@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support tests with `TestCaseSource`.
 ### Application
 - Update `ricaun.NUnit` to `1.4.0`.
+### Tests
+- Add `TestsCaseSource` to test `TestCaseSourceAttribute`.
 
 ## [1.4.1] / 2024-09-06
 ### TestAdapter
