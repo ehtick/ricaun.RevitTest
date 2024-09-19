@@ -65,7 +65,7 @@
 
   <ItemGroup>
     <PackageReference Include="NamedPipeWrapper.Json" Version="*" />
-    <PackageReference Include="ricaun.NUnit" Version="*-*" />
+    <PackageReference Include="ricaun.NUnit" Version="*" />
   </ItemGroup>
 
   <!-- Fody -->
