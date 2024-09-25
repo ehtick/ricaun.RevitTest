@@ -131,6 +131,7 @@ namespace ricaun.RevitTest.TestAdapter
 
             AdapterLogger.Logger.Info($"\tTestCase: {testCase} [{testCase.DisplayName}] \t{testCase.Id}");
 
+            testCase.LocalExtensionData = testModel;
             var testResult = new TestResult(testCase);
 
             testResult.Outcome = TestOutcome.Failed;

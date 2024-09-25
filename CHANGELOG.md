@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.5.1] / 2024-09-25
+### Features
+- Support `TestAdapter` custom executer.
+### TestAdapter
+- Use `LocalExtensionData` to store `TestModel` result.
+
 ## [1.5.0] / 2024-09-11 - 2024-09-19
 ### Features
 - Support tests with `TestCaseSource`. (Fix: #55)
@@ -486,6 +492,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.5.1]: ../../compare/1.5.0...1.5.1
 [1.5.0]: ../../compare/1.4.1...1.5.0
 [1.4.1]: ../../compare/1.4.0...1.4.1
 [1.4.0]: ../../compare/1.3.6...1.4.0
