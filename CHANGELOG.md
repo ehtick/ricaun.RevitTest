@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.5.1] / 2024-09-25
 ### Features
 - Support `TestAdapter` custom executer.
+- Support enviroment variables to overwrite settings in the `TestAdapter`.
 ### TestAdapter
 - Use `LocalExtensionData` to store `TestModel` result.
+- Add `EnviromentSettings` to overwrite settings in the `TestAdapter`.
 
 ## [1.5.0] / 2024-09-11 - 2024-09-19
 ### Features

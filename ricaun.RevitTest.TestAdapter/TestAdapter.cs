@@ -5,6 +5,7 @@
 
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using ricaun.RevitTest.TestAdapter.Metadatas;
 using ricaun.RevitTest.TestAdapter.Models;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
@@ -40,6 +41,7 @@ namespace ricaun.RevitTest.TestAdapter
         protected void Initialize(IDiscoveryContext discoveryContext, IMessageLogger messageLogger)
         {
             AdapterSettings.Create(discoveryContext);
+            EnviromentSettings.Create();
             AdapterLogger.Create(messageLogger, AdapterSettings.Settings.NUnit.Verbosity);
 
             AdapterLogger.Logger.InfoAny($"TestAdapter: {this.AdapterVersion}");
@@ -55,7 +57,7 @@ namespace ricaun.RevitTest.TestAdapter
             AdapterLogger.Logger.DebugOnlyLocal($"\tTestAdapter: {this.AdapterVersion}");
             AdapterLogger.Logger.DebugOnlyLocal($"\tAdapterSettings: {AdapterSettings.Settings}");
 
-            var collection = Metadatas.XmlUtils.ParseKeyValues(discoveryContext.RunSettings.SettingsXml);
+            var collection = XmlUtils.ParseKeyValues(discoveryContext.RunSettings.SettingsXml);
             foreach (var item in collection)
             {
                 AdapterLogger.Logger.DebugOnlyLocal($"\t{item.Key}: {item.Value}");
@@ -63,10 +65,20 @@ namespace ricaun.RevitTest.TestAdapter
 
             AdapterLogger.Logger.DebugOnlyLocal("-");
 
-            foreach (var item in Metadatas.MapperKey.GetNames(AdapterSettings.Instance))
+            foreach (var item in MapperKey.GetNames(AdapterSettings.Instance))
             {
                 AdapterLogger.Logger.DebugOnlyLocal($"\t{item}");
             }
+
+            AdapterLogger.Logger.DebugOnlyLocal("-");
+
+            foreach (var item in EnviromentSettings.GetEnviromentNames())
+            {
+                AdapterLogger.Logger.DebugOnlyLocal($"\tEnviroment: {item}");
+            }
+
+            //Environment.SetEnvironmentVariable("RICAUN_REVITTEST_TESTADAPTER_NUNIT_VERBOSITY", "3");
+
             AdapterLogger.Logger.DebugOnlyLocal("-DEBUG-");
 
             //var RunSettings = Metadatas.Mapper.Map(collection, new RunSettingsModel());

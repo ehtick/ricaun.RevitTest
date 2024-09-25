@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using ricaun.NUnit.Models;
+using ricaun.RevitTest.TestAdapter.Metadatas;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Collections.Generic;
@@ -82,8 +83,9 @@ namespace ricaun.RevitTest.TestAdapter
             {
                 AdapterLogger.Logger.Info($"Test: {test.FullyQualifiedName}.{test.DisplayName}");
             }
-            Metadatas.MetadataSettings.Create(source);
-
+            MetadataSettings.Create(source);
+            EnviromentSettings.Create();
+            
             AdapterLogger.Logger.Info("---------");
             AdapterLogger.Logger.Info($"RevitTestConsole: {AdapterSettings.Settings.NUnit.Application}");
             AdapterLogger.Logger.Info("---------");
