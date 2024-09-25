@@ -90,6 +90,12 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
 
+  <ItemGroup Condition=" '$(TargetFramework)' != 'netstandard2.0' ">
+    <PackageReference Include="Newtonsoft.Json" Version="9.*" IncludeAssets="build; compile" PrivateAssets="All">
+      <NoWarn>NU1903</NoWarn>
+    </PackageReference>
+  </ItemGroup>
+  
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Newtonsoft.Json" Version="*" />
   </ItemGroup>

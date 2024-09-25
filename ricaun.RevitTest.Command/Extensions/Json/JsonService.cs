@@ -1,11 +1,7 @@
-﻿namespace ricaun.RevitTest.TestAdapter.Extensions.Json
+﻿namespace ricaun.RevitTest.Command.Extensions.Json
 {
 #if NETFRAMEWORK
     using System.Web.Script.Serialization;
-    /// <summary>
-    /// JsonService
-    /// <code>Reference Include="System.Web.Extensions"</code>
-    /// </summary>
     internal class JsonService : IJsonService
     {
         public JsonService()
@@ -38,5 +34,10 @@
             return JsonSerializer.Serialize(value);
         }
     }
+#endif
+#if NETSTANDARD
+internal class JsonService : NewtonsoftJsonService
+{
+}
 #endif
 }
