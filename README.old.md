@@ -131,7 +131,7 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 dotnet test ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.Application=""
 ```
 
-### Enviroment Variables
+### Environment Variables
 ```
 RICAUN_REVITTEST_TESTADAPTER_NUNIT_VERSION
 RICAUN_REVITTEST_TESTADAPTER_NUNIT_LANGUAGE

@@ -46,7 +46,7 @@ namespace ricaun.RevitTest.TestAdapter
                 foreach (var source in sources)
                 {
                     MetadataSettings.Create(source);
-                    EnviromentSettings.Create();
+                    EnvironmentSettings.Create();
                     AdapterLogger.Logger.Info($"DiscoverTests: {source}");
 
                     using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application, source))

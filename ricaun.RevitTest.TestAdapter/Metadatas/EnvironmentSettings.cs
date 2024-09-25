@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ricaun.RevitTest.TestAdapter.Metadatas
 {
-    internal static class EnviromentSettings
+    internal static class EnvironmentSettings
     {
         /// <summary>
         /// Apply the environment settings.
@@ -12,29 +12,29 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         {
             try
             {
-                var enviromentDictionary = new Dictionary<string, string>();
-                var enviromentKeyNames = GetEnviromentKeyNames();
-                foreach (var enviromentKeyName in enviromentKeyNames)
+                var environmentDictionary = new Dictionary<string, string>();
+                var environmentKeyNames = GetEnvironmentKeyNames();
+                foreach (var environmentKeyName in environmentKeyNames)
                 {
-                    var enviromentName = enviromentKeyName.Value;
-                    var value = Environment.GetEnvironmentVariable(enviromentName);
+                    var environmentName = environmentKeyName.Value;
+                    var value = Environment.GetEnvironmentVariable(environmentName);
 
-                    AdapterLogger.Logger.DebugOnlyLocal($"\tEnviroment: {enviromentName} \t {value}");
+                    AdapterLogger.Logger.DebugOnlyLocal($"\tEnvironment: {environmentName} \t {value}");
 
                     if (value is null) 
                         continue;
 
-                    enviromentDictionary[enviromentKeyName.Key] = value;
-                    AdapterLogger.Logger.Info($"Enviroment: {enviromentName}");
+                    environmentDictionary[environmentKeyName.Key] = value;
+                    AdapterLogger.Logger.Info($"Environment: {environmentName}");
                 }
 
-                MapperKey.Map(AdapterSettings.Settings, enviromentDictionary);
+                MapperKey.Map(AdapterSettings.Settings, environmentDictionary);
 
                 AdapterLogger.Logger.DebugOnlyLocal($"\tAdapterSettings: {AdapterSettings.Settings}");
             }
             catch (Exception ex)
             {
-                AdapterLogger.Logger.InfoAny($"Enviroment: {ex}");
+                AdapterLogger.Logger.InfoAny($"Environment: {ex}");
             }
         }
 
@@ -45,9 +45,9 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         /// <remarks>
         /// NUnit.Version -> RICAUN_REVITTEST_TESTADAPTER_NUNIT_VERSION
         /// </remarks>
-        public static IEnumerable<string> GetEnviromentNames()
+        public static IEnumerable<string> GetEnvironmentNames()
         {
-            return GetEnviromentKeyNames().Values;
+            return GetEnvironmentKeyNames().Values;
         }
 
         /// <summary>
@@ -57,15 +57,15 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         /// <remarks>
         /// NUnit.Version -> RICAUN_REVITTEST_TESTADAPTER_NUNIT_VERSION
         /// </remarks>
-        internal static Dictionary<string, string> GetEnviromentKeyNames()
+        internal static Dictionary<string, string> GetEnvironmentKeyNames()
         {
             var result = new Dictionary<string, string>();
-            var assemblyName = typeof(EnviromentSettings).Assembly.GetName().Name;
+            var assemblyName = typeof(EnvironmentSettings).Assembly.GetName().Name;
             var names = MapperKey.GetNames(AdapterSettings.Settings);
             foreach (var name in names)
             {
                 var fullName = $"{assemblyName}.{name}";
-                result[name] = ConvertToEnviromentName(fullName);
+                result[name] = ConvertToEnvironmentName(fullName);
             }
             return result;
         }
@@ -75,7 +75,7 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         /// </summary>
         /// <param name="name">The name to convert.</param>
         /// <returns>The converted environment name.</returns>
-        private static string ConvertToEnviromentName(string name)
+        private static string ConvertToEnvironmentName(string name)
         {
             return name.Replace(".", "_").ToUpper();
         }

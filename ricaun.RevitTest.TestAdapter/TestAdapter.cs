@@ -41,7 +41,7 @@ namespace ricaun.RevitTest.TestAdapter
         protected void Initialize(IDiscoveryContext discoveryContext, IMessageLogger messageLogger)
         {
             AdapterSettings.Create(discoveryContext);
-            EnviromentSettings.Create();
+            EnvironmentSettings.Create();
             AdapterLogger.Create(messageLogger, AdapterSettings.Settings.NUnit.Verbosity);
 
             AdapterLogger.Logger.InfoAny($"TestAdapter: {this.AdapterVersion}");
@@ -72,9 +72,9 @@ namespace ricaun.RevitTest.TestAdapter
 
             AdapterLogger.Logger.DebugOnlyLocal("-");
 
-            foreach (var item in EnviromentSettings.GetEnviromentNames())
+            foreach (var item in EnvironmentSettings.GetEnvironmentNames())
             {
-                AdapterLogger.Logger.DebugOnlyLocal($"\tEnviroment: {item}");
+                AdapterLogger.Logger.DebugOnlyLocal($"\tEnvironment: {item}");
             }
 
             //Environment.SetEnvironmentVariable("RICAUN_REVITTEST_TESTADAPTER_NUNIT_VERBOSITY", "3");

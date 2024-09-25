@@ -84,7 +84,7 @@ namespace ricaun.RevitTest.TestAdapter
                 AdapterLogger.Logger.Info($"Test: {test.FullyQualifiedName}.{test.DisplayName}");
             }
             MetadataSettings.Create(source);
-            EnviromentSettings.Create();
+            EnvironmentSettings.Create();
             
             AdapterLogger.Logger.Info("---------");
             AdapterLogger.Logger.Info($"RevitTestConsole: {AdapterSettings.Settings.NUnit.Application}");
