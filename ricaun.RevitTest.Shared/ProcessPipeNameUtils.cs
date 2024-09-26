@@ -1,4 +1,4 @@
-﻿using NamedPipeWrapper;
+﻿using ricaun.NamedPipeWrapper;
 using System.Diagnostics;
 
 namespace ricaun.RevitTest.Shared

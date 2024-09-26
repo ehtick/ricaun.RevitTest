@@ -1,4 +1,4 @@
-﻿using NamedPipeWrapper.Json;
+﻿using ricaun.NamedPipeWrapper.Json;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
