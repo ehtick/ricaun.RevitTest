@@ -69,7 +69,7 @@ For more information see [Wiki](https://github.com/ricaun-io/ricaun.RevitTest/wi
 * [ricaun.RevitTest.Application.bundle.zip](ricaun.RevitTest.Application)
 #### Shared
 * [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
-* [NamedPipeWrapper.Json](https://github.com/ricaun-io/named-pipe-wrapper-json)
+* [ricaun.NamedPipeWrapper.Json](https://github.com/ricaun-io/named-pipe-wrapper-json)
 #### TestAdapter
 * [ricaun.RevitTest.Console.exe](ricaun.RevitTest.Console)
 * [ricaun.RevitTest.Command](ricaun.RevitTest.Command)

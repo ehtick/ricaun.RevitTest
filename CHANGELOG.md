@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Command
 - Update to use `JsonService` implementation to use `Newtonsoft.Json` in the domain.
 ### Shared
-- Update to use `ricaun.NamedPipeWrapper.Json`.
+- Update to use `ricaun.NamedPipeWrapper.Json` version `1.8.0`.
 ### TestAdapter
 - Use `LocalExtensionData` to store `TestModel` result.
 - Add `EnvironmentSettings` to overwrite settings in the `TestAdapter`.
