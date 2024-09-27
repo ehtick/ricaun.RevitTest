@@ -19,6 +19,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
     /// </summary>
     public static class RevitTestUtils
     {
+        private const bool EnableSelectMinMaxVersionReference = false;
         private const int RevitMinVersionReference = 2021;
         private const int RevitMaxVersionReference = 2023;
 
@@ -43,7 +44,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                 // Problem with AnavRes.dll / adui22res.dll (version -2020)
                 // Problem with UI (version 2024)
                 var revitVersionMinMax = Math.Min(Math.Max(revitVersion, RevitMinVersionReference), RevitMaxVersionReference);
-                if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionMinMax, out RevitInstallation revitInstallationMinMax))
+                if (EnableSelectMinMaxVersionReference && RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionMinMax, out RevitInstallation revitInstallationMinMax))
                 {
                     LoggerTest($"GetTest Version {revitVersionMinMax}");
                     Log.WriteLine($"RevitTestUtils: {revitInstallationMinMax.InstallLocation}");
@@ -56,6 +57,10 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                     tests = TestEngine.GetTestFullNames(filePath, revitInstallation.InstallLocation);
                 }
 
+                foreach (var exception in TestEngine.Exceptions)
+                {
+                    Log.WriteLine($"RevitTestUtils.Exceptions: {exception}");
+                }
                 if (tests.Length == 0)
                 {
                     throw new Exception($"Unable to read tests class using the Revit version {revitVersion}.");
@@ -111,7 +116,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         {
             int timeoutNotBusyCountMax = 10;
 
-            if (timeoutMinutes <= 0) 
+            if (timeoutMinutes <= 0)
                 timeoutMinutes = TimeoutMinutesDefault;
 
             if (revitVersionNumber == 0)

@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support environment variables to overwrite settings in the `TestAdapter`. (Fix: #57)
 ### Command
 - Update to use `JsonService` implementation to use `Newtonsoft.Json` in the domain.
+### Console
+- Add `RevitTestUtils.Exceptions` to show exceptions in the console.
+- Add `ricaun.RevitAPIUI.Fake.Reference` to fix `RevitAPIUI` reference exception in the discovery test.
+- Disable discovery test to use `RevitAPIUI` version `2021` to `2023`.
 ### Shared
 - Update to use `ricaun.NamedPipeWrapper.Json` version `1.8.0`.
 ### TestAdapter
