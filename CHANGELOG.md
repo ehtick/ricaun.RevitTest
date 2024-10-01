@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 - Support `TestAdapter` custom executer.
 - Support environment variables to overwrite settings in the `TestAdapter`. (Fix: #57)
+- Support `Cancel` tests and `Kill` processes in the `TestAdapter`.
 ### App
 - Force to kill test when `ClientDisconnected`.
 ### Command
