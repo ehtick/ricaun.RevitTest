@@ -73,6 +73,22 @@ namespace ricaun.RevitTest.Application.Revit
                 response.Tests = null;
             });
 
+            PipeTestServer.ClientDisconnected = () =>
+            {
+                try
+                {
+                    if (IsTestRunning)
+                    {
+                        Log.WriteLine("PipeTestServer: ClientDisconnected - TestEngine.KillTests");
+                        ricaun.NUnit.TestEngine.Result = new TestModelResult((test) =>
+                        {
+                            throw new Exception("Client disconnect, TestEngine.Kill to ignore test result.");
+                        });
+                    }
+                }
+                catch { }
+            };
+
             var initializeServer = PipeTestServer.Initialize();
 
             if (initializeServer)

@@ -27,10 +27,18 @@ namespace ricaun.RevitTest.Shared
                 namedPipe = new NamedPipeServer<TClient, TServer>(pipeName);
                 namedPipe.ClientConnected += OnClientConnected;
                 namedPipe.ClientMessage += OnClientMessage;
+                namedPipe.ClientDisconnected += OnClientDisconnected;
                 namedPipe.NamedPipeDebug();
                 namedPipe.Start();
             }
             return namedPipe != null;
+        }
+
+        public Action ClientDisconnected { get; set; }
+
+        private void OnClientDisconnected(NamedPipeConnection<TClient, TServer> connection)
+        {
+            ClientDisconnected?.Invoke();
         }
 
         public void Update(Action<TServer> response)

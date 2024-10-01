@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Features
 - Support `TestAdapter` custom executer.
 - Support environment variables to overwrite settings in the `TestAdapter`. (Fix: #57)
+### App
+- Force to kill test when `ClientDisconnected`.
 ### Command
 - Update to use `JsonService` implementation to use `Newtonsoft.Json` in the domain.
 - Update `ProcessStart` with `GetProcesses` to enable kill process.
@@ -18,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add Environment variable for process arguments `RICAUN_REVITTEST_CONSOLE_PROCESS_ARGUMENTS`.
 ### Shared
 - Update to use `ricaun.NamedPipeWrapper.Json` version `1.8.0`.
+- Add `ClientDisconnected` in `PipeProcessServer`.
 ### TestAdapter
 - Use `LocalExtensionData` to store `TestModel` result.
 - Add `EnvironmentSettings` to overwrite settings in the `TestAdapter`.
