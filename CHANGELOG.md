@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.5.1] / 2024-09-25
+## [1.6.0] / 2024-09-25
 ### Features
 - Support `TestAdapter` custom executer.
 - Support environment variables to overwrite settings in the `TestAdapter`. (Fix: #57)
@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update to use `JsonService` implementation to use `Newtonsoft.Json` in the domain.
 ### Console
 - Add `RevitTestUtils.Exceptions` to show exceptions in the console.
-- Add `ricaun.RevitAPI.Fake.References.RevitAPIUI` to fix `RevitAPIUI` reference exception in the discovery test.
+- Add `ricaun.RevitAPI.Fake.References.RevitAPIUI` to fix `RevitAPIUI` reference exception in the discovery test. (Fix: #58)
 - Disable/Remove discovery test to use `RevitAPIUI` version `2021` to `2023`.
 ### Shared
 - Update to use `ricaun.NamedPipeWrapper.Json` version `1.8.0`.
@@ -505,7 +505,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
-[1.5.1]: ../../compare/1.5.0...1.5.1
+[1.6.0]: ../../compare/1.5.0...1.6.0
 [1.5.0]: ../../compare/1.4.1...1.5.0
 [1.4.1]: ../../compare/1.4.0...1.4.1
 [1.4.0]: ../../compare/1.3.6...1.4.0
