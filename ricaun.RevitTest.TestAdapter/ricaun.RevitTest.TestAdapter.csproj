@@ -162,5 +162,5 @@
   <ItemGroup>
     <None Include="Resources\icon.png" />
   </ItemGroup>
-
+  
 </Project>

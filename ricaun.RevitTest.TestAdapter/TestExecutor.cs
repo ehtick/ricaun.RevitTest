@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using ricaun.NUnit.Models;
+using ricaun.RevitTest.TestAdapter.Extensions;
 using ricaun.RevitTest.TestAdapter.Metadatas;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
@@ -91,11 +92,7 @@ namespace ricaun.RevitTest.TestAdapter
             {
                 foreach (var process in ricaun.RevitTest.Command.Process.ProcessStart.GetProcesses())
                 {
-#if NET
                     process.Kill(true);
-#else
-                    process.Kill();
-#endif
                 }
             }
             catch (Exception ex)

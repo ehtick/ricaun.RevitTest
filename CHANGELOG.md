@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `EnvironmentSettings` to overwrite settings in the `TestAdapter`.
 - Update `JsonService` implementation to use `Newtonsoft.Json` in the domain.
 - Support `Cancel` to abort and `Kill` processes.
+- Add `ProcessExtension` to `KillTree` for net framework.
 ### Tests
 - Add `TestsRevitUI` to validate fake `RevitAPIUI` reference.
 
