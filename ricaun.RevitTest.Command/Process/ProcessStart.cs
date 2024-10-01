@@ -10,6 +10,12 @@ namespace ricaun.RevitTest.Command.Process
 {
     public class ProcessStart
     {
+        private static List<System.Diagnostics.Process> Processes = new List<System.Diagnostics.Process>();
+        public static System.Diagnostics.Process[] GetProcesses()
+        {
+            return Processes.OfType<System.Diagnostics.Process>().Where(e => !e.HasExited).ToArray();
+        }
+
         protected virtual void WriteLine(string message)
         {
             Debug.WriteLine(message);
@@ -99,6 +105,7 @@ namespace ricaun.RevitTest.Command.Process
             if (string.IsNullOrEmpty(processPath)) return;
             var psi = NewProcessStartInfo(arguments);
             var process = System.Diagnostics.Process.Start(psi);
+            Processes.Add(process);
             process.OutputDataReceived += (sender, e) =>
             {
                 consoleAction?.Invoke(e.Data);

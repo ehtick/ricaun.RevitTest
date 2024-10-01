@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support environment variables to overwrite settings in the `TestAdapter`. (Fix: #57)
 ### Command
 - Update to use `JsonService` implementation to use `Newtonsoft.Json` in the domain.
+- Update `ProcessStart` with `GetProcesses` to enable kill process.
 ### Console
 - Add `RevitTestUtils.Exceptions` to show exceptions in the console.
 - Add `ricaun.RevitAPI.Fake.References.RevitAPIUI` to fix `RevitAPIUI` reference exception in the discovery test. (Fix: #58)
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use `LocalExtensionData` to store `TestModel` result.
 - Add `EnvironmentSettings` to overwrite settings in the `TestAdapter`.
 - Update `JsonService` implementation to use `Newtonsoft.Json` in the domain.
+- Support `Cancel` to abort and `Kill` processes.
 ### Tests
 - Add `TestsRevitUI` to validate fake `RevitAPIUI` reference.
 
