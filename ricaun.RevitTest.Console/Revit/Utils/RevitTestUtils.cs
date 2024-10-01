@@ -19,10 +19,6 @@ namespace ricaun.RevitTest.Console.Revit.Utils
     /// </summary>
     public static class RevitTestUtils
     {
-        private const bool EnableSelectMinMaxVersionReference = false;
-        private const int RevitMinVersionReference = 2021;
-        private const int RevitMaxVersionReference = 2023;
-
         private const int SleepMillisecondsBeforeFinish = 1000;
         private const int SleepMillisecondsDebuggerAttached = 1000;
 
@@ -41,16 +37,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                 Log.WriteLine($"RevitTestUtils: {revitVersion}");
                 LoggerTest($"RevitTestUtils: {revitVersion}");
 
-                // Problem with AnavRes.dll / adui22res.dll (version -2020)
-                // Problem with UI (version 2024)
-                var revitVersionMinMax = Math.Min(Math.Max(revitVersion, RevitMinVersionReference), RevitMaxVersionReference);
-                if (EnableSelectMinMaxVersionReference && RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionMinMax, out RevitInstallation revitInstallationMinMax))
-                {
-                    LoggerTest($"GetTest Version {revitVersionMinMax}");
-                    Log.WriteLine($"RevitTestUtils: {revitInstallationMinMax.InstallLocation}");
-                    tests = TestEngine.GetTestFullNames(filePath, revitInstallationMinMax.InstallLocation);
-                }
-                else if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersion, out RevitInstallation revitInstallation))
+                if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersion, out RevitInstallation revitInstallation))
                 {
                     LoggerTest($"GetTest Version {revitVersion}");
                     Log.WriteLine($"RevitTestUtils: {revitInstallation.InstallLocation}");

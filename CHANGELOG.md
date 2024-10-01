@@ -12,8 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update to use `JsonService` implementation to use `Newtonsoft.Json` in the domain.
 ### Console
 - Add `RevitTestUtils.Exceptions` to show exceptions in the console.
-- Add `ricaun.RevitAPIUI.Fake.Reference` to fix `RevitAPIUI` reference exception in the discovery test.
-- Disable discovery test to use `RevitAPIUI` version `2021` to `2023`.
+- Add `ricaun.RevitAPI.Fake.References.RevitAPIUI` to fix `RevitAPIUI` reference exception in the discovery test.
+- Disable/Remove discovery test to use `RevitAPIUI` version `2021` to `2023`.
 ### Shared
 - Update to use `ricaun.NamedPipeWrapper.Json` version `1.8.0`.
 ### TestAdapter
