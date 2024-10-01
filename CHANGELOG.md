@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add `RevitTestUtils.Exceptions` to show exceptions in the console.
 - Add `ricaun.RevitAPI.Fake.References.RevitAPIUI` to fix `RevitAPIUI` reference exception in the discovery test. (Fix: #58)
 - Disable/Remove discovery test to use `RevitAPIUI` version `2021` to `2023`.
+- Add Environment variable for process arguments `RICAUN_REVITTEST_CONSOLE_PROCESS_ARGUMENTS`.
 ### Shared
 - Update to use `ricaun.NamedPipeWrapper.Json` version `1.8.0`.
 ### TestAdapter

@@ -154,6 +154,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         if (revitInstallation.TryGetProcess(out Process process) == false || forceToOpenNewRevit)
                         {
                             var startRevitLanguageArgument = RevitLanguageUtils.GetArgument(forceLanguageToRevit);
+                            startRevitLanguageArgument = string.Join(" ", startRevitLanguageArgument, Environment.GetEnvironmentVariable("RICAUN_REVITTEST_CONSOLE_PROCESS_ARGUMENTS"));
                             Log.WriteLine($"{revitInstallation}: Start {startRevitLanguageArgument}");
                             process = revitInstallation.Start(startRevitLanguageArgument);
                         }
