@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.6.0] / 2024-09-25
+## [1.6.0] / 2024-09-25 - 2024-10-01
 ### Features
 - Support `TestAdapter` custom executer.
 - Support environment variables to overwrite settings in the `TestAdapter`. (Fix: #57)
