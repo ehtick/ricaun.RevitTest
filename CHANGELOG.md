@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Use `LocalExtensionData` to store `TestModel` result.
 - Add `EnvironmentSettings` to overwrite settings in the `TestAdapter`.
 - Update `JsonService` implementation to use `Newtonsoft.Json` in the domain.
+### Tests
+- Add `TestsRevitUI` to validate fake `RevitAPIUI` reference.
 
 ## [1.5.0] / 2024-09-11 - 2024-09-19
 ### Features
