@@ -1,14 +1,33 @@
-﻿namespace ricaun.RevitTest.Command.Extensions
+﻿using ricaun.RevitTest.Command.Extensions.Json;
+
+namespace ricaun.RevitTest.Command.Extensions
 {
-#if NETFRAMEWORK
-    using System.Web.Script.Serialization;
     /// <summary>
     /// JsonExtension
-    /// <code>Reference Include="System.Web.Extensions"</code>
     /// </summary>
     public static class JsonExtension
     {
-        private static JavaScriptSerializer JavaScriptSerializer { get; set; } = new JavaScriptSerializer();
+        /// <summary>
+        /// IJsonService
+        /// </summary>
+        public static IJsonService JsonService { get; set; } = CreateJsonService();
+
+        /// <summary>
+        /// Create JsonService
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// If NewtonsoftJsonService is available, use it.
+        /// </remarks>
+        private static IJsonService CreateJsonService()
+        {
+            try
+            {
+                return new NewtonsoftJsonService();
+            }
+            catch { };
+            return new JsonService();
+        }
 
         /// <summary>
         /// Deserialize
@@ -18,7 +37,7 @@
         /// <returns></returns>
         public static T Deserialize<T>(this string value)
         {
-            return JavaScriptSerializer.Deserialize<T>(value);
+            return JsonService.Deserialize<T>(value);
         }
 
         /// <summary>
@@ -28,7 +47,7 @@
         /// <returns></returns>
         public static string Serialize(object value)
         {
-            return JavaScriptSerializer.Serialize(value);
+            return JsonService.Serialize(value);
         }
 
         /// <summary>
@@ -41,89 +60,4 @@
             return Serialize(value);
         }
     }
-#endif
-
-#if NETSTANDARD
-    ﻿using Newtonsoft.Json;
-    public static class JsonExtension
-    {
-        /// <summary>
-        /// Settings
-        /// </summary>
-        public static JsonSerializerSettings Settings { get; set; } = new JsonSerializerSettings();
-
-        /// <summary>
-        /// Deserialize
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static T Deserialize<T>(this string value)
-        {
-            return JsonConvert.DeserializeObject<T>(value, Settings);
-        }
-
-        /// <summary>
-        /// Serialize
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string Serialize(object value)
-        {
-            return JsonConvert.SerializeObject(value, Settings);
-        }
-
-        /// <summary>
-        /// ToJson
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string ToJson(this object value)
-        {
-            return Serialize(value);
-        }
-    }
-#endif
-
-#if NET
-    using System.Text.Json;
-    public static class JsonExtension
-    {
-        /// <summary>
-        /// Settings
-        /// </summary>
-        public static JsonSerializerOptions Settings { get; set; } = new JsonSerializerOptions();
-
-        /// <summary>
-        /// Deserialize
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static T Deserialize<T>(this string value)
-        {
-            return JsonSerializer.Deserialize<T>(value, Settings);
-        }
-
-        /// <summary>
-        /// Serialize
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string Serialize(object value)
-        {
-            return JsonSerializer.Serialize(value, Settings);
-        }
-
-        /// <summary>
-        /// ToJson
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string ToJson(this object value)
-        {
-            return Serialize(value);
-        }
-    }
-#endif
 }

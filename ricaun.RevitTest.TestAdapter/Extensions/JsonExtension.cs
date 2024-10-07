@@ -6,7 +6,27 @@
     /// </summary>
     internal static class JsonExtension
     {
-        private static IJsonService jsonService { get; set; } = new JsonService();
+        /// <summary>
+        /// IJsonService
+        /// </summary>
+        public static IJsonService JsonService { get; set; } = CreateJsonService();
+
+        /// <summary>
+        /// Create JsonService
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// If NewtonsoftJsonService is available, use it.
+        /// </remarks>
+        private static IJsonService CreateJsonService()
+        {
+            try
+            {
+                return new NewtonsoftJsonService();
+            }
+            catch { };
+            return new JsonService();
+        }
 
         /// <summary>
         /// Deserialize
@@ -16,7 +36,7 @@
         /// <returns></returns>
         public static T Deserialize<T>(this string value)
         {
-            return jsonService.Deserialize<T>(value);
+            return JsonService.Deserialize<T>(value);
         }
 
         /// <summary>
@@ -26,7 +46,7 @@
         /// <returns></returns>
         public static string Serialize(object value)
         {
-            return jsonService.Serialize(value);
+            return JsonService.Serialize(value);
         }
 
         /// <summary>

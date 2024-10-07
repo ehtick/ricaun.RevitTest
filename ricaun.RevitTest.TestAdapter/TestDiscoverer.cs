@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 using ricaun.RevitTest.TestAdapter.Extensions;
+using ricaun.RevitTest.TestAdapter.Metadatas;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,8 @@ namespace ricaun.RevitTest.TestAdapter
             {
                 foreach (var source in sources)
                 {
-                    Metadatas.MetadataSettings.Create(source);
+                    MetadataSettings.Create(source);
+                    EnvironmentSettings.Create();
                     AdapterLogger.Logger.Info($"DiscoverTests: {source}");
 
                     using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application, source))

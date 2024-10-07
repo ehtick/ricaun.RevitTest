@@ -69,7 +69,7 @@ For more information see [Wiki](https://github.com/ricaun-io/ricaun.RevitTest/wi
 * [ricaun.RevitTest.Application.bundle.zip](ricaun.RevitTest.Application)
 #### Shared
 * [ricaun.NUnit](https://github.com/ricaun-io/ricaun.NUnit)
-* [NamedPipeWrapper.Json](https://github.com/ricaun-io/named-pipe-wrapper-json)
+* [ricaun.NamedPipeWrapper.Json](https://github.com/ricaun-io/named-pipe-wrapper-json)
 #### TestAdapter
 * [ricaun.RevitTest.Console.exe](ricaun.RevitTest.Console)
 * [ricaun.RevitTest.Command](ricaun.RevitTest.Command)
@@ -129,6 +129,18 @@ dotnet test ricaun.RevitTest.Tests.dll --settings:.runsettings -- NUnit.Version=
 ```
 ```bash
 dotnet test ricaun.RevitTest.Tests.dll -v:detailed -- NUnit.Application=""
+```
+
+### Environment Variables
+```
+RICAUN_REVITTEST_TESTADAPTER_NUNIT_VERSION
+RICAUN_REVITTEST_TESTADAPTER_NUNIT_LANGUAGE
+RICAUN_REVITTEST_TESTADAPTER_NUNIT_OPEN
+RICAUN_REVITTEST_TESTADAPTER_NUNIT_CLOSE
+RICAUN_REVITTEST_TESTADAPTER_NUNIT_TIMEOUT
+RICAUN_REVITTEST_TESTADAPTER_NUNIT_VERBOSITY
+RICAUN_REVITTEST_TESTADAPTER_NUNIT_APPLICATION
+RICAUN_REVITTEST_TESTADAPTER_NUNIT_METADATA
 ```
 
 ### `.runsettings`

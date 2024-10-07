@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] / 2024-09-25 - 2024-10-06
+### Features
+- Support `TestAdapter` custom executer.
+- Support environment variables to overwrite settings in the `TestAdapter`. (Fix: #57)
+- Support `Cancel` tests and `Kill` processes in the `TestAdapter`.
+### App
+- Force to kill test when `ClientDisconnected`.
+### Command
+- Update to use `JsonService` implementation to use `Newtonsoft.Json` in the domain.
+- Update `ProcessStart` with `GetProcesses` to enable kill process.
+### Console
+- Add `RevitTestUtils.Exceptions` to show exceptions in the console.
+- Add `ricaun.RevitAPI.Fake.References.RevitAPIUI` to fix `RevitAPIUI` reference exception in the discovery test. (Fix: #58)
+- Disable/Remove discovery test to use `RevitAPIUI` version `2021` to `2023`.
+- Add Environment variable for process arguments `RICAUN_REVITTEST_CONSOLE_PROCESS_ARGUMENTS`.
+### Shared
+- Update to use `ricaun.NamedPipeWrapper.Json` version `1.8.0`.
+- Add `ClientDisconnected` in `PipeProcessServer`.
+### TestAdapter
+- Use `LocalExtensionData` to store `TestModel` result.
+- Add `EnvironmentSettings` to overwrite settings in the `TestAdapter`.
+- Update `JsonService` implementation to use `Newtonsoft.Json` in the domain.
+- Support `Cancel` to abort and `Kill` processes.
+- Add `ProcessExtension` to `KillTree` for net framework.
+### Tests
+- Add `TestsRevitUI` to validate fake `RevitAPIUI` reference.
+
 ## [1.5.0] / 2024-09-11 - 2024-09-19
 ### Features
 - Support tests with `TestCaseSource`. (Fix: #55)
@@ -486,6 +513,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.6.0]: ../../compare/1.5.0...1.6.0
 [1.5.0]: ../../compare/1.4.1...1.5.0
 [1.4.1]: ../../compare/1.4.0...1.4.1
 [1.4.0]: ../../compare/1.3.6...1.4.0

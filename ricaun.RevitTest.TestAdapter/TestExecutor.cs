@@ -1,10 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
 using ricaun.NUnit.Models;
+using ricaun.RevitTest.TestAdapter.Extensions;
+using ricaun.RevitTest.TestAdapter.Metadatas;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ricaun.RevitTest.TestAdapter
@@ -60,10 +63,44 @@ namespace ricaun.RevitTest.TestAdapter
             task.GetAwaiter().GetResult();
         }
 
-        public void Cancel()
+        #region Cancel
+        /// <summary>
+        /// Force to cancel `RunTests` if process exit
+        /// </summary>
+        private void InitializeCancel()
         {
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
         }
 
+        private void FinishCancel()
+        {
+            AppDomain.CurrentDomain.ProcessExit -= CurrentDomain_ProcessExit;
+        }
+
+        private void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        {
+            Cancel();
+        }
+
+        /// <summary>
+        /// Cancel force to kill process.
+        /// </summary>
+        public void Cancel()
+        {
+            FinishCancel();
+            try
+            {
+                foreach (var process in ricaun.RevitTest.Command.Process.ProcessStart.GetProcesses())
+                {
+                    process.Kill(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.WriteAllText($"{this.GetType().Assembly.GetName().Name}.Exception.txt", ex.ToString());
+            }
+        }
+        #endregion
         private static bool IsLogDebug => System.Diagnostics.Debugger.IsAttached || AdapterSettings.Settings.NUnit.Verbosity > 2;
 
         /// <summary>
@@ -75,6 +112,8 @@ namespace ricaun.RevitTest.TestAdapter
         /// <returns></returns>
         private async Task RunTests(IFrameworkHandle frameworkHandle, string source, List<TestCase> tests = null)
         {
+            InitializeCancel();
+
             tests = tests ?? new List<TestCase>();
 
             AdapterLogger.Logger.Info($"RunTest: {source} [TestCase: {tests.Count}]");
@@ -82,7 +121,8 @@ namespace ricaun.RevitTest.TestAdapter
             {
                 AdapterLogger.Logger.Info($"Test: {test.FullyQualifiedName}.{test.DisplayName}");
             }
-            Metadatas.MetadataSettings.Create(source);
+            MetadataSettings.Create(source);
+            EnvironmentSettings.Create();
 
             AdapterLogger.Logger.Info("---------");
             AdapterLogger.Logger.Info($"RevitTestConsole: {AdapterSettings.Settings.NUnit.Application}");
@@ -112,12 +152,14 @@ namespace ricaun.RevitTest.TestAdapter
                     AdapterSettings.Settings.NUnit.Open,
                     AdapterSettings.Settings.NUnit.Close,
                     AdapterSettings.Settings.NUnit.Timeout,
-                    AdapterLogger.Logger.Debug, (message) => { if (IsLogDebug) AdapterLogger.Logger.Debug(message); }, AdapterLogger.Logger.Warning, 
+                    AdapterLogger.Logger.Debug, (message) => { if (IsLogDebug) AdapterLogger.Logger.Debug(message); }, AdapterLogger.Logger.Warning,
                     filters);
 
             }
 
             AdapterLogger.Logger.Info("---------");
+
+            FinishCancel();
         }
 
         private static void RecordResultTestModel(IFrameworkHandle frameworkHandle, string source, List<TestCase> tests, TestModel testModel)
@@ -131,6 +173,7 @@ namespace ricaun.RevitTest.TestAdapter
 
             AdapterLogger.Logger.Info($"\tTestCase: {testCase} [{testCase.DisplayName}] \t{testCase.Id}");
 
+            testCase.LocalExtensionData = testModel;
             var testResult = new TestResult(testCase);
 
             testResult.Outcome = TestOutcome.Failed;

@@ -15,11 +15,11 @@ namespace ricaun.RevitTest.TestAdapter.Services
         {
             try
             {
-                var enviromentVariable = Environment.GetEnvironmentVariable(applicationPath);
-                if (!string.IsNullOrEmpty(enviromentVariable))
+                var environmentVariable = Environment.GetEnvironmentVariable(applicationPath);
+                if (!string.IsNullOrEmpty(environmentVariable))
                 {
-                    AdapterLogger.Logger.Info($"Application Environment: {Path.GetFileName(enviromentVariable)}");
-                    return enviromentVariable;
+                    AdapterLogger.Logger.Info($"Application Environment: {Path.GetFileName(environmentVariable)}");
+                    return environmentVariable;
                 }
             }
             catch { }

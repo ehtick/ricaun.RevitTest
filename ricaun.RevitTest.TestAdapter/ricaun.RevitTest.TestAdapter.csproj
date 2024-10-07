@@ -50,6 +50,12 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.*" IncludeAssets="build; compile" PrivateAssets="All">
+      <NoWarn>NU1903</NoWarn>
+    </PackageReference>
+  </ItemGroup>
+
   <!-- Fody -->
   <ItemGroup>
     <PackageReference Include="Costura.Fody" Version="5.*" IncludeAssets="build; compile" PrivateAssets="all" />
@@ -156,5 +162,5 @@
   <ItemGroup>
     <None Include="Resources\icon.png" />
   </ItemGroup>
-
+  
 </Project>
