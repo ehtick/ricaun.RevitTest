@@ -2,8 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
-//[assembly: AssemblyMetadata("NUnit.Open", "true")]
-//[assembly: AssemblyMetadata("NUnit.Close", "true")]
+
 #if DEBUG
 //[assembly: AssemblyMetadata("NUnit.Version", "2021")]
 //[assembly: AssemblyMetadata("NUnit.Open", "true")]
