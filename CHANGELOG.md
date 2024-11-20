@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] / 2024-11-02
+### Features
+- Support `IRevitTask` functions as parameters.
+### Application
+- Add 8 functions parameters in the tests to enable `IRevitTask` functions. (Fix: #61)
+### Tests
+- Update `TestsRevitTask` with `RevitTaskBase` using base parameter.
+- Add `TestsFuncTaskParameters` to test each parameter function.
+
 ## [1.6.0] / 2024-09-25 - 2024-10-06
 ### Features
 - Support `TestAdapter` custom executer.
@@ -513,6 +522,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.6.1]: ../../compare/1.6.0...1.6.1
 [1.6.0]: ../../compare/1.5.0...1.6.0
 [1.5.0]: ../../compare/1.4.1...1.5.0
 [1.4.1]: ../../compare/1.4.0...1.4.1
