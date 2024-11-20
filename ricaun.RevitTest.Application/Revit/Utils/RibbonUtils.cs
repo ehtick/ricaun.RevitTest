@@ -11,7 +11,7 @@ namespace ricaun.RevitTest.Application.Revit
         public static string TestWait { get; } = GetComponentImage("test-wait-light");
         public static string GetComponentImage(string imageName)
         {
-            return string.Format("Images/{0}.ico", imageName);
+            return string.Format("Images/{0}.tiff", imageName);
         }
     }
 }

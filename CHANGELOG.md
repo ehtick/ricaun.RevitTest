@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Support `IRevitTask` functions as parameters.
 ### Application
 - Add 8 functions parameters in the tests to enable `IRevitTask` functions. (Fix: #61)
+- Update `ricaun.Revit.UI` to `0.7.1` to support `.tiff` file.
+- Add `.tiff` to support `Multi-DPI`.
 ### Tests
 - Update `TestsRevitTask` with `RevitTaskBase` using base parameter.
 - Add `TestsFuncTaskParameters` to test each parameter function.
