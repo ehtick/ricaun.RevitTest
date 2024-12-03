@@ -101,13 +101,21 @@
 
   <ItemGroup>
     <None Remove="Images\test-fail-dark.ico" />
+    <None Remove="Images\test-fail-dark.tiff" />
     <None Remove="Images\test-fail-light.ico" />
+    <None Remove="Images\test-fail-light.tiff" />
     <None Remove="Images\test-pass-dark.ico" />
+    <None Remove="Images\test-pass-dark.tiff" />
     <None Remove="Images\test-pass-light.ico" />
+    <None Remove="Images\test-pass-light.tiff" />
     <None Remove="Images\test-skip-dark.ico" />
+    <None Remove="Images\test-skip-dark.tiff" />
     <None Remove="Images\test-skip-light.ico" />
+    <None Remove="Images\test-skip-light.tiff" />
     <None Remove="Images\test-wait-dark.ico" />
+    <None Remove="Images\test-wait-dark.tiff" />
     <None Remove="Images\test-wait-light.ico" />
+    <None Remove="Images\test-wait-light.tiff" />
   </ItemGroup>
 
   <ItemGroup>
@@ -162,13 +170,21 @@
 
   <ItemGroup>
     <Resource Include="Images\test-fail-dark.ico" />
+    <Resource Include="Images\test-fail-dark.tiff" />
     <Resource Include="Images\test-fail-light.ico" />
+    <Resource Include="Images\test-fail-light.tiff" />
     <Resource Include="Images\test-pass-dark.ico" />
+    <Resource Include="Images\test-pass-dark.tiff" />
     <Resource Include="Images\test-pass-light.ico" />
+    <Resource Include="Images\test-pass-light.tiff" />
     <Resource Include="Images\test-skip-dark.ico" />
+    <Resource Include="Images\test-skip-dark.tiff" />
     <Resource Include="Images\test-skip-light.ico" />
+    <Resource Include="Images\test-skip-light.tiff" />
     <Resource Include="Images\test-wait-dark.ico" />
+    <Resource Include="Images\test-wait-dark.tiff" />
     <Resource Include="Images\test-wait-light.ico" />
+    <Resource Include="Images\test-wait-light.tiff" />
   </ItemGroup>
 
 </Project>

@@ -27,7 +27,7 @@ public interface IBuildCommand : IBuildConsole
                     .ForEach(file =>
                     {
                         Serilog.Log.Information($"Copy nupkg: {file} to {releaseDirectory}");
-                        FileSystemTasks.CopyFileToDirectory(file, releaseDirectory, FileExistsPolicy.OverwriteIfNewer);
+                        AbsolutePathExtensions.CopyToDirectory(file, releaseDirectory, ExistsPolicy.FileOverwriteIfNewer);
                     });
 
             });

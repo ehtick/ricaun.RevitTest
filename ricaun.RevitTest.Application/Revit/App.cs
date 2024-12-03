@@ -29,6 +29,17 @@ namespace ricaun.RevitTest.Application.Revit
         private const int TestThreadSleepMin = 50;
         private const int TestAfterFinishSleepTime = 100;
 
+        #region RevitTask Parameter
+        static Func<Action, Task> revitTaskNone0 => RevitTask.Run;
+        static Func<Action<UIApplication>, Task> revitTaskNone1 => RevitTask.Run;
+        static Func<Func<object>, Task<object>> revitTaskNone2 => RevitTask.Run;
+        static Func<Func<UIApplication, object>, Task<object>> revitTaskNone3 => RevitTask.Run;
+        static Func<Action, System.Threading.CancellationToken, Task> revitTaskToken0 => RevitTask.Run;
+        static Func<Action<UIApplication>, System.Threading.CancellationToken, Task> revitTaskToken1 => RevitTask.Run;
+        static Func<Func<object>, System.Threading.CancellationToken, Task<object>> revitTaskToken2 => RevitTask.Run;
+        static Func<Func<UIApplication, object>, System.Threading.CancellationToken, Task<object>> revitTaskToken3 => RevitTask.Run;
+        #endregion
+
         public Result OnStartup(UIControlledApplication application)
         {
             Log.Initilize(application);
@@ -54,6 +65,10 @@ namespace ricaun.RevitTest.Application.Revit
                 application.ControlledApplication,
                 application.GetUIApplication(),
                 application.ControlledApplication.GetApplication());
+
+            // Add RevitTask Parameters
+            RevitParameters.AddParameter(revitTaskNone0, revitTaskNone1, revitTaskNone2, revitTaskNone3);
+            RevitParameters.AddParameter(revitTaskToken0, revitTaskToken1, revitTaskToken2, revitTaskToken3);
 
             PipeTestServer_Initialize();
 
