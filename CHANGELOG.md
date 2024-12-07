@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.7.1] / 2024-12-07
+### Application
+- Update to use `AssemblyMetadata` to set configuration.
+- Update `TestExecuteUtils` to use `ConfigurationMetadata`.
+
 ## [1.7.0] / 2024-11-02 - 2024-12-03
 ### Features
 - Support `IRevitTask` functions as parameters.
@@ -526,6 +531,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.7.1]: ../../compare/1.7.0...1.7.1
 [1.7.0]: ../../compare/1.6.0...1.7.0
 [1.6.0]: ../../compare/1.5.0...1.6.0
 [1.5.0]: ../../compare/1.4.1...1.5.0

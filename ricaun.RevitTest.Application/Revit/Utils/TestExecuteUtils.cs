@@ -18,7 +18,7 @@ namespace ricaun.RevitTest.Application.Revit
         {
             Log.WriteLine($"TestExecuteUtils: {filePath}");
             var zipFile = await revitTask.Run(() => CopyFilesUsingZipFolder(filePath));
-            
+
             if (zipFile is null)
             {
                 Log.WriteLine($"TestExecuteUtils: Copy Zip Fail");
@@ -27,7 +27,7 @@ namespace ricaun.RevitTest.Application.Revit
 
             string zipDestination = null;
             var extractToTempSucess = await revitTask.Run(() => ZipExtension.ExtractToTempFolder(zipFile, out zipDestination));
-            
+
             if (extractToTempSucess == false)
             {
                 Log.WriteLine($"TestExecuteUtils: Extract Zip Fail");
@@ -101,51 +101,50 @@ namespace ricaun.RevitTest.Application.Revit
                         TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(3);
 #endif
 
-                        if (FileVersionInfoUtils.TryGetComments(filePath, out ConfigurationComments comments))
+                        var configurationMetadata = ConfigurationMetadata.GetConfigurationMetadata(filePath);
+
+                        if (configurationMetadata.TimeOut > 0)
                         {
-                            if (comments.TimeOut > 0)
+                            TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(configurationMetadata.TimeOut);
+                            Log.WriteLine($"TimeOut: {configurationMetadata.TimeOut}");
+                        }
+
+                        string containTestNameForNoRevitContext = configurationMetadata.Name;
+                        if (string.IsNullOrEmpty(containTestNameForNoRevitContext) == false)
+                        {
+                            if (TestEngineFilter.ExplicitEnabled == false)
                             {
-                                TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(comments.TimeOut);
-                                Log.WriteLine($"TimeOut: {comments.TimeOut}");
+                                TestEngineFilter.ExplicitEnabled = false;
+                                TestEngineFilter.TestNames.AddRange(TestEngine.GetTestFullNames(filePath));
                             }
 
-                            string containTestNameForNoRevitContext = comments.TestAsync;
-                            if (string.IsNullOrEmpty(containTestNameForNoRevitContext) == false)
+                            var originalTestNames = TestEngineFilter.TestNames.ToArray();
+                            var testGroupNoContext = originalTestNames
+                                .GroupBy(str => str.Contains(containTestNameForNoRevitContext))
+                                .ToDictionary(group => group.Key, group => group.ToList());
+
+                            if (testGroupNoContext.TryGetValue(false, out var inContextTestNames))
                             {
-                                if (TestEngineFilter.ExplicitEnabled == false)
-                                {
-                                    TestEngineFilter.ExplicitEnabled = false;
-                                    TestEngineFilter.TestNames.AddRange(TestEngine.GetTestFullNames(filePath));
-                                }
-
-                                var originalTestNames = TestEngineFilter.TestNames.ToArray();
-                                var testGroupNoContext = originalTestNames
-                                    .GroupBy(str => str.Contains(containTestNameForNoRevitContext))
-                                    .ToDictionary(group => group.Key, group => group.ToList());
-
-                                if (testGroupNoContext.TryGetValue(false, out var inContextTestNames))
-                                {
-                                    TestEngineFilter.TestNames.Clear();
-                                    TestEngineFilter.TestNames.AddRange(inContextTestNames);
-                                    modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
-                                }
-
-                                if (testGroupNoContext.TryGetValue(true, out var testAsyncNames))
-                                {
-                                    Log.WriteLine($"TestAsync: [{string.Join(",", testAsyncNames)}]");
-                                    TestEngineFilter.TestNames.Clear();
-                                    TestEngineFilter.TestNames.AddRange(testAsyncNames);
-                                    var modelTestAsync = TestEngine.TestAssembly(filePath, parameters);
-                                    if (modelTest is null) modelTest = modelTestAsync;
-                                    else
-                                    {
-                                        modelTest.Tests.AddRange(modelTestAsync.Tests);
-                                    }
-                                }
-
                                 TestEngineFilter.TestNames.Clear();
-                                TestEngineFilter.TestNames.AddRange(originalTestNames);
+                                TestEngineFilter.TestNames.AddRange(inContextTestNames);
+                                modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
                             }
+
+                            if (testGroupNoContext.TryGetValue(true, out var testAsyncNames))
+                            {
+                                Log.WriteLine($"TestAsync: [{string.Join(",", testAsyncNames)}]");
+                                TestEngineFilter.TestNames.Clear();
+                                TestEngineFilter.TestNames.AddRange(testAsyncNames);
+                                var modelTestAsync = TestEngine.TestAssembly(filePath, parameters);
+                                if (modelTest is null) modelTest = modelTestAsync;
+                                else
+                                {
+                                    modelTest.Tests.AddRange(modelTestAsync.Tests);
+                                }
+                            }
+
+                            TestEngineFilter.TestNames.Clear();
+                            TestEngineFilter.TestNames.AddRange(originalTestNames);
                         }
 
                         if (modelTest is null)
@@ -193,90 +192,37 @@ namespace ricaun.RevitTest.Application.Revit
             return modelTest;
         }
 
-        //public static TestAssemblyModel Execute(string filePath, params object[] parameters)
-        //{
-        //    var zipFile = CopyFilesUsingZipFolder(filePath);
-
-        //    if (zipFile is null)
-        //        return null;
-
-        //    var extractToTempSucess = ZipExtension.ExtractToTempFolder(zipFile, out string zipDestination);
-
-        //    if (extractToTempSucess == false)
-        //        return null;
-
-        //    TestAssemblyModel tests = TestDirectory(zipDestination, parameters);
-
-        //    CopyFilesBackUsingZip(filePath, zipDestination);
-
-        //    return tests;
-        //}
-
-        //private static TestAssemblyModel TestDirectory(string directory, params object[] parameters)
-        //{
-        //    TestAssemblyModel modelTest = null;
-
-        //    Log.WriteLine("----------------------------------");
-        //    Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
-        //    Log.WriteLine("----------------------------------");
-
-        //    foreach (var filePath in Directory.GetFiles(directory, "*.dll"))
-        //    {
-        //        var fileName = Path.GetFileName(filePath);
-        //        try
-        //        {
-        //            if (TestEngine.ContainNUnit(filePath))
-        //            {
-        //                //Log.WriteLine($"Test File: {fileName}");
-        //                //foreach (var testName in TestEngine.GetTestFullNames(filePath))
-        //                //{
-        //                //    Log.WriteLine($"\t{testName}");
-        //                //}
-
-        //                TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(1);
-
-        //                modelTest = TestEngine.TestAssembly(filePath, parameters);
-
-        //                var passed = modelTest.Success ? "Passed" : "Failed";
-        //                if (modelTest.TestCount == 0) { passed = "No Tests"; }
-
-        //                Log.WriteLine($"{modelTest}\t {passed}");
-
-        //                var tests = modelTest.Tests.SelectMany(e => e.Tests);
-
-        //                foreach (var test in tests)
-        //                {
-        //                    Log.WriteLine($"\t {test.Time}\t {test}");
-        //                    //Debug.WriteLine($"Debug:\t {test}\t {test.Console.Trim()}");
-        //                }
-
-        //                if (tests.Any() == false)
-        //                {
-        //                    Log.WriteLine($"Error: {modelTest.Message}");
-        //                    try
-        //                    {
-        //                        var ex = new Exception(modelTest.Message.Split('\n').FirstOrDefault());
-        //                        modelTest = TestEngine.Fail(filePath, ex);
-        //                    }
-        //                    catch { }
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Log.WriteLine($"Error: {fileName} {ex}");
-        //        }
-        //    }
-
-        //    Log.WriteLine("----------------------------------");
-
-        //    return modelTest;
-        //}
-
         private class ConfigurationComments
         {
             public string TestAsync { get; set; }
             public double TimeOut { get; set; }
+        }
+
+        private class ConfigurationMetadata
+        {
+            public const string TasksTimeout = "ricaun.RevitTest.Application.Tasks.Timeout";
+            public const string TasksName = "ricaun.RevitTest.Application.Tasks.Name";
+            public string Name { get; set; }
+            public double TimeOut { get; set; }
+
+            public static ConfigurationMetadata GetConfigurationMetadata(string filePath)
+            {
+                try
+                {
+                    return GetConfigurationMetadata(Assembly.Load(File.ReadAllBytes(filePath)));
+                }
+                catch { }
+                return new ConfigurationMetadata();
+            }
+            
+            public static ConfigurationMetadata GetConfigurationMetadata(Assembly assembly)
+            {
+                return new ConfigurationMetadata
+                {
+                    Name = assembly.Get(TasksName),
+                    TimeOut = assembly.GetDouble(TasksTimeout)
+                };
+            }
         }
     }
 }

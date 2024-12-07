@@ -5,7 +5,10 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-[assembly: System.Reflection.AssemblyDescription("{\"TestAsync\":\"RevitTask\",\"TimeOut\":60.0}")]
+//[assembly: System.Reflection.AssemblyDescription("{\"TestAsync\":\"RevitTask\",\"TimeOut\":60.0}")]
+
+[assembly: System.Reflection.AssemblyMetadata("ricaun.RevitTest.Application.Tasks.Name", "RevitTask")]
+[assembly: System.Reflection.AssemblyMetadata("ricaun.RevitTest.Application.Tasks.Timeout", "60")]
 
 namespace ricaun.RevitTest.Tests
 {
