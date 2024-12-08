@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `TestExecuteUtils` to use `ConfigurationMetadata`.
 - Update `Log` file name.
 - Update `ricaun.NUnit` to `1.4.1`.
+### TestAdapter
+- Update `MapperKey` to multiple converts.
 
 ## [1.7.0] / 2024-11-02 - 2024-12-03
 ### Features

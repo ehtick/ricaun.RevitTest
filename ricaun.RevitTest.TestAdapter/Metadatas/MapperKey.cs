@@ -28,6 +28,7 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
                     {
                         try
                         {
+                            destinationValue = Convert.ChangeType(destinationValue, sourcePropertyInfo.PropertyType);
                             sourcePropertyInfo.SetValue(kvp.Object, destinationValue);
                             Debug.WriteLine($"\t{sourceKey}: {sourceValue} >> {sourcePropertyInfo.Name}: {destinationValue}");
                         }
@@ -46,29 +47,44 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
         {
             public static string[] CustomAttributeNames = new[] { "ElementName", "DisplayName", "Name" };
             public static Dictionary<Type, Func<string, object>> MapperConvert;
+            public static object ConvertToLong(string valueToConvert)
+            {
+                if (long.TryParse(valueToConvert, out var value))
+                    return value;
+                return valueToConvert;
+            }
+            public static object ConvertToULong(string valueToConvert)
+            {
+                if (ulong.TryParse(valueToConvert, out var value))
+                    return value;
+                return valueToConvert;
+            }
+            public static object ConvertToDouble(string valueToConvert)
+            {
+                try
+                {
+                    return double.Parse(valueToConvert.Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture);
+                }
+                catch { }
+                return valueToConvert;
+            }
+            public static object ConvertToBool(string valueToConvert)
+            {
+                var value = valueToConvert.ToLower();
+                return value.Equals("true") || value.Equals("1");
+            }
             static Mapper()
             {
                 MapperConvert = new Dictionary<Type, Func<string, object>>();
-                MapperConvert.Add(typeof(int), (string valueToConvert) =>
-                {
-                    if (int.TryParse(valueToConvert, out int value))
-                        return value;
-                    return valueToConvert;
-                });
-                MapperConvert.Add(typeof(double), (string valueToConvert) =>
-                {
-                    try
-                    {
-                        return double.Parse(valueToConvert.Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture);
-                    }
-                    catch { }
-                    return valueToConvert;
-                });
-                MapperConvert.Add(typeof(bool), (string valueToConvert) =>
-                {
-                    var value = valueToConvert.ToLower();
-                    return value.Equals("true") || value.Equals("1");
-                });
+                MapperConvert.Add(typeof(ulong), ConvertToULong);
+                MapperConvert.Add(typeof(uint), ConvertToULong);
+                MapperConvert.Add(typeof(ushort), ConvertToULong);
+                MapperConvert.Add(typeof(long), ConvertToLong);
+                MapperConvert.Add(typeof(int), ConvertToLong);
+                MapperConvert.Add(typeof(short), ConvertToLong);
+                MapperConvert.Add(typeof(double), ConvertToDouble);
+                MapperConvert.Add(typeof(float), ConvertToDouble);
+                MapperConvert.Add(typeof(bool), ConvertToBool);
             }
 
             #region PropertyInformation
