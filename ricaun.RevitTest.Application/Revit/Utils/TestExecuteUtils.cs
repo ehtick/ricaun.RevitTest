@@ -207,22 +207,26 @@ namespace ricaun.RevitTest.Application.Revit
 
             public static ConfigurationMetadata GetConfigurationMetadata(string filePath)
             {
+                var configurationMetadata = new ConfigurationMetadata();
                 try
                 {
-                    return GetConfigurationMetadata(Assembly.Load(File.ReadAllBytes(filePath)));
+                    //return GetConfigurationMetadata(Assembly.Load(File.ReadAllBytes(filePath)));
+                    var attributes = TestEngine.GetAssemblyMetadataAttributes(filePath);
+                    configurationMetadata.Name = attributes.Get(TasksName);
+                    configurationMetadata.TimeOut = attributes.GetDouble(TasksTimeout);
                 }
                 catch { }
-                return new ConfigurationMetadata();
+                return configurationMetadata;
             }
-            
-            public static ConfigurationMetadata GetConfigurationMetadata(Assembly assembly)
-            {
-                return new ConfigurationMetadata
-                {
-                    Name = assembly.Get(TasksName),
-                    TimeOut = assembly.GetDouble(TasksTimeout)
-                };
-            }
+
+            //public static ConfigurationMetadata GetConfigurationMetadata(Assembly assembly)
+            //{
+            //    return new ConfigurationMetadata
+            //    {
+            //        Name = assembly.Get(TasksName),
+            //        TimeOut = assembly.GetDouble(TasksTimeout)
+            //    };
+            //}
         }
     }
 }
