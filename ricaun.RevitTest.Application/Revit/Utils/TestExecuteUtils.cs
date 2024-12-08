@@ -103,15 +103,16 @@ namespace ricaun.RevitTest.Application.Revit
 
                         var configurationMetadata = ConfigurationMetadata.GetConfigurationMetadata(filePath);
 
-                        if (configurationMetadata.TimeOut > 0)
+                        if (configurationMetadata.Timeout > 0)
                         {
-                            TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(configurationMetadata.TimeOut);
-                            Log.WriteLine($"TimeOut: {configurationMetadata.TimeOut}");
+                            TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(configurationMetadata.Timeout);
+                            Log.WriteLine($"Tasks.Timeout: {configurationMetadata.Timeout}");
                         }
 
                         string containTestNameForNoRevitContext = configurationMetadata.Name;
                         if (string.IsNullOrEmpty(containTestNameForNoRevitContext) == false)
                         {
+                            Log.WriteLine($"Tasks.Name: {containTestNameForNoRevitContext}");
                             if (TestEngineFilter.ExplicitEnabled == false)
                             {
                                 TestEngineFilter.ExplicitEnabled = false;
@@ -192,41 +193,21 @@ namespace ricaun.RevitTest.Application.Revit
             return modelTest;
         }
 
-        private class ConfigurationComments
-        {
-            public string TestAsync { get; set; }
-            public double TimeOut { get; set; }
-        }
-
         private class ConfigurationMetadata
         {
-            public const string TasksTimeout = "ricaun.RevitTest.Application.Tasks.Timeout";
-            public const string TasksName = "ricaun.RevitTest.Application.Tasks.Name";
             public string Name { get; set; }
-            public double TimeOut { get; set; }
+            public double Timeout { get; set; }
 
             public static ConfigurationMetadata GetConfigurationMetadata(string filePath)
             {
                 var configurationMetadata = new ConfigurationMetadata();
                 try
                 {
-                    //return GetConfigurationMetadata(Assembly.Load(File.ReadAllBytes(filePath)));
-                    var attributes = TestEngine.GetAssemblyMetadataAttributes(filePath);
-                    configurationMetadata.Name = attributes.Get(TasksName);
-                    configurationMetadata.TimeOut = attributes.GetDouble(TasksTimeout);
+                    MetadataMapper.Map(configurationMetadata, TestEngine.GetAssemblyMetadataAttributes(filePath), "ricaun.RevitTest.Application.Tasks");
                 }
                 catch { }
                 return configurationMetadata;
             }
-
-            //public static ConfigurationMetadata GetConfigurationMetadata(Assembly assembly)
-            //{
-            //    return new ConfigurationMetadata
-            //    {
-            //        Name = assembly.Get(TasksName),
-            //        TimeOut = assembly.GetDouble(TasksTimeout)
-            //    };
-            //}
         }
     }
 }
