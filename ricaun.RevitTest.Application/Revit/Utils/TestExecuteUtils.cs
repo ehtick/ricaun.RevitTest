@@ -34,8 +34,7 @@ namespace ricaun.RevitTest.Application.Revit
                 throw new Exception("Extract Zip Fail");
             }
 
-            //TestAssemblyModel tests = await revitTask.Run(() => TestDirectory(zipDestination, parameters));
-            TestAssemblyModel tests = await TestDirectoryAsync(revitTask, zipDestination, Path.GetFileName(filePath), parameters);
+            TestAssemblyModel tests = await Task.Run(() => TestDirectoryAsync(revitTask, zipDestination, Path.GetFileName(filePath), parameters));
 
             await revitTask.Run(() => CopyFilesBackUsingZip(filePath, zipDestination));
 
@@ -137,7 +136,7 @@ namespace ricaun.RevitTest.Application.Revit
                                 Log.WriteLine($"Tasks: [{string.Join(",", testAsyncNames)}]");
                                 TestEngineFilter.TestNames.Clear();
                                 TestEngineFilter.TestNames.AddRange(testAsyncNames);
-                                var modelTestAsync = TestEngine.TestAssembly(filePath, parameters);
+                                var modelTestAsync = await Task.Run(() => TestEngine.TestAssembly(filePath, parameters));
                                 if (modelTest is null) modelTest = modelTestAsync;
                                 else
                                 {
