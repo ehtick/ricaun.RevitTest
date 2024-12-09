@@ -22,7 +22,7 @@ using System.Reflection;
 
 //[assembly: AssemblyMetadata("NUnit.Application", "..\\..\\..\\..\\ricaun.RevitTest.Console\\bin\\Debug\\ricaun.DA4R.NUnit.Console.zip")]
 
-[assembly: AssemblyMetadata("NUnit.Timeout", "5")]
+[assembly: AssemblyMetadata("NUnit.Timeout", "5.0")]
 
 //[assembly: AssemblyMetadata("NUnit.Language", "ENU /hosted")]
 #endif

@@ -63,13 +63,13 @@ namespace ricaun.RevitTest.Application.Revit
             public static Dictionary<Type, Func<string, object>> MapperConvert;
             public static object ConvertToLong(string valueToConvert)
             {
-                if (long.TryParse(valueToConvert, out var value))
+                if (long.TryParse(valueToConvert.Replace(',', '.').Split('.')[0], out var value))
                     return value;
                 return valueToConvert;
             }
             public static object ConvertToULong(string valueToConvert)
             {
-                if (ulong.TryParse(valueToConvert, out var value))
+                if (ulong.TryParse(valueToConvert.Replace(',', '.').Split('.')[0], out var value))
                     return value;
                 return valueToConvert;
             }
