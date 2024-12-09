@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ricaun.NUnit` to `1.4.1`.
 - Add `MetadataMapper` to map `AssemblyMetadata` configuration.
 - Update to use `Task.Run` to force run outside the Revit context.
+- Update `Timeout` to time unit in minutes.
 ### Command
 - Update `AssemblyName` to use `Version`.
 - Update `Timeout` to `double`.

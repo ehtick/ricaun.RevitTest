@@ -84,9 +84,9 @@ namespace ricaun.RevitTest.Application.Revit
         {
             TestAssemblyModel modelTest = null;
 
-            Log.WriteLine("----------------------------------");
+            Log.WriteLine();
             Log.WriteLine($"TestEngine: {ricaun.NUnit.TestEngine.Initialize(out string testInitialize)} {testInitialize}");
-            Log.WriteLine("----------------------------------");
+            Log.WriteLine();
 
             foreach (var filePath in Directory.GetFiles(directory, filePattern)) // "*.dll"
             {
@@ -104,8 +104,8 @@ namespace ricaun.RevitTest.Application.Revit
 
                         if (configurationMetadata.Timeout > 0)
                         {
-                            TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(configurationMetadata.Timeout);
-                            Log.WriteLine($"Tasks.Timeout: {configurationMetadata.Timeout}");
+                            TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(configurationMetadata.Timeout);
+                            Log.WriteLine($"Tasks.Timeout: {configurationMetadata.Timeout:0.00} minutes");
                         }
 
                         string containTestNameForNoRevitContext = configurationMetadata.Name;
@@ -156,6 +156,7 @@ namespace ricaun.RevitTest.Application.Revit
                         var passed = modelTest.Success ? "Passed" : "Failed";
                         if (modelTest.TestCount == 0) { passed = "No Tests"; }
 
+                        Log.WriteLine();
                         Log.WriteLine($"{modelTest}\t {passed}");
 
                         var tests = modelTest.Tests.SelectMany(e => e.Tests);
@@ -188,7 +189,7 @@ namespace ricaun.RevitTest.Application.Revit
                 }
             }
 
-            Log.WriteLine("----------------------------------");
+            Log.WriteLine();
 
             return modelTest;
         }
@@ -196,6 +197,9 @@ namespace ricaun.RevitTest.Application.Revit
         private class ConfigurationMetadata
         {
             public string Name { get; set; }
+            /// <summary>
+            /// Timeout in minutes
+            /// </summary>
             public double Timeout { get; set; }
 
             public static ConfigurationMetadata GetConfigurationMetadata(string filePath)
