@@ -40,7 +40,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <AssemblyName>$(PackageId)</AssemblyName>
+    <AssemblyName>$(PackageId).$(Version)</AssemblyName>
     <Product>$(PackageId)</Product>
     <Copyright>Copyright (C) $(Company) $(CopyrightYears)</Copyright>
   </PropertyGroup>
