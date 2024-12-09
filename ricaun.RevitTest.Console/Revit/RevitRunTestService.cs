@@ -17,7 +17,7 @@ namespace ricaun.RevitTest.Console.Revit
             string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
             bool forceToCloseRevit = false,
-            int timeoutMinutes = 0,
+            double timeoutMinutes = 0,
             params string[] testFilters)
         {
             RevitTestUtils.CreateRevitServer(

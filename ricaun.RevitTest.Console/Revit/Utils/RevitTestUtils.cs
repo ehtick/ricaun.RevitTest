@@ -98,7 +98,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
             bool forceToCloseRevit = false,
-            int timeoutMinutes = 0,
+            double timeoutMinutes = 0,
             params string[] testFilters)
         {
             int timeoutNotBusyCountMax = 10;
@@ -198,14 +198,14 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                             }
                         };
 
-                        var timeoutSeconds = timeoutMinutes * 60;
+                        int timeoutSeconds = (int) timeoutMinutes * 60;
                         for (int i = 0; i <= timeoutSeconds; i++)
                         {
                             Thread.Sleep(1000);
 
                             if (i % 30 == 0 && i > 0)
                             {
-                                Log.WriteLine($"{revitInstallation}: Execution time is {i / 60.0} minutes, maximum {timeoutMinutes} minutes.");
+                                Log.WriteLine($"{revitInstallation}: Execution time is {i / 60.0} minutes, maximum {timeoutMinutes:0.0} minutes.");
                             }
 
                             if (process.HasExited) break;
@@ -237,7 +237,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
                             if (timeoutForceToEnd)
                             {
-                                var timeoutMessage = $"RevitTest: Timeout {timeoutMinutes} minutes.";
+                                var timeoutMessage = $"RevitTest: Timeout {timeoutMinutes:0.0} minutes.";
                                 Log.WriteLine($"{revitInstallation}: {timeoutMessage}");
                                 var exceptionTimeoutTests = new Exception(timeoutMessage);
                                 var timeoutTests = TestEngine.Fail(fileToTest, exceptionTimeoutTests, testFilters);

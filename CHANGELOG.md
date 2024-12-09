@@ -14,10 +14,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update to use `Task.Run` to force run outside the Revit context.
 ### Command
 - Update `AssemblyName` to use `Version`.
+- Update `Timeout` to `double`.
 ### TestAdapter
 - Update `MapperKey` to multiple converts.
 - Update `MetadataMapper` with `prefix`.
 - Fix `Mapper` convert integer to ignore dot.
+- Update `Timeout` to `double`.
 
 ## [1.7.0] / 2024-11-02 - 2024-12-03
 ### Features

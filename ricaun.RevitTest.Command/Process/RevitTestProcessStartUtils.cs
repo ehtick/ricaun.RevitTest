@@ -56,7 +56,7 @@ namespace ricaun.RevitTest.Command.Process
             string language = null,
             bool revitOpen = false,
             bool revitClose = false,
-            int timeoutMinutes = 0,
+            double timeoutMinutes = 0,
             bool debugger = false,
             Action<string> consoleAction = null,
             Action<string> debugAction = null,
