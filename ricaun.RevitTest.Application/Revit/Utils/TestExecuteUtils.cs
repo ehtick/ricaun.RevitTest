@@ -105,7 +105,7 @@ namespace ricaun.RevitTest.Application.Revit
                         if (configurationMetadata.Timeout > 0)
                         {
                             TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromMinutes(configurationMetadata.Timeout);
-                            Log.WriteLine($"Tasks.Timeout: {configurationMetadata.Timeout:0.00} minutes");
+                            Log.WriteLine($"Tasks.Timeout: {configurationMetadata.Timeout} minutes");
                         }
 
                         string containTestNameForNoRevitContext = configurationMetadata.Name;

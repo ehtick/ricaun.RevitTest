@@ -205,7 +205,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
                             if (i % 30 == 0 && i > 0)
                             {
-                                Log.WriteLine($"{revitInstallation}: Execution time is {i / 60.0} minutes, maximum {timeoutMinutes:0.0} minutes.");
+                                Log.WriteLine($"{revitInstallation}: Execution time is {i / 60.0} minutes, maximum {timeoutMinutes} minutes.");
                             }
 
                             if (process.HasExited) break;
@@ -237,7 +237,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
                             if (timeoutForceToEnd)
                             {
-                                var timeoutMessage = $"RevitTest: Timeout {timeoutMinutes:0.0} minutes.";
+                                var timeoutMessage = $"RevitTest: Timeout {timeoutMinutes} minutes.";
                                 Log.WriteLine($"{revitInstallation}: {timeoutMessage}");
                                 var exceptionTimeoutTests = new Exception(timeoutMessage);
                                 var timeoutTests = TestEngine.Fail(fileToTest, exceptionTimeoutTests, testFilters);
