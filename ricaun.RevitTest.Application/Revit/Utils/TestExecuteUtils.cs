@@ -126,6 +126,7 @@ namespace ricaun.RevitTest.Application.Revit
 
                             if (testGroupNoContext.TryGetValue(false, out var inContextTestNames))
                             {
+                                Log.WriteLine($"InContext: [{string.Join(",", inContextTestNames)}]");
                                 TestEngineFilter.TestNames.Clear();
                                 TestEngineFilter.TestNames.AddRange(inContextTestNames);
                                 modelTest = await revitTask.Run(() => TestEngine.TestAssembly(filePath, parameters));
@@ -133,7 +134,7 @@ namespace ricaun.RevitTest.Application.Revit
 
                             if (testGroupNoContext.TryGetValue(true, out var testAsyncNames))
                             {
-                                Log.WriteLine($"TestAsync: [{string.Join(",", testAsyncNames)}]");
+                                Log.WriteLine($"Tasks: [{string.Join(",", testAsyncNames)}]");
                                 TestEngineFilter.TestNames.Clear();
                                 TestEngineFilter.TestNames.AddRange(testAsyncNames);
                                 var modelTestAsync = TestEngine.TestAssembly(filePath, parameters);
