@@ -6,10 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.7.1] / 2024-12-07 - 2024-12-10
 ### Application
-- Update to use `AssemblyMetadata` to set configuration.
+- Update to use `AssemblyMetadata` to set configuration. (Fix: #64)
 - Update `TestExecuteUtils` to use `ConfigurationMetadata`.
 - Update `Log` file name.
-- Update `ricaun.NUnit` to `1.4.1-rc`.
+- Update `ricaun.NUnit` to `1.4.1`.
 - Add `MetadataMapper` to map `AssemblyMetadata` configuration.
 - Update to use `Task.Run` to force run outside the Revit context.
 - Update `Timeout` to time unit in minutes.
@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `MetadataMapper` with `prefix`.
 - Fix `Mapper` convert integer to ignore dot.
 - Update `Timeout` to `double`.
+### Tests
+- Update `TestsRevitTask` with `AssemblyMetadata` configuration.
 
 ## [1.7.0] / 2024-11-02 - 2024-12-03
 ### Features
