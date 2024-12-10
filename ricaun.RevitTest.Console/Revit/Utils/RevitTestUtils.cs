@@ -98,7 +98,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
             bool forceToCloseRevit = false,
-            int timeoutMinutes = 0,
+            double timeoutMinutes = 0,
             params string[] testFilters)
         {
             int timeoutNotBusyCountMax = 10;
@@ -198,7 +198,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                             }
                         };
 
-                        var timeoutSeconds = timeoutMinutes * 60;
+                        int timeoutSeconds = (int) timeoutMinutes * 60;
                         for (int i = 0; i <= timeoutSeconds; i++)
                         {
                             Thread.Sleep(1000);

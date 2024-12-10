@@ -179,7 +179,8 @@ namespace ricaun.RevitTest.Application.Revit
 
                             try
                             {
-                                testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
+                                testAssemblyModel = await Task.Run(() => TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters));
+                                //testAssemblyModel = await TestExecuteUtils.ExecuteAsync(RevitTask, message.TestPathFile, RevitParameters.Parameters);
                             }
                             catch (Exception ex)
                             {

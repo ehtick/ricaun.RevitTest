@@ -109,7 +109,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
             string language = null,
             bool revitOpen = false,
             bool revitClose = false,
-            int timeoutMinutes = 0,
+            double timeoutMinutes = 0,
             Action<string> consoleAction = null,
             Action<string> debugAction = null,
             Action<string> errorAction = null,

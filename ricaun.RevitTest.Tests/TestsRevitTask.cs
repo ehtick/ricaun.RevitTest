@@ -2,10 +2,12 @@
 using NUnit.Framework;
 using ricaun.Revit.UI.Tasks;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-[assembly: System.Reflection.AssemblyDescription("{\"TestAsync\":\"RevitTask\",\"TimeOut\":60.0}")]
+[assembly: System.Reflection.AssemblyMetadata("ricaun.RevitTest.Application.Tasks.Name", "RevitTask")]
+[assembly: System.Reflection.AssemblyMetadata("ricaun.RevitTest.Application.Tasks.Timeout", "0.05")]
 
 namespace ricaun.RevitTest.Tests
 {
@@ -49,6 +51,20 @@ namespace ricaun.RevitTest.Tests
         private bool InContext(UIApplication uiapp)
         {
             return !(uiapp.ActiveAddInId is null);
+        }
+
+        [Test]
+        public void GetAssemblies()
+        {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(assembly => typeof(TestsRevitTask).Assembly.FullName == assembly.FullName);
+            foreach (var assembly in assemblies)
+            {
+                Console.WriteLine($"{assembly.GetName().Name} | {(!string.IsNullOrEmpty(assembly.Location) ? System.IO.Path.GetFileName(assembly.Location) : string.Empty)}");
+            }
+#if !DEBUG
+            // Check if the assembly is only loaded once
+            Assert.AreEqual(1, assemblies.Count());
+#endif
         }
 
         [Test] 

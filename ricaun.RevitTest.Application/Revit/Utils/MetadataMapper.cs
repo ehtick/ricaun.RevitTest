@@ -4,8 +4,22 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace ricaun.RevitTest.TestAdapter.Metadatas
+namespace ricaun.RevitTest.Application.Revit
 {
+    internal static class MetadataMapper
+    {
+        public static T Map<T>(T destination, IEnumerable<AssemblyMetadataAttribute> attributes, string prefix = null) where T : class
+        {
+            if (attributes is null)
+                return destination;
+
+            var metadataDictionary = attributes
+                .GroupBy(attr => attr.Key)
+                .ToDictionary(group => group.Key, group => group.Last().Value);
+
+            return MapperKey.Map(destination, metadataDictionary, prefix);
+        }
+    }
     internal static class MapperKey
     {
         public static T Map<T>(T destination, IDictionary<string, string> dictionary, string prefix = null)
@@ -32,7 +46,7 @@ namespace ricaun.RevitTest.TestAdapter.Metadatas
                             sourcePropertyInfo.SetValue(kvp.Object, destinationValue);
                             Debug.WriteLine($"\t{sourceKey}: {sourceValue} >> {sourcePropertyInfo.Name}: {destinationValue}");
                         }
-                        catch { }
+                        catch (Exception ex){ Debug.WriteLine(ex); }
                     }
                 }
             }

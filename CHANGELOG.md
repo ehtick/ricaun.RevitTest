@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.7.1] / 2024-12-07 - 2024-12-10
+### Application
+- Update to use `AssemblyMetadata` to set configuration. (Fix: #64)
+- Update `TestExecuteUtils` to use `ConfigurationMetadata`.
+- Update `Log` file name.
+- Update `ricaun.NUnit` to `1.4.1`.
+- Add `MetadataMapper` to map `AssemblyMetadata` configuration.
+- Update to use `Task.Run` to force run outside the Revit context.
+- Update `Timeout` to time unit in minutes.
+### Command
+- Update `AssemblyName` to use `Version`.
+- Update `Timeout` to `double`.
+### TestAdapter
+- Update `MapperKey` to multiple converts.
+- Update `MetadataMapper` with `prefix`.
+- Fix `Mapper` convert integer to ignore dot.
+- Update `Timeout` to `double`.
+### Tests
+- Update `TestsRevitTask` with `AssemblyMetadata` configuration.
+
 ## [1.7.0] / 2024-11-02 - 2024-12-03
 ### Features
 - Support `IRevitTask` functions as parameters.
@@ -526,6 +546,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.7.1]: ../../compare/1.7.0...1.7.1
 [1.7.0]: ../../compare/1.6.0...1.7.0
 [1.6.0]: ../../compare/1.5.0...1.6.0
 [1.5.0]: ../../compare/1.4.1...1.5.0

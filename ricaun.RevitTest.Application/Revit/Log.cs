@@ -46,7 +46,7 @@ namespace ricaun.RevitTest.Application.Revit
         #endregion
 
         #region File
-        private static string FileName = "RevitTest_{0}.log";
+        private static string FileName = "RevitTest_{0:X}.log";
         private static string FilePath = null;
 
         private static void CreateFile()

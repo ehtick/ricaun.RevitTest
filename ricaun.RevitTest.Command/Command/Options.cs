@@ -62,7 +62,7 @@ namespace ricaun.RevitTest.Command
         [Option("timeout",
           Default = 0,
           HelpText = "Timeout in minutes to abort this application.")]
-        public int Timeout { get; set; }
+        public double Timeout { get; set; }
 
         [Option("debugger",
             Default = false,
