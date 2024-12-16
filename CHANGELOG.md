@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ci` to use public `nuget` packages.
 ### TestAdapter
 - Update `ricaun.Security.WinTrust` to `1.1.0`.
+### Tests
+- Add `net47` with `Revit 2019` tests.
 
 ## [1.7.1] / 2024-12-07 - 2024-12-10
 ### Application
