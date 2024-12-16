@@ -9,8 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Make project public
 ### Application
 - Remove `net46` framework, remove `Revit 2017` and `Revit 2018` support.
+### Console
+- Update `ricaun.Revit.Installation` to `1.3.1`.
 ### Build
 - Update `ci` to use public `nuget` packages.
+### TestAdapter
+- Update `ricaun.Security.WinTrust` to `1.1.0`.
 
 ## [1.7.1] / 2024-12-07 - 2024-12-10
 ### Application
