@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] / 2024-12-16
+### Features
+- Make project public
+### Build
+- Update `ci` to use public `nuget` packages.
+
 ## [1.7.1] / 2024-12-07 - 2024-12-10
 ### Application
 - Update to use `AssemblyMetadata` to set configuration. (Fix: #64)
@@ -546,6 +552,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.8.0]: ../../compare/1.7.1...1.8.0
 [1.7.1]: ../../compare/1.7.0...1.7.1
 [1.7.0]: ../../compare/1.6.0...1.7.0
 [1.6.0]: ../../compare/1.5.0...1.6.0

@@ -41,7 +41,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="ricaun.Security.WinTrust" Version="*" PrivateAssets="all" />
+    <PackageReference Include="ricaun.Security.WinTrust" Version="*-*" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">

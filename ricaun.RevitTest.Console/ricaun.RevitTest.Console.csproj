@@ -47,7 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ricaun.Revit.Installation" Version="*" />
+    <PackageReference Include="ricaun.Revit.Installation" Version="*-*" />
     <PackageReference Include="ricaun.RevitAPI.Fake.References.RevitAPIUI" Version="*-*" />
     <PackageReference Include="Microsoft.VisualStudio.Interop" Version="*" />
   </ItemGroup>
