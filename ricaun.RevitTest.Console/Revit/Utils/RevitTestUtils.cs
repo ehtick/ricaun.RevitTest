@@ -14,6 +14,7 @@ using System.Threading;
 
 namespace ricaun.RevitTest.Console.Revit.Utils
 {
+
     /// <summary>
     /// RevitTestUtils
     /// </summary>
@@ -101,8 +102,8 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             double timeoutMinutes = 0,
             params string[] testFilters)
         {
-            int timeoutNotBusyCountMax = 10;
-
+            int timeoutNotBusyCountMax = EnvironmentVariable.TimeoutNotBusyMaxSeconds;
+            
             if (timeoutMinutes <= 0)
                 timeoutMinutes = TimeoutMinutesDefault;
 
@@ -154,7 +155,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         if (revitInstallation.TryGetProcess(out Process process) == false || forceToOpenNewRevit)
                         {
                             var startRevitLanguageArgument = RevitLanguageUtils.GetArgument(forceLanguageToRevit);
-                            startRevitLanguageArgument = string.Join(" ", startRevitLanguageArgument, Environment.GetEnvironmentVariable("RICAUN_REVITTEST_CONSOLE_PROCESS_ARGUMENTS"));
+                            startRevitLanguageArgument = string.Join(" ", startRevitLanguageArgument, EnvironmentVariable.ProcessArguments);
                             Log.WriteLine($"{revitInstallation}: Start {startRevitLanguageArgument}");
                             process = revitInstallation.Start(startRevitLanguageArgument);
                         }
