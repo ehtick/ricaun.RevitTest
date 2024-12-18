@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Make project public
 ### Application
 - Remove `net46` framework, remove `Revit 2017` and `Revit 2018` support.
+### Command
+- Fix `AppUtils` to show `ProductName`.
 ### Console
 - Update `ricaun.Revit.Installation` to `1.3.1`.
 - Add `EnvironmentVariable` class, with `ProcessArguments` and `TimeoutNotBusyMaxSeconds` variables.
