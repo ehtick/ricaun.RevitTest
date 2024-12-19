@@ -24,9 +24,10 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         private const int SleepMillisecondsDebuggerAttached = 1000;
 
         private const int TimeoutMinutesDefault = 10;
+        private const int MinimalRevitVersion = 2019; // Application is not compatible with Revit 2018 or lower
 
         /// <summary>
-        /// Get Test Full Names using RevitInstallation if needed (Revit +2021)
+        /// Get Test Full Names using RevitInstallation
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
@@ -103,7 +104,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
             params string[] testFilters)
         {
             int timeoutNotBusyCountMax = EnvironmentVariable.TimeoutNotBusyMaxSeconds;
-            
+
             if (timeoutMinutes <= 0)
                 timeoutMinutes = TimeoutMinutesDefault;
 
@@ -112,11 +113,22 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                 RevitUtils.TryGetRevitVersion(fileToTest, out revitVersionNumber);
             }
 
-            if (!RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallationNotExist))
+            if (!RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallationExist))
             {
                 var exceptionRevitNotExist = new Exception($"Installed Revit with version {revitVersionNumber} or greater not found.");
 
                 var failTests = TestEngine.Fail(fileToTest, exceptionRevitNotExist, testFilters);
+                actionOutput.Invoke(failTests.ToJson());
+
+                Thread.Sleep(SleepMillisecondsBeforeFinish);
+                return;
+            }
+
+            if (revitInstallationExist.Version < MinimalRevitVersion)
+            {
+                var exceptionRevitVersion = new Exception($"Revit version {revitInstallationExist.Version} is not compatible with the application, minimal Revit version {MinimalRevitVersion}.");
+                
+                var failTests = TestEngine.Fail(fileToTest, exceptionRevitVersion, testFilters);
                 actionOutput.Invoke(failTests.ToJson());
 
                 Thread.Sleep(SleepMillisecondsBeforeFinish);
@@ -199,7 +211,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                             }
                         };
 
-                        int timeoutSeconds = (int) timeoutMinutes * 60;
+                        int timeoutSeconds = (int)timeoutMinutes * 60;
                         for (int i = 0; i <= timeoutSeconds; i++)
                         {
                             Thread.Sleep(1000);

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `ricaun.Revit.Installation` to `1.3.1`.
 - Add `EnvironmentVariable` class, with `ProcessArguments` and `TimeoutNotBusyMaxSeconds` variables.
 - Remove not used `RevitAddinDisable` class.
+- Update `RevitTestUtils` with `MinimalRevitVersion` to `2019`.
 ### Build
 - Update `ci` to use public `nuget` packages.
 ### TestAdapter
