@@ -61,7 +61,7 @@ namespace ricaun.RevitTest.TestAdapter
             fullyQualifiedName = string.Join(".", splitDots.Take(index));
             displayName = string.Join(".", splitDots.Skip(index));
 
-            AdapterLogger.Logger.DebugOnlyLocal($"SplitTestName[{index}]: {testName} -\t {fullyQualifiedName}\t {displayName}");
+            // AdapterLogger.Logger.DebugOnlyLocal($"SplitTestName[{index}]: {testName} -\t {fullyQualifiedName}\t {displayName}");
         }
 
         private static int LastIndexSplitOfDisplayName(string[] splitDots)

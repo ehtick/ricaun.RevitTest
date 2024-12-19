@@ -5,14 +5,29 @@ namespace ricaun.RevitTest.Command.Utils
     public static class AppUtils
     {
         /// <summary>
-        /// Get Info (Assembly Name, Version and Target Framework)
+        /// Get Info (Product Name, Version and Target Framework)
         /// </summary>
         /// <returns></returns>
         public static string GetInfo()
         {
-            var assemblyName = typeof(AppUtils).Assembly.GetName();
-            var info = $"{assemblyName.Name} {GetSemanticVersion()} [{GetTargetFrameworkName()}]";
+            var info = $"{GetProduct()} {GetSemanticVersion()} [{GetTargetFrameworkName()}]";
             return info;
+        }
+
+        /// <summary>
+        /// Get Product Name
+        /// </summary>
+        /// <returns></returns>
+        public static string GetProduct()
+        {
+            var assembly = typeof(AppUtils).Assembly;
+            string product = assembly.GetName().Name;
+            try
+            {
+                product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
+            }
+            catch { }
+            return product;
         }
 
         /// <summary>

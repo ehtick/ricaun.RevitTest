@@ -167,42 +167,6 @@ namespace ricaun.RevitTest.TestAdapter.Services
         }
 
         /// <summary>
-        /// Download and unzip Application Async
-        /// </summary>
-        /// <param name="applicationFolder">Folder of the Application</param>
-        /// <param name="address"></param>
-        /// <param name="downloadFileException"></param>
-        /// <returns></returns>
-        private static async Task<bool> DownloadAsyncWeb(string applicationFolder, string address, Action<Exception> downloadFileException = null)
-        {
-            var fileName = Path.GetFileName(address);
-            var zipPath = Path.Combine(applicationFolder, fileName);
-            var result = false;
-
-#pragma warning disable SYSLIB0014 // Type or member is obsolete
-            using (var client = new WebClient())
-            {
-                System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls12;
-                client.Headers[HttpRequestHeader.UserAgent] = nameof(ApplicationUtils);
-                try
-                {
-                    await client.DownloadFileTaskAsync(new Uri(address), zipPath);
-                    ExtractZipToDirectory(zipPath, applicationFolder);
-                    result = true;
-                }
-                catch (Exception ex)
-                {
-                    downloadFileException?.Invoke(ex);
-                }
-                if (Path.GetExtension(zipPath) == ZIP_FILE_EXTENSION)
-                    if (File.Exists(zipPath)) File.Delete(zipPath);
-            }
-#pragma warning restore SYSLIB0014 // Type or member is obsolete
-
-            return result;
-        }
-
-        /// <summary>
         /// ExtractToDirectory with overwrite enable
         /// </summary>
         /// <param name="archiveFileName"></param>

@@ -4,6 +4,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] / 2024-12-16 - 2024-12-19
+### Features
+- Make project public
+- Fix test filter limit size `arguments` (Fix: #65)
+### Application
+- Remove `net46` framework, remove `Revit 2017` and `Revit 2018` support.
+### Command
+- Fix `AppUtils` to show `ProductName`.
+- Update `ProcessStart` to show `arguments` length in debug.
+- Update `RevitTestProcessStart` to create temp file for test `arguments`.
+- Update `RunCommand` to read test `arguments` from temp file.
+### Console
+- Update `ricaun.Revit.Installation` to `1.3.1`.
+- Add `EnvironmentVariable` class, with `ProcessArguments` and `TimeoutNotBusyMaxSeconds` variables.
+- Remove not used `RevitAddinDisable` class.
+- Update `RevitTestUtils` with `MinimalRevitVersion` to `2019`.
+### Build
+- Update `ci` to use public `nuget` packages.
+### TestAdapter
+- Update `ricaun.Security.WinTrust` to `1.1.0`.
+### Tests
+- Add `net47` with `Revit 2019` tests.
+
 ## [1.7.1] / 2024-12-07 - 2024-12-10
 ### Application
 - Update to use `AssemblyMetadata` to set configuration. (Fix: #64)
@@ -546,6 +569,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.8.0]: ../../compare/1.7.1...1.8.0
 [1.7.1]: ../../compare/1.7.0...1.7.1
 [1.7.0]: ../../compare/1.6.0...1.7.0
 [1.6.0]: ../../compare/1.5.0...1.6.0

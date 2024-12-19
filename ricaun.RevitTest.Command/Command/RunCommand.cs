@@ -26,6 +26,21 @@ namespace ricaun.RevitTest.Command
             if (!File.Exists(options.File))
                 throw new FileNotFoundException();
 
+            // Check if first argument is a file to read the test filters (Fix: #65)
+            if (options.Test.Count() == 1)
+            {
+                var tempFileTestFilters = options.Test.First();
+                if (File.Exists(tempFileTestFilters))
+                {
+                    options.Test = File.ReadAllLines(tempFileTestFilters);
+                    try
+                    {
+                        File.Delete(tempFileTestFilters);
+                    }
+                    catch { }
+                }
+            }
+
             Log.Enabled = options.Log;
         }
 

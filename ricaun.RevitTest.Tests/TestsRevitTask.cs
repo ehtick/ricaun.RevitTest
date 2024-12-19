@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 [assembly: System.Reflection.AssemblyMetadata("ricaun.RevitTest.Application.Tasks.Name", "RevitTask")]
-[assembly: System.Reflection.AssemblyMetadata("ricaun.RevitTest.Application.Tasks.Timeout", "0.05")]
+[assembly: System.Reflection.AssemblyMetadata("ricaun.RevitTest.Application.Tasks.Timeout", "0.10")]
 
 namespace ricaun.RevitTest.Tests
 {
@@ -96,6 +96,22 @@ namespace ricaun.RevitTest.Tests
             Console.WriteLine($"AddInName: {addInName2}");
         }
 
+#if NET47
+        [Test]
+        public async Task TestPostableCommand_MacroManager()
+        {
+            await RevitTask.Run((uiapp) =>
+            {
+                uiapp.DialogBoxShowing += DialogBoxShowingForceClose;
+                uiapp.PostCommand(RevitCommandId.LookupPostableCommandId(PostableCommand.MacroManager));
+            });
+
+            await RevitTask.Run((uiapp) =>
+            {
+                uiapp.DialogBoxShowing -= DialogBoxShowingForceClose;
+            });
+        }
+#else
         [Test]
         public async Task TestPostableCommand_NewProject()
         {
@@ -110,6 +126,7 @@ namespace ricaun.RevitTest.Tests
                 uiapp.DialogBoxShowing -= DialogBoxShowingForceClose;
             });
         }
+#endif
         private void DialogBoxShowingForceClose(object sender, Autodesk.Revit.UI.Events.DialogBoxShowingEventArgs e)
         {
             var uiapp = sender as UIApplication;
@@ -117,7 +134,6 @@ namespace ricaun.RevitTest.Tests
             Console.WriteLine($"DialogBoxShowing {e.DialogId}");
             e.OverrideResult((int)TaskDialogResult.Close);
         }
-
         [Test]
         public async Task TestAsync_Idling()
         {

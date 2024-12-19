@@ -1,6 +1,7 @@
 ﻿using ricaun.NUnit.Models;
 using ricaun.RevitTest.Command.Extensions;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -53,6 +54,15 @@ namespace ricaun.RevitTest.Command.Process
         {
             if (testFilters.Length == 0)
                 return this;
+
+            // Convert filter to file to fix the limit size of arguments (Fix: #65)
+            if (testFilters.Length > 32)
+            {
+                var tempFileTestFilters = Path.GetTempFileName();
+                File.WriteAllLines(tempFileTestFilters, testFilters);
+                return SetRevitArgument("test", tempFileTestFilters);
+            }
+
             return SetRevitArgument("test", testFilters);
         }
         public RevitTestProcessStart SetTestFilter(string testFilter)
