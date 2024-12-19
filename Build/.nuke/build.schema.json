@@ -207,6 +207,9 @@
         "ApplicationType": {
           "type": "string"
         },
+        "EnableForkedRepository": {
+          "type": "boolean"
+        },
         "Folder": {
           "type": "string"
         },

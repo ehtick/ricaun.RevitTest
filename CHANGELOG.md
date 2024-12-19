@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.8.0] / 2024-12-16
 ### Features
 - Make project public
+- Fix test filter limit size `arguments` (Fix: #65)
 ### Application
 - Remove `net46` framework, remove `Revit 2017` and `Revit 2018` support.
 ### Command
 - Fix `AppUtils` to show `ProductName`.
 - Update `ProcessStart` to show `arguments` length in debug.
+- Update `RevitTestProcessStart` to create temp file for test `arguments`.
+- Update `RunCommand` to read test `arguments` from temp file.
 ### Console
 - Update `ricaun.Revit.Installation` to `1.3.1`.
 - Add `EnvironmentVariable` class, with `ProcessArguments` and `TimeoutNotBusyMaxSeconds` variables.
