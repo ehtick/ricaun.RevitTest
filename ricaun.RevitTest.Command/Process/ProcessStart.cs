@@ -94,8 +94,8 @@ namespace ricaun.RevitTest.Command.Process
         public async Task Run(Action<string> consoleAction, Action<string> errorAction = null)
         {
             var arguments = CreateArguments();
-            WriteLine($"ProcessStart: {processPath}");
-            WriteLine($"ProcessStart.Run: {arguments}");
+            WriteLine($"ProcessStart[{processPath.Length}]: {processPath}");
+            WriteLine($"ProcessStart.Run[{arguments.Length}]: {arguments}");
             await Run(arguments, consoleAction, errorAction);
         }
         private async Task Run(string arguments,
