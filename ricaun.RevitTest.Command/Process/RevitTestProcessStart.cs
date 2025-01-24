@@ -87,7 +87,7 @@ namespace ricaun.RevitTest.Command.Process
             {
                 if (string.IsNullOrEmpty(item)) return;
 
-                if (item.StartsWith("{\"FileName"))
+                if (item.StartsWith($"{{\"{nameof(TestAssemblyModel.FileName)}"))
                 {
                     debugAction?.Invoke($"OutputConsole: DEBUG: {item.Trim()}");
 
@@ -101,7 +101,7 @@ namespace ricaun.RevitTest.Command.Process
                         actionTest?.Invoke(testModel);
                     }
                 }
-                else if (item.StartsWith("{\"Name"))
+                else if (item.StartsWith($"{{\"{nameof(TestModel.Name)}"))
                 {
                     debugAction?.Invoke($"OutputConsole: DEBUG: {item.Trim()}");
 
