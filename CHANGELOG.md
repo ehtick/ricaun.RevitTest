@@ -4,9 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.8.1] / 2025-01-24
+## [1.9.0] / 2025-02-07
+### Features
+- Update `ricaun.NUnit` support `TestFixture`.
 ### Commands
 - Update `RevitTestProcessStart` to use `nameof`.
+### TestAdapter
+- Update `TestCaseUtils.SplitTestName` to split and ignore `(` and `)`.
+### Tests
+- Add `TestsFixture` and `TestFixtureSource`.
 
 ## [1.8.0] / 2024-12-16 - 2024-12-19
 ### Features
@@ -573,7 +579,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
-[1.8.1]: ../../compare/1.8.0...1.8.1
+[1.9.0]: ../../compare/1.8.0...1.9.0
 [1.8.0]: ../../compare/1.7.1...1.8.0
 [1.7.1]: ../../compare/1.7.0...1.7.1
 [1.7.0]: ../../compare/1.6.0...1.7.0
