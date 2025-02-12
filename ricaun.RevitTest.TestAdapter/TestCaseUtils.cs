@@ -52,9 +52,10 @@ namespace ricaun.RevitTest.TestAdapter
 
         #region private
 
+        static string Split_Dot_Ignore_Parentheses = @"(?<!\([^\)]*)\.(?![^\(]*\))";
         private static void SplitTestName(string testName, out string fullyQualifiedName, out string displayName)
         {
-            string[] splitDots = System.Text.RegularExpressions.Regex.Split(testName, pattern);
+            string[] splitDots = System.Text.RegularExpressions.Regex.Split(testName, Split_Dot_Ignore_Parentheses);
             var index = splitDots.Length - 1;
             fullyQualifiedName = string.Join(".", splitDots.Take(index));
             displayName = string.Join(".", splitDots.Skip(index));
@@ -63,7 +64,6 @@ namespace ricaun.RevitTest.TestAdapter
 
             ///https://github.com/nunit/nunit3-vs-adapter/blob/master/src/NUnitTestAdapter/TestConverter.cs#L78
         }
-        static string pattern = @"(?<!\([^\)]*)\.(?![^\(]*\))";
 
         #endregion
     }

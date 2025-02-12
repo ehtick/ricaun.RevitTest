@@ -11,9 +11,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `RevitTestProcessStart` to use `nameof`.
 ### TestAdapter
 - Update `TestCaseUtils.SplitTestName` to split and ignore `(` and `)`.
+- Update `ExecutorUriString` to use `NUnitTestExecutor` as name.
 ### Tests
 - Add `TestsFixture` and `TestFixtureSource`.
 - Add `TestsRevitFixtureSource` with Revit parameter and `TestFixtureSource` attribute.
+- Add `TestsFixtureParameterized` with multiple constructors.
 
 ## [1.8.0] / 2024-12-16 - 2024-12-19
 ### Features

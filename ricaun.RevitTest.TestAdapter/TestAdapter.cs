@@ -15,7 +15,8 @@ namespace ricaun.RevitTest.TestAdapter
 {
     internal abstract class TestAdapter
     {
-        public const string ExecutorUriString = "executor://ricaun.RevitTest.TestExecutor/v1";
+        //public const string ExecutorUriString = "executor://ricaun.RevitTest.TestExecutor/v1";
+        public const string ExecutorUriString = "executor://NUnitTestExecutor";
         public static readonly Uri ExecutorUri = new Uri(ExecutorUriString);
 
         // The adapter version
