@@ -9,14 +9,12 @@ using ricaun.RevitTest.TestAdapter.Metadatas;
 using ricaun.RevitTest.TestAdapter.Models;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
-using System.Reflection;
 
 namespace ricaun.RevitTest.TestAdapter
 {
     internal abstract class TestAdapter
     {
-        //public const string ExecutorUriString = "executor://ricaun.RevitTest.TestExecutor/v1";
-        public const string ExecutorUriString = "executor://NUnitTestExecutor";
+        public const string ExecutorUriString = "executor://ricaun.RevitTest.TestExecutor/v1";
         public static readonly Uri ExecutorUri = new Uri(ExecutorUriString);
 
         // The adapter version
