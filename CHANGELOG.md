@@ -6,11 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.9.0] / 2025-02-07
 ### Features
-- Update `ricaun.NUnit` support `TestFixture`.
+- Update `ricaun.NUnit` support `TestFixture` - Version 1.5.0.
 ### Commands
 - Update `RevitTestProcessStart` to use `nameof`.
+- Update `Options.RevitVersion` to be string. (Fix: #68)
+### Console
+- Update `RevitTestUtils` version to use string. (Fix: #68)
 ### TestAdapter
 - Update `TestCaseUtils.SplitTestName` to split and ignore `(` and `)`.
+- Update `NUnit.Version` to be string. (Fix: #68)
 ### Tests
 - Add `TestsFixture` and `TestFixtureSource`.
 - Add `TestsRevitFixtureSource` with Revit parameter and `TestFixtureSource` attribute.

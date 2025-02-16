@@ -12,7 +12,7 @@ namespace ricaun.RevitTest.Console.Revit
         }
 
         public bool RunTests(string fileToTest,
-            int revitVersionNumber,
+            string revitVersion,
             Action<string> actionOutput = null,
             string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
@@ -21,7 +21,7 @@ namespace ricaun.RevitTest.Console.Revit
             params string[] testFilters)
         {
             RevitTestUtils.CreateRevitServer(
-                fileToTest, revitVersionNumber, actionOutput, forceLanguageToRevit,
+                fileToTest, revitVersion, actionOutput, forceLanguageToRevit,
                 forceToOpenNewRevit, forceToCloseRevit, timeoutMinutes, testFilters);
             return true;
         }
