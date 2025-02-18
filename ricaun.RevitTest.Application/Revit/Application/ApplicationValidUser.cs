@@ -2,6 +2,7 @@
 using Autodesk.Revit.UI;
 using ricaun.NUnit;
 using ricaun.NUnit.Models;
+using ricaun.Revit.UI;
 using ricaun.RevitTest.Shared;
 using System;
 using System.Diagnostics;
@@ -24,10 +25,10 @@ namespace ricaun.RevitTest.Application.Revit.Application
                 var testPathFile = testRequest.TestPathFile;
                 var testFilterNames = testRequest.TestFilters ?? new string[] { };
 
-                var isPreviewReleaseOrLoggedIn = ApplicationPreviewUtils.IsPreviewReleaseOrLoggedIn();
+                var isPreviewReleaseOrLoggedIn = RevitApplicationPreview.IsPreviewReleaseOrLoggedIn;
                 if (isPreviewReleaseOrLoggedIn)
                 {
-                    var isPreviewRelease = ApplicationPreviewUtils.IsPreviewRelease();
+                    var isPreviewRelease = RevitApplicationPreview.IsPreviewRelease;
                     if (isPreviewRelease)
                     {
                         const string PreviewReleaseMessage = "Preview Release allow Revit user not logged.";

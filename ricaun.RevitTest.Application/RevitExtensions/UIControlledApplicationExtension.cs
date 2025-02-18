@@ -17,10 +17,10 @@
         {
             var type = typeof(UIControlledApplication);
 
-            var propertie = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
+            var property = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic)
                 .FirstOrDefault(e => e.FieldType == typeof(UIApplication));
 
-            return propertie?.GetValue(application) as UIApplication;
+            return property?.GetValue(application) as UIApplication;
         }
 
         /// <summary>

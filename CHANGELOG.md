@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.9.0] / 2025-02-07
 ### Features
 - Update `ricaun.NUnit` support `TestFixture` - Version 1.5.0.
+- Update `ricaun.Revit.UI` version 0.8.0.
 ### Commands
 - Update `RevitTestProcessStart` to use `nameof`.
 - Update `Options.RevitVersion` to be string. (Fix: #68)
