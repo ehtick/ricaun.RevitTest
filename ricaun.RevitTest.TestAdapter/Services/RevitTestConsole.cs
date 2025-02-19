@@ -105,7 +105,7 @@ namespace ricaun.RevitTest.TestAdapter.Services
         public async Task RunExecuteTests(
             string file,
             Action<TestModel> testResultAction,
-            int version = 0,
+            string version = null,
             string language = null,
             bool revitOpen = false,
             bool revitClose = false,

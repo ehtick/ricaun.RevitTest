@@ -145,6 +145,7 @@ namespace ricaun.RevitTest.Application.Revit
                         }
                     }
 
+                    var testStopwatch = Stopwatch.StartNew();
                     IsTestRunning = true;
                     PipeTestServer.Update((response) =>
                     {
@@ -221,6 +222,10 @@ namespace ricaun.RevitTest.Application.Revit
                     });
 
                     ribbonItem.SetLargeImage(LargeImageNoBusy);
+
+                    testStopwatch.Stop();
+                    Log.WriteLine($"Execute Total: {testStopwatch.Elapsed}");
+                    Log.WriteLine();
                 };
             }
 

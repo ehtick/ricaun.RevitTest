@@ -7,7 +7,7 @@ namespace ricaun.RevitTest.Command
         public string[] GetTests(string filePath);
         public bool RunTests(
             string fileToTest,
-            int revitVersionNumber,
+            string revitVersion,
             Action<string> actionOutput = null,
             string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,

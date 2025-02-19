@@ -29,7 +29,7 @@ namespace ricaun.RevitTest.Command
 
         [Option('v', "version",
           HelpText = "Force to run with Revit version.")]
-        public int RevitVersion { get; set; }
+        public string RevitVersion { get; set; }
 
         [Option("language",
           HelpText = "Force to run with Revit with language. (Default: ENU)")]
@@ -67,7 +67,7 @@ namespace ricaun.RevitTest.Command
         [Option("debugger",
             Default = false,
             Hidden = true,
-            HelpText = "Force to attach debbuger in the Revit process.")]
+            HelpText = "Force to attach debugger in the Revit process.")]
         public bool DebuggerAttach { get; set; }
     }
 }

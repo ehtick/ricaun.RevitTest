@@ -9,7 +9,6 @@ using ricaun.RevitTest.TestAdapter.Metadatas;
 using ricaun.RevitTest.TestAdapter.Models;
 using ricaun.RevitTest.TestAdapter.Services;
 using System;
-using System.Reflection;
 
 namespace ricaun.RevitTest.TestAdapter
 {

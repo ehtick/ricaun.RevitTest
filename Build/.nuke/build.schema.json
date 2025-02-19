@@ -247,11 +247,11 @@
         "NewVersions": {
           "type": "boolean"
         },
-        "NugetApiKey": {
+        "NuGetApiKey": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
-        "NugetApiUrl": {
+        "NuGetApiUrl": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
@@ -297,7 +297,7 @@
         "TestLocalProjectName": {
           "type": "string"
         },
-        "UnlistNuget": {
+        "UnlistNuGet": {
           "type": "boolean"
         },
         "VendorDescription": {

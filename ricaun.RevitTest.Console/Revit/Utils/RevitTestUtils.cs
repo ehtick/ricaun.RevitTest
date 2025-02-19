@@ -82,6 +82,19 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         }
         #endregion
 
+        static int ConvertToRevitVersion(string revitVersion)
+        {
+            if (string.IsNullOrWhiteSpace(revitVersion))
+            {
+                return 0;
+            }
+            if (int.TryParse(revitVersion, out int revitVersionNumber))
+            {
+                return revitVersionNumber;
+            }
+            return 0;
+        }
+
         /// <summary>
         /// Create Revit Server
         /// </summary>
@@ -95,7 +108,7 @@ namespace ricaun.RevitTest.Console.Revit.Utils
         /// <param name="testFilters"></param>
         public static void CreateRevitServer(
             string fileToTest,
-            int revitVersionNumber,
+            string revitVersion,
             Action<string> actionOutput = null,
             string forceLanguageToRevit = null,
             bool forceToOpenNewRevit = false,
@@ -107,6 +120,8 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
             if (timeoutMinutes <= 0)
                 timeoutMinutes = TimeoutMinutesDefault;
+
+            var revitVersionNumber = ConvertToRevitVersion(revitVersion);
 
             if (revitVersionNumber == 0)
             {

@@ -29,7 +29,13 @@ namespace ricaun.RevitTest.Command.Process
             if (!log) return this;
             return SetRevitArgument("log");
         }
-        public RevitTestProcessStart SetRevitVersion(int revitVersion) => SetRevitArgument("version", revitVersion);
+        public RevitTestProcessStart SetRevitVersion(string revitVersion)
+        {
+            if (string.IsNullOrWhiteSpace(revitVersion) == false)
+                SetRevitArgument("version", revitVersion);
+
+            return this;
+        }
         public RevitTestProcessStart SetRevitLanguage(string revitLanguage)
         {
             if (string.IsNullOrWhiteSpace(revitLanguage) == false)
@@ -87,7 +93,7 @@ namespace ricaun.RevitTest.Command.Process
             {
                 if (string.IsNullOrEmpty(item)) return;
 
-                if (item.StartsWith("{\"FileName"))
+                if (item.StartsWith($"{{\"{nameof(TestAssemblyModel.FileName)}"))
                 {
                     debugAction?.Invoke($"OutputConsole: DEBUG: {item.Trim()}");
 
@@ -101,7 +107,7 @@ namespace ricaun.RevitTest.Command.Process
                         actionTest?.Invoke(testModel);
                     }
                 }
-                else if (item.StartsWith("{\"Name"))
+                else if (item.StartsWith($"{{\"{nameof(TestModel.Name)}"))
                 {
                     debugAction?.Invoke($"OutputConsole: DEBUG: {item.Trim()}");
 
@@ -128,7 +134,7 @@ namespace ricaun.RevitTest.Command.Process
             return Run(outputConsole, outputError);
         }
 
-        public Task RunReadTests(Action<string[]> actionTests, 
+        public Task RunReadTests(Action<string[]> actionTests,
             Action<string> consoleAction = null,
             Action<string> debugAction = null,
             Action<string> errorAction = null)

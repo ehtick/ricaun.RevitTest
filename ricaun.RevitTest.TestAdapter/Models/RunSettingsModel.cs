@@ -12,7 +12,7 @@
         public class NUnitModel
         {
             [XmlElement("Version")]
-            public int Version { get; set; }
+            public string Version { get; set; }
 
             [XmlElement("Language")]
             public string Language { get; set; }
