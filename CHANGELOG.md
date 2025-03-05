@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.9.1] / 2025-03-05
 ### Features
 ### Console
-- Update `ricaun.Revit.Installation` to `1.3.2`.
+- Update `ricaun.Revit.Installation` to `1.3.2`. (Fix: #74)
 ### Shared
 - Add `ricaun.RevitTest.Shared.Tests` to test mapper.
 
