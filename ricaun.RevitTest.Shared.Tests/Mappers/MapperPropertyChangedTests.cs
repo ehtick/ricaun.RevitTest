@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using NUnit.Framework.Internal;
+using ricaun.RevitTest.Shared.Mappers;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ricaun.RevitTest.Shared.Mappers
+namespace ricaun.RevitTest.Shared.Tests.Mappers
 {
     //<!-- Fody -->
     //<ItemGroup>
@@ -40,7 +40,7 @@ namespace ricaun.RevitTest.Shared.Mappers
         }
 
         [Test]
-        public void Test()
+        public void Test_Destination_PropertyChanged()
         {
             var source = new TestClass() { TestProperty = "text" };
             var destination = new TestDestination();

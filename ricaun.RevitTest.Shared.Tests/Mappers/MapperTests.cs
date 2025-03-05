@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
+using ricaun.RevitTest.Shared.Mappers;
 
-namespace ricaun.RevitTest.Shared.Mappers
+namespace ricaun.RevitTest.Shared.Tests.Mappers
 {
     internal class MapperTests
     {
@@ -15,7 +16,7 @@ namespace ricaun.RevitTest.Shared.Mappers
         }
 
         [Test]
-        public void Test()
+        public void Test_Mapper_NotifyPropertyChanged()
         {
             var source = new TestClass() { TestProperty = "text" };
             var destination = new TestDestination();
