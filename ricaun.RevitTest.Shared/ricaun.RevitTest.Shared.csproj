@@ -57,12 +57,6 @@
     <Copyright>Copyright © $(Company) $(CopyrightYears)</Copyright>
   </PropertyGroup>
 
-  <!--Tests-->
-  <ItemGroup>
-    <Compile Remove="Mappers\MapperPropertyChangedTests.cs" />
-    <Compile Remove="Mappers\MapperTests.cs" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="ricaun.NamedPipeWrapper.Json" Version="*" />
     <PackageReference Include="ricaun.NUnit" Version="*" />

@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.9.1] / 2025-03-05 - 2025-03-14
+### Features
+- Support localized `InstallLocation` path. (Fix: #74)
+### Console
+- Update `ricaun.Revit.Installation` to `1.3.2`. (Fix: #74)
+### Shared
+- Add `ricaun.RevitTest.Shared.Tests` to test mapper.
+
 ## [1.9.0] / 2025-02-07 - 2025-02-19
 ### Features
 - Update `ricaun.NUnit` support `TestFixture` - Version 1.5.0.
@@ -586,6 +594,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.9.1]: ../../compare/1.9.0...1.9.1
 [1.9.0]: ../../compare/1.8.0...1.9.0
 [1.8.0]: ../../compare/1.7.1...1.8.0
 [1.7.1]: ../../compare/1.7.0...1.7.1
