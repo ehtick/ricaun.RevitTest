@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.10.0] / 2025-04-03
 ### Features
 - Support `dotnet test` with `--filter` with properties `FullyQualifiedName` and `Name`. (Fix: #76)
+### Console
+- Update `Process` to start using `UseShellExecute` true.
 ### TestAdapter
 - Add `TestFilter` to filter `TestCase` using `FullyQualifiedName` and `Name`.
 - Update `AdapterLogger` to enable/disable logs. 

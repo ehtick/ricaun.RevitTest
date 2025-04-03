@@ -184,7 +184,14 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                             var startRevitLanguageArgument = RevitLanguageUtils.GetArgument(forceLanguageToRevit);
                             startRevitLanguageArgument = string.Join(" ", startRevitLanguageArgument, EnvironmentVariable.ProcessArguments);
                             Log.WriteLine($"{revitInstallation}: Start {startRevitLanguageArgument}");
-                            process = revitInstallation.Start(startRevitLanguageArgument);
+                            //process = revitInstallation.Start(startRevitLanguageArgument);
+                            var startInfo = new ProcessStartInfo
+                            {
+                                FileName = Path.Combine(revitInstallation.InstallLocation, RevitInstallationExtension.ExecuteName),
+                                Arguments = startRevitLanguageArgument,
+                                UseShellExecute = true, // This ensures the process is not a child process
+                            };
+                            process = Process.Start(startInfo);
                         }
 
                         var client = new PipeTestClient(process);

@@ -41,6 +41,10 @@ namespace ricaun.RevitTest.TestAdapter
             });
             task.GetAwaiter().GetResult();
 
+            AdapterLogger.Logger.Info($"KeepAlive: `{runContext.KeepAlive}`");
+            AdapterLogger.Logger.Info($"InIsolation: `{runContext.InIsolation}`");
+            AdapterLogger.Logger.Info($"EnableShutdownAfterTestRun: `{frameworkHandle.EnableShutdownAfterTestRun}`");
+
         }
 
         /// <summary>
@@ -74,7 +78,6 @@ namespace ricaun.RevitTest.TestAdapter
             });
             task.GetAwaiter().GetResult();
         }
-
         #region Cancel
         /// <summary>
         /// Force to cancel `RunTests` if process exit
