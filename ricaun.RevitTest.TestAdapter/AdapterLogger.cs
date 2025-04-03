@@ -6,11 +6,12 @@ namespace ricaun.RevitTest.TestAdapter
     internal class AdapterLogger
     {
         private static AdapterLogger Instance { get; set; }
+        public static bool IsEnabled { get; set; } = true;
         public static ITestLogger Logger
         {
             get
             {
-                if (Instance == null) return new NoneTestLogger();
+                if (Instance == null || !IsEnabled) return new NoneTestLogger();
                 return Instance.TestLogger;
             }
         }
