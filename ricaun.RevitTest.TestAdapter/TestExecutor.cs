@@ -53,11 +53,23 @@ namespace ricaun.RevitTest.TestAdapter
         {
             Initialize(runContext, frameworkHandle);
 
+            var testFilter = TestFilterFactory.CreateTestFilter(runContext);
+
             var task = Task.Run(async () =>
             {
                 foreach (var source in sources)
                 {
-                    await RunTests(frameworkHandle, source);
+                    var testCases = new List<TestCase>();
+                    if (!testFilter.IsEmpty)
+                    {
+                        AdapterLogger.Logger.Info($"TestFilter: `{testFilter.TestCaseFilterExpression.TestCaseFilterValue}`");
+                        AdapterLogger.IsEnabled = false;
+                        testCases = TestDiscoverer.GetTests(new[] { source });
+                        testCases = testFilter.CheckFilter(testCases).ToList();
+                        AdapterLogger.IsEnabled = true;
+                        if (testCases.Count == 0) continue;
+                    }
+                    await RunTests(frameworkHandle, source, testCases);
                 }
             });
             task.GetAwaiter().GetResult();

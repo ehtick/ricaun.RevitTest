@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] / 2025-04-03
+### Features
+- Support `dotnet test` with `--filter` with properties `FullyQualifiedName` and `Name`. (Fix: #76)
+### Console
+- Update `ricaun.Revit.Installation` to `1.4.0` to fix Revit start with `UseShellExecute` to true. (Fix: #77)
+### TestAdapter
+- Add `TestFilter` to filter `TestCase` using `FullyQualifiedName` and `Name`.
+- Update `AdapterLogger` to enable/disable logs. 
+
 ## [1.9.1] / 2025-03-05 - 2025-03-14
 ### Features
 - Support localized `InstallLocation` path. (Fix: #74)
@@ -594,6 +603,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.10.0]: ../../compare/1.9.1...1.10.0
 [1.9.1]: ../../compare/1.9.0...1.9.1
 [1.9.0]: ../../compare/1.8.0...1.9.0
 [1.8.0]: ../../compare/1.7.1...1.8.0
