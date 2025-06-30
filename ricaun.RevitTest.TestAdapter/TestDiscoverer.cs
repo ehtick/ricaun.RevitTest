@@ -39,7 +39,13 @@ namespace ricaun.RevitTest.TestAdapter
             if (string.IsNullOrWhiteSpace(application))
                 return false;
 
-            return (application.Equals("disable", StringComparison.InvariantCultureIgnoreCase));
+            string[] disableNames = new string[] { "disable", "none", "null" };
+            foreach (var disableName in disableNames)
+            {
+                return (application.Equals(disableName, StringComparison.InvariantCultureIgnoreCase));
+            }
+
+            return false;
         }
 
         /// <summary>

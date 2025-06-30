@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [1.10.1] / 2025-05-13
 ### Features
 - Support `disable` tests using `NUnit.Application` configuration. (Fix: #73)
+### Application
+- Force to kill tests when `ClientDisconnected` in `Debug` if test still running.
 ### TestAdapter
 - Add `IsApplicationDisable` to disable tests in `TestDiscoverer`.
+- Add `disable`, `none`, `null` keyworks to disable tests in `TestDiscoverer`.
 
 ## [1.10.0] / 2025-04-03
 ### Features

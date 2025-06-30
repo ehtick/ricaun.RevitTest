@@ -99,6 +99,17 @@ namespace ricaun.RevitTest.Application.Revit
                         {
                             throw new Exception("Client disconnect, TestEngine.Kill to ignore test result.");
                         });
+#if DEBUG
+                        Task.Run(async () =>
+                        {
+                            await Task.Delay(5000);
+                            if (IsTestRunning)
+                            {
+#warning This will kill the Revit process, which is not ideal. Consider a better way to handle this.
+                                Process.GetCurrentProcess().Kill();
+                            }
+                        });
+#endif
                     }
                 }
                 catch { }
