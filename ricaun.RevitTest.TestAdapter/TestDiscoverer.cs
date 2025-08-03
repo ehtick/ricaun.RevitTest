@@ -30,6 +30,25 @@ namespace ricaun.RevitTest.TestAdapter
         }
 
         /// <summary>
+        /// Check if the application is disable to skip the test discovery
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        internal static bool IsApplicationDisable(string application)
+        {
+            if (string.IsNullOrWhiteSpace(application))
+                return false;
+
+            string[] disableNames = new string[] { "disable", "none", "null" };
+            foreach (var disableName in disableNames)
+            {
+                return (application.Equals(disableName, StringComparison.InvariantCultureIgnoreCase));
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Get All Tests using RevitTest.Console -r
         /// </summary>
         /// <param name="TestAdapter"></param>
@@ -49,7 +68,13 @@ namespace ricaun.RevitTest.TestAdapter
                     EnvironmentSettings.Create();
                     AdapterLogger.Logger.Info($"DiscoverTests: {source}");
 
-                    using (var revit = new RevitTestConsole(AdapterSettings.Settings.NUnit.Application, source))
+                    var application = AdapterSettings.Settings.NUnit.Application;
+                    if (IsApplicationDisable(application))
+                    {
+                        AdapterLogger.Logger.Warning($"DiscoverTests: Application is {application}.");
+                        continue;
+                    }
+                    using (var revit = new RevitTestConsole(application, source))
                     {
                         if (revit.IsTrusted(out string message) == false)
                         {
@@ -61,9 +86,9 @@ namespace ricaun.RevitTest.TestAdapter
 
                         var testNames = new string[] { };
 
-                        await revit.RunReadTests(source, (tests) => { testNames = tests; }, 
-                            AdapterLogger.Logger.Debug, 
-                            AdapterLogger.Logger.Debug, 
+                        await revit.RunReadTests(source, (tests) => { testNames = tests; },
+                            AdapterLogger.Logger.Debug,
+                            AdapterLogger.Logger.Debug,
                             AdapterLogger.Logger.Warning);
 
                         AdapterLogger.Logger.Debug("DiscoverTests: -------------------------------");

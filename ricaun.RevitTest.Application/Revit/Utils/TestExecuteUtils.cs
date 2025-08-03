@@ -91,6 +91,7 @@ namespace ricaun.RevitTest.Application.Revit
             foreach (var filePath in Directory.GetFiles(directory, filePattern)) // "*.dll"
             {
                 var fileName = Path.GetFileName(filePath);
+                Log.WriteLine($"TestEngine: {fileName}");
                 try
                 {
                     if (TestEngine.ContainNUnit(filePath))
@@ -99,7 +100,6 @@ namespace ricaun.RevitTest.Application.Revit
 #if DEBUG
                         TestEngineFilter.CancellationTokenTimeOut = TimeSpan.FromSeconds(3);
 #endif
-
                         var configurationMetadata = ConfigurationMetadata.GetConfigurationMetadata(filePath);
 
                         if (configurationMetadata.Timeout > 0)

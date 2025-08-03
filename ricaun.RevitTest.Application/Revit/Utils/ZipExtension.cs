@@ -4,6 +4,9 @@ using System.IO.Compression;
 
 namespace ricaun.RevitTest.Application.Revit
 {
+    /// <summary>
+    /// ZipExtension
+    /// </summary>
     public static class ZipExtension
     {
         /// <summary>
