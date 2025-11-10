@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.10.2] / 2025-11-10
 ### Application
-- Update `App` to log filter after `IsBusy` response.
+- Update `App` to log filter after `IsBusy` response. (Fix: #83)
 
 ## [1.10.1] / 2025-05-13 - 2025-08-02
 ### Features
