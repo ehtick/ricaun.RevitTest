@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.10.2] / 2025-11-10
+### Application
+- Update `App` to log filter after `IsBusy` response.
+
 ## [1.10.1] / 2025-05-13 - 2025-08-02
 ### Features
 - Support `disable` tests using `NUnit.Application` configuration. (Fix: #73)
@@ -612,6 +616,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.10.2]: ../../compare/1.10.1...1.10.2
 [1.10.1]: ../../compare/1.10.0...1.10.1
 [1.10.0]: ../../compare/1.9.1...1.10.0
 [1.9.1]: ../../compare/1.9.0...1.9.1
