@@ -1,11 +1,14 @@
 ﻿using Nuke.Common;
 using Nuke.Common.IO;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities.Collections;
 using ricaun.Nuke.Components;
 using ricaun.Nuke.Extensions;
 
 public interface IBuildConsole : IHazExample, IRevitPackageBuilder
 {
+    public AbsolutePath GetExampleDirectory(Project project) => project.Directory / "bin" / "Release";
+
     Target BuildConsole => _ => _
         .TriggeredBy(PackageBuilder)
         .Before(Release)
