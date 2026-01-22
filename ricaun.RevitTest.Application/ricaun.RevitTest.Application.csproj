@@ -22,7 +22,7 @@
 
   <!-- RevitVersion -->
   <PropertyGroup>
-    <TargetFrameworks>net47;net48;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>net47;net48;net8.0-windows;net10.0-windows</TargetFrameworks>
   </PropertyGroup>
   <Choose>
     <When Condition="$(TargetFramework.StartsWith('net47'))">
@@ -35,9 +35,19 @@
         <RevitVersion>2021</RevitVersion>
       </PropertyGroup>
     </When>
-    <Otherwise>
+    <When Condition="$(TargetFramework.StartsWith('net8'))">
       <PropertyGroup>
         <RevitVersion>2025</RevitVersion>
+      </PropertyGroup>
+    </When>
+    <When Condition="$(TargetFramework.StartsWith('net10'))">
+      <PropertyGroup>
+        <RevitVersion>2027</RevitVersion>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <RevitVersion>2027</RevitVersion>
       </PropertyGroup>
     </Otherwise>
   </Choose>
@@ -127,27 +137,12 @@
 
   <!-- Fody -->
   <ItemGroup>
-    <PackageReference Include="PropertyChanged.Fody" Version="3.*" IncludeAssets="build; compile" PrivateAssets="all" />
-    <PackageReference Include="Costura.Fody" Version="5.*" IncludeAssets="build; compile" PrivateAssets="all" />
+    <PackageReference Include="Costura.Fody" Version="6.*" IncludeAssets="build; compile" PrivateAssets="all" />
   </ItemGroup>
   <PropertyGroup>
     <WeaverConfiguration>
       <Weavers>
-        <PropertyChanged />
         <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false" />
-      </Weavers>
-    </WeaverConfiguration>
-    <WeaverConfiguration Condition="$(Configuration.Contains('Debug'))">
-      <Weavers>
-        <PropertyChanged />
-        <Costura CreateTemporaryAssemblies="true" LoadAtModuleInit="false">
-          <!--
-          <IncludeAssemblies>
-            nunit.framework
-            NamedPipeWrapper.Json.*
-          </IncludeAssemblies>
-          -->
-        </Costura>
       </Weavers>
     </WeaverConfiguration>
   </PropertyGroup>
@@ -156,11 +151,15 @@
     <PackageReference Include="Newtonsoft.Json" Version="9.*" IncludeAssets="build; compile" PrivateAssets="All">
       <NoWarn>NU1903</NoWarn>
     </PackageReference>
-    <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*" IncludeAssets="build; compile" PrivateAssets="All" />
+    <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*-*" IncludeAssets="build; compile" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ricaun.RevitTest.Shared\ricaun.RevitTest.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <Reference Include="System.IO.Compression" />
   </ItemGroup>
 
   <ItemGroup>
