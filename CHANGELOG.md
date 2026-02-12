@@ -4,10 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.10.2] / 2025-11-10 - 2026-01-22
+## [1.10.2] / 2025-11-10 - 2026-02-18
 ### Application
 - Support Revit 2027 with framework `net10`.
 - Update `App` to log filter after `IsBusy` response. (Fix: #83)
+### Console
+- Update `ricaun.Revit.Installation` to version `1.5.1` to change how delete bundle works. (Delete folders or `PackageContents.xml`)
 
 ## [1.10.1] / 2025-05-13 - 2025-08-02
 ### Features
