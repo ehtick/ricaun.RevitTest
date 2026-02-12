@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Update `App` to log filter after `IsBusy` response. (Fix: #83)
 ### Console
 - Update `ricaun.Revit.Installation` to version `1.5.1` to change how delete bundle works. (Delete folders or `PackageContents.xml`)
+### Build
+- Update target framework to `net10`.
 
 ## [1.10.1] / 2025-05-13 - 2025-08-02
 ### Features
