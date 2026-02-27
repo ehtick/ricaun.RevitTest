@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [1.11.0] / 2025-11-10 - 2026-02-18
+## [1.11.0] / 2025-11-10 - 2026-02-27
 ### Features
-- Support changing `VendorId` and `AddInId` in the `.addin` files before start Revit.
+- Support changing `VendorId` and `AddInId` in the `.addin` files before start Revit. (Fix: #83)
 ### Application
 - Support Revit 2027 with framework `net10`.
 - Update `App` to log filter after `IsBusy` response. (Fix: #83)
