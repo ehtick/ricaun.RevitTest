@@ -141,6 +141,16 @@ namespace ricaun.RevitTest.Application.Revit
                         return;
                     }
 
+                    var testStopwatch = Stopwatch.StartNew();
+                    IsTestRunning = true;
+                    PipeTestServer.Update((response) =>
+                    {
+                        response.IsBusy = true;
+                        response.Test = null;
+                        response.Info = null;
+                        response.Tests = null;
+                    });
+
                     ribbonItem.SetLargeImage(LargeImageRun);
 
                     Log.WriteLine($"Execute: {message.TestPathFile}");
@@ -155,16 +165,6 @@ namespace ricaun.RevitTest.Application.Revit
                             Log.WriteLine($"FilterName: {testFilterName}");
                         }
                     }
-
-                    var testStopwatch = Stopwatch.StartNew();
-                    IsTestRunning = true;
-                    PipeTestServer.Update((response) =>
-                    {
-                        response.IsBusy = true;
-                        response.Test = null;
-                        response.Info = null;
-                        response.Tests = null;
-                    });
 
                     var testAssemblyModel = await RevitTask.Run((uiapp) => Application.ApplicationValidUser.ApplicationCheckTest(PipeTestServer, message));
 

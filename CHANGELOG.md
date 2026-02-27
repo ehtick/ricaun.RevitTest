@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.11.0] / 2025-11-10 - 2026-02-27
+### Features
+- Support changing `VendorId` and `AddInId` in the `.addin` files before start Revit. (Fix: #83)
+### Application
+- Support Revit 2027 with framework `net10`.
+- Update `App` to log filter after `IsBusy` response. (Fix: #83)
+### Console
+- Update `ricaun.Revit.Installation` to version `1.5.1` to change how delete bundle works. (Delete folders or `PackageContents.xml`)
+- Update `ApplicationPluginsDisposable` with `UpdateRevitAddinFile` to update `VendorId` and `AddInId` in the `.addin` files.
+- Update `CreateRevitServer` with `UpdateRevitAddinFileUsingTestMetadata` to update `VendorId` and `AddInId` in the `.addin` files using the test metadata. (Fix: #84)
+	- `ricaun.RevitTest.Application.VendorId` to set the `VendorId` in the `.addin` file.
+	- `ricaun.RevitTest.Application.AddInId` to set the `AddInId` in the `.addin` file. (This should be used carefully, because the `AddInId` should be unique inside Revit.)
+### Build
+- Update target framework to `net10`.
+
 ## [1.10.1] / 2025-05-13 - 2025-08-02
 ### Features
 - Support `disable` tests using `NUnit.Application` configuration. (Fix: #73)
@@ -612,6 +627,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [x] TestsFail
 
 [vNext]: ../../compare/1.0.0...HEAD
+[1.11.0]: ../../compare/1.10.1...1.11.0
 [1.10.1]: ../../compare/1.10.0...1.10.1
 [1.10.0]: ../../compare/1.9.1...1.10.0
 [1.9.1]: ../../compare/1.9.0...1.9.1

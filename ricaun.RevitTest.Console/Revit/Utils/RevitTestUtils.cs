@@ -175,6 +175,8 @@ namespace ricaun.RevitTest.Console.Revit.Utils
                         return;
                     }
 
+                    UpdateRevitAddinFileUsingTestMetadata(appPlugin, fileToTest);
+
                     if (RevitInstallationUtils.InstalledRevit.TryGetRevitInstallationGreater(revitVersionNumber, out RevitInstallation revitInstallation))
                     {
                         Log.WriteLine(revitInstallation);
@@ -327,6 +329,14 @@ namespace ricaun.RevitTest.Console.Revit.Utils
 
                 }
             }
+        }
+
+        private static void UpdateRevitAddinFileUsingTestMetadata(ApplicationPluginsDisposable appPlugin, string fileToTest)
+        {
+            var assemblyMetadatas = TestEngine.GetAssemblyMetadataAttributes(fileToTest);
+            var vendorIdMetadata = assemblyMetadatas.FirstOrDefault(e => e.Key == "ricaun.RevitTest.Application.VendorId");
+            var addInIdMetadata = assemblyMetadatas.FirstOrDefault(e => e.Key == "ricaun.RevitTest.Application.AddInId");
+            appPlugin.UpdateRevitAddinFile(vendorIdMetadata?.Value, addInIdMetadata?.Value);
         }
 
         #region private
